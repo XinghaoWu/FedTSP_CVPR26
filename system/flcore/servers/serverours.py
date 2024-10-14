@@ -33,7 +33,7 @@ class FedOurs(Server):
         self.num_classes = args.num_classes
 
         # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_lamda{args.lamda}_prompt(p{args.p_prompt}_CSC{args.CSC}_{args.len_prompt})_pcls{args.p_classifier}_alter{args.alter}_{args.prompt_epoch}/'
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_lamda(t{args.lamda}_v{args.vision_proto})_prompt(p{args.p_prompt}_CSC{args.CSC}_{args.len_prompt})_pcls{args.p_classifier}_alter{args.alter}_{args.prompt_epoch}/'
         self.set_loggers(logger_path)
 
         # for vision prototype alignment
@@ -117,6 +117,7 @@ class FedOurs(Server):
 
         # aggregate global vision prototype
         if abs(self.args.vision_proto) > 1e-6:
+            print('Aggregate vision prototypes')
             uploaded_protos = []
             for client in self.selected_clients:
                 protos = client.local_vision_prompt

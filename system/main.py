@@ -379,7 +379,7 @@ if __name__ == "__main__":
     parser.add_argument('--prompt_epoch', type=int, default=1, help='the number of training prompt epochs, only useful when --alter=1')
     parser.add_argument('--prompt_lr', type=float, default=0.01, help='learning rate for prompt')
     parser.add_argument('--CSC', default=True, action='store_false', help='whether use class-specific prompt')
-    parser.add_argument('--vision_proto', dtype=float, default=0, help='whether to align with the vision prototype, set to 0 to disable')
+    parser.add_argument('--vision_proto', type=float, default=0, help='whether to align with the vision prototype, set to 0 to disable')
 
     args = parser.parse_args()
 
