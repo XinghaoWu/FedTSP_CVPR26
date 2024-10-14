@@ -1,0 +1,229 @@
+import time
+import numpy as np
+from flcore.clients.clientours import clientOurs
+from flcore.servers.serverbase import Server
+from flcore.clients.clientbase import load_item, save_item
+from utils.data_utils import read_client_data
+from threading import Thread
+from collections import defaultdict
+import json
+import copy
+from tqdm import tqdm
+
+
+class FedOurs(Server):
+    def __init__(self, args, times):
+        super().__init__(args, times)
+
+        # obtain the classes
+        dataset_json_dir = f'../dataset/{args.dataset}/config.json'
+        with open(dataset_json_dir, 'r') as f:
+            data_config = json.load(f)
+        self.args.classes = data_config['classes']
+
+        # select slow clients
+        self.set_slow_clients()
+        self.set_clients(clientOurs)
+
+        print(f"\nJoin ratio / total clients: {self.join_ratio} / {self.num_clients}")
+        print("Finished creating server and clients.")
+
+        # self.load_model()
+        self.Budget = []
+        self.num_classes = args.num_classes
+
+        # set logger
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_lamda{args.lamda}_prompt(p{args.p_prompt}_CSC{args.CSC}_{args.len_prompt})_pcls{args.p_classifier}_alter{args.alter}_{args.prompt_epoch}/'
+        self.set_loggers(logger_path)
+
+    def train(self):
+        for i in tqdm(range(self.global_rounds + 1)):
+            s_t = time.time()
+            self.selected_clients = self.select_clients()
+
+            if i % self.eval_gap == 0:
+                print(f"\n-------------Round number: {i}-------------")
+                print("\nEvaluate heterogeneous models")
+                self.logger.info(f"\n-------------Round number: {i}-------------")
+                self.logger.info("\nEvaluate heterogeneous models")
+                self.epoch = i
+                self.evaluate()
+            print(f'Round {i}, local training starts.')
+            # for client in self.selected_clients:
+            #     client.train()
+            for client in self.selected_clients:
+                client.train()
+
+            # threads = [Thread(target=client.train)
+            #            for client in self.selected_clients]
+            # [t.start() for t in threads]
+            # [t.join() for t in threads]
+
+            self.receive_ids()
+            # if self.args.len_prompt > 0:
+            self.aggregate_parameters()
+            self.send_parameters()
+
+            self.Budget.append(time.time() - s_t)
+            print('-' * 50, self.Budget[-1])
+
+            if self.auto_break and self.check_done(acc_lss=[self.rs_test_acc], top_cnt=self.top_cnt):
+                break
+
+        print("\nBest accuracy.")
+        # self.print_(max(self.rs_test_acc), max(
+        #     self.rs_train_acc), min(self.rs_train_loss))
+        print(max(self.rs_test_acc))
+        print(sum(self.Budget[1:]) / len(self.Budget[1:]))
+
+        self.save_results()
+
+    def aggregate_parameters(self):
+        assert (len(self.uploaded_ids) > 0)
+        # aggregate global prompts
+        if self.args.len_prompt > 0 and self.args.p_prompt == 0:
+            client = self.clients[self.uploaded_ids[0]]
+            global_prompt = copy.deepcopy(client.model.prompt_learner)
+            for param in global_prompt.parameters():
+                param.data.zero_()
+
+            for w, cid in zip(self.uploaded_weights, self.uploaded_ids):
+                client = self.clients[cid]
+                # client_prompt = load_item(client.role, 'prompts', client.save_folder_name)
+                client_prompt = copy.deepcopy(client.model.prompt_learner)
+                for server_param, client_param in zip(global_prompt.parameters(), client_prompt.parameters()):
+                    server_param.data += client_param.data.clone() * w
+            self.global_prompt = global_prompt
+        else:
+            self.global_prompt = None
+
+        # aggregate global classifier
+        if self.args.p_classifier == 0:
+            client = self.clients[self.uploaded_ids[0]]
+            global_classifier = copy.deepcopy(client.model.visual_model.head)
+            for param in global_classifier.parameters():
+                param.data.zero_()
+            for w, cid in zip(self.uploaded_weights, self.uploaded_ids):
+                client = self.clients[cid]
+                client_classifier = copy.deepcopy(client.model.visual_model.head)
+                for server_param, client_param in zip(global_classifier.parameters(), client_classifier.parameters()):
+                    server_param.data += client_param.data.clone() * w
+            self.global_classifier = global_classifier
+        else:
+            self.global_classifier = None
+
+
+    def send_parameters(self):
+        assert (len(self.clients) > 0)
+
+        for client in self.clients:
+            start_time = time.time()
+
+            client.set_parameters(self.global_prompt, self.global_classifier)
+
+            client.send_time_cost['num_rounds'] += 1
+            client.send_time_cost['total_cost'] += 2 * (time.time() - start_time)
+
+    def test_metrics(self):
+        num_samples = []
+        tot_correct = []
+        tot_losses = []
+        for c in self.clients:
+            correct_num, test_num, total_loss = c.test_metrics()
+            tot_correct.append(correct_num)
+            # print(f'Client {c.id}: Test Acc: {correct_num * 1.0 / test_num}, Test Loss: {total_loss * 1.0 / test_num}')
+            tot_losses.append(total_loss)
+            num_samples.append(test_num)
+
+        ids = [c.id for c in self.clients]
+
+        return ids, num_samples, tot_correct, tot_losses
+
+    def train_metrics(self):
+        num_samples = []
+        tot_correct = []
+        tot_losses = []
+        for c in self.clients:
+            total_loss, train_num, correct_num = c.train_metrics()
+            num_samples.append(train_num)
+            tot_losses.append(total_loss)
+            # print(f'Client {c.id}: Train Acc: {correct_num * 1.0 / train_num}, Train Loss: {total_loss * 1.0 / train_num}')
+            tot_correct.append(correct_num)
+
+        ids = [c.id for c in self.clients]
+
+        return ids, num_samples, tot_correct, tot_losses
+
+    # evaluate selected clients
+    def evaluate(self, acc=None, loss=None):
+        stats = self.test_metrics()
+        stats_train = self.train_metrics()
+
+        test_acc = sum(stats[2]) * 1.0 / sum(stats[1])
+        test_loss = sum(stats[3]) * 1.0 / sum(stats[1])
+        test_accs = [a / n for a, n in zip(stats[2], stats[1])]
+        test_losses = [a / n for a, n in zip(stats[3], stats[1])]
+
+        if test_acc >= self.best_acc:
+            self.best_acc = test_acc
+            self.best_epoch = self.epoch
+
+        if acc == None:
+            self.rs_test_acc.append(test_acc)
+        else:
+            acc.append(test_acc)
+
+        train_acc = sum(stats_train[2]) * 1.0 / sum(stats_train[1])
+        train_loss = sum(stats_train[3])*1.0 / sum(stats_train[1])
+        train_accs = [a / n for a, n in zip(stats_train[2], stats_train[1])]
+        train_losses = [a / n for a, n in zip(stats_train[3], stats_train[1])]
+
+        # if loss == None:
+        #     self.rs_train_loss.append(train_loss)
+        # else:
+        #     loss.append(train_loss)
+
+        # print("Averaged Train Loss: {:.4f}".format(train_loss))
+
+        print(f'Train acc per client:{train_accs}')
+        print(f'Test acc per clients: {test_accs}')
+
+        print("Averaged Train Accurancy: {:.4f}".format(train_acc), end=', ')
+        print("Std Train Accurancy: {:.4f}".format(np.std(train_accs)), end=', ')
+        print("Averaged Train Loss: {:.4f}".format(train_loss), end=', ')
+        print("Std Train Loss: {:.4f}".format(np.std(train_losses)))
+
+        print("Averaged Test Accurancy: {:.4f}".format(test_acc), end=', ')
+        print("Std Test Accurancy: {:.4f}".format(np.std(test_accs)), end=', ')
+        print("Averaged Test Loss: {:.4f}".format(test_loss), end=', ')
+        print("Std Test Loss: {:.4f}".format(np.std(test_losses)))
+        print("Best Epoch: ", self.best_epoch)
+        print("Best Test Accurancy: {:.4f}".format(self.best_acc))
+
+        self.logger.info(f'Train acc per client:{train_accs}')
+        self.logger.info(f'Test acc per clients: {test_accs}')
+
+        self.logger.info("Averaged Train Accurancy: {:.4f}".format(train_acc))
+        self.logger.info("Std Train Accurancy: {:.4f}".format(np.std(train_accs)))
+        self.logger.info("Averaged Train Loss: {:.4f}".format(train_loss))
+        self.logger.info("Std Train Loss: {:.4f}".format(np.std(train_losses)))
+
+        self.logger.info("Averaged Test Accurancy: {:.4f}".format(test_acc))
+        self.logger.info("Std Test Accurancy: {:.4f}".format(np.std(test_accs)))
+        self.logger.info("Averaged Test Loss: {:.4f}".format(test_loss))
+        self.logger.info("Std Test Loss: {:.4f}".format(np.std(test_losses)))
+        self.logger.info(f"Best Epoch: {self.best_epoch}")
+        self.logger.info("Best Test Accurancy: {:.4f}".format(self.best_acc))
+
+        train_info = {
+            'train_acc': train_acc,
+            'train_loss': train_loss,
+        }
+        self.tensorboardLogger.add_scalars_dict(prefix='train', dic=train_info, rnd=self.epoch)
+
+        test_info = {
+            'test_acc': test_acc,
+            'test_loss': test_loss,
+            'best_acc': self.best_acc
+        }
+        self.tensorboardLogger.add_scalars_dict(prefix='test', dic=test_info, rnd=self.epoch)

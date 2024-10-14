@@ -1,0 +1,9 @@
+FedOurs
+python main.py --dataset=Cifar10_pat_2_balance_20 --algorithm=FedOurs --global_rounds=200 --local_epochs=5 --num_clients=20 --seed=0 --lamda=1 --len_prompt=24
+
+python main.py --dataset=Cifar10_dir_1.0_balance_40 --algorithm=FedOurs --global_rounds=200 --local_epochs=5 --num_clients=40 --seed=0 --lamda=1 --len_prompt=24
+
+FedProto
+python main.py --dataset=Cifar10_pat_2_balance_20 --algorithm=FedProto --global_rounds=200 --local_epochs=5 --num_clients=20 --seed=0 --lamda=1
+
+python main.py --dataset=Cifar10_dir_1.0_balance_40 --algorithm=FedProto --global_rounds=200 --local_epochs=5 --num_clients=20 --seed=0 --lamda=3
