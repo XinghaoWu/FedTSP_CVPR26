@@ -33,6 +33,12 @@ class clientOurs(Client):
         self.testloaderfull = self.load_test_data()
         self.prompt_lr = args.prompt_lr
 
+        # used for aligning the vision prompt
+        if self.args.vision_proto > 1e-6:
+            self.global_vision_prompt = None
+            self.local_vision_prompt = None
+            self.loss_mse = nn.MSELoss()
+
     def train(self):
         # trainloader = self.load_train_data()
         # model = load_item(self.role, 'model', self.save_folder_name)
@@ -50,6 +56,7 @@ class clientOurs(Client):
         if self.train_slow:
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
+        protos = defaultdict(list)
         if self.args.alter == 0 or self.args.len_prompt == 0:
             for step in range(max_local_epochs):
                 for i, (x, y) in enumerate(self.trainloader):
@@ -64,8 +71,21 @@ class clientOurs(Client):
                     classification_logit = visual_model(x)
                     loss1 = self.loss(classification_logit, y)
 
-                    clip_logits = self.model(x)
+                    clip_logits, rep = self.model(x)
                     loss2 = F.cross_entropy(clip_logits, y)
+
+                    if abs(self.args.vision_proto) > 1e-6:
+                        if self.global_vision_prompt is not None:
+                            proto_new = copy.deepcopy(rep.detach())
+                            for i, yy in enumerate(y):
+                                y_c = yy.item()
+                                if type(self.global_vision_prompt[y_c]) != type([]):
+                                    proto_new[i, :] = self.global_vision_prompt[y_c].data
+                            loss1 += self.loss_mse(proto_new, rep) * self.args.vision_proto
+
+                        for i, yy in enumerate(y):
+                            y_c = yy.item()
+                            protos[y_c].append(rep[i, :].detach().data)
 
                     loss = loss1 + self.lamda * loss2
 
@@ -88,8 +108,21 @@ class clientOurs(Client):
                     classification_logit = visual_model(x)
                     loss1 = self.loss(classification_logit, y)
 
-                    clip_logits = self.model(x)
+                    clip_logits, rep = self.model(x)
                     loss2 = F.cross_entropy(clip_logits, y)
+
+                    if abs(self.args.vision_proto) > 1e-6:
+                        if self.global_vision_prompt is not None:
+                            proto_new = copy.deepcopy(rep.detach())
+                            for i, yy in enumerate(y):
+                                y_c = yy.item()
+                                if type(self.global_vision_prompt[y_c]) != type([]):
+                                    proto_new[i, :] = self.global_vision_prompt[y_c].data
+                            loss1 += self.loss_mse(proto_new, rep) * self.args.vision_proto
+
+                        for i, yy in enumerate(y):
+                            y_c = yy.item()
+                            protos[y_c].append(rep[i, :].detach().data)
 
                     loss = loss1 + self.lamda * loss2
 
@@ -107,14 +140,14 @@ class clientOurs(Client):
                     if self.train_slow:
                         time.sleep(0.1 * np.abs(np.random.rand()))
 
-                    clip_logits = self.model(x)
+                    clip_logits, _ = self.model(x)
                     loss = F.cross_entropy(clip_logits, y)
 
                     optimizer_prompts.zero_grad()
                     loss.backward()
                     optimizer_prompts.step()
 
-
+        if abs(self.args.vision_proto) > 1e-6: self.local_vision_prompt = agg_func(protos)
         # save_item(visual_model, self.role, 'visual_model', self.save_folder_name)
         # save_item(prompts, self.role, 'prompts', self.save_folder_name)
         # save_item(model, self.role, 'model', self.save_folder_name)
@@ -175,8 +208,27 @@ class clientOurs(Client):
         self.model.to('cpu')
         return losses, train_num, train_acc
 
-    def set_parameters(self, global_prompts, global_classifier):
+    def set_parameters(self, global_prompts, global_classifier, global_vision_prompt):
         if global_prompts is not None:
             self.model.prompt_learner.load_state_dict(global_prompts.state_dict())
         if global_classifier is not None:
             self.model.visual_model.head.load_state_dict(global_classifier.state_dict())
+        if global_vision_prompt is not None:
+            self.global_vision_prompt = copy.deepcopy(global_vision_prompt)
+
+# https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L205
+def agg_func(protos):
+    """
+    Returns the average of the weights.
+    """
+
+    for [label, proto_list] in protos.items():
+        if len(proto_list) > 1:
+            proto = 0 * proto_list[0].data
+            for i in proto_list:
+                proto += i.data
+            protos[label] = proto / len(proto_list)
+        else:
+            protos[label] = proto_list[0]
+
+    return protos

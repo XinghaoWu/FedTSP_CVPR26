@@ -127,6 +127,7 @@ class CustomCLIP_client(nn.Module):
 
     def forward(self, image):
         image_features = self.visual_model.base(image.type(self.dtype))
+        origin_feature = image_features
 
         logit_scale = self.logit_scale.exp()
 
@@ -140,6 +141,6 @@ class CustomCLIP_client(nn.Module):
 
         logits = logit_scale * image_features @ text_features.t()
 
-        return logits
+        return logits, origin_feature
 
 

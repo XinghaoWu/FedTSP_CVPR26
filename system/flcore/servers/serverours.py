@@ -36,6 +36,9 @@ class FedOurs(Server):
         logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_lamda{args.lamda}_prompt(p{args.p_prompt}_CSC{args.CSC}_{args.len_prompt})_pcls{args.p_classifier}_alter{args.alter}_{args.prompt_epoch}/'
         self.set_loggers(logger_path)
 
+        # for vision prototype alignment
+        self.global_vision_protos = None
+
     def train(self):
         for i in tqdm(range(self.global_rounds + 1)):
             s_t = time.time()
@@ -112,6 +115,13 @@ class FedOurs(Server):
         else:
             self.global_classifier = None
 
+        # aggregate global vision prototype
+        if abs(self.args.vision_proto) > 1e-6:
+            uploaded_protos = []
+            for client in self.selected_clients:
+                protos = client.local_vision_prompt
+                uploaded_protos.append(protos)
+            self.global_vision_protos = proto_aggregation(uploaded_protos)
 
     def send_parameters(self):
         assert (len(self.clients) > 0)
@@ -119,7 +129,7 @@ class FedOurs(Server):
         for client in self.clients:
             start_time = time.time()
 
-            client.set_parameters(self.global_prompt, self.global_classifier)
+            client.set_parameters(self.global_prompt, self.global_classifier, self.global_vision_protos)
 
             client.send_time_cost['num_rounds'] += 1
             client.send_time_cost['total_cost'] += 2 * (time.time() - start_time)
@@ -227,3 +237,21 @@ class FedOurs(Server):
             'best_acc': self.best_acc
         }
         self.tensorboardLogger.add_scalars_dict(prefix='test', dic=test_info, rnd=self.epoch)
+
+# https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L221
+def proto_aggregation(local_protos_list):
+    agg_protos_label = defaultdict(list)
+    for local_protos in local_protos_list:
+        for label in local_protos.keys():
+            agg_protos_label[label].append(local_protos[label])
+
+    for [label, proto_list] in agg_protos_label.items():
+        if len(proto_list) > 1:
+            proto = 0 * proto_list[0].data
+            for i in proto_list:
+                proto += i.data
+            agg_protos_label[label] = proto / len(proto_list)
+        else:
+            agg_protos_label[label] = proto_list[0].data
+
+    return agg_protos_label
