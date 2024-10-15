@@ -380,6 +380,7 @@ if __name__ == "__main__":
     parser.add_argument('--p_classifier', type=int, default=1, help='whether to personalize classifier')    # v2
     parser.add_argument('--p_prompt', type=int, default=0, help='whether to personalize prompt')
     parser.add_argument('--alter', type=int, default=0, help='whether to use alternate training')
+    parser.add_argument('--update_prompt', default=True, action='store_false', help='whether to update trainable prompt')
     parser.add_argument('--prompt_epoch', type=int, default=1, help='the number of training prompt epochs, only useful when --alter=1')   # v2: server update round
     parser.add_argument('--prompt_lr', type=float, default=0.01, help='learning rate for prompt')   # v2: server learning rate
     parser.add_argument('--CSC', default=True, action='store_false', help='whether use class-specific prompt')  # v2
@@ -392,7 +393,7 @@ if __name__ == "__main__":
     if args.device == "cuda" and not torch.cuda.is_available():
         print("\ncuda is not avaiable.\n")
         args.device = "cpu"
-
+    print(f'Arguments"{args}"')
     print("=" * 50)
 
     print("Algorithm: {}".format(args.algorithm))

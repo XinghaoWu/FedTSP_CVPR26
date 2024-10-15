@@ -46,7 +46,7 @@ class clientOurs(Client):
         visual_model = self.model.visual_model
         prompts = self.model.prompt_learner
         optimizer_visual_model = torch.optim.SGD(visual_model.parameters(), lr=self.learning_rate)
-        if self.args.len_prompt > 0: optimizer_prompts = torch.optim.SGD(prompts.parameters(), lr=self.prompt_lr)
+        if self.args.len_prompt > 0 and self.args.update_prompt: optimizer_prompts = torch.optim.SGD(prompts.parameters(), lr=self.prompt_lr)
         # model.to(self.device)
         self.model.train()
 
@@ -89,10 +89,10 @@ class clientOurs(Client):
 
                     loss = loss1 + self.lamda * loss2
 
-                    if self.args.len_prompt > 0: optimizer_prompts.zero_grad()
+                    if self.args.len_prompt > 0 and self.args.update_prompt: optimizer_prompts.zero_grad()
                     optimizer_visual_model.zero_grad()
                     loss.backward()
-                    if self.args.len_prompt > 0: optimizer_prompts.step()
+                    if self.args.len_prompt > 0 and self.args.update_prompt: optimizer_prompts.step()
                     optimizer_visual_model.step()
         else:
             for step in range(max_local_epochs - self.args.prompt_epoch):
@@ -143,9 +143,9 @@ class clientOurs(Client):
                     clip_logits, _ = self.model(x)
                     loss = F.cross_entropy(clip_logits, y)
 
-                    optimizer_prompts.zero_grad()
+                    if self.args.update_prompt:optimizer_prompts.zero_grad()
                     loss.backward()
-                    optimizer_prompts.step()
+                    if self.args.update_prompt: optimizer_prompts.step()
 
         if abs(self.args.vision_proto) > 1e-6: self.local_vision_prompt = agg_func(protos)
         # save_item(visual_model, self.role, 'visual_model', self.save_folder_name)
