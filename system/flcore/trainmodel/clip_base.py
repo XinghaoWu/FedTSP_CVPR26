@@ -144,3 +144,34 @@ class CustomCLIP_client(nn.Module):
         return logits, origin_feature
 
 
+class TextEncoder_server(nn.Module):
+    def __init__(self, classnames, clip_model, n_ctx_num=16, CSC=True):
+        super().__init__()
+        self.prompt_learner = PromptLearner_client(n_ctx_num, classnames, clip_model, CSC)
+        self.tokenized_prompts = self.prompt_learner.tokenized_prompts
+        self.text_encoder = TextEncoder(clip_model)
+        self.logit_scale = clip_model.logit_scale
+        self.dtype = clip_model.dtype
+
+    def get_text_prototypes(self):
+        with torch.no_grad():
+            tokenized_prompts = self.tokenized_prompts
+            prompts = self.prompt_learner()
+
+            text_features = self.text_encoder(prompts, tokenized_prompts)
+
+        return text_features.detach()
+
+    def forward(self, global_vision_prototype):
+        image_features = global_vision_prototype.type(self.dtype)
+        image_features = image_features / image_features.norm(dim=-1, keepdim=True)
+
+        tokenized_prompts = self.tokenized_prompts
+        prompts = self.prompt_learner()
+
+        text_features = self.text_encoder(prompts, tokenized_prompts)
+        text_features = text_features / text_features.norm(dim=-1, keepdim=True)
+
+        logit_scale = self.logit_scale.exp()
+        logits = logit_scale * image_features @ text_features.t()
+        return logits

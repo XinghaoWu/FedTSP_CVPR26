@@ -21,6 +21,7 @@ from flcore.servers.servertgp import FedTGP
 # from flcore.servers.serverktl_stylegan_3 import FedKTL as FedKTL_stylegan_3
 # from flcore.servers.serverktl_stable_diffusion import FedKTL as FedKTL_stable_diffusion
 from flcore.servers.serverours import FedOurs
+from flcore.servers.servertspv2 import FedTSPv2
 
 
 from utils.result_utils import average_data
@@ -263,6 +264,9 @@ def run(args):
         elif args.algorithm == "FedOurs":
             server = FedOurs(args, i)
 
+        elif args.algorithm == "FedTSPv2":
+            server = FedTSPv2(args, i)
+
         # elif args.algorithm == "FedKTL-stylegan-xl":
         #     server = FedKTL_stylegan_xl(args, i)
         #
@@ -372,14 +376,14 @@ if __name__ == "__main__":
     parser.add_argument('-mu', "--mu", type=float, default=50.0)
 
     # ours
-    parser.add_argument('--len_prompt', default=24, type=int, help='the length of prompts')
-    parser.add_argument('--p_classifier', type=int, default=1, help='whether to personalize classifier')
+    parser.add_argument('--len_prompt', default=24, type=int, help='the length of prompts') # v2
+    parser.add_argument('--p_classifier', type=int, default=1, help='whether to personalize classifier')    # v2
     parser.add_argument('--p_prompt', type=int, default=0, help='whether to personalize prompt')
     parser.add_argument('--alter', type=int, default=0, help='whether to use alternate training')
-    parser.add_argument('--prompt_epoch', type=int, default=1, help='the number of training prompt epochs, only useful when --alter=1')
-    parser.add_argument('--prompt_lr', type=float, default=0.01, help='learning rate for prompt')
-    parser.add_argument('--CSC', default=True, action='store_false', help='whether use class-specific prompt')
-    parser.add_argument('--vision_proto', type=float, default=0, help='whether to align with the vision prototype, set to 0 to disable')
+    parser.add_argument('--prompt_epoch', type=int, default=1, help='the number of training prompt epochs, only useful when --alter=1')   # v2: server update round
+    parser.add_argument('--prompt_lr', type=float, default=0.01, help='learning rate for prompt')   # v2: server learning rate
+    parser.add_argument('--CSC', default=True, action='store_false', help='whether use class-specific prompt')  # v2
+    parser.add_argument('--vision_proto', type=float, default=0, help='whether to align with the vision prototype, set to 0 to disable')    # v2
 
     args = parser.parse_args()
 
