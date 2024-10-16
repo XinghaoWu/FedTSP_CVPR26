@@ -11,11 +11,8 @@ pip install click
 
 pip install calmsize
 pip install memory-profiler
-pip install opacus
-pip install portalocker
 pip install cvxpy
 pip install higher
-pip install diffusers
 pip install accelerate
 pip install transformers
 pip install tensorboard

@@ -4,6 +4,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 import time
+
+
 from flcore.clients.clientbase import Client, load_item, save_item
 from collections import defaultdict
 import clip
@@ -33,6 +35,10 @@ class clientTSPv2(Client):
         self.loss_mse = nn.MSELoss()
         self.global_text_proto = None
 
+        self.logger = self.args.logger
+        self.tensorboardLogger = self.args.tensorboardLogger
+        self.epoch = 0
+
     def train(self):
         self.model.to(self.device)
         optimizer_visual_model = torch.optim.SGD(self.model.parameters(), lr=self.learning_rate)
@@ -42,6 +48,11 @@ class clientTSPv2(Client):
         max_local_epochs = self.local_epochs
         if self.train_slow:
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
+
+        total_loss1 = 0
+        total_loss2 = 0
+        total_loss3 = 0
+        batch_num = 0
 
         for step in range(max_local_epochs):
             for i, (x, y) in enumerate(self.trainloader):
@@ -55,16 +66,18 @@ class clientTSPv2(Client):
 
                 # cross entropy loss
                 rep = self.model.base(x)
-                classification_logit = self.model.head(x)
+                classification_logit = self.model.head(rep)
                 loss1 = self.loss(classification_logit, y)
 
                 # align with the global text prototype
                 image_features = rep.type(self.dtype)
+                # print(f'type:{self.dtype}')
                 image_features = image_features / image_features.norm(dim=-1, keepdim=True)
                 text_features = self.global_text_proto
                 text_features = text_features / text_features.norm(dim=-1, keepdim=True)
-                logits_per_image = self.logit_scale * image_features @ text_features.t()
-                loss2 = self.loss(logits_per_image, y)
+                logit_scale = self.logit_scale.exp()
+                logits_per_image = logit_scale * image_features @ text_features.t()
+                loss2 = F.cross_entropy(logits_per_image, y)
 
 
                 if self.global_vision_proto is not None:
@@ -80,12 +93,30 @@ class clientTSPv2(Client):
 
                 loss = loss1 + self.lamda * loss2 + self.args.vision_proto * loss3
 
+                total_loss1 += loss1.item()
+                total_loss2 += loss2.item()
+                total_loss3 += loss3.item() if type(loss3) != type(0) else 0
+                batch_num += 1
+
                 optimizer_visual_model.zero_grad()
                 loss.backward()
                 optimizer_visual_model.step()
 
 
         self.local_vision_proto = self.collect_protos()
+
+        avg_loss1 = total_loss1 / batch_num
+        avg_loss2 = total_loss2 / batch_num
+        avg_loss3 = total_loss3 / batch_num
+        print(f'client {self.id} train loss1:{avg_loss1}, loss2:{avg_loss2}, loss3:{avg_loss3}')
+        self.logger.info(f'client {self.id} train loss1:{avg_loss1}, loss2:{avg_loss2}, loss3:{avg_loss3}')
+        if self.id in [i for i in range(10)]:
+            client_train_loss_info = {
+                'train_loss1': avg_loss1,
+                'train_loss2': avg_loss2,
+                'train_loss3': avg_loss3
+            }
+            self.tensorboardLogger.add_scalars_dict(prefix=f'train/client {self.id}', dic=client_train_loss_info, rnd=self.epoch)
 
         self.model.to('cpu')
         self.train_time_cost['num_rounds'] += 1
@@ -132,7 +163,7 @@ class clientTSPv2(Client):
                 else:
                     x = x.to(self.device)
                 y = y.to(self.device)
-                output = self.model.visual_model(x)
+                output = self.model(x)
 
                 test_acc += (torch.sum(torch.argmax(output, dim=1) == y)).item()
                 test_num += y.shape[0]
@@ -159,7 +190,7 @@ class clientTSPv2(Client):
                 else:
                     x = x.to(self.device)
                 y = y.to(self.device)
-                output = self.model.visual_model(x)
+                output = self.model(x)
                 loss = self.loss(output, y)
                 train_num += y.shape[0]
                 losses += loss.item() * y.shape[0]
@@ -169,7 +200,7 @@ class clientTSPv2(Client):
 
     def set_parameters(self, global_classifier, global_vision_proto, global_text_proto):
         if global_classifier is not None:
-            self.model.visual_model.head.load_state_dict(global_classifier.state_dict())
+            self.model.head.load_state_dict(global_classifier.state_dict())
         if global_vision_proto is not None:
             self.global_vision_proto = copy.deepcopy(global_vision_proto)
         if global_text_proto is not None:

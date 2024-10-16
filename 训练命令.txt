@@ -7,3 +7,6 @@ FedProto
 python main.py --dataset=Cifar10_pat_2_balance_20 --algorithm=FedProto --global_rounds=200 --local_epochs=5 --num_clients=20 --seed=0 --lamda=1
 
 python main.py --dataset=Cifar10_dir_1.0_balance_40 --algorithm=FedProto --global_rounds=200 --local_epochs=5 --num_clients=20 --seed=0 --lamda=3
+
+FedTSPv2
+python main.py --dataset=Cifar100_dir_1.0_balance_40 --num_classes=100 --model_family=HtFE2 --local_learning_rate=0.01 --global_rounds=200 --algorithm=FedTSPv2 --local_epochs=5 --num_clients=40 --prompt_lr=0.01 --prompt_epoch=0 --lamda=6 --len_prompt=5 --vision_proto=0 --seed=0

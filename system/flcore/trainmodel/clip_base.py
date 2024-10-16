@@ -8,6 +8,8 @@ from torch.cuda.amp import GradScaler, autocast
 from clip import clip
 from clip.simple_tokenizer import SimpleTokenizer as _Tokenizer
 
+from collections import defaultdict
+
 _tokenizer = _Tokenizer()
 
 
@@ -163,7 +165,14 @@ class TextEncoder_server(nn.Module):
         return text_features.detach()
 
     def forward(self, global_vision_prototype):
-        image_features = global_vision_prototype.type(self.dtype)
+        # Check if global_vision_prototype is a defaultdict, and convert it to a tensor if necessary
+        # print(f'global_vision_prototype before convert:{global_vision_prototype}')
+        if isinstance(global_vision_prototype, defaultdict):
+            feature_list = list(global_vision_prototype.values())
+            image_features = torch.stack(feature_list)
+        else:
+            image_features = global_vision_prototype
+        # print(f'global_vision_prototype after convert:{image_features}')
         image_features = image_features / image_features.norm(dim=-1, keepdim=True)
 
         tokenized_prompts = self.tokenized_prompts

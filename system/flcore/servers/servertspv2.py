@@ -12,6 +12,7 @@ from tqdm import tqdm
 import clip
 from flcore.trainmodel.clip_base import TextEncoder_server
 import torch
+import torch.nn.functional as F
 
 '''
 The main difference between FedTSPv2 and FedOurs is FedTSPv2 set text encoder on the server
@@ -19,6 +20,12 @@ The main difference between FedTSPv2 and FedOurs is FedTSPv2 set text encoder on
 class FedTSPv2(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
+
+        # set logger
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_{args.len_prompt})_pcls{args.p_classifier}_promptep{args.prompt_epoch}/'
+        self.set_loggers(logger_path)
+        self.args.logger = self.logger
+        self.args.tensorboardLogger = self.tensorboardLogger
 
         # obtain the classes
         dataset_json_dir = f'../dataset/{args.dataset}/config.json'
@@ -46,11 +53,7 @@ class FedTSPv2(Server):
                 param.requires_grad_(True)
             else:
                 param.requires_grad_(False)
-        self.loss = torch.nn.CrossEntropyLoss()
-
-        # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_{args.len_prompt})_pcls{args.p_classifier}_promptep{args.prompt_epoch}/'
-        self.set_loggers(logger_path)
+        self.prompt_lr = args.prompt_lr
 
         # for vision prototype alignment
         self.global_vision_protos = None
@@ -74,6 +77,7 @@ class FedTSPv2(Server):
             self.send_parameters()
 
             print(f'Round {i}, local training starts.')
+            self.logger.info(f'Round {i}, local training starts.')
 
             # client training
             for client in self.selected_clients:
@@ -86,14 +90,17 @@ class FedTSPv2(Server):
             # server training to optimize the text prompt
             if self.args.len_prompt > 0:
                 print(f'Rounds {i}, server training starts.')
+                self.logger.info(f'Rounds {i}, server training starts.')
                 prompts = self.global_model.prompt_learner
                 optimizer_prompts = torch.optim.SGD(prompts.parameters(), lr=self.prompt_lr)
                 for j in range(self.args.prompt_epoch):
                     clip_logits = self.global_model(self.global_vision_protos)
-                    loss = self.loss(clip_logits, torch.tensor([i for i in range(self.num_classes)]).to(self.device))
+                    loss = F.cross_entropy(clip_logits, torch.tensor([i for i in range(self.num_classes)]).to(self.device))
                     optimizer_prompts.zero_grad()
                     loss.backward()
                     optimizer_prompts.step()
+                    print(f'Prompt training epoch {j}, loss: {loss.item()}')
+                    self.logger.info(f'Prompt training epoch {j}, loss: {loss.item()}')
 
 
 
@@ -117,12 +124,12 @@ class FedTSPv2(Server):
         # aggregate global classifier
         if self.args.p_classifier == 0:
             client = self.clients[self.uploaded_ids[0]]
-            global_classifier = copy.deepcopy(client.model.visual_model.head)
+            global_classifier = copy.deepcopy(client.model.head)
             for param in global_classifier.parameters():
                 param.data.zero_()
             for w, cid in zip(self.uploaded_weights, self.uploaded_ids):
                 client = self.clients[cid]
-                client_classifier = copy.deepcopy(client.model.visual_model.head)
+                client_classifier = copy.deepcopy(client.model.head)
                 for server_param, client_param in zip(global_classifier.parameters(), client_classifier.parameters()):
                     server_param.data += client_param.data.clone() * w
             self.global_classifier = global_classifier
@@ -130,13 +137,12 @@ class FedTSPv2(Server):
             self.global_classifier = None
 
         # aggregate global vision prototype
-        if abs(self.args.vision_proto) > 1e-6:
-            print('Aggregate vision prototypes')
-            uploaded_protos = []
-            for client in self.selected_clients:
-                protos = client.local_vision_proto
-                uploaded_protos.append(protos)
-            self.global_vision_protos = proto_aggregation(uploaded_protos)
+        print('Aggregate vision prototypes')
+        uploaded_protos = []
+        for client in self.selected_clients:
+            protos = client.local_vision_proto
+            uploaded_protos.append(protos)
+        self.global_vision_protos = proto_aggregation(uploaded_protos)
 
     def send_parameters(self):
         assert (len(self.clients) > 0)
@@ -145,6 +151,7 @@ class FedTSPv2(Server):
             start_time = time.time()
 
             client.set_parameters(self.global_classifier, self.global_vision_protos, self.global_text_protos)
+            client.epoch = self.epoch
 
             client.send_time_cost['num_rounds'] += 1
             client.send_time_cost['total_cost'] += 2 * (time.time() - start_time)

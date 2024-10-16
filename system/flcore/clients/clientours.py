@@ -58,6 +58,9 @@ class clientOurs(Client):
 
         protos = defaultdict(list)
         if self.args.alter == 0 or self.args.len_prompt == 0:
+            total_loss1 = 0
+            total_loss2 = 0
+            batch_num = 0
             for step in range(max_local_epochs):
                 for i, (x, y) in enumerate(self.trainloader):
                     if type(x) == type([]):
@@ -89,11 +92,19 @@ class clientOurs(Client):
 
                     loss = loss1 + self.lamda * loss2
 
+                    total_loss1 += loss1.item()
+                    total_loss2 += loss2.item()
+                    batch_num += 1
+
                     if self.args.len_prompt > 0 and self.args.update_prompt: optimizer_prompts.zero_grad()
                     optimizer_visual_model.zero_grad()
                     loss.backward()
                     if self.args.len_prompt > 0 and self.args.update_prompt: optimizer_prompts.step()
                     optimizer_visual_model.step()
+            avg_loss1 = total_loss1 / batch_num
+            avg_loss2 = total_loss2 / batch_num
+            print(f'client {self.id} train loss1:{avg_loss1}, loss2:{avg_loss2}')
+
         else:
             for step in range(max_local_epochs - self.args.prompt_epoch):
                 for i, (x, y) in enumerate(self.trainloader):
