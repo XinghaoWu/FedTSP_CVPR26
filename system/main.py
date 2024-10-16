@@ -386,6 +386,9 @@ if __name__ == "__main__":
     parser.add_argument('--CSC', default=True, action='store_false', help='whether use class-specific prompt')  # v2
     parser.add_argument('--vision_proto', type=float, default=0, help='whether to align with the vision prototype, set to 0 to disable')    # v2
 
+    # FedTSPv2
+    parser.add_argument('--EMA_alpha', type=float, default=0, help='EMA ratio')
+
     args = parser.parse_args()
 
     os.environ["CUDA_VISIBLE_DEVICES"] = args.device_id

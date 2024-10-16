@@ -22,7 +22,7 @@ class FedTSPv2(Server):
         super().__init__(args, times)
 
         # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_{args.len_prompt})_pcls{args.p_classifier}_promptep{args.prompt_epoch}/'
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_{args.len_prompt})_EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_pcls{args.p_classifier}/'
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
@@ -58,6 +58,9 @@ class FedTSPv2(Server):
         # for vision prototype alignment
         self.global_vision_protos = None
 
+        # for text prorotype alignment
+        self.global_text_protos = None
+
         self.global_classifier = None
 
     def train(self):
@@ -73,7 +76,12 @@ class FedTSPv2(Server):
                 self.epoch = i
                 self.evaluate()
 
-            self.global_text_protos = self.global_model.get_text_prototypes()
+            # self.global_text_protos = self.global_model.get_text_prototypes()
+            new_global_text_protos = self.global_model.get_text_prototypes()
+            if self.global_text_protos is None:
+                self.global_text_protos = new_global_text_protos
+            else:
+                self.global_text_protos = self.args.EMA_alpha * self.global_text_protos + (1 - self.args.EMA_alpha) * new_global_text_protos
             self.send_parameters()
 
             print(f'Round {i}, local training starts.')
