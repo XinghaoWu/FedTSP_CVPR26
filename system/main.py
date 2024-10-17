@@ -388,6 +388,7 @@ if __name__ == "__main__":
 
     # FedTSPv2
     parser.add_argument('--EMA_alpha', type=float, default=0, help='EMA ratio')
+    parser.add_argument('--prompt_random_init', default=True, action='store_false', help='whether to randomly initialize prompt')
 
     args = parser.parse_args()
 

@@ -22,7 +22,10 @@ class FedTSPv2(Server):
         super().__init__(args, times)
 
         # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_{args.len_prompt})_EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_pcls{args.p_classifier}/'
+        logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
+                       f'ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
+                       f'lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
+                       f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_pcls{args.p_classifier}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
@@ -47,7 +50,7 @@ class FedTSPv2(Server):
         # load server model
         clip_model, _ = clip.load('ViT-B/32', device=torch.device("cpu"))
         clip_model.to(self.device)
-        self.global_model = TextEncoder_server(self.args.classes, clip_model, self.args.len_prompt, self.args.CSC).to(self.device)
+        self.global_model = TextEncoder_server(self.args.classes, clip_model, self.args.len_prompt, self.args.CSC, self.args.prompt_random_init).to(self.device)
         for name, param in self.global_model.named_parameters():
             if 'prompt_learner' in name:
                 param.requires_grad_(True)

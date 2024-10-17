@@ -37,7 +37,7 @@ class TextEncoder(nn.Module):
 
 
 class PromptLearner_client(nn.Module):
-    def __init__(self, n_ctx_num, classnames, clip_model, CSC=True):
+    def __init__(self, n_ctx_num, classnames, clip_model, CSC=True, random_init=True):
         super().__init__()
         n_cls = len(classnames)
         n_ctx = n_ctx_num  # the number of prompts
@@ -48,17 +48,17 @@ class PromptLearner_client(nn.Module):
         # cfg_imsize = 224
         # assert cfg_imsize == clip_imsize, f"cfg_imsize ({cfg_imsize}) must equal to clip_imsize ({clip_imsize})"
         CSC = CSC
-        if n_ctx > 0:
-            if CSC:
-                print("Initializing class-specific contexts")
-                ctx_vectors = torch.empty(n_cls, n_ctx, ctx_dim, dtype=dtype)
-            else:
-                print("Initializing a generic context")
-                ctx_vectors = torch.empty(n_ctx, ctx_dim, dtype=dtype)
-            nn.init.normal_(ctx_vectors, std=0.02)  # ctx_vectors: trainable prompts
-            self.ctx_global = nn.Parameter(ctx_vectors)  # to be optimized
-        else:
-            self.ctx_global = None
+        # if n_ctx > 0:
+        #     if CSC:
+        #         print("Initializing class-specific contexts")
+        #         ctx_vectors = torch.empty(n_cls, n_ctx, ctx_dim, dtype=dtype)
+        #     else:
+        #         print("Initializing a generic context")
+        #         ctx_vectors = torch.empty(n_ctx, ctx_dim, dtype=dtype)
+        #     nn.init.normal_(ctx_vectors, std=0.02)  # ctx_vectors: trainable prompts
+        #     self.ctx_global = nn.Parameter(ctx_vectors)  # to be optimized
+        # else:
+        #     self.ctx_global = None
 
         # prompt_prefix = " ".join(["X"] * n_ctx)
         prompt_prefix = 'A photo of a'
@@ -73,6 +73,30 @@ class PromptLearner_client(nn.Module):
         tokenized_prompts = torch.cat([clip.tokenize(p) for p in prompts])
         with torch.no_grad():
             embedding = clip_model.token_embedding(tokenized_prompts.cuda()).type(dtype)
+
+        if n_ctx > 0:
+            if CSC:
+                print("Initializing class-specific contexts")
+                if random_init:
+                    print("Random initialization")
+                    ctx_vectors = torch.empty(n_cls, n_ctx, ctx_dim, dtype=dtype)
+                    nn.init.normal_(ctx_vectors, std=0.02)  # ctx_vectors: trainable prompts
+                    self.ctx_global = nn.Parameter(ctx_vectors)  # to be optimized
+                else:
+                    print("Initializing with token embeddings")
+                    self.ctx_global = nn.Parameter(embedding[:, 1:1 + n_ctx, :])  # Extract from embedding
+            else:
+                print("Initializing a generic context")
+                if random_init:
+                    print("Random initialization")
+                    ctx_vectors = torch.empty(n_ctx, ctx_dim, dtype=dtype)
+                    nn.init.normal_(ctx_vectors, std=0.02)  # ctx_vectors: trainable prompts
+                    self.ctx_global = nn.Parameter(ctx_vectors)  # to be optimized
+                else:
+                    print("Initializing with token embeddings")
+                    self.ctx_global = nn.Parameter(embedding[:, 1:1 + n_ctx, :].mean(dim=0, keepdim=True))
+        else:
+            self.ctx_global = None
 
         # print(embedding.shape)
         # These token vectors will be saved when in save_model(),
@@ -147,9 +171,9 @@ class CustomCLIP_client(nn.Module):
 
 
 class TextEncoder_server(nn.Module):
-    def __init__(self, classnames, clip_model, n_ctx_num=16, CSC=True):
+    def __init__(self, classnames, clip_model, n_ctx_num=16, CSC=True, random_init=True):
         super().__init__()
-        self.prompt_learner = PromptLearner_client(n_ctx_num, classnames, clip_model, CSC)
+        self.prompt_learner = PromptLearner_client(n_ctx_num, classnames, clip_model, CSC, random_init)
         self.tokenized_prompts = self.prompt_learner.tokenized_prompts
         self.text_encoder = TextEncoder(clip_model)
         self.logit_scale = clip_model.logit_scale
