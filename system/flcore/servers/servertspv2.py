@@ -99,7 +99,7 @@ class FedTSPv2(Server):
             self.aggregate_parameters()
 
             # server training to optimize the text prompt
-            if self.args.len_prompt > 0 and i > 0 and i % self.args.server_training_freq == 0:
+            if self.args.len_prompt > 0 and i % self.args.server_training_freq == 0:
                 print(f'Rounds {i}, server training starts.')
                 self.logger.info(f'Rounds {i}, server training starts.')
                 prompts = self.global_model.prompt_learner

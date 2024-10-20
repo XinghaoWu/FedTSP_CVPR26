@@ -178,6 +178,7 @@ class TextEncoder_server(nn.Module):
         self.text_encoder = TextEncoder(clip_model)
         self.logit_scale = clip_model.logit_scale
         self.dtype = clip_model.dtype
+        self.num_classes = len(classnames)
 
     def get_text_prototypes(self):
         with torch.no_grad():
@@ -192,7 +193,8 @@ class TextEncoder_server(nn.Module):
         # Check if global_vision_prototype is a defaultdict, and convert it to a tensor if necessary
         # print(f'global_vision_prototype before convert:{global_vision_prototype}')
         if isinstance(global_vision_prototype, defaultdict):
-            feature_list = list(global_vision_prototype.values())
+            # feature_list = list(global_vision_prototype.values())
+            feature_list = [global_vision_prototype[key] for key in range(self.num_classes)]
             image_features = torch.stack(feature_list)
         else:
             image_features = global_vision_prototype
