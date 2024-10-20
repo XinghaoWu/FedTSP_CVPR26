@@ -25,7 +25,7 @@ class FedTSPv2(Server):
         logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                        f'ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
                        f'lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
-                       f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_pcls{args.p_classifier}/')
+                       f'EMA{args.EMA_alpha}_EMAp{args.prompt_EMA_alpha}_promptep{args.prompt_epoch}_gap{args.server_training_freq}_pcls{args.p_classifier}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
@@ -99,10 +99,11 @@ class FedTSPv2(Server):
             self.aggregate_parameters()
 
             # server training to optimize the text prompt
-            if self.args.len_prompt > 0:
+            if self.args.len_prompt > 0 and i > 0 and i % self.args.server_training_freq == 0:
                 print(f'Rounds {i}, server training starts.')
                 self.logger.info(f'Rounds {i}, server training starts.')
                 prompts = self.global_model.prompt_learner
+                old_prompts = copy.deepcopy(prompts)
                 optimizer_prompts = torch.optim.SGD(prompts.parameters(), lr=self.prompt_lr)
                 for j in range(self.args.prompt_epoch):
                     clip_logits = self.global_model(self.global_vision_protos)
@@ -112,6 +113,8 @@ class FedTSPv2(Server):
                     optimizer_prompts.step()
                     print(f'Prompt training epoch {j}, loss: {loss.item()}')
                     self.logger.info(f'Prompt training epoch {j}, loss: {loss.item()}')
+                for param, old_param in zip(prompts.parameters(), old_prompts.parameters()):
+                    param.data = self.args.prompt_EMA_alpha * old_param.data + (1 - self.args.prompt_EMA_alpha) * param.data
 
 
 
