@@ -74,7 +74,15 @@ class Server(object):
         self.tensorboardLogger = Logger(logFilePath)
         self.logger = set_logger(logFilePath + 'textlog.log')
 
-
+    def log_experiment_results(self, log_file, hyperparameters, results):
+        with open(log_file, 'a') as f:
+            f.write('Hyperparameters: \n')
+            for key, value in hyperparameters.items():
+                f.write(str(key) + ' : ' + str(value) + '\n')
+            f.write('Results: \n')
+            for key, value in results.items():
+                f.write(str(key) + ' : ' + str(value) + '\n')
+            f.write('='*50 + '\n')
 
 
     def set_clients(self, clientObj):

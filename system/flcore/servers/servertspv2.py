@@ -29,6 +29,7 @@ class FedTSPv2(Server):
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
+        self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/summary.txt'
 
         # obtain the classes
         dataset_json_dir = f'../dataset/{args.dataset}/config.json'
@@ -124,6 +125,23 @@ class FedTSPv2(Server):
 
             if self.auto_break and self.check_done(acc_lss=[self.rs_test_acc], top_cnt=self.top_cnt):
                 break
+
+        hyperparameters = {
+            'prompt_lr': self.prompt_lr,
+            'text_lamda': self.args.lamda,
+            'vision_lamda': self.args.vision_proto,
+            'prompt_len': self.args.len_prompt,
+            'prompt_random_init': self.args.prompt_random_init,
+            'EMA_alpha': self.args.EMA_alpha,
+            'prompt_EMA_alpha': self.args.prompt_EMA_alpha,
+            'prompt_epoch': self.args.prompt_epoch,
+            'server_training_freq': self.args.server_training_freq,
+        }
+        results = {
+            'Best accuracy': self.best_acc,
+            'Best epoch': self.best_epoch,
+        }
+        self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
         print("\nBest accuracy.")
         # self.print_(max(self.rs_test_acc), max(
