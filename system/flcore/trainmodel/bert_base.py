@@ -2,6 +2,8 @@ from transformers import BertTokenizer, BertModel
 import torch.nn as nn
 import torch
 
+from collections import defaultdict
+
 
 # class BERTPromptLearner(nn.Module):
 #     def __init__(self, n_ctx, classnames, pretrained_model_name="bert-base-uncased"):
@@ -104,7 +106,9 @@ class TextEncoder_server_bert(nn.Module):
         # Use the updated BERTPromptLearner
         self.prompt_learner = BERTPromptLearner(n_ctx, classnames, pretrained_model_name, CSC, random_init)
         self.bert_model = BertModel.from_pretrained(pretrained_model_name)
-        self.logit_scale = nn.Parameter(torch.ones([]) * torch.log(torch.tensor(1 / 0.07)))  # Initial logit scale
+        # self.logit_scale = nn.Parameter(torch.ones([]) * torch.log(torch.tensor(1 / 0.07)))  # Initial logit scale
+        self.logit_scale = nn.Parameter(torch.tensor(4.6052))   # Initial logit scale is the same with the CLIP model
+        self.num_classes = len(classnames)
 
     def get_text_prototypes(self):
         with torch.no_grad():

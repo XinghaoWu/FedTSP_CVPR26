@@ -1,6 +1,6 @@
 import time
 import numpy as np
-from flcore.clients.clienttspv2 import clientTSPv3
+from flcore.clients.clienttspv3 import clientTSPv3
 from flcore.servers.serverbase import Server
 from flcore.clients.clientbase import load_item, save_item
 from utils.data_utils import read_client_data
@@ -26,11 +26,11 @@ class FedTSPv3(Server):
         logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                        f'ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
                        f'lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
-                       f'EMA{args.EMA_alpha}_EMAp{args.prompt_EMA_alpha}_promptep{args.prompt_epoch}_gap{args.server_training_freq}_pcls{args.p_classifier}/')
+                       f'EMA{args.EMA_alpha}_EMAp{args.prompt_EMA_alpha}_promptep{args.prompt_epoch}_gap{args.server_training_freq}_{args.server_model}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
-        self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/summary.txt'
+        self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/summary_{args.server_model}.txt'
 
         # obtain the classes
         dataset_json_dir = f'../dataset/{args.dataset}/config.json'
@@ -60,7 +60,7 @@ class FedTSPv3(Server):
                 else:
                     param.requires_grad_(False)
         elif args.server_model == 'bert':
-            self.global_model = TextEncoder_server_bert(self.args.classes, self.args.len_prompt, pretrained_model_name="bert-base-uncased", CSC=self.args.CSC, random_init=self.args.prompt_random_init).to(self.device)
+            self.global_model = TextEncoder_server_bert(self.args.classes, self.args.len_prompt, pretrained_model_name=args.bert_model_path, CSC=self.args.CSC, random_init=self.args.prompt_random_init).to(self.device)
             for name, param in self.global_model.named_parameters():
                 if 'prompt_learner' in name or 'logit_scale' in name:
                     param.requires_grad_(True)
@@ -128,6 +128,7 @@ class FedTSPv3(Server):
                     optimizer_logit_scale.step()
                     print(f'Prompt training epoch {j}, loss: {loss.item()}')
                     self.logger.info(f'Prompt training epoch {j}, loss: {loss.item()}')
+                    print(f'logit_scale: {self.global_model.logit_scale.item()}')
                 for param, old_param in zip(prompts.parameters(), old_prompts.parameters()):
                     param.data = self.args.prompt_EMA_alpha * old_param.data + (1 - self.args.prompt_EMA_alpha) * param.data
 

@@ -316,7 +316,7 @@ if __name__ == "__main__":
                         help="Local learning rate")
     parser.add_argument('-ld', "--learning_rate_decay", type=bool, default=False)
     parser.add_argument('-ldg', "--learning_rate_decay_gamma", type=float, default=0.99)
-    parser.add_argument('-gr', "--global_rounds", type=int, default=5)
+    parser.add_argument('-gr', "--global_rounds", type=int, default=100)
     parser.add_argument('-ls', "--local_epochs", type=int, default=5,
                         help="Multiple update steps in one local epoch.")
     parser.add_argument('-algo', "--algorithm", type=str, default="FedTSPv2")
@@ -334,7 +334,7 @@ if __name__ == "__main__":
                         help="Rounds gap for evaluation")
     parser.add_argument('-sfn', "--save_folder_name", type=str, default='temp')
     parser.add_argument('-ab', "--auto_break", type=bool, default=False)
-    parser.add_argument('-fd', "--feature_dim", type=int, default=512)
+    parser.add_argument('-fd', "--feature_dim", type=int, default=768)
     parser.add_argument('-vs', "--vocab_size", type=int, default=98635)
     parser.add_argument('-ml', "--max_len", type=int, default=200)
     # practical
@@ -354,7 +354,7 @@ if __name__ == "__main__":
 
 
     # FedProto/ours/FedDistill (gamma)
-    parser.add_argument('-lam', "--lamda", type=float, default=1.0)
+    parser.add_argument('-lam', "--lamda", type=float, default=6.0)
     # FedGen
     parser.add_argument('-nd', "--noise_dim", type=int, default=32)
     parser.add_argument('-glr', "--generator_learning_rate", type=float, default=0.1)
@@ -380,12 +380,12 @@ if __name__ == "__main__":
     parser.add_argument('-mu', "--mu", type=float, default=50.0)
 
     # ours
-    parser.add_argument('--len_prompt', default=24, type=int, help='the length of prompts') # v2
+    parser.add_argument('--len_prompt', default=5, type=int, help='the length of prompts') # v2
     parser.add_argument('--p_classifier', type=int, default=1, help='whether to personalize classifier')    # v2
     parser.add_argument('--p_prompt', type=int, default=0, help='whether to personalize prompt')
     parser.add_argument('--alter', type=int, default=0, help='whether to use alternate training')
     parser.add_argument('--update_prompt', default=True, action='store_false', help='whether to update trainable prompt')
-    parser.add_argument('--prompt_epoch', type=int, default=1, help='the number of training prompt epochs, only useful when --alter=1')   # v2: server update round
+    parser.add_argument('--prompt_epoch', type=int, default=10, help='the number of training prompt epochs, only useful when --alter=1')   # v2: server update round
     parser.add_argument('--prompt_lr', type=float, default=0.01, help='learning rate for prompt')   # v2: server learning rate
     parser.add_argument('--CSC', default=True, action='store_false', help='whether use class-specific prompt')  # v2
     parser.add_argument('--vision_proto', type=float, default=0, help='whether to align with the vision prototype, set to 0 to disable')    # v2
@@ -398,6 +398,7 @@ if __name__ == "__main__":
 
     # FedTSPv3
     parser.add_argument('--server_model', type=str, default='bert', help='server model')
+    parser.add_argument('--bert_model_path', type=str, default='./flcore/trainmodel/bert-base-uncased', help='bert model path')
 
     args = parser.parse_args()
 

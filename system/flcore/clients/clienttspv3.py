@@ -27,9 +27,10 @@ class clientTSPv3(Client):
             self.logit_scale = clip_model.logit_scale
             self.dtype = clip_model.dtype
         elif args.server_model == 'bert':
-            bert_model_name = "bert-base-uncased"  # 或其他BERT模型名称
+            bert_model_name = args.bert_model_path
             self.tokenizer = BertTokenizer.from_pretrained(bert_model_name)
-            self.logit_scale = nn.Parameter(torch.ones([]) * torch.log(torch.tensor(1 / 0.07)))
+            # self.logit_scale = nn.Parameter(torch.ones([]) * torch.log(torch.tensor(1 / 0.07)))
+            self.logit_scale = nn.Parameter(torch.tensor(4.6052))
             self.dtype = torch.float32
 
         self.model.to('cpu')

@@ -16,4 +16,4 @@ python main.py --dataset=Cifar100_dir_1.0_balance_40 --num_classes=100 --model_f
 
 
 # summary_to_excel
-python summary_to_excel.py --dataset=Cifar10_dir_1.0_balance_20 --model_family=HtFE2 --algorithm=FedTSPv2 --global_rounds=60 --local_epochs=5 --num_clients=20
+python summary_to_excel.py --dataset=Cifar10_dir_1.0_balance_20 --model_family=HtFE2 --algorithm=FedTSPv2 --global_rounds=60 --local_epochs=5 --num_clients=20 --summary_date=11.8
