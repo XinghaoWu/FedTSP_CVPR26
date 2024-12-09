@@ -14,6 +14,7 @@ from flcore.trainmodel.clip_base import TextEncoder_server
 from flcore.trainmodel.bert_base import TextEncoder_server_bert
 import torch
 import torch.nn.functional as F
+import os
 
 '''
 The main difference between FedTSPv3 and FedTSPv2 is FedTSPv3 1) allow to use bert as the global text encoder; 2) logit_scale is trainable and shared by server. 
@@ -26,11 +27,21 @@ class FedTSPv3(Server):
         logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                        f'ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
                        f'lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
-                       f'EMA{args.EMA_alpha}_EMAp{args.prompt_EMA_alpha}_promptep{args.prompt_epoch}_gap{args.server_training_freq}_{args.server_model}/')
+                       f'EMA{args.EMA_alpha}_EMAp{args.prompt_EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
         self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/summary_{args.server_model}.txt'
+
+        self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
+                                f'ep{args.local_epochs}_nc{args.num_clients}/lamda(t{args.lamda}_v{args.vision_proto})_'
+                                f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
+                                f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}')
+
+        self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
+                                f'ep{args.local_epochs}_nc{args.num_clients}/lamda(t{args.lamda}_v{args.vision_proto})_'
+                                f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
+                                f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}')
 
         # obtain the classes
         dataset_json_dir = f'../dataset/{args.dataset}/config.json'
@@ -77,6 +88,8 @@ class FedTSPv3(Server):
         self.global_text_protos = None
 
         self.global_classifier = None
+
+        self.epoch = 0
 
     def train(self):
         for i in tqdm(range(self.global_rounds + 1)):
@@ -204,6 +217,27 @@ class FedTSPv3(Server):
             client.send_time_cost['num_rounds'] += 1
             client.send_time_cost['total_cost'] += 2 * (time.time() - start_time)
 
+    def save_model(self):
+        if not os.path.exists(self.model_save_path):
+            os.makedirs(self.model_save_path)
+        # save server model
+        torch.save(self.global_model, f'{self.model_save_path}/server_model.pth')
+
+        # save client models
+        for c in self.clients:
+            c.save_model(save_dir=self.model_save_path)
+
+    def load_model(self):
+        if not os.path.exists(self.model_save_path):
+            raise ValueError(f'No model to load: {self.model_save_path}')
+
+        # load server model
+        self.global_model = torch.load(f'{self.model_save_path}/server_model.pth')
+
+        # load client models
+        for c in self.clients:
+            c.load_model(save_dir=self.model_save_path)
+
     def test_metrics(self):
         num_samples = []
         tot_correct = []
@@ -247,6 +281,8 @@ class FedTSPv3(Server):
         if test_acc >= self.best_acc:
             self.best_acc = test_acc
             self.best_epoch = self.epoch
+            if self.args.save_model != 0:
+                self.save_model()
 
         if acc == None:
             self.rs_test_acc.append(test_acc)
@@ -307,6 +343,223 @@ class FedTSPv3(Server):
             'best_acc': self.best_acc
         }
         self.tensorboardLogger.add_scalars_dict(prefix='test', dic=test_info, rnd=self.epoch)
+
+    def get_global_protos(self):
+        return self.global_model.get_text_prototypes()
+
+
+
+    # def visualize_global_prototype_similarity(self):
+    #     import matplotlib.pyplot as plt
+    #     import seaborn as sns
+    #     import matplotlib
+    #     matplotlib.rcParams['pdf.fonttype'] = 42
+    #
+    #     self.load_model()
+    #
+    #     global_protos = self.get_global_protos()
+    #     global_protos = global_protos / global_protos.norm(dim=-1, keepdim=True)
+    #     if self.args.similarity_mode == 'cosine':
+    #         similarity_matrix = global_protos @ global_protos.T
+    #     elif self.args.similarity_mode == 'euclidean':
+    #         similarity_matrix = torch.cdist(global_protos, global_protos, p=2)
+    #     else:
+    #         raise ValueError(f'Invalid similarity mode: {self.args.similarity_mode}')
+    #
+    #     # Convert to numpy for visualization
+    #     similarity_matrix_np = similarity_matrix.detach().cpu().numpy()
+    #     mask = ~np.eye(similarity_matrix_np.shape[0], dtype=bool)
+    #     non_diag_elements = similarity_matrix_np[mask]
+    #     min_val = non_diag_elements.min()
+    #     max_val = non_diag_elements.max()
+    #     normalized_values = (non_diag_elements - min_val) / (max_val - min_val)
+    #     similarity_matrix_np[mask] = normalized_values
+    #     print(similarity_matrix_np)
+    #
+    #     # Get class names from self.args.classes
+    #     class_names = self.args.classes if hasattr(self.args, 'classes') else [f'Class {i}' for i in
+    #                                                                            range(similarity_matrix_np.shape[0])]
+    #
+    #     # Plot heatmap with values
+    #     plt.figure(figsize=(10, 8))
+    #     if self.args.similarity_mode == 'cosine':
+    #         sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
+    #                     xticklabels=class_names, yticklabels=class_names, vmin=0, vmax=1)
+    #     else:
+    #         sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
+    #                     xticklabels=class_names, yticklabels=class_names)
+    #     plt.title('Global Prototype Similarity Heatmap')
+    #     plt.xlabel('Prototypes')
+    #     plt.ylabel('Prototypes')
+    #     plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
+    #     plt.tight_layout()  # Adjust layout to prevent label cutoff
+    #     plt.show()
+    #
+    #     return similarity_matrix
+
+    def Plot_TSNE_Together(self, client_num=6):
+        from sklearn.manifold import TSNE
+        import matplotlib
+        import matplotlib.lines as mlines
+        import matplotlib.pyplot as plt
+        import matplotlib.markers as mmarkers
+        matplotlib.rcParams['pdf.fonttype'] = 42
+
+        self.load_model()
+        all_features = []
+        all_labels = []
+        client_index = []
+
+        # 为每个客户端的每个类别初始化特征总和和计数的字典
+        client_category_features = {}
+        client_category_counts = {}
+
+        # 初始化用于计算所有客户端的每个类别的特征总和和计数的字典
+        overall_category_features = {}
+        overall_category_counts = {}
+
+        for client in range(client_num):
+            client_features, client_labels = self.clients[client].get_features_and_labels()
+            # client_features = client_features / client_features.norm(dim=-1, keepdim=True)
+            # client_features = client_features / np.linalg.norm(client_features, axis=-1, keepdims=True)
+            all_features.append(client_features)
+            all_labels.append(client_labels)
+            client_index.extend([client] * len(client_labels))
+
+            # 计算每个类别的特征总和和计数
+            unique_labels = np.unique(client_labels)
+            for label in unique_labels:
+                label_indices = np.where(client_labels == label)
+                label_features = client_features[label_indices]
+
+                if (client, label) not in client_category_features:
+                    client_category_features[(client, label)] = np.sum(label_features, axis=0)
+                    client_category_counts[(client, label)] = len(label_features)
+                else:
+                    client_category_features[(client, label)] += np.sum(label_features, axis=0)
+                    client_category_counts[(client, label)] += len(label_features)
+
+                # 累加到总体特征总和和计数
+                if label not in overall_category_features:
+                    overall_category_features[label] = np.sum(label_features, axis=0)
+                    overall_category_counts[label] = len(label_features)
+                else:
+                    overall_category_features[label] += np.sum(label_features, axis=0)
+                    overall_category_counts[label] += len(label_features)
+
+        # # 计算每个客户端每个类别的特征均值
+        # client_category_means = {}
+        # for key, total_features in client_category_features.items():
+        #     count = client_category_counts[key]
+        #     client_category_means[key] = total_features / count
+
+        # 计算所有客户端的每个类别的特征均值
+        overall_category_means = {}
+        for label, total_features in overall_category_features.items():
+            count = overall_category_counts[label]
+            overall_category_means[label] = total_features / count
+
+        # 记录text prototype
+        over_all_text_protos = self.get_global_protos()
+        over_all_text_protos /= over_all_text_protos.norm(dim=-1, keepdim=True)
+        over_all_text_protos = over_all_text_protos.cpu().numpy()
+
+        client_center = []
+        feature_center = []
+        text_center = []
+        # # 选择输出方式显示均值（示例输出到控制台）
+        # for key, mean_features in client_category_means.items():
+        #     print(f"Client {key[0]}, Label {key[1]} Mean Features: {mean_features}")
+        #     client_center.append(mean_features)
+        # all_features.append(client_center)
+
+        for label, mean_features in overall_category_means.items():
+            print(f"Overall Mean Features for Label {label}: {mean_features}")
+            feature_center.append(mean_features)
+
+        for label, text_proto in enumerate(over_all_text_protos):
+            print(f"Overall Text Prototypes for Label {label}: {text_proto}")
+            text_center.append(text_proto)
+
+
+        all_features.append(feature_center)
+        all_features.append(text_center)
+
+        all_features = np.concatenate(all_features, axis=0)
+        all_labels = np.concatenate(all_labels, axis=0)
+
+        tsne = TSNE(n_components=2, random_state=42)
+        transformed_features = tsne.fit_transform(all_features)
+
+        plt.figure(figsize=(8, 8))
+
+        colors = ['OrangeRed', 'orange', 'Gold', 'Coral', 'PaleGreen', 'CornflowerBlue', 'Orchid', 'LimeGreen', 'pink',
+                  'DeepSkyBlue']
+        markers = [self.clients[client].marker[client] for client in range(client_num)]
+        # 创建图例中的点和标记
+        legend_elements = []
+
+        # 添加颜色图例
+        for idx, color in enumerate(colors):
+            legend_elements.append(mlines.Line2D([0], [0], marker='o', color='w', label=f'{idx}',
+                                                 markerfacecolor=color, markersize=16))
+
+        # 添加标记图例
+        for idx, marker in enumerate(markers):
+            legend_elements.append(mlines.Line2D([0], [0], marker=marker, color='w', label=f'cid {idx}',
+                                                 markerfacecolor='black', markersize=16))
+
+        colormap = matplotlib.colors.ListedColormap(colors)
+
+        # for client in range(client_num):
+        #     index = np.where(np.array(client_index) == client)
+        #     plt.scatter(transformed_features[index, 0], transformed_features[index, 1],
+        #                 c=[colors[label] for label in all_labels[index]],
+        #                 cmap=colormap, label=f'Client {client}', marker=self.clients[client].marker[client], s=25,
+        #                 alpha=0.7)
+
+        # 绘制特征中心
+        features = transformed_features[len(all_labels):, :]
+        # 绘制客户端中心
+        index = 0
+        # for key, mean_features in client_category_means.items():
+        #     client, label = key
+        #     plt.scatter(features[index, 0], features[index, 1], c=colors[label], cmap=colormap,
+        #                 marker=self.clients[client].marker[client], s=600, alpha=1)
+        #     index += 1
+        # 绘制所有客户端的特征中心
+        for label, mean_features in overall_category_means.items():
+            plt.scatter(features[index, 0], features[index, 1], c=colors[label], cmap=colormap,
+                        marker='H', s=800, alpha=1)
+            index += 1
+
+        # 绘制所有客户端的text prototype
+        for label, text_proto in enumerate(over_all_text_protos):
+            plt.scatter(features[index, 0], features[index, 1], c=colors[label], cmap=colormap,
+                        marker='X', s=800, alpha=1)
+            index += 1
+
+
+
+        ax = plt.gca()
+        ax.axes.xaxis.set_visible(False)
+        ax.axes.yaxis.set_visible(False)
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+
+        plt.tight_layout()
+        dir = self.plot_path
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+
+        # plt.savefig(f'{dir}/TSNE.pdf')
+        plt.show()
+
+        return
+
+
+
+
 
 # https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L221
 def proto_aggregation(local_protos_list):

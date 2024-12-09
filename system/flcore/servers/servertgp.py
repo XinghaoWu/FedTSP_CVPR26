@@ -9,15 +9,15 @@ from threading import Thread
 from collections import defaultdict
 from torch.utils.data import DataLoader
 
+import os
+
 
 class FedTGP(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
-
         # select slow clients
         self.set_slow_clients()
         self.set_clients(clientTGP)
-
         print(f"\nJoin ratio / total clients: {self.join_ratio} / {self.num_clients}")
         print("Finished creating server and clients.")
 
@@ -53,6 +53,11 @@ class FedTGP(Server):
         logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_se{args.server_epochs}_margin{args.margin_threthold}/'
         self.set_loggers(logger_path)
 
+        self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
+                                f'ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_se{args.server_epochs}_margin{args.margin_threthold}')
+
+        self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
+                          f'ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_se{args.server_epochs}_margin{args.margin_threthold}')
 
     def train(self):
         for i in range(self.global_rounds+1):
@@ -66,6 +71,9 @@ class FedTGP(Server):
                 self.logger.info("\nEvaluate heterogeneous models")
                 self.current_epoch = i
                 self.evaluate()
+                if self.best_epoch == i:
+                    if self.args.save_model != 0:
+                        self.save_model()
 
             for client in self.selected_clients:
                 client.train()
@@ -160,6 +168,88 @@ class FedTGP(Server):
         for class_id in range(self.num_classes):
             global_protos[class_id] = PROTO(torch.tensor(class_id, device=self.device)).detach()
         save_item(global_protos, self.role, 'global_protos', self.save_folder_name)
+
+    def save_model(self):
+        if not os.path.exists(self.model_save_path):
+            os.makedirs(self.model_save_path)
+
+        # save server proto
+        PROTO = load_item(self.role, 'PROTO', self.save_folder_name)
+        torch.save(PROTO, f'{self.model_save_path}/global_proto.pth')
+
+        # save client models
+        for client in self.clients:
+            client.save_model(save_dir=self.model_save_path)
+
+    def load_model(self):
+        if not os.path.exists(self.model_save_path):
+            raise ValueError(f'No model to load: {self.model_save_path}')
+
+        # load server proto
+        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth')
+
+        # load client models
+        for c in self.clients:
+            c.load_model(save_dir=self.model_save_path)
+
+    def load_global_prototype(self):
+        if not os.path.exists(self.model_save_path):
+            raise ValueError(f'No model to load: {self.model_save_path}')
+
+        # load server proto
+        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth')
+
+    def get_global_protos(self):
+        PROTO = self.global_proto
+        global_protos = defaultdict(list)
+        for class_id in range(self.num_classes):
+            global_protos[class_id] = PROTO(torch.tensor(class_id, device=self.device)).detach()
+        global_protos = torch.stack([global_protos[class_id] for class_id in range(self.num_classes)])
+        return global_protos
+
+    # def visualize_global_prototype_similarity(self):
+    #     import matplotlib.pyplot as plt
+    #     import seaborn as sns
+    #     import matplotlib
+    #     matplotlib.rcParams['pdf.fonttype'] = 42
+    #
+    #     self.load_model()
+    #     global_protos = self.get_global_protos()
+    #     print(global_protos)
+    #
+    #     global_protos = global_protos / global_protos.norm(dim=-1, keepdim=True)
+    #     if self.args.similarity_mode == 'cosine':
+    #         similarity_matrix = global_protos @ global_protos.T
+    #     elif self.args.similarity_mode == 'euclidean':
+    #         similarity_matrix = torch.cdist(global_protos, global_protos, p=2)
+    #     else:
+    #         raise ValueError(f'Invalid similarity mode: {self.args.similarity_mode}')
+    #
+    #     # Convert to numpy for visualization
+    #     similarity_matrix_np = similarity_matrix.detach().cpu().numpy()
+    #     print(similarity_matrix_np)
+    #
+    #     # Get class names from self.args.classes
+    #     class_names = self.args.classes if hasattr(self.args, 'classes') else [f'Class {i}' for i in
+    #                                                                            range(similarity_matrix_np.shape[0])]
+    #
+    #     # Plot heatmap with values
+    #     plt.figure(figsize=(10, 8))
+    #     if self.args.similarity_mode == 'cosine':
+    #         sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
+    #                     xticklabels=class_names, yticklabels=class_names, vmin=0, vmax=1)
+    #     else:
+    #         sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
+    #                     xticklabels=class_names, yticklabels=class_names)
+    #     plt.title('Global Prototype Similarity Heatmap')
+    #     plt.xlabel('Prototypes')
+    #     plt.ylabel('Prototypes')
+    #     plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
+    #     plt.tight_layout()  # Adjust layout to prevent label cutoff
+    #     plt.show()
+    #
+    #     return similarity_matrix
+
 
 
 def proto_cluster(protos_list):

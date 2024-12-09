@@ -6,6 +6,8 @@ import copy
 import time
 import random
 import shutil
+import json
+
 from utils.data_utils import read_client_data
 from flcore.clients.clientbase import load_item, save_item
 from utils.log_utils import set_logger, Logger
@@ -68,6 +70,21 @@ class Server(object):
 
         self.tensorboardLogger = None
         self.logger = None
+
+        # obtain the classes
+        dataset_json_dir = f'../dataset/{args.dataset}/config.json'
+        with open(dataset_json_dir, 'r') as f:
+            data_config = json.load(f)
+        self.args.classes = data_config['classes']
+
+        # obtain tsne classes
+        dataset_tsne_json_dir = f'../dataset/{args.dataset}/plot_config.json'
+        if os.path.exists(dataset_tsne_json_dir):
+            with open(dataset_tsne_json_dir, 'r', encoding='utf-8') as f:
+                data_config = json.load(f)
+            self.args.tsne_classes = data_config['TSNE class']
+        else:
+            self.args.tsne_classes = None
 
     # set logger and tensorboard
     def set_loggers(self, logFilePath):
@@ -300,3 +317,190 @@ class Server(object):
             else:
                 raise NotImplementedError
         return True
+
+    def load_model(self):
+        raise NotImplementedError
+
+    def get_global_protos(self):
+        raise NotImplementedError
+
+    def visualize_global_protos_superclass_similarity(self):
+        import matplotlib.pyplot as plt
+        import matplotlib.font_manager as fm
+        zh_font = fm.FontProperties(fname="C:/Windows/Fonts/simhei.ttf")  # Windows 示例路径
+        import seaborn as sns
+        import matplotlib
+        matplotlib.rcParams['pdf.fonttype'] = 42
+        plt.rcParams['font.family'] = 'Times New Roman'
+        self.load_model()
+
+        # obtain tsne classes
+        dataset_tsne_json_dir = f'../dataset/{self.args.dataset}/plot_config.json'
+        if os.path.exists(dataset_tsne_json_dir):
+            with open(dataset_tsne_json_dir, 'r', encoding='utf-8') as f:
+                data_config = json.load(f)
+            tsne_super_classes = data_config['superclass']
+            tsne_super_class_names = data_config['superclassname']
+            print(tsne_super_classes)
+            print(tsne_super_class_names)
+        else:
+            raise NotImplementedError
+
+        global_protos = self.get_global_protos()
+        global_protos = global_protos / global_protos.norm(dim=-1, keepdim=True)
+
+        # # select partial class to visualize
+        # if self.args.tsne_classes is not None:
+        #     plot_proto = []
+        #     for plot_class in self.args.tsne_classes:
+        #         for idx, class_name in enumerate(self.args.classes):
+        #             if class_name == plot_class:
+        #                 plot_proto.append(global_protos[idx])
+        #                 break
+        #     global_protos = torch.stack(plot_proto)
+
+        if self.args.similarity_mode == 'cosine':
+            similarity_matrix = global_protos @ global_protos.T
+        elif self.args.similarity_mode == 'euclidean':
+            similarity_matrix = torch.cdist(global_protos, global_protos, p=2)
+        else:
+            raise ValueError(f'Invalid similarity mode: {self.args.similarity_mode}')
+
+        if self.args.scaler == 'minmax':
+            mask = ~np.eye(similarity_matrix.shape[0], dtype=bool)
+            non_diag_elements = similarity_matrix[mask]
+            min_val = non_diag_elements.min()
+            max_val = non_diag_elements.max()
+            normalized_values = (non_diag_elements - min_val) / (max_val - min_val)
+            similarity_matrix[mask] = normalized_values
+
+        superclassnumber = len(tsne_super_classes)
+        superclasssimilarity = torch.zeros(superclassnumber, superclassnumber)
+        count = torch.zeros(superclassnumber, superclassnumber)
+        for i in range(self.args.num_classes):
+            classname_i = self.args.classes[i]
+            superclassname_i = None
+            # obtain superclass of i
+            for k in range(superclassnumber):
+                if classname_i in tsne_super_classes[str(k)]:
+                    superclassname_i = k
+                    break
+            print(f'classname:{classname_i}, superclassname:{superclassname_i}')
+            for j in range(self.args.num_classes):
+                if j == i: continue
+                # obtain superclass of j
+                classname_j = self.args.classes[j]
+                superclassname_j = None
+                for k in range(superclassnumber):
+                    if classname_j in tsne_super_classes[str(k)]:
+                        superclassname_j = k
+                        break
+                print(f'{superclassname_i}, {superclassname_j}, {similarity_matrix[i][j]}')
+                superclasssimilarity[superclassname_i][superclassname_j] += similarity_matrix[i][j].cpu()
+                count[superclassname_i][superclassname_j] += 1
+
+        superclasssimilarity = superclasssimilarity / count
+        tsne_super_class_names = [tsne_super_class_names[str(i)] for i in range(superclassnumber)]
+
+        # Plot heatmap with values
+        plt.figure(figsize=(10, 8))
+        if self.args.similarity_mode == 'cosine':
+            sns.heatmap(superclasssimilarity, annot=True, fmt=".2f", cmap='Blues', cbar=True,
+                        xticklabels=tsne_super_class_names, yticklabels=tsne_super_class_names, vmin=0, vmax=1, annot_kws={"size": 16})
+        else:
+            sns.heatmap(superclasssimilarity, annot=True, fmt=".2f", cmap='Blues', cbar=True,
+                        xticklabels=tsne_super_class_names, yticklabels=tsne_super_class_names)
+        # plt.title('Global Prototype Similarity Heatmap')
+        plt.xlabel('Prototypes', fontsize=18)
+        plt.ylabel('Prototypes', fontsize=18)
+        plt.xticks(fontproperties=zh_font,rotation=45, ha='right', fontsize=16)  # Rotate x-axis labels for better readability
+        plt.yticks(fontproperties=zh_font,rotation=0, fontsize=16)
+        plt.tight_layout()  # Adjust layout to prevent label cutoff
+        plt.show()
+        plt.close()
+
+        # Compute the mean of diagonal and non-diagonal elements
+        diagonal_mean = torch.diag(superclasssimilarity).mean().item()
+        non_diagonal_mask = ~torch.eye(superclasssimilarity.size(0), dtype=bool)
+        non_diagonal_mean = superclasssimilarity[non_diagonal_mask].mean().item()
+
+        # Plot a bar chart for diagonal and non-diagonal means
+        plt.figure(figsize=(4, 4))
+        bars = plt.bar(['Diagonal', 'Non-Diagonal'], [diagonal_mean, non_diagonal_mean], color=['deepskyblue', 'darkorange'])
+        # Add values on top of each bar
+        for bar in bars:
+            height = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width() / 2.0, height, f'{height:.2f}', ha='center', va='bottom',
+                     fontsize=14)
+        plt.ylabel('Mean Similarity', fontsize=18)
+        # plt.title('Mean Similarity: Diagonal vs Non-Diagonal', fontsize=18)
+        plt.xticks(fontsize=16)
+        plt.yticks(fontsize=16)
+        plt.tight_layout()  # Adjust layout for better visual appearance
+        plt.show()
+
+
+
+
+    def visualize_global_prototype_similarity(self):
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+        import matplotlib
+        matplotlib.rcParams['pdf.fonttype'] = 42
+        plt.rcParams['font.family'] = 'Times New Roman'
+        self.load_model()
+
+        global_protos = self.get_global_protos()
+        global_protos = global_protos / global_protos.norm(dim=-1, keepdim=True)
+
+        # select partial class to visualize
+        if self.args.tsne_classes is not None:
+            plot_proto = []
+            for plot_class in self.args.tsne_classes:
+                for idx, class_name in enumerate(self.args.classes):
+                    if class_name == plot_class:
+                        plot_proto.append(global_protos[idx])
+                        break
+            global_protos = torch.stack(plot_proto)
+
+        if self.args.similarity_mode == 'cosine':
+            similarity_matrix = global_protos @ global_protos.T
+        elif self.args.similarity_mode == 'euclidean':
+            similarity_matrix = torch.cdist(global_protos, global_protos, p=2)
+        else:
+            raise ValueError(f'Invalid similarity mode: {self.args.similarity_mode}')
+
+        # Convert to numpy for visualization
+        similarity_matrix_np = similarity_matrix.detach().cpu().numpy()
+        np.fill_diagonal(similarity_matrix_np, np.nan)
+        if self.args.scaler == 'minmax':
+            mask = ~np.eye(similarity_matrix_np.shape[0], dtype=bool)
+            non_diag_elements = similarity_matrix_np[mask]
+            min_val = non_diag_elements.min()
+            max_val = non_diag_elements.max()
+            normalized_values = (non_diag_elements - min_val) / (max_val - min_val)
+            similarity_matrix_np[mask] = normalized_values
+        print(similarity_matrix_np)
+
+        print(self.args)
+        # Get class names from self.args.classes
+        class_names = self.args.tsne_classes if hasattr(self.args, 'tsne_classes') else [f'Class {i}' for i in
+                                                                               range(similarity_matrix_np.shape[0])]
+
+        # Plot heatmap with values
+        plt.figure(figsize=(10, 8))
+        if self.args.similarity_mode == 'cosine':
+            sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
+                        xticklabels=class_names, yticklabels=class_names, vmin=0, vmax=1, annot_kws={"size": 16})
+        else:
+            sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
+                        xticklabels=class_names, yticklabels=class_names)
+        # plt.title('Global Prototype Similarity Heatmap')
+        plt.xlabel('Prototypes', fontsize=18)
+        plt.ylabel('Prototypes', fontsize=18)
+        plt.xticks(rotation=45, ha='right', fontsize=16)  # Rotate x-axis labels for better readability
+        plt.yticks(rotation=0, fontsize=16)
+        plt.tight_layout()  # Adjust layout to prevent label cutoff
+        plt.show()
+
+        return similarity_matrix

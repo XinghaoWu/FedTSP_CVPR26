@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+from ssl import SSLSocket
+
 import torch
 import argparse
 import os
@@ -8,6 +10,7 @@ import numpy as np
 import logging
 import random
 
+from flcore.servers.serverbase import Server
 from flcore.servers.serverlocal import Local
 from flcore.servers.serverproto import FedProto
 from flcore.servers.servergen import FedGen
@@ -24,7 +27,6 @@ from flcore.servers.serverours import FedOurs
 from flcore.servers.servertspv2 import FedTSPv2
 from flcore.servers.servertspv3 import FedTSPv3
 
-
 from utils.result_utils import average_data
 from utils.mem_utils import MemReporter
 
@@ -32,6 +34,8 @@ from utils.mem_utils import MemReporter
 # logger.setLevel(logging.ERROR)
 
 warnings.simplefilter("ignore")
+
+
 # torch.manual_seed(0)
 
 def setup_seed(seed):
@@ -41,8 +45,8 @@ def setup_seed(seed):
     random.seed(seed)
     torch.backends.cudnn.deterministic = True
 
-def run(args):
 
+def run(args):
     time_list = []
     reporter = MemReporter()
 
@@ -60,20 +64,20 @@ def run(args):
         # Generate args.models
         if args.model_family == "HtFE2":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)', 
+                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)',
                 'resnet18(num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "HtFE3":
             args.models = [
-                'resnet10(num_classes=args.num_classes)', 
-                'resnet18(num_classes=args.num_classes)',
-                'resnet34(num_classes=args.num_classes)',
+                'resnet10(num_classes=args.num_classes)',
+                'resnet18(pretrained=False, num_classes=args.num_classes)',
+                'resnet34(pretrained=False, num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "HtFE4":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)', 
+                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)',
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)'
@@ -81,8 +85,8 @@ def run(args):
 
         elif args.model_family == "HtFE8":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)', 
-                # 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=10816)', 
+                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)',
+                # 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=10816)',
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
@@ -94,10 +98,10 @@ def run(args):
 
         elif args.model_family == "HtFE9":
             args.models = [
-                'resnet4(num_classes=args.num_classes)', 
-                'resnet6(num_classes=args.num_classes)', 
-                'resnet8(num_classes=args.num_classes)', 
-                'resnet10(num_classes=args.num_classes)', 
+                'resnet4(num_classes=args.num_classes)',
+                'resnet6(num_classes=args.num_classes)',
+                'resnet8(num_classes=args.num_classes)',
+                'resnet10(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
                 'resnet34(num_classes=args.num_classes)',
                 'resnet50(num_classes=args.num_classes)',
@@ -107,7 +111,7 @@ def run(args):
 
         elif args.model_family == "HtFE8-HtC4":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)', 
+                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)',
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
@@ -118,10 +122,10 @@ def run(args):
             ]
             args.global_model = 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)'
             args.heads = [
-                'Head(hidden_dims=[512], num_classes=args.num_classes)', 
-                'Head(hidden_dims=[512, 512], num_classes=args.num_classes)', 
-                'Head(hidden_dims=[512, 256], num_classes=args.num_classes)', 
-                'Head(hidden_dims=[512, 128], num_classes=args.num_classes)', 
+                'Head(hidden_dims=[512], num_classes=args.num_classes)',
+                'Head(hidden_dims=[512, 512], num_classes=args.num_classes)',
+                'Head(hidden_dims=[512, 256], num_classes=args.num_classes)',
+                'Head(hidden_dims=[512, 128], num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "Res34-HtC4":
@@ -130,27 +134,27 @@ def run(args):
             ]
             args.global_model = 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)'
             args.heads = [
-                'Head(hidden_dims=[512], num_classes=args.num_classes)', 
-                'Head(hidden_dims=[512, 512], num_classes=args.num_classes)', 
-                'Head(hidden_dims=[512, 256], num_classes=args.num_classes)', 
-                'Head(hidden_dims=[512, 128], num_classes=args.num_classes)', 
+                'Head(hidden_dims=[512], num_classes=args.num_classes)',
+                'Head(hidden_dims=[512, 512], num_classes=args.num_classes)',
+                'Head(hidden_dims=[512, 256], num_classes=args.num_classes)',
+                'Head(hidden_dims=[512, 128], num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "HCNNs8":
             args.models = [
-                'CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)', 
-                'CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)', 
-                'CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)', 
-                'CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)', 
-                'CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)', 
-                'CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)', 
-                'CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)', 
-                'CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)', 
+                'CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)',
+                'CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)',
+                'CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)',
+                'CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)',
+                'CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)',
+                'CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)',
+                'CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)',
+                'CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "ViTs":
             args.models = [
-                'torchvision.models.vit_b_16(image_size=32, num_classes=args.num_classes)', 
+                'torchvision.models.vit_b_16(image_size=32, num_classes=args.num_classes)',
                 'torchvision.models.vit_b_32(image_size=32, num_classes=args.num_classes)',
                 'torchvision.models.vit_l_16(image_size=32, num_classes=args.num_classes)',
                 'torchvision.models.vit_l_32(image_size=32, num_classes=args.num_classes)',
@@ -158,7 +162,7 @@ def run(args):
 
         elif args.model_family == "HtM10":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)', 
+                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)',
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
@@ -172,10 +176,10 @@ def run(args):
 
         elif args.model_family == "NLP_all":
             args.models = [
-                'fastText(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
-                'LSTMNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
-                'BiLSTM_TextClassification(input_size=args.vocab_size, hidden_size=args.feature_dim, output_size=args.num_classes, num_layers=1, embedding_dropout=0, lstm_dropout=0, attention_dropout=0, embedding_length=args.feature_dim)', 
-                'TextCNN(hidden_dim=args.feature_dim, max_len=args.max_len, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
+                'fastText(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'LSTMNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'BiLSTM_TextClassification(input_size=args.vocab_size, hidden_size=args.feature_dim, output_size=args.num_classes, num_layers=1, embedding_dropout=0, lstm_dropout=0, attention_dropout=0, embedding_length=args.feature_dim)',
+                'TextCNN(hidden_dim=args.feature_dim, max_len=args.max_len, vocab_size=args.vocab_size, num_classes=args.num_classes)',
                 'TransformerModel(ntoken=args.vocab_size, d_model=args.feature_dim, nhead=8, nlayers=2, num_classes=args.num_classes, max_len=args.max_len)'
             ]
 
@@ -208,29 +212,29 @@ def run(args):
 
         elif args.model_family == "MLPs":
             args.models = [
-                'AmazonMLP(feature_dim=[])', 
-                'AmazonMLP(feature_dim=[200])', 
-                'AmazonMLP(feature_dim=[500])', 
-                'AmazonMLP(feature_dim=[1000, 500])', 
-                'AmazonMLP(feature_dim=[1000, 500, 200])', 
+                'AmazonMLP(feature_dim=[])',
+                'AmazonMLP(feature_dim=[200])',
+                'AmazonMLP(feature_dim=[500])',
+                'AmazonMLP(feature_dim=[1000, 500])',
+                'AmazonMLP(feature_dim=[1000, 500, 200])',
             ]
 
         elif args.model_family == "MLP_1layer":
             args.models = [
-                'AmazonMLP(feature_dim=[200])', 
-                'AmazonMLP(feature_dim=[500])', 
+                'AmazonMLP(feature_dim=[200])',
+                'AmazonMLP(feature_dim=[500])',
             ]
 
         elif args.model_family == "MLP_layers":
             args.models = [
-                'AmazonMLP(feature_dim=[500])', 
-                'AmazonMLP(feature_dim=[1000, 500])', 
-                'AmazonMLP(feature_dim=[1000, 500, 200])', 
+                'AmazonMLP(feature_dim=[500])',
+                'AmazonMLP(feature_dim=[1000, 500])',
+                'AmazonMLP(feature_dim=[1000, 500, 200])',
             ]
 
         else:
             raise NotImplementedError
-            
+
         for model in args.models:
             print(model)
 
@@ -279,23 +283,34 @@ def run(args):
         #
         # elif args.algorithm == "FedKTL-stable-diffusion":
         #     server = FedKTL_stable_diffusion(args, i)
-            
+
         else:
             raise NotImplementedError
 
-        server.train()
+        if args.visualization_mode == 'TSNE':
+            server.Plot_TSNE_Together()
 
-        time_list.append(time.time()-start)
+        if args.visualization_mode == 'proto_sim':
+            server.visualize_global_prototype_similarity()
+
+        if args.visualization_mode == 'test':
+            server.load_model()
+            server.evaluate()
+
+        if args.visualization_mode == 'super_sim':
+            server.visualize_global_protos_superclass_similarity()
+
+
+        time_list.append(time.time() - start)
 
     print(f"\nAverage time cost: {round(np.average(time_list), 2)}s.")
-    
 
-    # Global average
-    average_data(dataset=args.dataset, algorithm=args.algorithm, goal=args.goal, times=args.times)
+    # # Global average
+    # average_data(dataset=args.dataset, algorithm=args.algorithm, goal=args.goal, times=args.times)
 
     print("All done!")
 
-    reporter.report()
+    # reporter.report()
 
 
 if __name__ == "__main__":
@@ -303,7 +318,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     # general
-    parser.add_argument('-go', "--goal", type=str, default="test", 
+    parser.add_argument('-go', "--goal", type=str, default="test",
                         help="The goal for this experiment")
     parser.add_argument('-dev', "--device", type=str, default="cuda",
                         choices=["cpu", "cuda"])
@@ -351,8 +366,6 @@ if __name__ == "__main__":
 
     parser.add_argument("--seed", type=int, default=0)
 
-
-
     # FedProto/ours/FedDistill (gamma)
     parser.add_argument('-lam', "--lamda", type=float, default=6.0)
     # FedGen
@@ -380,28 +393,39 @@ if __name__ == "__main__":
     parser.add_argument('-mu', "--mu", type=float, default=50.0)
 
     # ours
-    parser.add_argument('--len_prompt', default=20, type=int, help='the length of prompts') # v2
-    parser.add_argument('--p_classifier', type=int, default=1, help='whether to personalize classifier')    # v2
+    parser.add_argument('--len_prompt', default=5, type=int, help='the length of prompts')  # v2
+    parser.add_argument('--p_classifier', type=int, default=1, help='whether to personalize classifier')  # v2
     parser.add_argument('--p_prompt', type=int, default=0, help='whether to personalize prompt')
     parser.add_argument('--alter', type=int, default=0, help='whether to use alternate training')
-    parser.add_argument('--update_prompt', default=True, action='store_false', help='whether to update trainable prompt')
-    parser.add_argument('--prompt_epoch', type=int, default=10, help='the number of training prompt epochs, only useful when --alter=1')   # v2: server update round
-    parser.add_argument('--prompt_lr', type=float, default=0.01, help='learning rate for prompt')   # v2: server learning rate
+    parser.add_argument('--update_prompt', default=True, action='store_false',
+                        help='whether to update trainable prompt')
+    parser.add_argument('--prompt_epoch', type=int, default=10,
+                        help='the number of training prompt epochs, only useful when --alter=1')  # v2: server update round
+    parser.add_argument('--prompt_lr', type=float, default=0.01,
+                        help='learning rate for prompt')  # v2: server learning rate
     parser.add_argument('--CSC', default=True, action='store_false', help='whether use class-specific prompt')  # v2
-    parser.add_argument('--vision_proto', type=float, default=0, help='whether to align with the vision prototype, set to 0 to disable')    # v2
+    parser.add_argument('--vision_proto', type=float, default=0,
+                        help='whether to align with the vision prototype, set to 0 to disable')  # v2
 
     # FedTSPv2
     parser.add_argument('--EMA_alpha', type=float, default=0, help='EMA ratio')
     parser.add_argument('--prompt_EMA_alpha', type=float, default=0, help='prompt EMA ratio')
-    parser.add_argument('--prompt_random_init', default=True, action='store_false', help='whether to randomly initialize prompt')
+    parser.add_argument('--prompt_random_init', default=True, action='store_false',
+                        help='whether to randomly initialize prompt')
     parser.add_argument('--server_training_freq', type=int, default=1, help='server training freq')
 
     # FedTSPv3
     parser.add_argument('--server_model', type=str, default='bert', help='server model')
-    parser.add_argument('--bert_model_path', type=str, default='./flcore/trainmodel/bert-base-uncased', help='bert model path')
-
+    parser.add_argument('--bert_model_path', type=str, default='./flcore/trainmodel/bert-base-uncased',
+                        help='bert model path')
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
+
+    # visualization arguments
+    parser.add_argument('--visualization_mode', type=str, default='super_sim', choices=['TSNE', 'proto_sim', 'super_sim', 'test'])
+    parser.add_argument('--visualization_dataset_type', type=str, default='test', help='visualize train or test datasets')
+    parser.add_argument('--similarity_mode', type=str, default="cosine", help='cosine or euclidean')
+    parser.add_argument('--scaler', type=str, default='none', help='none or minmax')
 
     args = parser.parse_args()
 
@@ -438,23 +462,6 @@ if __name__ == "__main__":
     print("=" * 50)
 
 
-    # if args.dataset == "mnist" or args.dataset == "fmnist":
-    #     generate_mnist('../dataset/mnist/', args.num_clients, 10, args.niid)
-    # elif args.dataset == "Cifar10" or args.dataset == "Cifar100":
-    #     generate_cifar10('../dataset/Cifar10/', args.num_clients, 10, args.niid)
-    # else:
-    #     generate_synthetic('../dataset/synthetic/', args.num_clients, 10, args.niid)
-
-    # with torch.profiler.profile(
-    #     activities=[
-    #         torch.profiler.ProfilerActivity.CPU,
-    #         torch.profiler.ProfilerActivity.CUDA],
-    #     profile_memory=True, 
-    #     on_trace_ready=torch.profiler.tensorboard_trace_handler('./log')
-    #     ) as prof:
-    # with torch.autograd.profiler.profile(profile_memory=True) as prof:
     run(args)
 
-    
-    # print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=20))
-    # print(f"\nTotal time cost: {round(time.time()-total_start, 2)}s.")
+

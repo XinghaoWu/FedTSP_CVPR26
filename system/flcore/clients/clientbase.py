@@ -9,6 +9,7 @@ from sklearn.preprocessing import label_binarize
 from sklearn import metrics
 from utils.data_utils import read_client_data
 from flcore.trainmodel.models import BaseHeadSplit
+import json
 
 
 class Client(object):
@@ -18,6 +19,7 @@ class Client(object):
 
     def __init__(self, args, id, train_samples, test_samples, **kwargs):
         torch.manual_seed(0)
+        self.args = args
         self.algorithm = args.algorithm
         self.dataset = args.dataset
         self.device = args.device
@@ -42,6 +44,9 @@ class Client(object):
         self.send_time_cost = {'num_rounds': 0, 'total_cost': 0.0}
 
         self.loss = nn.CrossEntropyLoss()
+
+        # used for TSNE visualization
+        self.marker = ['o', 'd', 's', 'D', '^', '<', '*', '>', 'v', 'p']
 
 
     def load_train_data(self, batch_size=None):
@@ -126,21 +131,46 @@ class Client(object):
 
         return losses, train_num
 
-    # def get_next_train_batch(self):
-    #     try:
-    #         # Samples a new batch for persionalizing
-    #         (x, y) = next(self.iter_trainloader)
-    #     except StopIteration:
-    #         # restart the generator if the previous generator is exhausted.
-    #         self.iter_trainloader = iter(self.trainloader)
-    #         (x, y) = next(self.iter_trainloader)
+    def save_model(self, save_dir):
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+        model_save_path = os.path.join(save_dir, f'local_model_client_{self.id}.pth')
+        torch.save(self.model, model_save_path)
 
-    #     if type(x) == type([]):
-    #         x = x[0]
-    #     x = x.to(self.device)
-    #     y = y.to(self.device)
+    def load_model(self, save_dir):
+        model_save_path = os.path.join(save_dir, f'local_model_client_{self.id}.pth')
+        self.model = torch.load(model_save_path)
 
-    #     return x, y
+    def get_features_and_labels(self):
+        all_features = []
+        all_labels = []
+
+        dataloader = self.load_train_data() if self.args.visualization_dataset_type == 'train' else self.load_test_data()
+        self.model.eval()
+        self.model.to(self.device)
+
+        with torch.no_grad():
+            for x, y in dataloader:
+                if type(x) == type([]):
+                    x[0] = x[0].to(self.device)
+                else:
+                    x = x.to(self.device)
+                labels = y.to(self.device)
+                features = self.model.base(x)
+
+                all_features.append(features)  # Keep as torch tensors for global norm
+                all_labels.append(labels.cpu().numpy())
+
+        # Concatenate features and labels across batches
+        all_features = torch.cat(all_features, dim=0)  # Concatenate all batches
+        all_labels = np.concatenate(all_labels, axis=0)
+
+        # Normalize all features globally
+        all_features = all_features / all_features.norm(dim=-1, keepdim=True)
+        all_features = all_features.cpu().numpy()  # Convert to numpy array for t-SNE
+
+        self.model.to('cpu')
+        return all_features, all_labels
 
 
 def save_item(item, role, item_name, item_path=None):

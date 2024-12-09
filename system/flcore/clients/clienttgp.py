@@ -5,6 +5,7 @@ import numpy as np
 import time
 from flcore.clients.clientbase import Client, load_item, save_item
 from collections import defaultdict
+import torch.nn.functional as F
 
 
 class clientTGP(Client):
@@ -15,12 +16,18 @@ class clientTGP(Client):
         self.loss_mse = nn.MSELoss()
         self.lamda = args.lamda
 
+        self.model = load_item(self.role, 'model', self.save_folder_name)
+
+        self.logit_scale = nn.Parameter(torch.tensor(4.6052))
+
 
     def train(self):
         trainloader = self.load_train_data()
         model = load_item(self.role, 'model', self.save_folder_name)
+        self.model = model
         global_protos = load_item('Server', 'global_protos', self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        # optimizer_logit_scale = torch.optim.SGD([self.logit_scale], lr=self.learning_rate)
         # model.to(self.device)
         model.train()
 
@@ -52,16 +59,24 @@ class clientTGP(Client):
                     # we use MSE here following FedProto's official implementation, where lamda is set to 10 by default.
                     # see https://github.com/yuetan031/FedProto/blob/main/lib/update.py#L171
                     loss += self.loss_mse(proto_new, rep) * self.lamda
+                    # image_features = rep / rep.norm(dim=-1, keepdim=True)
+                    # text_features = proto_new / proto_new.norm(dim=-1, keepdim=True)
+                    # logit_scale = self.logit_scale.exp()
+                    # logits_per_image = logit_scale * image_features @ text_features.t()
+                    # loss += F.cross_entropy(logits_per_image, y) * self.lamda
 
                 optimizer.zero_grad()
+                # optimizer_logit_scale.zero_grad()
                 loss.backward()
                 optimizer.step()
+                # optimizer_logit_scale.step()
 
         self.collect_protos()
         save_item(model, self.role, 'model', self.save_folder_name)
 
         self.train_time_cost['num_rounds'] += 1
         self.train_time_cost['total_cost'] += time.time() - start_time
+        # print(f'client: {self.id}. logit_scale: {self.logit_scale.item()}')
 
 
     def collect_protos(self):
@@ -87,37 +102,62 @@ class clientTGP(Client):
 
         save_item(agg_func(protos), self.role, 'protos', self.save_folder_name)
 
+    # def test_metrics(self):
+    #     testloader = self.load_test_data()
+    #     model = load_item(self.role, 'model', self.save_folder_name)
+    #     global_protos = load_item('Server', 'global_protos', self.save_folder_name)
+    #     model.eval()
+    #
+    #     test_acc = 0
+    #     test_num = 0
+    #
+    #     if global_protos is not None:
+    #         with torch.no_grad():
+    #             for x, y in testloader:
+    #                 if type(x) == type([]):
+    #                     x[0] = x[0].to(self.device)
+    #                 else:
+    #                     x = x.to(self.device)
+    #                 y = y.to(self.device)
+    #                 rep = model.base(x)
+    #
+    #                 output = float('inf') * torch.ones(y.shape[0], self.num_classes).to(self.device)
+    #                 for i, r in enumerate(rep):
+    #                     for j, pro in global_protos.items():
+    #                         if type(pro) != type([]):
+    #                             output[i, j] = self.loss_mse(r, pro)
+    #
+    #                 test_acc += (torch.sum(torch.argmin(output, dim=1) == y)).item()
+    #                 test_num += y.shape[0]
+    #
+    #         return test_acc, test_num, 0
+    #     else:
+    #         return 0, 1e-5, 0
+
     def test_metrics(self):
         testloader = self.load_test_data()
+        # model = self.model
         model = load_item(self.role, 'model', self.save_folder_name)
-        global_protos = load_item('Server', 'global_protos', self.save_folder_name)
+        # global_protos = load_item('Server', 'global_protos', self.save_folder_name)
         model.eval()
 
         test_acc = 0
         test_num = 0
 
-        if global_protos is not None:
-            with torch.no_grad():
-                for x, y in testloader:
-                    if type(x) == type([]):
-                        x[0] = x[0].to(self.device)
-                    else:
-                        x = x.to(self.device)
-                    y = y.to(self.device)
-                    rep = model.base(x)
+        with torch.no_grad():
+            for x, y in testloader:
+                if type(x) == type([]):
+                    x[0] = x[0].to(self.device)
+                else:
+                    x = x.to(self.device)
+                y = y.to(self.device)
+                output = model(x)
 
-                    output = float('inf') * torch.ones(y.shape[0], self.num_classes).to(self.device)
-                    for i, r in enumerate(rep):
-                        for j, pro in global_protos.items():
-                            if type(pro) != type([]):
-                                output[i, j] = self.loss_mse(r, pro)
-
-                    test_acc += (torch.sum(torch.argmin(output, dim=1) == y)).item()
-                    test_num += y.shape[0]
+                test_acc += (torch.sum(torch.argmax(output, dim=1) == y)).item()
+                test_num += y.shape[0]
 
             return test_acc, test_num, 0
-        else:
-            return 0, 1e-5, 0
+
 
     def train_metrics(self):
         trainloader = self.load_train_data()
