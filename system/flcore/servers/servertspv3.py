@@ -62,7 +62,11 @@ class FedTSPv3(Server):
 
         # load server model
         if args.server_model == 'clip':
-            clip_model, _ = clip.load('ViT-B/32', device=torch.device("cpu"))
+            if not os.path.exists(self.args.clip_model_path):
+                clip_model, _ = clip.load('ViT-B/32', device=torch.device("cpu"))
+                torch.save(clip_model, self.args.clip_model_path)
+            else:
+                clip_model = torch.load(self.args.clip_model_path)
             clip_model.to(self.device)
             self.global_model = TextEncoder_server(self.args.classes, clip_model, self.args.len_prompt, self.args.CSC, self.args.prompt_random_init).to(self.device)
             for name, param in self.global_model.named_parameters():

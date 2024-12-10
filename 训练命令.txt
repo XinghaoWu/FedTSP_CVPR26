@@ -17,3 +17,8 @@ python main.py --dataset=Cifar100_dir_1.0_balance_40 --num_classes=100 --model_f
 
 # summary_to_excel
 python summary_to_excel.py --dataset=Cifar10_dir_1.0_balance_20 --model_family=HtFE2 --algorithm=FedTSPv2 --global_rounds=60 --local_epochs=5 --num_clients=20 --summary_date=11.8
+
+python summary_to_excel.py --dataset=Cifar10_dir_1.0_balance_20 --model_family=HtFE2 --algorithm=FedTSPv3 --global_rounds=100 --local_epochs=5 --num_clients=20 --summary_date=bert_11.26
+
+# TSNE
+python visualization.py --dataset=Cifar10_dir_1.0_balance_20 --num_classes=10 --model_family=HtFE2 --local_learning_rate=0.01 --global_rounds=100 --algorithm=FedTSPv3 --local_epochs=5 --num_clients=20 --prompt_lr=0.01 --prompt_epoch=15 --lamda=8 --len_prompt=1 --vision_proto=0 --EMA_alpha=0.9 --server_model=bert --feature_dim=768 --seed=0 --visualization_mode=TSNE --tsne_dataset_type=test

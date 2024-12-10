@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 import time
+import os
 
 
 from flcore.clients.clientbase import Client, load_item, save_item
@@ -23,7 +24,12 @@ class clientTSPv3(Client):
         self.model = load_item(self.role, 'model', self.save_folder_name)
 
         if args.server_model == 'clip':
-            clip_model, _ = clip.load('ViT-B/32', device=torch.device("cpu"))
+            if not os.path.exists(self.args.clip_model_path):
+                clip_model, _ = clip.load('ViT-B/32', device=torch.device("cpu"))
+                torch.save(clip_model, self.args.clip_model_path)
+            else:
+                clip_model = torch.load(self.args.clip_model_path)
+            # clip_model, _ = clip.load('ViT-B/32', device=torch.device("cpu"))
             self.logit_scale = clip_model.logit_scale
             self.dtype = clip_model.dtype
         elif args.server_model == 'bert':
