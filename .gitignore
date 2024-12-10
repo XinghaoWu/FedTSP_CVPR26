@@ -3,6 +3,7 @@
 /logs/
 /results/
 /system/temp/
+/system/flcore/trainmodel/bert-base-uncased
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

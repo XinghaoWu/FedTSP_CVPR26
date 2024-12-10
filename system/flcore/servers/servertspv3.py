@@ -25,21 +25,21 @@ class FedTSPv3(Server):
 
         # set logger
         logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                       f'ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
+                       f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
                        f'lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
                        f'EMA{args.EMA_alpha}_EMAp{args.prompt_EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
-        self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/summary_{args.server_model}.txt'
+        self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary_{args.server_model}.txt'
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                                f'ep{args.local_epochs}_nc{args.num_clients}/lamda(t{args.lamda}_v{args.vision_proto})_'
+                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda}_v{args.vision_proto})_'
                                 f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
                                 f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                                f'ep{args.local_epochs}_nc{args.num_clients}/lamda(t{args.lamda}_v{args.vision_proto})_'
+                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda}_v{args.vision_proto})_'
                                 f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
                                 f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}')
 

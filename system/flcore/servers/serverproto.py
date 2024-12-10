@@ -26,14 +26,14 @@ class FedProto(Server):
         self.num_classes = args.num_classes
 
         # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}/'
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}/'
         self.set_loggers(logger_path)
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                                f'ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}')
+                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                          f'ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}')
+                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}')
 
 
     def train(self):

@@ -19,7 +19,7 @@ echo "batch_size: ${batch_size}"
 echo "seed: ${seed}"
 echo "device_id: ${device_id}"
 
-if [ -z "$noniid" ] || [ -z "$alpha" ] || [ -z "$num_clients" ] || [ -z "$model_family" ] || [ -z "$lamda" ] || [ -z "$batch_size" ] || [ -z "$seed" ]; then
+if [ -z "$noniid" ] || [ -z "$alpha" ] || [ -z "$num_clients" ] || [ -z "$model_family" ] || [ -z "$lamda" ]; then
   echo "请提供 noniid alpha, num_clients, model_family, lamda 和 seed 参数，例如："
   echo "./script.sh dir 0.1 20 HtFE2 7 100 0 0"
   exit 1
