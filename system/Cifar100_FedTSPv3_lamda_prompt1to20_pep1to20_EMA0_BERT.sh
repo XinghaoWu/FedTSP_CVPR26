@@ -9,7 +9,7 @@ lamda=$5
 batch_size=${6:-100}
 seed=${7:-0}
 device_id=${8:-0}
-global_rounds=${8:-100}
+global_rounds=${9:-100}
 
 echo "参数列表:"
 echo "noniid: ${noniid}"
