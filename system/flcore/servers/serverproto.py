@@ -6,7 +6,7 @@ from flcore.clients.clientbase import load_item, save_item
 from utils.data_utils import read_client_data
 from threading import Thread
 from collections import defaultdict
-import os
+import os, copy
 import torch
 
 
@@ -101,6 +101,19 @@ class FedProto(Server):
         # load client models
         for c in self.clients:
             c.load_model(save_dir=self.model_save_path)
+
+        print('Loaded checkpoint models successfully')
+        self.logger.info('Loaded checkpoint models successfully')
+
+    def load_global_prototype(self):
+        if not os.path.exists(self.model_save_path):
+            raise ValueError(f'No model to load: {self.model_save_path}')
+
+        # load server proto
+        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth')
+
+        print('Loaded checkpoint global protos successfully')
+        self.logger.info('Loaded checkpoint global protos successfully')
 
     def get_global_protos(self):
         global_protos = self.global_proto

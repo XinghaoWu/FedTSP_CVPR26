@@ -9,7 +9,7 @@ from threading import Thread
 from collections import defaultdict
 from torch.utils.data import DataLoader
 
-import os
+import os, copy
 
 
 class FedTGP(Server):
@@ -192,12 +192,18 @@ class FedTGP(Server):
         for c in self.clients:
             c.load_model(save_dir=self.model_save_path)
 
+        print('Loaded checkpoint models successfully')
+        self.logger.info('Loaded checkpoint models successfully')
+
     def load_global_prototype(self):
         if not os.path.exists(self.model_save_path):
             raise ValueError(f'No model to load: {self.model_save_path}')
 
         # load server proto
         self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth')
+
+        print('Loaded checkpoint global protos successfully')
+        self.logger.info('Loaded checkpoint global protos successfully')
 
     def get_global_protos(self):
         PROTO = self.global_proto
