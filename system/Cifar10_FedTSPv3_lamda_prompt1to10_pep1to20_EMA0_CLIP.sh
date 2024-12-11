@@ -9,8 +9,10 @@ lamda=$5
 batch_size=${6:-100}
 seed=${7:-0}
 device_id=${8:-0}
+global_rounds=${8:-60}
 
 echo "参数列表:"
+echo "noniid: ${noniid}"
 echo "alpha: ${alpha}"
 echo "num_clients: ${num_clients}"
 echo "model_family: ${model_family}"
@@ -18,6 +20,7 @@ echo "lamda: ${lamda}"
 echo "batch_size: ${batch_size}"
 echo "seed: ${seed}"
 echo "device_id: ${device_id}"
+echo "global_rounds: ${global_rounds}"
 
 if [ -z "$noniid" ] || [ -z "$alpha" ] || [ -z "$num_clients" ] || [ -z "$model_family" ] || [ -z "$lamda" ]; then
   echo "请提供 noniid alpha, num_clients, model_family, lamda 和 seed 参数，例如："
@@ -32,7 +35,7 @@ python main.py --dataset=${dataset} \
           --num_classes=10 \
           --model_family=${model_family} \
           --local_learning_rate=0.01 \
-          --global_rounds=60 \
+          --global_rounds=${global_rounds} \
           --algorithm=FedTSPv3 \
           --local_epochs=5 \
           --batch_size=${batch_size} \
@@ -62,7 +65,7 @@ do
           --num_classes=10 \
           --model_family=${model_family} \
           --local_learning_rate=0.01 \
-          --global_rounds=60 \
+          --global_rounds=${global_rounds} \
           --algorithm=FedTSPv3 \
           --local_epochs=5 \
           --batch_size=${batch_size} \
@@ -84,7 +87,7 @@ do
           --num_classes=10 \
           --model_family=${model_family} \
           --local_learning_rate=0.01 \
-          --global_rounds=60 \
+          --global_rounds=${global_rounds} \
           --algorithm=FedTSPv3 \
           --local_epochs=5 \
           --batch_size=${batch_size} \
