@@ -57,7 +57,7 @@ for lamda in ${lamda};
 do
   for prompt_epoch in 1 5 10 15 20;
   do
-    for len_prompt in 1 5 10 15 20;
+    for len_prompt in 1 5 10;
     do
       for EMA_alpha in 0;
       do
