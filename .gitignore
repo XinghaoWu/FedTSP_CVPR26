@@ -4,7 +4,7 @@
 /results/
 /system/temp/
 /system/flcore/trainmodel/bert-base-uncased
-
+/system/flcore/trainmodel/clip-ViT-B-32.pt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
