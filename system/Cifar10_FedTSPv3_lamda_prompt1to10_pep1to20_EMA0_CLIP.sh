@@ -51,7 +51,7 @@ python main.py --dataset=${dataset} \
           --prompt_random_init \
           --seed=${seed} \
           --device_id=${device_id} \
-          --save_model=0 &
+          --save_model=1 &
 
 for lamda in ${lamda};
 do

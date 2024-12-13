@@ -41,7 +41,7 @@ python main.py --dataset=${dataset} \
         --lamda=0 \
         --seed=${seed} \
         --device_id=${device_id} \
-        --save_model=0
+        --save_model=1
 
 for lamda in 1 2 3 4 5;
 do
