@@ -43,6 +43,7 @@ class PromptLearner_client(nn.Module):
         n_ctx = n_ctx_num  # the number of prompts
         ctx_init = ''
         dtype = clip_model.dtype
+        device = next(clip_model.parameters()).device
         ctx_dim = clip_model.ln_final.weight.shape[0]
         # clip_imsize = clip_model.visual.input_resolution
         # cfg_imsize = 224
@@ -72,7 +73,8 @@ class PromptLearner_client(nn.Module):
 
         tokenized_prompts = torch.cat([clip.tokenize(p) for p in prompts])
         with torch.no_grad():
-            embedding = clip_model.token_embedding(tokenized_prompts.cuda()).type(dtype)
+            # embedding = clip_model.token_embedding(tokenized_prompts.cuda()).type(dtype)
+            embedding = clip_model.token_embedding(tokenized_prompts.to(device)).type(dtype)
 
         if n_ctx > 0:
             if CSC:

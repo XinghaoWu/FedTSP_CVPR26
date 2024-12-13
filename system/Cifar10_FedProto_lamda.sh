@@ -29,7 +29,21 @@ fi
 # 动态生成 dataset 参数
 dataset="Cifar10_${noniid}_${alpha}_balance_${num_clients}"
 
-for lamda in 0 1 2 3 4 5;
+python main.py --dataset=${dataset} \
+        --num_classes=10 \
+        --model_family=${model_family} \
+        --local_learning_rate=0.01 \
+        --global_rounds=50 \
+        --algorithm=FedProto \
+        --local_epochs=5 \
+        --batch_size=${batch_size} \
+        --num_clients=${num_clients} \
+        --lamda=0 \
+        --seed=${seed} \
+        --device_id=${device_id} \
+        --save_model=0
+
+for lamda in 1 2 3 4 5;
 do
     python main.py --dataset=${dataset} \
         --num_classes=10 \
