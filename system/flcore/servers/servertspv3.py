@@ -236,7 +236,7 @@ class FedTSPv3(Server):
             raise ValueError(f'No model to load: {self.model_save_path}')
 
         # load server model
-        self.global_model = torch.load(f'{self.model_save_path}/server_model.pth')
+        self.global_model = torch.load(f'{self.model_save_path}/server_model.pth').to(self.device)
 
         # load client models
         for c in self.clients:

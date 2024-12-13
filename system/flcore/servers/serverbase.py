@@ -295,13 +295,14 @@ class Server(object):
         for client_id in range(self.num_clients):
             test_data = read_client_data(self.dataset, client_id, is_train=False)
             test_dataset_global.extend(test_data)
-        test_data_loader_global = DataLoader(test_dataset_global, self.args.batch_size, drop_last=False, shuffle=False)
+        test_data_loader_global = DataLoader(test_dataset_global, 200, drop_last=False, shuffle=False)
 
         # evaluate on each client
         test_acc_for_each_client = []
         for client in self.clients:
             acc_num, total_num, _ = client.test_metrics(test_data_loader_global)
             test_acc_for_each_client.append(acc_num / total_num)
+            print(f'client {client.id}, acc {acc_num / total_num}')
 
 
         print(f'Accuracy for each client: {test_acc_for_each_client}')
@@ -521,6 +522,7 @@ class Server(object):
         plt.xticks(rotation=45, ha='right', fontsize=16)  # Rotate x-axis labels for better readability
         plt.yticks(rotation=0, fontsize=16)
         plt.tight_layout()  # Adjust layout to prevent label cutoff
+        plt.savefig(f'{self.args.algorithm}.png', dpi=480)
         plt.show()
 
         return similarity_matrix

@@ -433,7 +433,10 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = args.device_id
+    # os.environ["CUDA_VISIBLE_DEVICES"] = args.device_id
+    if args.device == 'cuda':
+        args.device = f'{args.device}:{args.device_id}'
+    print(f'new device:{args.device}')
 
     if args.device == "cuda" and not torch.cuda.is_available():
         print("\ncuda is not avaiable.\n")
