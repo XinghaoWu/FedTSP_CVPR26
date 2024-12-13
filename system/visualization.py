@@ -295,7 +295,10 @@ def run(args):
 
         if args.visualization_mode == 'test':
             server.load_model()
-            server.evaluate()
+            if args.test_data_mode == 'local':
+                server.evaluate()
+            else:
+                server.evaluate_global()
 
         if args.visualization_mode == 'super_sim':
             server.visualize_global_protos_superclass_similarity()
@@ -424,6 +427,7 @@ if __name__ == "__main__":
     # visualization arguments
     parser.add_argument('--visualization_mode', type=str, default='super_sim', choices=['TSNE', 'proto_sim', 'super_sim', 'test'])
     parser.add_argument('--visualization_dataset_type', type=str, default='test', help='visualize train or test datasets')
+    parser.add_argument('--test_data_mode', type=str, default='local', help='test on local or global data', choices=['local', 'global'])
     parser.add_argument('--similarity_mode', type=str, default="cosine", help='cosine or euclidean')
     parser.add_argument('--scaler', type=str, default='none', help='none or minmax')
 

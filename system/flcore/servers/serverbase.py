@@ -9,6 +9,7 @@ import shutil
 import json
 
 from utils.data_utils import read_client_data
+from torch.utils.data import DataLoader
 from flcore.clients.clientbase import load_item, save_item
 from utils.log_utils import set_logger, Logger
 
@@ -287,6 +288,25 @@ class Server(object):
                 'best_acc': self.best_acc
             }
             self.tensorboardLogger.add_scalars_dict(prefix='test', dic=test_info, rnd=self.current_epoch)
+
+    # evaluate selected clients on the global dataset
+    def evaluate_global(self, acc=None, loss=None):
+        test_dataset_global = []
+        for client_id in range(self.num_clients):
+            test_data = read_client_data(self.dataset, client_id, is_train=False)
+            test_dataset_global.extend(test_data)
+        test_data_loader_global = DataLoader(test_dataset_global, self.args.batch_size, drop_last=False, shuffle=False)
+
+        # evaluate on each client
+        test_acc_for_each_client = []
+        for client in self.clients:
+            acc_num, total_num, _ = client.test_metrics(test_data_loader_global)
+            test_acc_for_each_client.append(acc_num / total_num)
+
+
+        print(f'Accuracy for each client: {test_acc_for_each_client}')
+        print(f'Average accuracy: {sum(test_acc_for_each_client) / len(test_acc_for_each_client)}')
+
 
     def print_(self, test_acc, test_auc, train_loss):
         print("Average Test Accurancy: {:.4f}".format(test_acc))

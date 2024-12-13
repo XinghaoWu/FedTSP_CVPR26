@@ -160,19 +160,19 @@ class clientTSPv3(Client):
 
         return agg_func(protos)
 
-    def test_metrics(self):
+    def test_metrics(self, specific_testloader=None):
         # testloaderfull = self.load_test_data()
         # model = load_item(self.role, 'model', self.save_folder_name).visual_model
         # model.to(self.device)
         self.model.to(self.device)
         self.model.eval()
-
+        test_loader = self.testloaderfull if specific_testloader is None else specific_testloader
         test_acc = 0
         test_num = 0
         losses = 0
 
         with torch.no_grad():
-            for x, y in self.testloaderfull:
+            for x, y in test_loader:
                 if type(x) == type([]):
                     x[0] = x[0].to(self.device)
                 else:

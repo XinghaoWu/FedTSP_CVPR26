@@ -114,10 +114,10 @@ class clientProto(Client):
     #     else:
     #         return 0, 1e-5, 0
 
-    def test_metrics(self):
-        testloader = self.load_test_data()
-        # model = self.model
-        model = load_item(self.role, 'model', self.save_folder_name)
+    def test_metrics(self, specific_testloader=None):
+        testloader = self.load_test_data() if specific_testloader is None else specific_testloader
+        model = self.model
+        # model = load_item(self.role, 'model', self.save_folder_name)
         # global_protos = load_item('Server', 'global_protos', self.save_folder_name)
         model.eval()
 
