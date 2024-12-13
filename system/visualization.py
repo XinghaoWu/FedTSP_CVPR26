@@ -71,8 +71,8 @@ def run(args):
         elif args.model_family == "HtFE3":
             args.models = [
                 'resnet10(num_classes=args.num_classes)',
-                'resnet18(pretrained=False, num_classes=args.num_classes)',
-                'resnet34(pretrained=False, num_classes=args.num_classes)',
+                'resnet18(num_classes=args.num_classes)',
+                'resnet34(num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "HtFE4":

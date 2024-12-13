@@ -22,3 +22,5 @@ python summary_to_excel.py --dataset=Cifar10_dir_1.0_balance_20 --model_family=H
 
 # TSNE
 python visualization.py --dataset=Cifar10_dir_1.0_balance_20 --num_classes=10 --model_family=HtFE2 --local_learning_rate=0.01 --global_rounds=100 --algorithm=FedTSPv3 --local_epochs=5 --num_clients=20 --prompt_lr=0.01 --prompt_epoch=15 --lamda=8 --len_prompt=1 --vision_proto=0 --EMA_alpha=0.9 --server_model=bert --feature_dim=768 --seed=0 --visualization_mode=TSNE --tsne_dataset_type=test
+
+python visualization.py --dataset=Cifar10_pat_2_balance_100 --num_classes=10 --model_family=HtFE3 --local_learning_rate=0.01 --global_rounds=100 --algorithm=FedProto --local_epochs=5 --batch_size=10 --num_clients=100 --lamda=1 --seed=0 --visualization_mode=proto_sim --similarity_mode=cosine --scaler=minmax
