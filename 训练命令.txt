@@ -29,3 +29,5 @@ python visualization.py --dataset=Cifar10_pat_2_balance_100 --num_classes=10 --m
 # test
 python visualization.py --dataset=Cifar10_dir_1.0_balance_20 --num_classes=10 --model_family=HtFE3 --local_learning_rate=0.01 --global_rounds=300 --algorithm=FedProto --local_epochs=5 --batch_size=100 --num_clients=20 --lamda=1 --seed=0 --visualization_mode=test --test_data_mode=global
 
+python visualization.py --dataset=Cifar10_dir_1.0_balance_20 --num_classes=10 --model_family=HtFE3 --local_learning_rate=0.01 --global_rounds=100 --algorithm=FedTSPv3 --local_epochs=5 --num_clients=20 --prompt_lr=0.01 --prompt_epoch=0 --lamda=8 --len_prompt=0 --vision_proto=0 --EMA_alpha=0 --server_model=bert --feature_dim=768 --seed=0 --visualization_mode=test --test_data_mode=global
+
