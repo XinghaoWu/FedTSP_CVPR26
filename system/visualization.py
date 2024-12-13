@@ -421,6 +421,8 @@ if __name__ == "__main__":
     parser.add_argument('--server_model', type=str, default='bert', help='server model')
     parser.add_argument('--bert_model_path', type=str, default='./flcore/trainmodel/bert-base-uncased',
                         help='bert model path')
+    parser.add_argument('--clip_model_path', type=str, default='./flcore/trainmodel/clip-ViT-B-32.pt',
+                        help='clip model path')
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
 
