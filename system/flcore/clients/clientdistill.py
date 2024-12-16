@@ -14,10 +14,12 @@ class clientDistill(Client):
 
         self.lamda = args.lamda
 
+        self.model = load_item(self.role, 'model', self.save_folder_name)
 
     def train(self):
         trainloader = self.load_train_data()
         model = load_item(self.role, 'model', self.save_folder_name)
+        self.model = model
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
         global_logits = load_item('Server', 'global_logits', self.save_folder_name)
         

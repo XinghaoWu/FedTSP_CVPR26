@@ -5,6 +5,7 @@ import numpy as np
 import time
 import torch.nn.functional as F
 from flcore.clients.clientbase import Client, load_item, save_item
+import os
 
 
 class clientKD(Client):
@@ -88,6 +89,26 @@ class clientKD(Client):
         self.train_time_cost['num_rounds'] += 1
         self.train_time_cost['total_cost'] += time.time() - start_time
 
+    def save_model(self, save_dir):
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+        model = load_item(self.role, 'model', self.save_folder_name)
+        global_model = load_item(self.role, 'global_model', self.save_folder_name)
+        W_h = load_item(self.role, 'W_h', self.save_folder_name)
+        model_save_path = os.path.join(save_dir, f'local_model_client_{self.id}.pth')
+        torch.save(model, model_save_path)
+        W_h_save_path = os.path.join(save_dir, f'local_W_h_client_{self.id}.pth')
+        torch.save(W_h, W_h_save_path)
+        global_model_save_path = os.path.join(save_dir, f'local_global_model_client_{self.id}.pth')
+        torch.save(global_model, global_model_save_path)
+
+    def load_model(self, save_dir):
+        model_save_path = os.path.join(save_dir, f'local_model_client_{self.id}.pth')
+        W_h_save_path = os.path.join(save_dir, f'local_W_h_client_{self.id}.pth')
+        global_model_save_path = os.path.join(save_dir, f'local_global_model_client_{self.id}.pth')
+        self.model = torch.load(model_save_path).to(self.device)
+        self.W_h = torch.load(W_h_save_path).to(self.device)
+        self.global_model = torch.load(global_model_save_path).to(self.device)
         
     def set_parameters(self):
         global_model = load_item(self.role, 'global_model', self.save_folder_name)

@@ -15,11 +15,14 @@ class clientFML(Client):
         self.alpha = args.alpha
         self.beta = args.beta
 
+        self.model = load_item(self.role, 'model', self.save_folder_name)
+
         self.KL = nn.KLDivLoss()
 
     def train(self):
         trainloader = self.load_train_data()
         model = load_item(self.role, 'model', self.save_folder_name)
+        self.model = model
         global_model = load_item('Server', 'global_model', self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
         optimizer_g = torch.optim.SGD(global_model.parameters(), lr=self.learning_rate)
