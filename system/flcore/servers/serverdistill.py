@@ -6,6 +6,7 @@ from flcore.servers.serverbase import Server
 from flcore.clients.clientbase import load_item, save_item
 from threading import Thread
 from collections import defaultdict
+import os
 
 
 class FedDistill(Server):
@@ -24,9 +25,10 @@ class FedDistill(Server):
         self.num_classes = args.num_classes
 
         # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}/'
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}/'
         self.set_loggers(logger_path)
 
+        self.model_save_path = f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}/'
 
     def train(self):
         for i in range(self.global_rounds+1):
@@ -40,6 +42,9 @@ class FedDistill(Server):
                 self.logger.info("\nEvaluate heterogeneous models")
                 self.current_epoch = i
                 self.evaluate()
+                if self.best_epoch == i:
+                    if self.args.save_model != 0:
+                        self.save_model()
 
             for client in self.selected_clients:
                 client.train()
@@ -64,7 +69,25 @@ class FedDistill(Server):
         print(sum(self.Budget[1:])/len(self.Budget[1:]))
 
         self.save_results()
-        
+
+    def save_model(self):
+        if not os.path.exists(self.model_save_path):
+            os.makedirs(self.model_save_path)
+
+        # save client models
+        for client in self.clients:
+            client.save_model(save_dir=self.model_save_path)
+
+    def load_model(self):
+        if not os.path.exists(self.model_save_path):
+            raise ValueError(f'No model to load: {self.model_save_path}')
+
+        # load client models
+        for c in self.clients:
+            c.load_model(save_dir=self.model_save_path)
+
+        print('Loaded checkpoint models successfully')
+        self.logger.info('Loaded checkpoint models successfully')
 
     def receive_logits(self):
         assert (len(self.selected_clients) > 0)

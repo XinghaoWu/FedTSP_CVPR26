@@ -6,6 +6,7 @@ from flcore.servers.serverbase import Server
 from flcore.clients.clientbase import load_item, save_item
 from threading import Thread
 from torch.utils.data import DataLoader
+import os
 
 
 class FedGH(Server):
@@ -29,9 +30,10 @@ class FedGH(Server):
         save_item(head, 'Server', 'head', self.save_folder_name)
 
         # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate})_slr{args.server_learning_rate}/'
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_slr{args.server_learning_rate}/'
         self.set_loggers(logger_path)
 
+        self.model_save_path = f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_slr{args.server_learning_rate}/'
 
     def train(self):
         for i in range(self.global_rounds+1):
@@ -46,6 +48,9 @@ class FedGH(Server):
                 self.logger.info("\nEvaluate heterogeneous models")
                 self.current_epoch = i
                 self.evaluate()
+                if self.best_epoch == i:
+                    if self.args.save_model != 0:
+                        self.save_model()
 
             for client in self.selected_clients:
                 client.train()
@@ -73,6 +78,13 @@ class FedGH(Server):
 
         self.save_results()
 
+    def save_model(self):
+        if not os.path.exists(self.model_save_path):
+            os.makedirs(self.model_save_path)
+
+        # save client models
+        for client in self.clients:
+            client.save_model(save_dir=self.model_save_path)
 
     def receive_protos(self):
         assert (len(self.selected_clients) > 0)

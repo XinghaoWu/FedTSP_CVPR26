@@ -18,11 +18,14 @@ class clientGen(Client):
                 self.sample_per_class[yy.item()] += 1
 
         self.qualified_labels = []
+
+        self.model = load_item(self.role, 'model', self.save_folder_name)
         
 
     def train(self):
         trainloader = self.load_train_data()
         model = load_item(self.role, 'model', self.save_folder_name)
+        self.model = model
         generative_model = load_item('Server', 'generative_model', self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
         # model.to(self.device)

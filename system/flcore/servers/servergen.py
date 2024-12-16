@@ -9,6 +9,7 @@ from flcore.clients.clientgen import clientGen
 from flcore.servers.serverbase import Server
 from flcore.clients.clientbase import load_item, save_item
 from threading import Thread
+import os
 
 
 class FedGen(Server):
@@ -50,8 +51,10 @@ class FedGen(Server):
         save_item(head, self.role, 'head', self.save_folder_name)
 
         # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/lr({args.local_learning_rate})_nd{args.noise_dim}_glr{args.generator_learning_rate}_hd{args.hidden_dim}_se{args.server_epochs}/'
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_nd{args.noise_dim}_glr{args.generator_learning_rate}_hd{args.hidden_dim}_se{args.server_epochs}/'
         self.set_loggers(logger_path)
+
+        self.model_save_path = f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_nd{args.noise_dim}_glr{args.generator_learning_rate}_hd{args.hidden_dim}_se{args.server_epochs}/'
         
 
     def train(self):
@@ -67,6 +70,9 @@ class FedGen(Server):
                 self.logger.info("\nEvaluate heterogeneous models")
                 self.current_epoch = i
                 self.evaluate()
+                if self.best_epoch == i:
+                    if self.args.save_model != 0:
+                        self.save_model()
 
             for client in self.selected_clients:
                 client.train()
@@ -94,6 +100,14 @@ class FedGen(Server):
         print(sum(self.Budget[1:])/len(self.Budget[1:]))
 
         self.save_results()
+
+    def save_model(self):
+        if not os.path.exists(self.model_save_path):
+            os.makedirs(self.model_save_path)
+
+        # save client models
+        for client in self.clients:
+            client.save_model(save_dir=self.model_save_path)
 
 
     def receive_ids(self):

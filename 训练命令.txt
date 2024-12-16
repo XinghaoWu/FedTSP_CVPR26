@@ -11,8 +11,20 @@ python main.py --dataset=Cifar10_dir_1.0_balance_40 --algorithm=FedProto --globa
 FedTSPv2
 python main.py --dataset=Cifar100_dir_1.0_balance_40 --num_classes=100 --model_family=HtFE2 --local_learning_rate=0.01 --global_rounds=150 --algorithm=FedTSPv2 --local_epochs=5 --num_clients=40 --prompt_lr=0.01 --prompt_epoch=0 --lamda=6 --len_prompt=5 --vision_proto=0 --seed=0
 
+FedGen
+python main.py --algorithm=FedGen --local_learning_rate=0.01 --noise_dim=32 --generator_learning_rate=0.1 --hidden_dim=512 --server_epoch=100
 
+FedGH
+python main.py --algorithm=FedGH --local_learning_rate=0.01 --server_learning_rate=0.01 --global_rounds=5
 
+LG-FedAvg
+python main.py --algorithm=LG-FedAvg --local_learning_rate=0.01 --global_rounds=5
+
+FML
+python main.py --algorithm=FML --local_learning_rate=0.01 --alpha=0.5 --beta=0.5 --global_rounds=5
+
+FedKD
+python main.py --algorithm=FedKD --local_learning_rate=0.01 --mentee_learning_rate=0.01 --T_start=0.95 --T_end=0.95 --global_rounds=5
 
 
 # summary_to_excel
