@@ -12,7 +12,7 @@ FedTSPv2
 python main.py --dataset=Cifar100_dir_1.0_balance_40 --num_classes=100 --model_family=HtFE2 --local_learning_rate=0.01 --global_rounds=150 --algorithm=FedTSPv2 --local_epochs=5 --num_clients=40 --prompt_lr=0.01 --prompt_epoch=0 --lamda=6 --len_prompt=5 --vision_proto=0 --seed=0
 
 
-
+python main.py --dataset=Cifar10_pat_2_balance_100 --num_classes=10 --model_family=HtFE3 --local_learning_rate=0.01 --global_rounds=50 --algorithm=FedTSPv3 --local_epochs=5 --batch_size=10 --num_clients=100 --prompt_lr=0.01 --prompt_epoch=0 --lamda=8 --len_prompt=0 --vision_proto=0 --EMA_alpha=0 --server_model=clip --feature_dim=512 --prompt_random_init --seed=0 --device_id=0 --save_model=1
 
 
 # summary_to_excel
@@ -31,3 +31,6 @@ python visualization.py --dataset=Cifar10_dir_1.0_balance_20 --num_classes=10 --
 
 python visualization.py --dataset=Cifar10_dir_1.0_balance_20 --num_classes=10 --model_family=HtFE3 --local_learning_rate=0.01 --global_rounds=100 --algorithm=FedTSPv3 --local_epochs=5 --num_clients=20 --prompt_lr=0.01 --prompt_epoch=0 --lamda=8 --len_prompt=0 --vision_proto=0 --EMA_alpha=0 --server_model=bert --feature_dim=768 --seed=0 --visualization_mode=test --test_data_mode=global
 
+python visualization.py --dataset=Cifar10_dir_0.1_balance_100 --num_classes=10 --model_family=HtFE3 --local_learning_rate=0.01 --global_rounds=100 --algorithm=FedProto --local_epochs=5 --batch_size=10 --num_clients=100 --lamda=1 --seed=0 --visualization_mode=test --test_data_mode=global
+
+python visualization.py --dataset=Cifar10_dir_0.1_balance_100 --num_classes=10 --model_family=HtFE3 --local_learning_rate=0.01 --global_rounds=50 --algorithm=FedTSPv3 --local_epochs=5 --batch_size=10 --num_clients=100 --prompt_lr=0.01 --prompt_epoch=0 --lamda=8 --len_prompt=0 --vision_proto=0 --EMA_alpha=0 --server_model=clip --feature_dim=512 --prompt_random_init --seed=0 --visualization_mode=test --test_data_mode=global
