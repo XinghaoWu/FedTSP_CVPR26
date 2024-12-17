@@ -26,6 +26,9 @@ python main.py --algorithm=FML --local_learning_rate=0.01 --alpha=0.5 --beta=0.5
 FedKD
 python main.py --algorithm=FedKD --local_learning_rate=0.01 --mentee_learning_rate=0.01 --T_start=0.95 --T_end=0.95 --global_rounds=5
 
+FedDistill
+python main.py --algorithm=FedDistill --local_learning_rate=0.01 --lamda=1 --global_rounds=5
+
 
 # summary_to_excel
 python summary_to_excel.py --dataset=Cifar10_dir_1.0_balance_20 --model_family=HtFE2 --algorithm=FedTSPv2 --global_rounds=60 --local_epochs=5 --num_clients=20 --summary_date=11.8
