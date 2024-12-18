@@ -59,6 +59,8 @@ class FedTGP(Server):
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                           f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_se{args.server_epochs}_margin{args.margin_threthold}_seed{args.seed}')
 
+        self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary.txt'
+
     def train(self):
         for i in range(self.global_rounds+1):
             s_t = time.time()
@@ -91,6 +93,18 @@ class FedTGP(Server):
 
             if self.auto_break and self.check_done(acc_lss=[self.rs_test_acc], top_cnt=self.top_cnt):
                 break
+
+        hyperparameters = {
+            'lamda': self.args.lamda,
+            'server_epochs': self.args.server_epochs,
+            'margin_threshold': self.args.margin_threthold,
+            'seed': self.args.seed
+        }
+        results = {
+            'Best accuracy': self.best_acc,
+            'Best epoch': self.best_epoch,
+        }
+        self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
         print("\nBest accuracy.")
         # self.print_(max(self.rs_test_acc), max(

@@ -55,7 +55,8 @@ class FedGen(Server):
         self.set_loggers(logger_path)
 
         self.model_save_path = f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_nd{args.noise_dim}_glr{args.generator_learning_rate}_hd{args.hidden_dim}_se{args.server_epochs}_seed{args.seed}/'
-        
+
+        self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary.txt'
 
     def train(self):
         for i in range(self.global_rounds+1):
@@ -91,6 +92,19 @@ class FedGen(Server):
 
             if self.auto_break and self.check_done(acc_lss=[self.rs_test_acc], top_cnt=self.top_cnt):
                 break
+
+        hyperparameters = {
+            'noise_dim': self.args.noise_dim,
+            'generator_learning_rate': self.args.generator_learning_rate,
+            'hidden_dim': self.args.hidden_dim,
+            'server_epochs': self.args.server_epochs,
+            'seed': self.args.seed
+        }
+        results = {
+            'Best accuracy': self.best_acc,
+            'Best epoch': self.best_epoch,
+        }
+        self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
         print("\nBest accuracy.")
         # self.print_(max(self.rs_test_acc), max(

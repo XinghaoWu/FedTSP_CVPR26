@@ -37,6 +37,8 @@ class FedKD(Server):
 
         self.model_save_path = f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_mlr{args.mentee_learning_rate}_Ts{args.T_start}_Te{args.T_end}_seed{args.seed}/'
 
+        self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary.txt'
+
     def train(self):
         for i in range(self.global_rounds+1):
             s_t = time.time()
@@ -75,6 +77,18 @@ class FedKD(Server):
             self.energy = self.T_start + ((1 + i) / self.global_rounds) * (self.T_end - self.T_start)
             for client in self.clients:
                 client.energy = self.energy
+
+        hyperparameters = {
+            'mentee_learning_rate': self.args.mentee_learning_rate,
+            'T_start': self.args.T_start,
+            'T_end': self.args.T_end,
+            'seed': self.args.seed
+        }
+        results = {
+            'Best accuracy': self.best_acc,
+            'Best epoch': self.best_epoch,
+        }
+        self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
         print("\nBest accuracy.")
         # self.print_(max(self.rs_test_acc), max(
