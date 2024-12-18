@@ -32,10 +32,10 @@ class FedKD(Server):
         self.energy = self.T_start
 
         # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_mlr{args.mentee_learning_rate}_Ts{args.T_start}_Te{args.T_end}/'
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_mlr{args.mentee_learning_rate}_Ts{args.T_start}_Te{args.T_end}_seed{args.seed}/'
         self.set_loggers(logger_path)
 
-        self.model_save_path = f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_mlr{args.mentee_learning_rate}_Ts{args.T_start}_Te{args.T_end}/'
+        self.model_save_path = f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_mlr{args.mentee_learning_rate}_Ts{args.T_start}_Te{args.T_end}_seed{args.seed}/'
 
     def train(self):
         for i in range(self.global_rounds+1):

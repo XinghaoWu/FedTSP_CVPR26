@@ -27,7 +27,7 @@ class FedTSPv3(Server):
         logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                        f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
                        f'lamda(t{args.lamda}_v{args.vision_proto})_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
-                       f'EMA{args.EMA_alpha}_EMAp{args.prompt_EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}/')
+                       f'EMA{args.EMA_alpha}_EMAp{args.prompt_EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_seed{args.seed}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
@@ -36,12 +36,12 @@ class FedTSPv3(Server):
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                                 f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda}_v{args.vision_proto})_'
                                 f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
-                                f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}')
+                                f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_seed{args.seed}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                                 f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda}_v{args.vision_proto})_'
                                 f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
-                                f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}')
+                                f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_seed{args.seed}')
 
         # obtain the classes
         dataset_json_dir = f'../dataset/{args.dataset}/config.json'
@@ -168,6 +168,7 @@ class FedTSPv3(Server):
             'prompt_EMA_alpha': self.args.prompt_EMA_alpha,
             'prompt_epoch': self.args.prompt_epoch,
             'server_training_freq': self.args.server_training_freq,
+            'seed': self.args.seed
         }
         results = {
             'Best accuracy': self.best_acc,

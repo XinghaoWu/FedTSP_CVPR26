@@ -50,14 +50,14 @@ class FedTGP(Server):
         self.max_gap = None
 
         # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_se{args.server_epochs}_margin{args.margin_threthold}/'
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_se{args.server_epochs}_margin{args.margin_threthold}_seed{args.seed}/'
         self.set_loggers(logger_path)
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_se{args.server_epochs}_margin{args.margin_threthold}')
+                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_se{args.server_epochs}_margin{args.margin_threthold}_seed{args.seed}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_se{args.server_epochs}_margin{args.margin_threthold}')
+                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_se{args.server_epochs}_margin{args.margin_threthold}_seed{args.seed}')
 
     def train(self):
         for i in range(self.global_rounds+1):

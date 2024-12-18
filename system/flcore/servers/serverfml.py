@@ -27,10 +27,10 @@ class FML(Server):
         self.Budget = []
 
         # set logger
-        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_al{args.alpha}_bt{args.beta}/'
+        logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_al{args.alpha}_bt{args.beta}_seed{args.seed}/'
         self.set_loggers(logger_path)
 
-        self.model_save_path = f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_al{args.alpha}_bt{args.beta}/'
+        self.model_save_path = f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_al{args.alpha}_bt{args.beta}_seed{args.seed}/'
 
     def train(self):
         for i in range(self.global_rounds+1):
