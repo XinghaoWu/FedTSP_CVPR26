@@ -20,6 +20,7 @@ from flcore.servers.servertgp import FedTGP
 # from flcore.servers.serverktl_stylegan_xl import FedKTL as FedKTL_stylegan_xl
 # from flcore.servers.serverktl_stylegan_3 import FedKTL as FedKTL_stylegan_3
 # from flcore.servers.serverktl_stable_diffusion import FedKTL as FedKTL_stable_diffusion
+from flcore.servers.serveralign import AlignFed
 from flcore.servers.serverours import FedOurs
 from flcore.servers.servertspv2 import FedTSPv2
 from flcore.servers.servertspv3 import FedTSPv3
@@ -262,6 +263,9 @@ def run(args):
         elif args.algorithm == "FedTGP":
             server = FedTGP(args, i)
 
+        elif args.algorithm == "AlignFed":
+            server = AlignFed(args, i)
+
         elif args.algorithm == "FedOurs":
             server = FedOurs(args, i)
 
@@ -355,6 +359,8 @@ if __name__ == "__main__":
 
     # FedProto/ours/FedDistill (gamma)
     parser.add_argument('-lam', "--lamda", type=float, default=6.0)
+    # AlignFed
+    parser.add_argument('-flam', "--final_lamda", type=float, default=2)
     # FedGen
     parser.add_argument('-nd', "--noise_dim", type=int, default=32)
     parser.add_argument('-glr', "--generator_learning_rate", type=float, default=0.1)

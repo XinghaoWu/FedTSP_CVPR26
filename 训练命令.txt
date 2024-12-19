@@ -31,6 +31,9 @@ python main.py --algorithm=FedKD --local_learning_rate=0.01 --mentee_learning_ra
 FedDistill
 python main.py --algorithm=FedDistill --local_learning_rate=0.01 --lamda=1 --global_rounds=5
 
+AlignFed
+python main.py --algorithm=AlignFed --local_learning_rate=0.01 --lamda=20 --final_lamda=2 --global_rounds=5
+
 
 
 # summary_to_excel
