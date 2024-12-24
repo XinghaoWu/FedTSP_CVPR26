@@ -24,14 +24,24 @@ class FedTSPv4(Server):
         super().__init__(args, times)
 
         # set logger
-        logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                       f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
-                       f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
-                       f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_seed{args.seed}/')
+        if 'main.py' in self.caller_script:
+            logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
+                        f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
+                        f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
+                        f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_seed{args.seed}/')
+        else:
+            logger_path = (f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
+                        f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
+                        f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
+                        f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_seed{args.seed}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
-        self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary_{args.server_model}.txt'
+        if 'main.py' in self.caller_script:
+            self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary_{args.server_model}.txt'
+        else:
+            self.final_log_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary_{args.server_model}.txt'
+
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                                 f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda})_cls{args.p_classifier}_'

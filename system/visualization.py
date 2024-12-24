@@ -26,6 +26,7 @@ from flcore.servers.servertgp import FedTGP
 from flcore.servers.serverours import FedOurs
 from flcore.servers.servertspv2 import FedTSPv2
 from flcore.servers.servertspv3 import FedTSPv3
+from flcore.servers.servertspv4 import FedTSPv4
 
 from utils.result_utils import average_data
 from utils.mem_utils import MemReporter
@@ -274,6 +275,9 @@ def run(args):
 
         elif args.algorithm == "FedTSPv3":
             server = FedTSPv3(args, i)
+        
+        elif args.algorithm == "FedTSPv4":
+            server = FedTSPv4(args, i)
 
         # elif args.algorithm == "FedKTL-stylegan-xl":
         #     server = FedKTL_stylegan_xl(args, i)

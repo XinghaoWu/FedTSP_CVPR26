@@ -12,6 +12,7 @@ from utils.data_utils import read_client_data
 from torch.utils.data import DataLoader
 from flcore.clients.clientbase import load_item, save_item
 from utils.log_utils import set_logger, Logger
+import sys
 
 
 class Server(object):
@@ -72,20 +73,25 @@ class Server(object):
         self.tensorboardLogger = None
         self.logger = None
 
-        # obtain the classes
-        dataset_json_dir = f'../dataset/{args.dataset}/config.json'
-        with open(dataset_json_dir, 'r') as f:
-            data_config = json.load(f)
-        self.args.classes = data_config['classes']
+        # obtain caller script
+        self.caller_script = os.path.basename(sys.argv[0])
+        print(f'Caller: {self.caller_script}')
 
-        # obtain tsne classes
-        dataset_tsne_json_dir = f'../dataset/{args.dataset}/plot_config.json'
-        if os.path.exists(dataset_tsne_json_dir):
-            with open(dataset_tsne_json_dir, 'r', encoding='utf-8') as f:
+        if 'visualization.py' in self.caller_script:
+            # obtain the classes
+            dataset_json_dir = f'../dataset/{args.dataset}/config.json'
+            with open(dataset_json_dir, 'r') as f:
                 data_config = json.load(f)
-            self.args.tsne_classes = data_config['TSNE class']
-        else:
-            self.args.tsne_classes = None
+            self.args.classes = data_config['classes']
+
+            # obtain tsne classes
+            dataset_tsne_json_dir = f'../dataset/{args.dataset}/plot_config.json'
+            if os.path.exists(dataset_tsne_json_dir):
+                with open(dataset_tsne_json_dir, 'r', encoding='utf-8') as f:
+                    data_config = json.load(f)
+                self.args.tsne_classes = data_config['TSNE class']
+            else:
+                self.args.tsne_classes = None
 
     # set logger and tensorboard
     def set_loggers(self, logFilePath):
