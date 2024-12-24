@@ -299,10 +299,7 @@ def run(args):
 
         if args.visualization_mode == 'test':
             server.load_model()
-            if args.test_data_mode == 'local':
-                server.evaluate()
-            else:
-                server.evaluate_global()
+            server.evaluate_after_training(args.test_data_mode)
 
         if args.visualization_mode == 'super_sim':
             server.visualize_global_protos_superclass_similarity()
