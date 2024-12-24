@@ -43,6 +43,7 @@ class clientTSPv4(Client):
         if self.args.p_classifier == 2:
             for name, param in self.model.head.named_parameters():
                 param.requires_grad_(False)
+                print(f'Frozen params: {name}')
         self.lamda = args.lamda
         self.trainloader = self.load_train_data()
         self.testloaderfull = self.load_test_data()
