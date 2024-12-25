@@ -219,6 +219,7 @@ class clientTSPv4(Client):
 
     def set_parameters(self, global_classifier, global_vision_proto, global_text_proto):
         if global_classifier is not None:
+            print('load global classifier')
             self.model.head.load_state_dict(global_classifier.state_dict())
         if global_vision_proto is not None:
             self.global_vision_proto = copy.deepcopy(global_vision_proto)

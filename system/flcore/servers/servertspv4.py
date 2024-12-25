@@ -200,6 +200,7 @@ class FedTSPv4(Server):
 
         # aggregate global classifier
         if self.args.p_classifier == 0:
+            print('aggregate global classifier')
             client = self.clients[self.uploaded_ids[0]]
             global_classifier = copy.deepcopy(client.model.head)
             for param in global_classifier.parameters():
