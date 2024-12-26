@@ -34,7 +34,7 @@ class FedTSPv4(Server):
             logger_path = (f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                         f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
                         f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
-                        f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_seed{args.seed}/')
+                        f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
