@@ -130,6 +130,33 @@ class Client(object):
                 losses += loss.item() * y.shape[0]
 
         return losses, train_num
+    
+    # used for evaluation on specific dataset
+    def evaluation(self, dataloader):
+        self.model.to(self.device)
+        self.model.eval()
+        test_loader = dataloader
+        test_acc = 0
+        test_num = 0
+        losses = 0
+
+        with torch.no_grad():
+            for x, y in test_loader:
+                if type(x) == type([]):
+                    x[0] = x[0].to(self.device)
+                else:
+                    x = x.to(self.device)
+                y = y.to(self.device)
+                output = self.model(x)
+
+                test_acc += (torch.sum(torch.argmax(output, dim=1) == y)).item()
+                test_num += y.shape[0]
+                loss = self.loss(output, y)
+                losses += loss.item() * y.shape[0]
+
+        self.model.to('cpu')
+        return test_acc, test_num, losses
+        
 
     def save_model(self, save_dir):
         if not os.path.exists(save_dir):

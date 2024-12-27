@@ -12,6 +12,7 @@ from utils.data_utils import read_client_data
 from torch.utils.data import DataLoader
 from flcore.clients.clientbase import load_item, save_item
 from utils.log_utils import set_logger, Logger
+import sys
 
 
 class Server(object):
@@ -72,20 +73,25 @@ class Server(object):
         self.tensorboardLogger = None
         self.logger = None
 
-        # obtain the classes
-        dataset_json_dir = f'../dataset/{args.dataset}/config.json'
-        with open(dataset_json_dir, 'r') as f:
-            data_config = json.load(f)
-        self.args.classes = data_config['classes']
+        # obtain caller script
+        self.caller_script = os.path.basename(sys.argv[0])
+        print(f'Caller: {self.caller_script}')
 
-        # obtain tsne classes
-        dataset_tsne_json_dir = f'../dataset/{args.dataset}/plot_config.json'
-        if os.path.exists(dataset_tsne_json_dir):
-            with open(dataset_tsne_json_dir, 'r', encoding='utf-8') as f:
+        if 'visualization.py' in self.caller_script:
+            # obtain the classes
+            dataset_json_dir = f'../dataset/{args.dataset}/config.json'
+            with open(dataset_json_dir, 'r') as f:
                 data_config = json.load(f)
-            self.args.tsne_classes = data_config['TSNE class']
-        else:
-            self.args.tsne_classes = None
+            self.args.classes = data_config['classes']
+
+            # obtain tsne classes
+            dataset_tsne_json_dir = f'../dataset/{args.dataset}/plot_config.json'
+            if os.path.exists(dataset_tsne_json_dir):
+                with open(dataset_tsne_json_dir, 'r', encoding='utf-8') as f:
+                    data_config = json.load(f)
+                self.args.tsne_classes = data_config['TSNE class']
+            else:
+                self.args.tsne_classes = None
 
     # set logger and tensorboard
     def set_loggers(self, logFilePath):
@@ -290,23 +296,53 @@ class Server(object):
             self.tensorboardLogger.add_scalars_dict(prefix='test', dic=test_info, rnd=self.current_epoch)
 
     # evaluate selected clients on the global dataset
-    def evaluate_global(self, acc=None, loss=None):
-        test_dataset_global = []
-        for client_id in range(self.num_clients):
-            test_data = read_client_data(self.dataset, client_id, is_train=False)
-            test_dataset_global.extend(test_data)
-        test_data_loader_global = DataLoader(test_dataset_global, 200, drop_last=False, shuffle=False)
-
-        # evaluate on each client
+    def evaluate_after_training(self, type='global'):
         test_acc_for_each_client = []
-        for client in self.clients:
-            acc_num, total_num, _ = client.test_metrics(test_data_loader_global)
-            test_acc_for_each_client.append(acc_num / total_num)
-            print(f'client {client.id}, acc {acc_num / total_num}')
+        total_correct = 0
+        total_samples = 0
+        if type == 'global':
+            test_dataset_global = []
+            for client_id in range(self.num_clients):
+                test_data = read_client_data(self.dataset, client_id, is_train=False)
+                test_dataset_global.extend(test_data)
+            test_data_loader_global = DataLoader(test_dataset_global, 200, drop_last=False, shuffle=False)
 
-
+            # evaluate on each client
+            for client in self.clients:
+                acc_num, total_num, _ = client.evaluation(test_data_loader_global)
+                total_correct += acc_num
+                total_samples += total_num
+                print(acc_num, total_num)
+                test_acc_for_each_client.append(acc_num / total_num)
+                print(f'client {client.id}, acc {acc_num / total_num}')
+                self.logger.info(f'client {client.id}, acc {acc_num / total_num}')
+        elif type == 'local':
+            # evaluate on each client
+            for client in self.clients:
+                test_data = read_client_data(self.dataset, client.id, is_train=False)
+                test_data_loader_local = DataLoader(test_data, 200, drop_last=False, shuffle=False)
+                acc_num, total_num, _ = client.evaluation(test_data_loader_local)
+                total_correct += acc_num
+                total_samples += total_num
+                print(acc_num, total_num)
+                test_acc_for_each_client.append(acc_num / total_num)
+                print(f'client {client.id}, acc {acc_num / total_num}')
+                self.logger.info(f'client {client.id}, acc {acc_num / total_num}')
+        else:
+            raise NotImplementedError
         print(f'Accuracy for each client: {test_acc_for_each_client}')
-        print(f'Average accuracy: {sum(test_acc_for_each_client) / len(test_acc_for_each_client)}')
+        print(f'Average accuracy: {total_correct / total_samples}')
+        self.logger.info(f'Accuracy for each client: {test_acc_for_each_client}')
+        self.logger.info(f'Average accuracy: {total_correct / total_samples}')
+
+        hyperparameters = {
+            'seed': self.args.seed,
+            'type': type
+        }
+        results = {
+            'Average Accuracy': total_correct / total_samples
+        }
+        self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
 
     def print_(self, test_acc, test_auc, train_loss):
@@ -340,7 +376,12 @@ class Server(object):
         return True
 
     def load_model(self):
-        raise NotImplementedError
+        if not os.path.exists(self.model_save_path):
+            raise ValueError(f'No model to load: {self.model_save_path}')
+
+        # load client models
+        for c in self.clients:
+            c.load_model(save_dir=self.model_save_path)
 
     def get_global_protos(self):
         raise NotImplementedError
