@@ -62,7 +62,7 @@ def run(args):
         # Generate args.models
         if args.model_family == "HtFE2":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)', 
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 'resnet18(num_classes=args.num_classes)',
             ]
 
@@ -75,7 +75,7 @@ def run(args):
 
         elif args.model_family == "HtFE4":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)', 
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)'
@@ -83,7 +83,7 @@ def run(args):
 
         elif args.model_family == "HtFE8":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)', 
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 # 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=10816)', 
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
@@ -109,7 +109,7 @@ def run(args):
 
         elif args.model_family == "HtFE8-HtC4":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)', 
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
@@ -118,7 +118,7 @@ def run(args):
                 'resnet101(num_classes=args.num_classes)',
                 'resnet152(num_classes=args.num_classes)'
             ]
-            args.global_model = 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)'
+            args.global_model = f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})'
             args.heads = [
                 'Head(hidden_dims=[512], num_classes=args.num_classes)', 
                 'Head(hidden_dims=[512, 512], num_classes=args.num_classes)', 
@@ -130,7 +130,7 @@ def run(args):
             args.models = [
                 'resnet34(num_classes=args.num_classes)',
             ]
-            args.global_model = 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)'
+            args.global_model = f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})'
             args.heads = [
                 'Head(hidden_dims=[512], num_classes=args.num_classes)', 
                 'Head(hidden_dims=[512, 512], num_classes=args.num_classes)', 
@@ -160,7 +160,7 @@ def run(args):
 
         elif args.model_family == "HtM10":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)', 
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
@@ -345,6 +345,7 @@ if __name__ == "__main__":
     parser.add_argument('-fd', "--feature_dim", type=int, default=512)
     parser.add_argument('-vs', "--vocab_size", type=int, default=98635)
     parser.add_argument('-ml', "--max_len", type=int, default=200)
+    parser.add_argument('--FedAvgCNN_dim', type=int, default=1600)
     # practical
     parser.add_argument('-cdr', "--client_drop_rate", type=float, default=0.0,
                         help="Rate for clients that train but drop out")
@@ -420,6 +421,9 @@ if __name__ == "__main__":
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
 
     args = parser.parse_args()
+
+    if 'TinyImagenet' in args.dataset:
+        args.FedAvgCNN_dim = 10816
 
     # os.environ["CUDA_VISIBLE_DEVICES"] = args.device_id
     if args.device == 'cuda':
