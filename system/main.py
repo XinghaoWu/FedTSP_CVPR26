@@ -411,6 +411,10 @@ if __name__ == "__main__":
     parser.add_argument('--bert_model_path', type=str, default='./flcore/trainmodel/bert-base-uncased', help='bert model path')
     parser.add_argument('--clip_model_path', type=str, default='./flcore/trainmodel/clip-ViT-B-32.pt',
                         help='clip model path')
+    
+    # FedTSPv4
+    parser.add_argument('--manual_prompt', type=int, default=1, help='whether to use manual prompt')
+    parser.add_argument('--negative_class', type=int, default=0, help='whether add negative class')
 
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
@@ -425,6 +429,10 @@ if __name__ == "__main__":
     if args.device == "cuda" and not torch.cuda.is_available():
         print("\ncuda is not avaiable.\n")
         args.device = "cpu"
+    
+    args.manual_prompt = bool(args.manual_prompt)
+    args.negative_class = bool(args.negative_class)
+
     print(f'Arguments"{args}"')
     print("=" * 50)
 

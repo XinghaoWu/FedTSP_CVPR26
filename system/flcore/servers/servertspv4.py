@@ -10,8 +10,8 @@ import json
 import copy
 from tqdm import tqdm
 import clip
-from flcore.trainmodel.clip_base import TextEncoder_server
-from flcore.trainmodel.bert_base import TextEncoder_server_bert
+from flcore.trainmodel.clip_base_v2 import TextEncoder_server
+from flcore.trainmodel.bert_base_v2 import TextEncoder_server_bert
 import torch
 import torch.nn.functional as F
 import os
@@ -28,12 +28,12 @@ class FedTSPv4(Server):
         if 'main.py' in self.caller_script:
             logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                         f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
-                        f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
+                        f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
                         f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_seed{args.seed}/')
         else:
             logger_path = (f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                         f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
-                        f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
+                        f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
                         f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
@@ -46,12 +46,12 @@ class FedTSPv4(Server):
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                                 f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda})_cls{args.p_classifier}_'
-                                f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
+                                f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
                                 f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_seed{args.seed}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                                 f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda})_cls{args.p_classifier}_'
-                                f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init})_'
+                                f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
                                 f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_seed{args.seed}')
 
         # obtain the classes
@@ -79,19 +79,21 @@ class FedTSPv4(Server):
             else:
                 clip_model = torch.load(self.args.clip_model_path)
             clip_model.to(self.device)
-            self.global_model = TextEncoder_server(self.args.classes, clip_model, self.args.len_prompt, self.args.CSC, self.args.prompt_random_init).to(self.device)
+            self.global_model = TextEncoder_server(self.args.classes, clip_model, self.args.len_prompt, self.args.CSC, self.args.prompt_random_init, self.args.manual_prompt, self.args.negative_class, self.args.dataset).to(self.device)
             for name, param in self.global_model.named_parameters():
-                if 'prompt_learner' in name or 'logit_scale' in name:
+                if 'ctx_global' in name or 'logit_scale' in name:
                     param.requires_grad_(True)
                 else:
                     param.requires_grad_(False)
+                print(name, param.requires_grad)
         elif args.server_model == 'bert':
-            self.global_model = TextEncoder_server_bert(self.args.classes, self.args.len_prompt, pretrained_model_name=args.bert_model_path, CSC=self.args.CSC, random_init=self.args.prompt_random_init).to(self.device)
+            self.global_model = TextEncoder_server_bert(self.args.classes, self.args.len_prompt, pretrained_model_name=args.bert_model_path, CSC=self.args.CSC, random_init=self.args.prompt_random_init, manual_prompt=self.args.manual_prompt, negative_class=self.args.negative_class, dataset=self.args.dataset).to(self.device)
             for name, param in self.global_model.named_parameters():
-                if 'prompt_learner' in name or 'logit_scale' in name:
+                if 'ctx_global' in name or 'logit_scale' in name:
                     param.requires_grad_(True)
                 else:
                     param.requires_grad_(False)
+                print(name, param.requires_grad)
 
 
         self.prompt_lr = args.prompt_lr
@@ -142,9 +144,9 @@ class FedTSPv4(Server):
             if self.args.len_prompt > 0 and i % self.args.server_training_freq == 0:
                 print(f'Rounds {i}, server training starts.')
                 self.logger.info(f'Rounds {i}, server training starts.')
-                prompts = self.global_model.prompt_learner
+                prompts = self.global_model.prompt_learner.ctx_global
                 old_prompts = copy.deepcopy(prompts)
-                optimizer_prompts = torch.optim.SGD(prompts.parameters(), lr=self.prompt_lr)
+                optimizer_prompts = torch.optim.SGD([prompts], lr=self.prompt_lr)
                 optimizer_logit_scale = torch.optim.SGD([self.global_model.logit_scale], lr=self.prompt_lr)
                 for j in range(self.args.prompt_epoch):
                     clip_logits = self.global_model(self.global_vision_protos)
@@ -157,8 +159,7 @@ class FedTSPv4(Server):
                     print(f'Prompt training epoch {j}, loss: {loss.item()}')
                     self.logger.info(f'Prompt training epoch {j}, loss: {loss.item()}')
                     print(f'logit_scale: {self.global_model.logit_scale.item()}')
-                for param, old_param in zip(prompts.parameters(), old_prompts.parameters()):
-                    param.data = self.args.prompt_EMA_alpha * old_param.data + (1 - self.args.prompt_EMA_alpha) * param.data
+                prompts.data = self.args.prompt_EMA_alpha * old_prompts.data + (1 - self.args.prompt_EMA_alpha) * prompts.data
 
 
 
