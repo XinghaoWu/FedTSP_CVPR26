@@ -165,13 +165,13 @@ if __name__ == '__main__':
     # Parse the summary file
 
     # experiment result dir
-    dir_path = f'./logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}/'
+    dir_path = f'./logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/'
 
     summary_file = f'summary_{args.summary_date}.txt'
     parsed_data = parse_summary(dir_path + summary_file)
 
     # Write the parsed data to an Excel file
-    output_excel = dir_path+f'{args.dataset}_{args.model_family}_{args.algorithm}_gr{args.global_rounds}_ep{args.local_epochs}_nc{args.num_clients}_experiment_results_{args.summary_date}.xlsx'
+    output_excel = dir_path+f'{args.dataset}_{args.model_family}_{args.algorithm}_gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}_experiment_results_{args.summary_date}.xlsx'
     write_to_excel(parsed_data, output_excel)
 
     print(f"Data has been written to {output_excel}")
