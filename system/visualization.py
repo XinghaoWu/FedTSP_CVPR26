@@ -23,6 +23,7 @@ from flcore.servers.servertgp import FedTGP
 # from flcore.servers.serverktl_stylegan_xl import FedKTL as FedKTL_stylegan_xl
 # from flcore.servers.serverktl_stylegan_3 import FedKTL as FedKTL_stylegan_3
 # from flcore.servers.serverktl_stable_diffusion import FedKTL as FedKTL_stable_diffusion
+from flcore.servers.serveralign import AlignFed
 from flcore.servers.serverours import FedOurs
 from flcore.servers.servertspv2 import FedTSPv2
 from flcore.servers.servertspv3 import FedTSPv3
@@ -65,20 +66,20 @@ def run(args):
         # Generate args.models
         if args.model_family == "HtFE2":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)',
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 'resnet18(num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "HtFE3":
             args.models = [
-                'resnet10(num_classes=args.num_classes)',
+                'resnet10(num_classes=args.num_classes)', 
                 'resnet18(num_classes=args.num_classes)',
                 'resnet34(num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "HtFE4":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)',
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)'
@@ -86,8 +87,8 @@ def run(args):
 
         elif args.model_family == "HtFE8":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)',
-                # 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=10816)',
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
+                # 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=10816)', 
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
@@ -112,7 +113,7 @@ def run(args):
 
         elif args.model_family == "HtFE8-HtC4":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)',
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
@@ -121,7 +122,7 @@ def run(args):
                 'resnet101(num_classes=args.num_classes)',
                 'resnet152(num_classes=args.num_classes)'
             ]
-            args.global_model = 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)'
+            args.global_model = f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})'
             args.heads = [
                 'Head(hidden_dims=[512], num_classes=args.num_classes)',
                 'Head(hidden_dims=[512, 512], num_classes=args.num_classes)',
@@ -133,7 +134,7 @@ def run(args):
             args.models = [
                 'resnet34(num_classes=args.num_classes)',
             ]
-            args.global_model = 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)'
+            args.global_model = f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})'
             args.heads = [
                 'Head(hidden_dims=[512], num_classes=args.num_classes)',
                 'Head(hidden_dims=[512, 512], num_classes=args.num_classes)',
@@ -163,7 +164,7 @@ def run(args):
 
         elif args.model_family == "HtM10":
             args.models = [
-                'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)',
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 'googlenet(aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
@@ -267,6 +268,9 @@ def run(args):
         elif args.algorithm == "FedTGP":
             server = FedTGP(args, i)
 
+        elif args.algorithm == "AlignFed":
+            server = AlignFed(args, i)
+
         elif args.algorithm == "FedOurs":
             server = FedOurs(args, i)
 
@@ -353,9 +357,10 @@ if __name__ == "__main__":
                         help="Rounds gap for evaluation")
     parser.add_argument('-sfn', "--save_folder_name", type=str, default='temp')
     parser.add_argument('-ab', "--auto_break", type=bool, default=False)
-    parser.add_argument('-fd', "--feature_dim", type=int, default=768)
+    parser.add_argument('-fd', "--feature_dim", type=int, default=512)
     parser.add_argument('-vs', "--vocab_size", type=int, default=98635)
     parser.add_argument('-ml', "--max_len", type=int, default=200)
+    parser.add_argument('--FedAvgCNN_dim', type=int, default=1600)
     # practical
     parser.add_argument('-cdr', "--client_drop_rate", type=float, default=0.0,
                         help="Rate for clients that train but drop out")
@@ -372,6 +377,8 @@ if __name__ == "__main__":
 
     # FedProto/ours/FedDistill (gamma)
     parser.add_argument('-lam', "--lamda", type=float, default=6.0)
+    # AlignFed
+    parser.add_argument('-flam', "--final_lamda", type=float, default=2)
     # FedGen
     parser.add_argument('-nd', "--noise_dim", type=int, default=32)
     parser.add_argument('-glr', "--generator_learning_rate", type=float, default=0.1)
@@ -397,8 +404,8 @@ if __name__ == "__main__":
     parser.add_argument('-mu', "--mu", type=float, default=50.0)
 
     # ours
-    parser.add_argument('--len_prompt', default=5, type=int, help='the length of prompts')  # v2
-    parser.add_argument('--p_classifier', type=int, default=1, help='whether to personalize classifier')  # v2
+    parser.add_argument('--len_prompt', default=20, type=int, help='the length of prompts') # v2
+    parser.add_argument('--p_classifier', type=int, default=1, help='whether to personalize classifier')    # v2
     parser.add_argument('--p_prompt', type=int, default=0, help='whether to personalize prompt')
     parser.add_argument('--alter', type=int, default=0, help='whether to use alternate training')
     parser.add_argument('--update_prompt', default=True, action='store_false',
@@ -424,6 +431,11 @@ if __name__ == "__main__":
                         help='bert model path')
     parser.add_argument('--clip_model_path', type=str, default='./flcore/trainmodel/clip-ViT-B-32.pt',
                         help='clip model path')
+    
+    # FedTSPv4
+    parser.add_argument('--manual_prompt', type=int, default=1, help='whether to use manual prompt')
+    parser.add_argument('--negative_class', type=int, default=0, help='whether add negative class')
+
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
 
@@ -436,6 +448,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    if 'TinyImagenet' in args.dataset:
+        args.FedAvgCNN_dim = 10816
+
     # os.environ["CUDA_VISIBLE_DEVICES"] = args.device_id
     if args.device == 'cuda':
         args.device = f'{args.device}:{args.device_id}'
@@ -444,6 +459,10 @@ if __name__ == "__main__":
     if args.device == "cuda" and not torch.cuda.is_available():
         print("\ncuda is not avaiable.\n")
         args.device = "cpu"
+    
+    args.manual_prompt = bool(args.manual_prompt)
+    args.negative_class = bool(args.negative_class)
+
     print(f'Arguments"{args}"')
     print("=" * 50)
 
