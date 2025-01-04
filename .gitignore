@@ -1,5 +1,10 @@
 # project code
-/dataset/
+#/dataset/
+/dataset/rawdata/
+/dataset/*_*_*_balance_*/
+!/dataset/generate_*.py
+!/dataset/LLM_prompts/
+!/dataset/utils/
 /logs/
 /results/
 /system/temp/
