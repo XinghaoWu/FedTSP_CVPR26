@@ -49,7 +49,7 @@ class BERTPromptLearner(nn.Module):
 
         if dataset is not None:
             dataset_core = dataset.split('_')[0]
-            prompt_dir = f'../dataset/rawdata/{dataset_core}/text_encoder_prompts.json'
+            prompt_dir = f'../dataset/LLM_prompts/{dataset_core}/text_encoder_prompts.json'
             with open(prompt_dir, 'r') as f:
                 text_encoder_prompts = json.load(f)
         else:
