@@ -1,0 +1,152 @@
+{
+    "airplane": {
+        "Short Label": "Plane",
+        "Fine-grained Descriptions": [
+            "A fixed-wing aircraft with large wings and engine-powered flight for transporting passengers or cargo.",
+            "Commonly seen at airports, soaring through the sky on jet or propeller propulsion.",
+            "Features a streamlined fuselage, prominent wingspan, and tail assembly designed for aerodynamic travel."
+        ],
+        "Hard Negatives": [
+            {
+                "NegativeClassName": "Helicopter",
+                "Reason for Confusion": "Both are airborne vehicles with a similar overall shape from a distance, potentially confusing silhouettes.",
+                "Negative Prompt": "A rotary-wing aircraft with overhead rotors, capable of hovering and vertical takeoff."
+            }
+        ]
+    },
+    "automobile": {
+        "Short Label": "Car",
+        "Fine-grained Descriptions": [
+            "A four-wheeled motor vehicle commonly used for personal transportation on roads.",
+            "Has a compact body with doors, windows, and seats typically arranged in rows.",
+            "Powered by an internal combustion or electric engine, designed for efficient on-road travel."
+        ],
+        "Hard Negatives": [
+            {
+                "NegativeClassName": "Bus",
+                "Reason for Confusion": "Both are road vehicles with multiple seats and four wheels, which might appear similar from certain angles.",
+                "Negative Prompt": "A large vehicle designed to carry many passengers, usually operating along a fixed route."
+            }
+        ]
+    },
+    "bird": {
+        "Short Label": "Bird",
+        "Fine-grained Descriptions": [
+            "A feathered vertebrate that lays eggs and often takes flight using its wings.",
+            "Commonly seen perched on branches or soaring in the sky, with beaks adapted to various food sources.",
+            "Varies widely in size and color, but typically light-boned for aerial mobility."
+        ],
+        "Hard Negatives": [
+            {
+                "NegativeClassName": "Bat",
+                "Reason for Confusion": "Both are small flying creatures with similar winged silhouettes in low light conditions.",
+                "Negative Prompt": "A nocturnal mammal that navigates by echolocation and flies with membranous wings."
+            }
+        ]
+    },
+    "cat": {
+        "Short Label": "Cat",
+        "Fine-grained Descriptions": [
+            "A small, domesticated feline known for its agility, retractable claws, and curious nature.",
+            "Typically has soft fur, upright ears, and a long tail used for balance.",
+            "Often kept as a household pet, displaying playful and independent behavior."
+        ],
+        "Hard Negatives": [
+            {
+                "NegativeClassName": "Fox",
+                "Reason for Confusion": "Both share similar facial features and a bushy tail, making them visually akin at a quick glance.",
+                "Negative Prompt": "A small, wild canid with pointed ears, a bushy tail, and a cunning reputation."
+            }
+        ]
+    },
+    "deer": {
+        "Short Label": "Deer",
+        "Fine-grained Descriptions": [
+            "A hoofed mammal with slender legs and often antlers on males.",
+            "Frequently found in forests or grasslands, grazing on vegetation.",
+            "Has a lean body and a short tail, typically moving in cautious herds."
+        ],
+        "Hard Negatives": [
+            {
+                "NegativeClassName": "Elk",
+                "Reason for Confusion": "Both are large cervids with antlers, often seen grazing in similar environments.",
+                "Negative Prompt": "A large deer species with impressive antlers, known for roaming forested or mountainous regions."
+            }
+        ]
+    },
+    "dog": {
+        "Short Label": "Dog",
+        "Fine-grained Descriptions": [
+            "A domesticated canid known for loyalty and companionship.",
+            "Often kept as a pet, with varied breeds ranging from small to large in size.",
+            "Exhibits social behavior, responsive to training, and known for protective instincts."
+        ],
+        "Hard Negatives": [
+            {
+                "NegativeClassName": "Wolf",
+                "Reason for Confusion": "Both share similar canine features like muzzle shape and fur coat, potentially confusing at a distance.",
+                "Negative Prompt": "A wild canid living in packs, with a lean body, sharp teeth, and a strong predatory drive."
+            }
+        ]
+    },
+    "frog": {
+        "Short Label": "Frog",
+        "Fine-grained Descriptions": [
+            "A small amphibian with a slimy skin, long hind legs, and the ability to jump great distances.",
+            "Typically found near ponds, rivers, or wetlands, often emitting croaking sounds.",
+            "Has bulging eyes and a wide mouth used for catching insects with its sticky tongue."
+        ],
+        "Hard Negatives": [
+            {
+                "NegativeClassName": "Toad",
+                "Reason for Confusion": "Both are amphibians with a similar shape and may share habitats, making them easy to mix up visually.",
+                "Negative Prompt": "A stout-bodied amphibian with warty skin, commonly found in moist environments and gardens."
+            }
+        ]
+    },
+    "horse": {
+        "Short Label": "Horse",
+        "Fine-grained Descriptions": [
+            "A large hoofed mammal with a mane and tail, often ridden or used for work.",
+            "Characterized by its strong build, speed, and ability to carry humans or pull loads.",
+            "Has a graceful gait and is commonly found in stables, farms, or open pastures."
+        ],
+        "Hard Negatives": [
+            {
+                "NegativeClassName": "Zebra",
+                "Reason for Confusion": "Both are equine animals with similar body shape and size, differing mainly in coat patterns.",
+                "Negative Prompt": "An African equine with distinctive black-and-white striped fur, roaming savannas and grasslands."
+            }
+        ]
+    },
+    "ship": {
+        "Short Label": "Ship",
+        "Fine-grained Descriptions": [
+            "A large watercraft designed for deep-sea or ocean travel, often carrying passengers or cargo.",
+            "Built with a sturdy hull and multiple decks, powered by engines or sails.",
+            "Operates in open waters, requiring extensive navigation systems and crew operations."
+        ],
+        "Hard Negatives": [
+            {
+                "NegativeClassName": "Yacht",
+                "Reason for Confusion": "Both are sizable watercraft, potentially similar in profile and deck structure from afar.",
+                "Negative Prompt": "A luxury vessel typically used for leisure cruises, featuring elegant design and private amenities."
+            }
+        ]
+    },
+    "truck": {
+        "Short Label": "Truck",
+        "Fine-grained Descriptions": [
+            "A heavy-duty vehicle designed to transport goods, often featuring a powerful engine and large cargo area.",
+            "Commonly seen on highways hauling freight or equipment.",
+            "Built with a robust chassis and higher ground clearance for carrying heavy loads."
+        ],
+        "Hard Negatives": [
+            {
+                "NegativeClassName": "Tractor",
+                "Reason for Confusion": "Both are large vehicles with robust engines and similar silhouettes, often associated with hauling or pulling.",
+                "Negative Prompt": "A farm vehicle used for pulling or pushing agricultural machinery, featuring large rear wheels and a strong engine."
+            }
+        ]
+    }
+}

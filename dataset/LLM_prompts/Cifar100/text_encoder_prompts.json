@@ -1,0 +1,1502 @@
+{
+    "apple": {
+      "Short Label": "Apple",
+      "Fine-grained Descriptions": [
+        "A round, sweet fruit with a crisp texture and smooth skin, often red or green.",
+        "Grows on trees in orchards, with a core containing small seeds.",
+        "Commonly eaten fresh or used in pies, juices, and other desserts."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Tomato",
+          "Reason for Confusion": "Both are round, edible, and can be red, making them visually similar in certain contexts.",
+          "Negative Prompt": "A soft, juicy red fruit often used in salads or sauces, featuring a slightly glossy exterior."
+        }
+      ]
+    },
+    "aquarium_fish": {
+      "Short Label": "Aquarium Fish",
+      "Fine-grained Descriptions": [
+        "A colorful fish typically kept in a glass tank or aquarium for observation and care.",
+        "Often has vibrant scales that catch light, with fins adapted for slow, steady swimming.",
+        "Requires a controlled water environment and regular feeding to thrive."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Koi",
+          "Reason for Confusion": "Both can be ornamental fish with vivid patterns, commonly seen in decorative water settings.",
+          "Negative Prompt": "A large, brightly colored carp kept in outdoor ponds, featuring bold markings on its scales."
+        }
+      ]
+    },
+    "baby": {
+      "Short Label": "Baby",
+      "Fine-grained Descriptions": [
+        "A very young human, typically under one year of age, who is unable to walk or speak clearly.",
+        "Often seen swaddled or held, requiring constant care and attention.",
+        "Has soft, delicate features and communicates primarily by crying or cooing."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Toddler",
+          "Reason for Confusion": "Both are young children, visually small and dependent, making them easy to confuse at a glance.",
+          "Negative Prompt": "A slightly older child who can walk and explore, exhibiting early stages of speech and independence."
+        }
+      ]
+    },
+    "bear": {
+      "Short Label": "Bear",
+      "Fine-grained Descriptions": [
+        "A large mammal with thick fur, sharp claws, and a robust body.",
+        "Often found in forests or mountains, adept at climbing and foraging for food.",
+        "Known for its strong limbs and omnivorous diet, including fish, berries, and small mammals."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Gorilla",
+          "Reason for Confusion": "Both are large, powerful animals with bulky builds and dark fur, potentially confusing at a distance.",
+          "Negative Prompt": "A large primate with a muscular body and thick hair, usually found in tropical forests."
+        }
+      ]
+    },
+    "beaver": {
+      "Short Label": "Beaver",
+      "Fine-grained Descriptions": [
+        "A semi-aquatic rodent known for its flat tail and ability to build dams.",
+        "Has prominent front teeth for gnawing wood and constructing lodges.",
+        "Typically found near rivers or streams, with brown fur and webbed feet."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Otter (River Otter)",
+          "Reason for Confusion": "Both are semi-aquatic mammals with brown fur and often seen near rivers, causing visual overlap.",
+          "Negative Prompt": "A sleek, playful water mammal with streamlined body and strong swimming skills."
+        }
+      ]
+    },
+    "bed": {
+      "Short Label": "Bed",
+      "Fine-grained Descriptions": [
+        "A piece of furniture designed for sleeping or resting, typically with a mattress and frame.",
+        "Often found in bedrooms, adorned with pillows, sheets, and blankets.",
+        "Comes in various sizes like twin, queen, or king, providing comfort and support."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Cot",
+          "Reason for Confusion": "Both are sleep surfaces that can feature simple frames, potentially similar at a quick glance.",
+          "Negative Prompt": "A lightweight, portable sleeping frame often used for camping or temporary accommodation."
+        }
+      ]
+    },
+    "bee": {
+      "Short Label": "Bee",
+      "Fine-grained Descriptions": [
+        "A small, flying insect with striped abdomen, known for pollination and producing honey.",
+        "Has a fuzzy thorax and wings adapted for gathering nectar from flowers.",
+        "Lives in colonies with a queen, workers, and drones, communicating through dances."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Wasp",
+          "Reason for Confusion": "Both have similar striped bodies and stingers, which can cause visual confusion in flight.",
+          "Negative Prompt": "A slender-bodied insect with a pointed abdomen, known for building paper-like nests."
+        }
+      ]
+    },
+    "beetle": {
+      "Short Label": "Beetle",
+      "Fine-grained Descriptions": [
+        "An insect with a hard exoskeleton and a pair of protective forewings (elytra).",
+        "Varies greatly in color and shape, from shiny metallic hues to dull browns.",
+        "Has a sturdy body and is found in diverse habitats, from forests to gardens."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Cockchafer",
+          "Reason for Confusion": "Both are robust, hard-shelled insects with similar body shapes, making quick identification tricky.",
+          "Negative Prompt": "A large, brown beetle species with a bulky body and fan-shaped antennae often seen near lights."
+        }
+      ]
+    },
+    "bicycle": {
+      "Short Label": "Bike",
+      "Fine-grained Descriptions": [
+        "A two-wheeled vehicle powered by pedaling, often used for personal transportation or recreation.",
+        "Consists of a frame, handlebars, seat, and chain-driven rear wheel.",
+        "Can have different styles like mountain bikes, road bikes, or city bikes."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Scooter",
+          "Reason for Confusion": "Both can be two-wheeled transports used in urban settings, with somewhat similar silhouettes.",
+          "Negative Prompt": "A step-through vehicle with a footboard and handles, typically powered by pushing or a small motor."
+        }
+      ]
+    },
+    "bottle": {
+      "Short Label": "Bottle",
+      "Fine-grained Descriptions": [
+        "A container with a narrow neck used to store liquids like water, soda, or sauce.",
+        "Often made of glass or plastic, sealed with a cap or cork.",
+        "Can come in various shapes and sizes, commonly found in kitchen or dining settings."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Flask",
+          "Reason for Confusion": "Both are vessels for liquids, sometimes similar in form but used for different purposes.",
+          "Negative Prompt": "A small, flat container typically made of metal or glass, often used to carry alcoholic beverages."
+        }
+      ]
+    },
+    "bowl": {
+      "Short Label": "Bowl",
+      "Fine-grained Descriptions": [
+        "A round, deep dish used for containing foods like soup, cereal, or salads.",
+        "Has a curved interior and may be made of ceramic, glass, or metal.",
+        "Commonly found in kitchens and dining areas, often used with a spoon."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Mortar",
+          "Reason for Confusion": "Both are bowl-shaped and found in kitchens, potentially confusing if viewed from above.",
+          "Negative Prompt": "A sturdy, bowl-like kitchen tool used for grinding or crushing ingredients with a pestle."
+        }
+      ]
+    },
+    "boy": {
+      "Short Label": "Boy",
+      "Fine-grained Descriptions": [
+        "A young male child, typically under the age of adolescence.",
+        "Often active and playful, engaging in various games and hobbies.",
+        "Characterized by developing traits of male youth, both physically and socially."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Girl",
+          "Reason for Confusion": "Both are children of similar ages, making them visually and contextually easy to mix up if gender cues are subtle.",
+          "Negative Prompt": "A young female child who may share similar clothing styles and activities, but differs in gender."
+        }
+      ]
+    },
+    "bridge": {
+      "Short Label": "Bridge",
+      "Fine-grained Descriptions": [
+        "A structure built to span physical obstacles like rivers or roads, allowing passage.",
+        "Often made of steel, concrete, or wood, with designs ranging from simple to iconic.",
+        "Can feature arches, cables, or pillars, supporting vehicles, pedestrians, or trains."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Overpass",
+          "Reason for Confusion": "Both are elevated structures crossing roads or railways, similar in function and appearance.",
+          "Negative Prompt": "A high roadway crossing above another route, allowing traffic to pass underneath without intersection."
+        }
+      ]
+    },
+    "bus": {
+      "Short Label": "Bus",
+      "Fine-grained Descriptions": [
+        "A large road vehicle designed to carry multiple passengers, typically following a set route.",
+        "Features rows of seating, wide windows, and standing room for commuters.",
+        "Used in public transportation systems, often painted in bright or distinctive colors."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Coach",
+          "Reason for Confusion": "Both are large passenger vehicles, similarly shaped with multiple seats, often used for group travel.",
+          "Negative Prompt": "A comfortable, long-distance vehicle with reclining seats and overhead luggage space."
+        }
+      ]
+    },
+    "butterfly": {
+      "Short Label": "Butterfly",
+      "Fine-grained Descriptions": [
+        "A flying insect known for its vibrant, often patterned wings and slender body.",
+        "Emerges from a chrysalis during metamorphosis, transitioning from caterpillar to adult.",
+        "Commonly found near flowers, feeding on nectar using a tubular proboscis."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Moth",
+          "Reason for Confusion": "Both have wings and can appear similar in shape, though moths are often duller and nocturnal.",
+          "Negative Prompt": "A nocturnal insect with feathery antennae and dusty wings, attracted to light sources."
+        }
+      ]
+    },
+    "camel": {
+      "Short Label": "Camel",
+      "Fine-grained Descriptions": [
+        "A large desert mammal known for humps on its back, used to store fat.",
+        "Adapted for arid environments with the ability to go long periods without water.",
+        "Has long legs, a long neck, and a distinctive rolling gait."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Llama",
+          "Reason for Confusion": "Both are large, long-necked mammals often used as pack animals, visually similar at a glance.",
+          "Negative Prompt": "A South American camelid with a slender body, used for carrying loads and producing wool."
+        }
+      ]
+    },
+    "can": {
+      "Short Label": "Can",
+      "Fine-grained Descriptions": [
+        "A cylindrical metal container used to store food or beverages, often sealed.",
+        "Typically made of aluminum or steel, opened with a pull-tab or can opener.",
+        "Commonly holds soda, soup, or preserved goods on store shelves."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Tin",
+          "Reason for Confusion": "Both refer colloquially to metal containers, though 'tin' can also mean a type of metal or different container.",
+          "Negative Prompt": "A metallic storage container often associated with preserving foods like biscuits or tea."
+        }
+      ]
+    },
+    "castle": {
+      "Short Label": "Castle",
+      "Fine-grained Descriptions": [
+        "A large fortified structure historically inhabited by nobility, featuring towers and thick walls.",
+        "Often made of stone with battlements, moats, and drawbridges for defense.",
+        "Serves as a symbol of medieval architecture and heritage."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Fortress",
+          "Reason for Confusion": "Both are defensive strongholds with imposing walls, designed for protection.",
+          "Negative Prompt": "A fortified military building with robust walls and strategic placements, often lacking the regal design of a castle."
+        }
+      ]
+    },
+    "caterpillar": {
+      "Short Label": "Caterpillar",
+      "Fine-grained Descriptions": [
+        "A larval stage of a butterfly or moth, typically worm-like with multiple legs.",
+        "Often has a segmented body, sometimes with vivid colors or spines.",
+        "Feeds on leaves before forming a chrysalis or cocoon."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Centipede",
+          "Reason for Confusion": "Both are elongated, multi-legged critters, potentially similar in shape from afar.",
+          "Negative Prompt": "A segmented arthropod with many pairs of legs, known for its swift movements."
+        }
+      ]
+    },
+    "cattle": {
+      "Short Label": "Cattle",
+      "Fine-grained Descriptions": [
+        "Domesticated bovines raised for milk, meat, or as draft animals.",
+        "Typically large, four-legged herbivores with hooves and horns (in some breeds).",
+        "Often found grazing in fields, part of a farm or ranch setting."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Water Buffalo",
+          "Reason for Confusion": "Both are large, horned bovines that graze and can look similar in silhouette.",
+          "Negative Prompt": "A hefty bovine adapted to marshy terrain, often used for plowing or milk production in certain regions."
+        }
+      ]
+    },
+    "chair": {
+      "Short Label": "Chair",
+      "Fine-grained Descriptions": [
+        "A piece of furniture designed to seat one person, typically with four legs and a backrest.",
+        "Commonly made from wood, metal, or plastic, found in homes, offices, and public spaces.",
+        "Varies in style, from simple kitchen chairs to ergonomic office chairs."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Stool",
+          "Reason for Confusion": "Both are single-person seats, often similarly sized, sometimes lacking a backrest.",
+          "Negative Prompt": "A small seat with legs but no back or armrests, designed for quick sitting."
+        }
+      ]
+    },
+    "chimpanzee": {
+      "Short Label": "Chimp",
+      "Fine-grained Descriptions": [
+        "A highly intelligent primate with dark hair, closely related to humans.",
+        "Known for complex social structures and tool usage in the wild.",
+        "Has long arms, enabling it to knuckle-walk and climb trees."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Bonobo",
+          "Reason for Confusion": "Both are great apes closely related to humans, physically similar with only subtle distinctions.",
+          "Negative Prompt": "A slender primate with dark hair and a social structure noted for strong female bonding."
+        }
+      ]
+    },
+    "clock": {
+      "Short Label": "Clock",
+      "Fine-grained Descriptions": [
+        "A device that displays time using hands or a digital interface.",
+        "Can be wall-mounted, tabletop, or worn as a watch, using quartz or mechanical movement.",
+        "Often features numerals or markings arranged in a circle to represent hours."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Timer",
+          "Reason for Confusion": "Both display time but serve slightly different functions, sometimes similar in design.",
+          "Negative Prompt": "A device used to count down or measure specific time intervals, often digital or dial-based."
+        }
+      ]
+    },
+    "cloud": {
+      "Short Label": "Cloud",
+      "Fine-grained Descriptions": [
+        "A visible mass of condensed water vapor floating in the atmosphere.",
+        "Varies in shape and size, from fluffy cumulus to thin cirrus forms.",
+        "Often white or gray, moving across the sky with changing weather conditions."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Fog",
+          "Reason for Confusion": "Both are formed by condensed water vapor, with fog essentially a cloud near the ground.",
+          "Negative Prompt": "A dense, low-lying mist that reduces visibility and envelops the surroundings at ground level."
+        }
+      ]
+    },
+    "cockroach": {
+      "Short Label": "Cockroach",
+      "Fine-grained Descriptions": [
+        "A resilient, brownish insect with a flattened body and long antennae.",
+        "Often found in dark, damp areas of homes or buildings.",
+        "Capable of rapid movement and associated with unsanitary conditions."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Water Bug",
+          "Reason for Confusion": "Both are dark, oval-shaped insects that scurry quickly and are found in moist areas.",
+          "Negative Prompt": "A flat-bodied, aquatic insect often mistaken for cockroaches due to similar shape and color."
+        }
+      ]
+    },
+    "couch": {
+      "Short Label": "Sofa",
+      "Fine-grained Descriptions": [
+        "A piece of upholstered furniture designed for multiple people to sit comfortably.",
+        "Often found in living rooms, featuring cushions, armrests, and a backrest.",
+        "Can vary in size from loveseats to large sectionals, made of fabric or leather."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Recliner",
+          "Reason for Confusion": "Both are seating furniture with cushioning, possibly similar in size and comfort features.",
+          "Negative Prompt": "A cushioned armchair with a footrest that can extend and a back that tilts for lounging."
+        }
+      ]
+    },
+    "crab": {
+      "Short Label": "Crab",
+      "Fine-grained Descriptions": [
+        "A crustacean with a broad, flattened shell, multiple legs, and pincers on the front limbs.",
+        "Commonly found in coastal regions, walking sideways along the sand.",
+        "Has a hard exoskeleton and may use shells or burrows for protection."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Crayfish",
+          "Reason for Confusion": "Both are crustaceans with pincers, and can appear similar in small sizes or certain environments.",
+          "Negative Prompt": "A freshwater crustacean resembling a small lobster, dwelling in streams and rivers."
+        }
+      ]
+    },
+    "crocodile": {
+      "Short Label": "Crocodile",
+      "Fine-grained Descriptions": [
+        "A large, semiaquatic reptile with a long snout and powerful jaws lined with sharp teeth.",
+        "Inhabits rivers, swamps, and wetlands, often seen basking on riverbanks.",
+        "Has rough, scaly skin and a strong tail used for swimming."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Alligator",
+          "Reason for Confusion": "Both are large reptiles with similar body shape and habitat, differing mainly by snout shape.",
+          "Negative Prompt": "A broad-snouted reptile that dwells in freshwater habitats, also known for powerful jaws and scaly hide."
+        }
+      ]
+    },
+    "cup": {
+      "Short Label": "Cup",
+      "Fine-grained Descriptions": [
+        "A small open container for drinking, typically with a handle.",
+        "Can be made of ceramic, plastic, or glass, often used for hot beverages.",
+        "Holds a modest volume of liquid, commonly found in kitchens or cafes."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Mug",
+          "Reason for Confusion": "Both are drinkware with handles, often used for hot beverages, but mugs are typically larger.",
+          "Negative Prompt": "A sturdy cylindrical vessel with a handle, used for coffee, tea, or other hot drinks."
+        }
+      ]
+    },
+    "dinosaur": {
+      "Short Label": "Dinosaur",
+      "Fine-grained Descriptions": [
+        "A group of extinct reptiles that once roamed the earth, ranging in size from small to massive.",
+        "Known for diverse shapes, such as bipedal theropods or giant long-necked sauropods.",
+        "Often depicted in paleontology exhibits or popular culture illustrations."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Dragon",
+          "Reason for Confusion": "Both are reptile-like and large in mythical or historical depictions, sometimes conflated in fantasy.",
+          "Negative Prompt": "A legendary, winged reptilian creature often associated with fire-breathing in folklore."
+        }
+      ]
+    },
+    "dolphin": {
+      "Short Label": "Dolphin",
+      "Fine-grained Descriptions": [
+        "A highly intelligent marine mammal with a streamlined body and a beak-like snout.",
+        "Swims in pods, known for acrobatic leaps and sophisticated communication.",
+        "Has smooth, rubbery skin, usually gray, and uses echolocation to navigate."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Porpoise",
+          "Reason for Confusion": "Both are small cetaceans with similar body shapes, easily mixed up by casual observers.",
+          "Negative Prompt": "A compact marine mammal with a blunt snout and spade-shaped teeth, found in coastal waters."
+        }
+      ]
+    },
+    "elephant": {
+      "Short Label": "Elephant",
+      "Fine-grained Descriptions": [
+        "A large, herbivorous mammal with a trunk, tusks, and thick gray skin.",
+        "Lives in herds, often found in savannas or forests, known for strong social bonds.",
+        "Uses its trunk for breathing, grasping objects, and communication."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Mastodon",
+          "Reason for Confusion": "Both are large proboscideans with tusks, making their fossil forms visually similar.",
+          "Negative Prompt": "An extinct, elephant-like mammal with distinct molar shapes and a bulky build."
+        }
+      ]
+    },
+    "flatfish": {
+      "Short Label": "Flatfish",
+      "Fine-grained Descriptions": [
+        "A marine fish with a flattened body, both eyes on one side of the head.",
+        "Typically lies on the ocean floor, camouflaging against sandy or muddy bottoms.",
+        "Known species include flounders, halibut, and sole."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Ray (Stingray)",
+          "Reason for Confusion": "Both have flattened bodies that rest on the sea floor, though rays are cartilaginous, not typical bony fish.",
+          "Negative Prompt": "A flat-bodied, wing-like sea creature with a long tail, often found gliding near the ocean floor."
+        }
+      ]
+    },
+    "forest": {
+      "Short Label": "Forest",
+      "Fine-grained Descriptions": [
+        "A large area covered primarily with trees and undergrowth.",
+        "Hosts a diverse ecosystem of wildlife, often featuring mossy floors and layered vegetation.",
+        "Characterized by thick canopies that filter sunlight, creating a shaded interior."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Jungle",
+          "Reason for Confusion": "Both are dense, tree-filled environments, but jungles are typically more tropical and humid.",
+          "Negative Prompt": "A tropical forest with lush, thick vegetation and abundant rainfall, supporting a wide variety of wildlife."
+        }
+      ]
+    },
+    "fox": {
+      "Short Label": "Fox",
+      "Fine-grained Descriptions": [
+        "A small-to-medium-sized canid with a pointed muzzle and bushy tail.",
+        "Often reddish-brown in color, known for cunning and adaptability.",
+        "Inhabits diverse environments from forests to urban areas, scavenging and hunting small prey."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Coyote",
+          "Reason for Confusion": "Both are wild canines with similar facial features, though coyotes are larger and differently proportioned.",
+          "Negative Prompt": "A medium-sized wild canine known for its yipping calls, often found in North American plains and hills."
+        }
+      ]
+    },
+    "girl": {
+      "Short Label": "Girl",
+      "Fine-grained Descriptions": [
+        "A young female child, often in school-age or pre-adolescence.",
+        "May wear similar clothing styles to boys, leading to occasional confusion.",
+        "Engages in various playful activities, learning and growing both physically and socially."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Boy",
+          "Reason for Confusion": "Both are children of similar ages, without strong gender markers it can be easy to mix them up visually.",
+          "Negative Prompt": "A young male child who might share similar clothing and interests in childhood settings."
+        }
+      ]
+    },
+    "hamster": {
+      "Short Label": "Hamster",
+      "Fine-grained Descriptions": [
+        "A small rodent with a stout body, short tail, and expandable cheek pouches.",
+        "Commonly kept as a pet, often found in cages with wheels and tunnels.",
+        "Has soft fur, varying in color from golden to gray or brown."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Gerbil",
+          "Reason for Confusion": "Both are small, furry rodents often kept as pets, with somewhat similar body shapes.",
+          "Negative Prompt": "A tiny rodent with a longer tail than a hamster, commonly found burrowing in desert-like conditions."
+        }
+      ]
+    },
+    "house": {
+      "Short Label": "House",
+      "Fine-grained Descriptions": [
+        "A building intended for residential living, often with multiple rooms and a roof.",
+        "Constructed from materials like wood, brick, or concrete, with windows and doors.",
+        "Surrounded by yards, gardens, or fences in many neighborhoods."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Cabin",
+          "Reason for Confusion": "Both are dwellings, though cabins are typically smaller and found in rural or wilderness settings.",
+          "Negative Prompt": "A modest wooden shelter usually situated in remote areas, featuring basic living amenities."
+        }
+      ]
+    },
+    "kangaroo": {
+      "Short Label": "Kangaroo",
+      "Fine-grained Descriptions": [
+        "A large marsupial from Australia, known for powerful hind legs and a strong tail.",
+        "Hops at high speed and carries offspring in a pouch.",
+        "Often found in grasslands or bush areas, grazing on vegetation."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Wallaby",
+          "Reason for Confusion": "Both are marsupials with similar shapes, though wallabies are generally smaller.",
+          "Negative Prompt": "A smaller Australian marsupial resembling a kangaroo, with proportionally shorter legs."
+        }
+      ]
+    },
+    "keyboard": {
+      "Short Label": "Keyboard",
+      "Fine-grained Descriptions": [
+        "An input device featuring a set of keys for typing characters and commands.",
+        "Commonly connected to computers or laptops, sometimes wireless.",
+        "Has a QWERTY layout in many regions, with specialized function and arrow keys."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Piano Keyboard",
+          "Reason for Confusion": "Both feature rows of keys pressed by fingers, though one is for musical notes rather than computing input.",
+          "Negative Prompt": "A musical instrument interface with black and white keys used to produce melodic sounds."
+        }
+      ]
+    },
+    "lamp": {
+      "Short Label": "Lamp",
+      "Fine-grained Descriptions": [
+        "A light fixture designed to illuminate a space, often with a shade or cover.",
+        "Powered by electricity or batteries, providing focused or ambient lighting.",
+        "Commonly found on desks or tables, with switch controls for easy use."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Lantern",
+          "Reason for Confusion": "Both are portable light sources, sometimes with similar shapes or handles.",
+          "Negative Prompt": "A self-contained light source with a protective enclosure, often used outdoors or in emergencies."
+        }
+      ]
+    },
+    "lawn_mower": {
+      "Short Label": "Lawn Mower",
+      "Fine-grained Descriptions": [
+        "A machine used for cutting grass, typically featuring rotating blades beneath a chassis.",
+        "May be powered by electricity or a gasoline engine, guided by an operator.",
+        "Commonly used in residential and commercial lawn maintenance."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Weed Trimmer",
+          "Reason for Confusion": "Both are lawn care tools that cut grass or weeds, though trimmers use a spinning line or blade at the end of a shaft.",
+          "Negative Prompt": "A handheld device with a rotating line or blade designed for edging and trimming smaller areas of grass."
+        }
+      ]
+    },
+    "leopard": {
+      "Short Label": "Leopard",
+      "Fine-grained Descriptions": [
+        "A large feline with a golden coat covered in dark rosette spots.",
+        "Known for agility, capable of climbing trees while carrying prey.",
+        "Inhabits Africa and parts of Asia, preferring dense bush and forest."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Jaguar",
+          "Reason for Confusion": "Both have spotted coats and are big cats, looking very similar except for subtle differences in build and habitat.",
+          "Negative Prompt": "A powerful, stocky cat with rose-like spots, often found in the jungles of Central and South America."
+        }
+      ]
+    },
+    "lion": {
+      "Short Label": "Lion",
+      "Fine-grained Descriptions": [
+        "A large feline known as the 'king of the jungle,' with males sporting a mane.",
+        "Lives in groups called prides, found mainly in African savannas.",
+        "Recognized by its powerful build, tawny coat, and social hunting behavior."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Tiger",
+          "Reason for Confusion": "Both are big cats with formidable builds, and from a distance one might only see a large feline silhouette.",
+          "Negative Prompt": "A massive striped feline found in Asia, known for its orange coat with black stripes."
+        }
+      ]
+    },
+    "lizard": {
+      "Short Label": "Lizard",
+      "Fine-grained Descriptions": [
+        "A reptile with scaly skin, a long tail, and four limbs (in most species).",
+        "Often basks in the sun to regulate body temperature, found in diverse habitats.",
+        "Some species can detach their tail to escape predators."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Gecko",
+          "Reason for Confusion": "Both are small to medium reptiles with similar body shapes, though geckos often have sticky toe pads and different behaviors.",
+          "Negative Prompt": "A small reptile with adhesive pads on its toes, known for climbing walls and making chirping sounds."
+        }
+      ]
+    },
+    "lobster": {
+      "Short Label": "Lobster",
+      "Fine-grained Descriptions": [
+        "A large marine crustacean with a hard exoskeleton, long antennae, and prominent claws.",
+        "Dwells on the ocean floor, scavenging or hunting for food.",
+        "Typically turns red when cooked, but otherwise can be dark greenish or bluish."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Crayfish",
+          "Reason for Confusion": "Both have similar lobster-like body shapes and pincers, though crayfish are freshwater and smaller.",
+          "Negative Prompt": "A smaller crustacean resembling a miniature lobster, living in streams and rivers."
+        }
+      ]
+    },
+    "man": {
+      "Short Label": "Man",
+      "Fine-grained Descriptions": [
+        "An adult male human, fully grown and mature.",
+        "Often seen in varied roles and attire, from professional to casual settings.",
+        "Physical characteristics can vary widely, including facial hair or muscular build."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Teenage Boy",
+          "Reason for Confusion": "Both are male and can have similar builds; age difference might not be obvious if features are mature.",
+          "Negative Prompt": "A male in adolescence, potentially taller and developing, yet not fully matured."
+        }
+      ]
+    },
+    "maple_tree": {
+      "Short Label": "Maple",
+      "Fine-grained Descriptions": [
+        "A deciduous tree known for lobed leaves and sap used to produce syrup.",
+        "Displays vibrant colors in autumn, ranging from bright orange to deep red.",
+        "Often found in temperate regions, valued for ornamental and timber use."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Sweetgum Tree",
+          "Reason for Confusion": "Both have star-like leaves with similar autumn color changes, possibly confusing from a distance.",
+          "Negative Prompt": "A deciduous tree with spiky seed pods and leaves that turn vivid shades in fall."
+        }
+      ]
+    },
+    "motorcycle": {
+      "Short Label": "Motorcycle",
+      "Fine-grained Descriptions": [
+        "A two-wheeled motorized vehicle often used for personal transport or sport.",
+        "Operated by straddling the seat and using handlebars for steering.",
+        "Varies in design from cruisers and sport bikes to off-road motorcycles."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Moped",
+          "Reason for Confusion": "Both are two-wheeled vehicles powered by an engine, though mopeds typically have smaller engines and may include pedals.",
+          "Negative Prompt": "A low-powered, lightweight two-wheeler often used for short commutes, sometimes equipped with pedals."
+        }
+      ]
+    },
+    "mountain": {
+      "Short Label": "Mountain",
+      "Fine-grained Descriptions": [
+        "A large natural elevation of Earth's surface, typically rising sharply from the surrounding terrain.",
+        "Characterized by rugged peaks, rocky slopes, and often snow-capped summits.",
+        "Formed by tectonic forces, offering diverse climates and ecosystems at different altitudes."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Hill",
+          "Reason for Confusion": "Both are elevated landforms, with hills sometimes looking like smaller mountains.",
+          "Negative Prompt": "A naturally raised area of land, less steep and lower in elevation than mountains."
+        }
+      ]
+    },
+    "mouse": {
+      "Short Label": "Mouse",
+      "Fine-grained Descriptions": [
+        "A small rodent with a pointed snout, large ears, and a long, thin tail.",
+        "Commonly found in fields or houses, feeding on seeds and grains.",
+        "Quick and agile, known for squeaking sounds and nesting in hidden areas."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Rat",
+          "Reason for Confusion": "Both are rodents with similar body shapes; rats are typically larger and more robust.",
+          "Negative Prompt": "A medium-sized rodent with a thicker body and tail, often found in urban areas."
+        }
+      ]
+    },
+    "mushroom": {
+      "Short Label": "Mushroom",
+      "Fine-grained Descriptions": [
+        "A fleshy, spore-bearing fungus with a cap and stem, commonly found in damp habitats.",
+        "Can vary in color, shape, and size, with some species edible and others toxic.",
+        "Grows in forests or grassy areas, often decomposing organic material."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Toadstool (Amanita)",
+          "Reason for Confusion": "Both are cap-and-stem fungi, with toadstools often red-capped but visually similar in form.",
+          "Negative Prompt": "A brightly colored, sometimes poisonous mushroom with white spots on its cap."
+        }
+      ]
+    },
+    "oak_tree": {
+      "Short Label": "Oak",
+      "Fine-grained Descriptions": [
+        "A large deciduous tree known for its sturdy trunk and lobed leaves.",
+        "Produces acorns as seeds, supporting various wildlife.",
+        "Valued for strong, durable wood used in furniture and construction."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Chestnut Tree",
+          "Reason for Confusion": "Both produce nut-like seeds in husks and have similarly shaped leaves at a glance.",
+          "Negative Prompt": "A deciduous tree producing spiky burrs that contain edible nuts, featuring serrated leaves."
+        }
+      ]
+    },
+    "orange": {
+      "Short Label": "Orange",
+      "Fine-grained Descriptions": [
+        "A citrus fruit with a bright orange rind and juicy, segmented flesh.",
+        "Valued for its sweet, tangy taste and high vitamin C content.",
+        "Often peeled and eaten fresh or squeezed into juice."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Mandarin",
+          "Reason for Confusion": "Both are orange citrus fruits with a similar shape, though mandarins are typically smaller and easier to peel.",
+          "Negative Prompt": "A small, sweet citrus fruit with a thin, loose rind that peels effortlessly."
+        }
+      ]
+    },
+    "orchid": {
+      "Short Label": "Orchid",
+      "Fine-grained Descriptions": [
+        "A diverse family of flowering plants known for intricate, often colorful blooms.",
+        "Features a unique petal arrangement, sometimes resembling exotic shapes or patterns.",
+        "Commonly grown as ornamental houseplants, requiring specific humidity and light."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Lily",
+          "Reason for Confusion": "Both produce large, elegant flowers often used ornamentally, potentially causing confusion if only the bloom is seen.",
+          "Negative Prompt": "A tall, graceful flowering plant with trumpet-shaped blooms and a sweet fragrance."
+        }
+      ]
+    },
+    "otter": {
+      "Short Label": "Otter",
+      "Fine-grained Descriptions": [
+        "A playful, semi-aquatic mammal with streamlined body and webbed feet.",
+        "Has dense, waterproof fur and is often seen floating on its back cracking shells.",
+        "Thrives in rivers, lakes, or coastal areas, typically hunting fish or shellfish."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Mink",
+          "Reason for Confusion": "Both are small, semi-aquatic mammals with sleek fur and similar silhouettes in the water.",
+          "Negative Prompt": "A slender, agile mammal with luxurious fur, found near water and known for hunting small prey."
+        }
+      ]
+    },
+    "palm_tree": {
+      "Short Label": "Palm",
+      "Fine-grained Descriptions": [
+        "A tropical tree with a long trunk and large, fan-like or feather-like fronds at the top.",
+        "Often found along beaches or in warm climates, providing shade and coconuts (in some species).",
+        "Symbolizes tropical or desert environments, with minimal branching except at the crown."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Cycad",
+          "Reason for Confusion": "Both can have a palm-like appearance with a crown of leaves, leading to confusion in certain gardens.",
+          "Negative Prompt": "An ancient group of seed plants with a stout trunk and a crown of large, stiff leaves, resembling palms."
+        }
+      ]
+    },
+    "pear": {
+      "Short Label": "Pear",
+      "Fine-grained Descriptions": [
+        "A sweet, bell-shaped fruit with a narrow top and broader bottom.",
+        "Has a soft, grainy interior and thin skin that can be green, yellow, or brownish.",
+        "Often eaten fresh, baked, or poached, popular in desserts and salads."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Avocado",
+          "Reason for Confusion": "Both can share a somewhat pear-like shape, though avocados have a different texture and flavor.",
+          "Negative Prompt": "A creamy, green-fleshed fruit with a rough outer skin and a large central pit."
+        }
+      ]
+    },
+    "pickup_truck": {
+      "Short Label": "Pickup",
+      "Fine-grained Descriptions": [
+        "A light-duty truck with an open cargo bed in the rear.",
+        "Often used for transporting goods or equipment in everyday or work contexts.",
+        "Features a front cab for passengers and a rear bed for hauling."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "SUV",
+          "Reason for Confusion": "Both are large vehicles with high ground clearance; from the front they can look similar.",
+          "Negative Prompt": "A sport utility vehicle with an enclosed cargo area and passenger seating, suitable for family or off-road use."
+        }
+      ]
+    },
+    "pine_tree": {
+      "Short Label": "Pine",
+      "Fine-grained Descriptions": [
+        "An evergreen conifer with needle-like leaves and seed-bearing cones.",
+        "Often tall with a straight trunk, adaptable to cold or mountainous regions.",
+        "Used for timber, paper production, and Christmas trees in holiday tradition."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Fir Tree",
+          "Reason for Confusion": "Both are conifers with needle-like leaves and similar overall shapes, commonly confused in forests or Christmas tree lots.",
+          "Negative Prompt": "An evergreen tree with softer, flatter needles and upright cones, often used as a holiday decoration."
+        }
+      ]
+    },
+    "plain": {
+      "Short Label": "Plain",
+      "Fine-grained Descriptions": [
+        "A broad, flat expanse of land with minimal elevation changes.",
+        "Typically covered by grasses, offering expansive views of the horizon.",
+        "Found in many regions, supporting farming and grazing due to fertile soil."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Plateau",
+          "Reason for Confusion": "Both are expansive landforms, though a plateau is elevated and more level on top.",
+          "Negative Prompt": "A raised, flat region with steep sides, standing prominently above surrounding terrain."
+        }
+      ]
+    },
+    "plate": {
+      "Short Label": "Plate",
+      "Fine-grained Descriptions": [
+        "A flat, round dish used to serve or hold food.",
+        "Commonly made of ceramic, glass, or plastic, found in dining settings.",
+        "Varies in size from small dessert plates to large dinner plates."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Charger (Dinner Charger)",
+          "Reason for Confusion": "Both are circular dining objects, with a charger placed under plates for decorative purposes.",
+          "Negative Prompt": "A decorative base setting larger than a typical plate, used to accentuate a dining arrangement."
+        }
+      ]
+    },
+    "poppy": {
+      "Short Label": "Poppy",
+      "Fine-grained Descriptions": [
+        "A brightly colored flowering plant known for its delicate, papery petals.",
+        "Often red or orange, with a dark center bearing seeds.",
+        "Associated with remembrance in certain cultures, grown in fields or gardens."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Anemone (Windflower)",
+          "Reason for Confusion": "Both produce vibrant, poppy-like blossoms with thin petals, creating visual overlap in gardens.",
+          "Negative Prompt": "A graceful flowering plant with delicate, brightly hued petals that sway in the breeze."
+        }
+      ]
+    },
+    "porcupine": {
+      "Short Label": "Porcupine",
+      "Fine-grained Descriptions": [
+        "A large rodent covered in sharp quills used as a defense mechanism.",
+        "Typically slow-moving, found in forests or wooded areas.",
+        "Feeds on bark, leaves, and other vegetation, climbing trees with strong claws."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Hedgehog",
+          "Reason for Confusion": "Both are spiny mammals, though hedgehogs are smaller and roll into a tight ball for defense.",
+          "Negative Prompt": "A small, nocturnal insectivore with short spines covering its back and sides."
+        }
+      ]
+    },
+    "possum": {
+      "Short Label": "Possum",
+      "Fine-grained Descriptions": [
+        "A nocturnal marsupial with a pointed snout and a prehensile tail.",
+        "Known for 'playing dead' as a defense tactic when threatened.",
+        "Frequently scavenges for food in urban and woodland areas."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Raccoon Dog (Tanuki)",
+          "Reason for Confusion": "Both are small, nocturnal mammals with somewhat scruffy fur and a tail, possibly confusing in dim light.",
+          "Negative Prompt": "A canid with a raccoon-like face mask and thick fur, native to East Asia, active mostly at night."
+        }
+      ]
+    },
+    "rabbit": {
+      "Short Label": "Rabbit",
+      "Fine-grained Descriptions": [
+        "A small mammal with long ears, a short fluffy tail, and strong hind legs.",
+        "Known for hopping gait and rapid breeding, often found in meadows or burrows.",
+        "Eats vegetation like grass, roots, and leafy greens."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Hare",
+          "Reason for Confusion": "Both are lagomorphs with long ears and similar body shapes, though hares are generally larger and faster.",
+          "Negative Prompt": "A swift, long-eared mammal that lives in aboveground nests and relies on speed to escape predators."
+        }
+      ]
+    },
+    "raccoon": {
+      "Short Label": "Raccoon",
+      "Fine-grained Descriptions": [
+        "A medium-sized mammal with a masked face and ringed tail, known for dexterous front paws.",
+        "Nocturnal forager found in urban and rural areas, rummaging through trash or natural food sources.",
+        "Grayish fur with black markings around the eyes, giving a distinctive look."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Coati",
+          "Reason for Confusion": "Both have masked faces and ringed tails, belonging to the same Procyonidae family.",
+          "Negative Prompt": "A long-nosed mammal with a striped tail, often found in Central and South American forests."
+        }
+      ]
+    },
+    "ray": {
+      "Short Label": "Ray (Manta/Stingray)",
+      "Fine-grained Descriptions": [
+        "A flat, diamond or disc-shaped cartilaginous fish, gliding gracefully through the water.",
+        "Has gill slits on the underside and large pectoral fins merging with the head.",
+        "Some species have a stinging tail spine, while others are giant filter-feeders."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Flounder",
+          "Reason for Confusion": "Both are flat marine organisms living near the seabed, potentially confusing in silhouette.",
+          "Negative Prompt": "A flat-bodied fish with both eyes on one side of the head, camouflaged on the ocean floor."
+        }
+      ]
+    },
+    "road": {
+      "Short Label": "Road",
+      "Fine-grained Descriptions": [
+        "A paved or unpaved route for vehicles and pedestrians to travel between locations.",
+        "Marked with lanes, signs, and sometimes sidewalks, facilitating traffic flow.",
+        "Varies from small country lanes to large highways with multiple lanes."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Driveway",
+          "Reason for Confusion": "Both are paved surfaces used for vehicle passage, though a driveway is typically private and much shorter.",
+          "Negative Prompt": "A short, private path connecting a public street to a building or garage."
+        }
+      ]
+    },
+    "rocket": {
+      "Short Label": "Rocket",
+      "Fine-grained Descriptions": [
+        "A spacecraft or missile propelled by rocket engines, producing thrust via high-speed exhaust.",
+        "Used for launching satellites or crew into space, featuring a tall, cylindrical body.",
+        "Often multistage, shedding sections as fuel is expended during ascent."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Missile",
+          "Reason for Confusion": "Both are propelled devices with a similar cylindrical form, though missiles are typically for military use rather than space travel.",
+          "Negative Prompt": "A guided projectile powered by rockets, designed for strategic targets rather than orbital missions."
+        }
+      ]
+    },
+    "rose": {
+      "Short Label": "Rose",
+      "Fine-grained Descriptions": [
+        "A flowering plant known for its fragrant blooms and thorny stems.",
+        "Comes in a variety of colors like red, pink, yellow, or white, symbolizing love or romance.",
+        "Often cultivated in gardens or sold as bouquets for special occasions."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Camellia",
+          "Reason for Confusion": "Both have layered, petal-rich blooms, sometimes leading to visual confusion in a garden setting.",
+          "Negative Prompt": "An evergreen shrub producing lush, rose-like flowers with glossy leaves, often blooming in cooler seasons."
+        }
+      ]
+    },
+    "sea": {
+      "Short Label": "Sea",
+      "Fine-grained Descriptions": [
+        "A vast body of saltwater covering large portions of the Earth's surface.",
+        "Influenced by tides, weather patterns, and currents, supporting diverse marine life.",
+        "Often associated with coasts, beaches, and oceanic travel or fishing."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Lake",
+          "Reason for Confusion": "Both are large bodies of water, though lakes are freshwater and completely enclosed by land.",
+          "Negative Prompt": "A sizable, enclosed freshwater body surrounded by land, supporting fish and aquatic plants."
+        }
+      ]
+    },
+    "seal": {
+      "Short Label": "Seal",
+      "Fine-grained Descriptions": [
+        "A marine mammal with a streamlined body and flippers, often seen resting on shores or ice.",
+        "Dives to catch fish and uses whiskers to detect prey in murky water.",
+        "Has a thick layer of blubber for insulation in cold environments."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Sea Lion",
+          "Reason for Confusion": "Both are pinnipeds with similar body shapes, though sea lions have visible external ear flaps and can walk on land using flippers.",
+          "Negative Prompt": "A vocal pinniped with external ear flaps and rotating rear flippers for agile movement on shore."
+        }
+      ]
+    },
+    "shark": {
+      "Short Label": "Shark",
+      "Fine-grained Descriptions": [
+        "A cartilaginous fish with a streamlined body, multiple gill slits, and sharp teeth.",
+        "Often an apex predator in marine environments, exhibiting powerful swimming.",
+        "Varies widely from small reef sharks to massive whale sharks, feeding on fish or plankton."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Dolphin",
+          "Reason for Confusion": "Both have a similar torpedo-shaped body in the water, though dolphins are mammals and have different dorsal fin shapes.",
+          "Negative Prompt": "A highly intelligent marine mammal with a beaked snout and a smooth, gray body."
+        }
+      ]
+    },
+    "shrew": {
+      "Short Label": "Shrew",
+      "Fine-grained Descriptions": [
+        "A tiny mammal with a pointed snout, small eyes, and a voracious appetite.",
+        "Feeds on insects and worms, often active day and night.",
+        "Has a high metabolism requiring near-constant feeding, found under leaf litter or logs."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Vole",
+          "Reason for Confusion": "Both are small, mouse-like creatures with short legs and fur, easily mistaken if viewed briefly.",
+          "Negative Prompt": "A small rodent with a stout body and short tail, living in grassy or woodland habitats."
+        }
+      ]
+    },
+    "skunk": {
+      "Short Label": "Skunk",
+      "Fine-grained Descriptions": [
+        "A small mammal known for its distinctive black and white fur and strong defensive spray.",
+        "Has a bushy tail and a well-developed scent gland used for protection.",
+        "Often forages at night for insects, small animals, or garbage."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Polecat",
+          "Reason for Confusion": "Both are small carnivores with contrasting fur patterns, sometimes referred to similarly in casual speech.",
+          "Negative Prompt": "A weasel-like animal with a dark mask on the face and a strong musk used for marking territory."
+        }
+      ]
+    },
+    "skyscraper": {
+      "Short Label": "Skyscraper",
+      "Fine-grained Descriptions": [
+        "A very tall, continuously habitable building with multiple floors, dominating city skylines.",
+        "Constructed with steel or concrete frameworks, often featuring glass facades.",
+        "Represents modern urban development, housing offices or residential units."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Tower",
+          "Reason for Confusion": "Both are tall structures, though a tower might not be designed for full habitation across floors.",
+          "Negative Prompt": "A tall, narrow structure, sometimes freestanding or part of a larger building, used for observation or signals."
+        }
+      ]
+    },
+    "snail": {
+      "Short Label": "Snail",
+      "Fine-grained Descriptions": [
+        "A small mollusk with a coiled shell on its back, moving using a muscular foot.",
+        "Leaves a slimy trail as it crawls, found in gardens or damp habitats.",
+        "Has tentacles on its head, with eyes at the tips of the longer pair."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Slug",
+          "Reason for Confusion": "Both are gastropods with similar body shapes, but slugs lack a prominent external shell.",
+          "Negative Prompt": "A soft-bodied gastropod that glides on a foot, secreting mucus for movement without a visible shell."
+        }
+      ]
+    },
+    "snake": {
+      "Short Label": "Snake",
+      "Fine-grained Descriptions": [
+        "A legless reptile with a long, slender body and scales, moving by slithering.",
+        "Can be venomous or non-venomous, found in diverse habitats worldwide.",
+        "Feeds by swallowing prey whole, dislocating its jaw to accommodate large meals."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Glass Lizard",
+          "Reason for Confusion": "Both appear legless and elongated, though glass lizards are actually lizards without visible limbs.",
+          "Negative Prompt": "A reptile with a long tail and no external limbs, but with eyelids and ear openings, distinguishing it from snakes."
+        }
+      ]
+    },
+    "spider": {
+      "Short Label": "Spider",
+      "Fine-grained Descriptions": [
+        "An arachnid with eight legs, often spinning webs to catch prey.",
+        "Has a two-part body (cephalothorax and abdomen) and can produce silk.",
+        "Found in varied environments, from indoors to forests and deserts."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Harvestman (Daddy Longlegs)",
+          "Reason for Confusion": "Both have multiple long legs and are arachnids, though harvestmen have a fused body segment.",
+          "Negative Prompt": "An arachnid with an oval body and extremely long, slender legs, lacking a distinct waist."
+        }
+      ]
+    },
+    "squirrel": {
+      "Short Label": "Squirrel",
+      "Fine-grained Descriptions": [
+        "A small rodent with a bushy tail, often found climbing trees and gathering nuts.",
+        "Has sharp claws and agile movements, sometimes leaping between branches.",
+        "Commonly seen in parks, scurrying around in search of seeds and acorns."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Chipmunk",
+          "Reason for Confusion": "Both are small, fluffy-tailed rodents that climb and store food, differing mainly by size and facial stripes.",
+          "Negative Prompt": "A tiny ground squirrel with distinct facial stripes, known for stuffing food into cheek pouches."
+        }
+      ]
+    },
+    "streetcar": {
+      "Short Label": "Streetcar",
+      "Fine-grained Descriptions": [
+        "A rail vehicle operating on city streets, powered by overhead electric lines.",
+        "Provides public transport in urban areas, often running on tracks embedded in roads.",
+        "Stops at designated locations for passengers to board and alight."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Trolleybus",
+          "Reason for Confusion": "Both use overhead electrical lines in some cases, though trolleybuses run on rubber tires instead of tracks.",
+          "Negative Prompt": "A bus-like vehicle powered by overhead wires, operating on city streets without fixed rails."
+        }
+      ]
+    },
+    "sunflower": {
+      "Short Label": "Sunflower",
+      "Fine-grained Descriptions": [
+        "A tall annual plant with a large, bright yellow flower head that turns toward the sun.",
+        "Produces edible seeds arranged in a spiral pattern at the center of its bloom.",
+        "Commonly grown for oil production, ornamental gardens, and attracting pollinators."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Black-Eyed Susan",
+          "Reason for Confusion": "Both have a central dark disc and bright petals, appearing similar in yellow daisy-like forms.",
+          "Negative Prompt": "A wildflower with golden-yellow petals around a dark brown center, often found in meadows."
+        }
+      ]
+    },
+    "sweet_pepper": {
+      "Short Label": "Bell Pepper",
+      "Fine-grained Descriptions": [
+        "A hollow, bell-shaped vegetable that comes in green, red, yellow, or orange varieties.",
+        "Crunchy and mild in flavor, often eaten raw or cooked in various dishes.",
+        "Contains seeds in a spongy core, typically removed before cooking."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Chili Pepper",
+          "Reason for Confusion": "Both are peppers with similar shapes, but chili peppers are usually smaller and spicy.",
+          "Negative Prompt": "A smaller, elongated pepper with varying levels of heat, often used to add spice to meals."
+        }
+      ]
+    },
+    "table": {
+      "Short Label": "Table",
+      "Fine-grained Descriptions": [
+        "A piece of furniture with a flat top and one or more legs, used for dining or work.",
+        "Often made of wood, metal, or glass, found in homes and offices.",
+        "Varies in shape (round, rectangular) and size, accommodating different numbers of people."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Desk",
+          "Reason for Confusion": "Both are flat surfaces supported by legs, though desks typically have drawers or specific workspace features.",
+          "Negative Prompt": "A work-oriented surface often equipped with storage compartments and space for office materials."
+        }
+      ]
+    },
+    "tank": {
+      "Short Label": "Tank",
+      "Fine-grained Descriptions": [
+        "A heavily armored combat vehicle with tracks and a large caliber cannon.",
+        "Designed for battlefield engagements, featuring thick plating and a rotating turret.",
+        "Moves on continuous tracks for mobility across rough terrain, commonly used by militaries."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "APC (Armored Personnel Carrier)",
+          "Reason for Confusion": "Both are armored vehicles used in combat zones, often featuring similar boxy shapes and tracks.",
+          "Negative Prompt": "A troop-carrying armored vehicle designed for transporting soldiers, sometimes with a mounted gun but less firepower than a tank."
+        }
+      ]
+    },
+    "telephone": {
+      "Short Label": "Phone",
+      "Fine-grained Descriptions": [
+        "A communication device used for real-time voice calls across distances.",
+        "Traditionally includes a handset and dial pad; modern versions can be mobile or cordless.",
+        "Often found in homes, offices, and pockets (as smartphones)."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Intercom",
+          "Reason for Confusion": "Both involve voice communication, though intercoms are typically short-range systems within buildings.",
+          "Negative Prompt": "A fixed internal communication device connecting rooms or spaces, often with speaker and microphone units."
+        }
+      ]
+    },
+    "television": {
+      "Short Label": "TV",
+      "Fine-grained Descriptions": [
+        "An electronic device with a screen for viewing broadcast or streamed video content.",
+        "Found in homes or public areas, often using remote control for channel selection.",
+        "Modern versions include smart TVs with internet connectivity for streaming services."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Monitor (Computer Monitor)",
+          "Reason for Confusion": "Both are screens displaying visual content, but a monitor typically connects to a computer rather than receiving broadcast signals directly.",
+          "Negative Prompt": "A flat-panel or curved display primarily used for desktop computing or gaming setups."
+        }
+      ]
+    },
+    "tiger": {
+      "Short Label": "Tiger",
+      "Fine-grained Descriptions": [
+        "A large, striped feline with an orange coat and black stripes.",
+        "Native to Asia, adept at swimming and hunting in diverse habitats like jungles or grasslands.",
+        "Has a powerful build, known for its stealth and solitary nature."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Lion",
+          "Reason for Confusion": "Both are big cats of similar size and muscular form, though tigers have distinctive stripes and solitary behaviors.",
+          "Negative Prompt": "A large African feline known for living in prides, often with a prominent mane on males."
+        }
+      ]
+    },
+    "tractor": {
+      "Short Label": "Tractor",
+      "Fine-grained Descriptions": [
+        "A powerful farm vehicle used for pulling or pushing agricultural machinery.",
+        "Typically has large rear wheels and a sturdy engine for work on fields.",
+        "Used in plowing, tilling, and hauling tasks in agricultural settings."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Bulldozer",
+          "Reason for Confusion": "Both are heavy machinery that can be used in rugged terrains, with large wheels or tracks and strong engines.",
+          "Negative Prompt": "A track-laying machine with a wide metal blade at the front, used for pushing earth or rubble."
+        }
+      ]
+    },
+    "train": {
+      "Short Label": "Train",
+      "Fine-grained Descriptions": [
+        "A series of connected rail vehicles that run along tracks, transporting people or goods.",
+        "Powered by locomotives, electricity, or diesel, stopping at stations along defined routes.",
+        "Includes passenger coaches or freight cars, often traveling long distances."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Tram",
+          "Reason for Confusion": "Both are rail vehicles, though trams typically operate on city streets with more frequent stops.",
+          "Negative Prompt": "A lightweight rail vehicle running on tracks in urban environments, often powered by overhead lines."
+        }
+      ]
+    },
+    "trout": {
+      "Short Label": "Trout",
+      "Fine-grained Descriptions": [
+        "A freshwater fish with streamlined body and speckled or spotted scales.",
+        "Typically found in cool rivers and lakes, known for its firm, pinkish flesh.",
+        "Popular among anglers for sport fishing and prized as a culinary fish."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Salmon",
+          "Reason for Confusion": "Both are pink-fleshed fish in similar salmonid family, sharing a comparable shape and habitat in certain regions.",
+          "Negative Prompt": "A migratory fish that travels from ocean to freshwater to spawn, often sold as a popular seafood item."
+        }
+      ]
+    },
+    "tulip": {
+      "Short Label": "Tulip",
+      "Fine-grained Descriptions": [
+        "A spring-blooming flower known for its cup-shaped petals and vibrant colors.",
+        "Originated in Central Asia, famously cultivated in Dutch fields.",
+        "Has a single flower per stem, with smooth, elongated leaves."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Lily",
+          "Reason for Confusion": "Both have showy, colorful petals, and a somewhat similar shape from certain angles.",
+          "Negative Prompt": "A tall, elegant flower with large, often trumpet-shaped blooms and a sweet fragrance."
+        }
+      ]
+    },
+    "turtle": {
+      "Short Label": "Turtle",
+      "Fine-grained Descriptions": [
+        "A reptile with a hard, bony shell protecting its body and limbs, often slow-moving on land.",
+        "Varies between aquatic, semi-aquatic, and terrestrial species like sea turtles or tortoises.",
+        "Has a beak-like mouth, retractable head, and typically lays eggs on land."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Tortoise",
+          "Reason for Confusion": "Both have shells and four legs, though tortoises are terrestrial with domed shells and stumpy feet.",
+          "Negative Prompt": "A land-dwelling reptile with a robust shell, moving slowly and feeding primarily on vegetation."
+        }
+      ]
+    },
+    "wardrobe": {
+      "Short Label": "Wardrobe",
+      "Fine-grained Descriptions": [
+        "A tall, standing closet used to store clothing, often with doors and a hanging rod.",
+        "Can be made of wood or metal, featuring drawers or shelves for additional storage.",
+        "Commonly placed in bedrooms, providing organized space for garments."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Armoire",
+          "Reason for Confusion": "Both are large, ornate storage cabinets for clothes, sometimes used interchangeably in casual language.",
+          "Negative Prompt": "A tall, often decorative wooden cabinet used to store clothing or linens, featuring doors and sometimes drawers."
+        }
+      ]
+    },
+    "whale": {
+      "Short Label": "Whale",
+      "Fine-grained Descriptions": [
+        "A large, fully aquatic marine mammal, breathing air through a blowhole on top of its head.",
+        "Ranges in size from smaller toothed whales like orcas to the massive blue whale.",
+        "Communicates via vocalizations and echolocation, living in pods or solitary."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Shark",
+          "Reason for Confusion": "Both are large marine predators, with a similar streamlined body form, though whales are mammals and sharks are fish.",
+          "Negative Prompt": "A cartilaginous fish with sharp teeth, swimming powerfully with multiple gill slits and no blowhole."
+        }
+      ]
+    },
+    "willow_tree": {
+      "Short Label": "Willow",
+      "Fine-grained Descriptions": [
+        "A deciduous tree with slender, cascading branches and narrow leaves.",
+        "Often found near water sources, with drooping limbs creating a graceful canopy.",
+        "Famous varieties include the weeping willow, recognized by its long, arching stems."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Birch Tree",
+          "Reason for Confusion": "Both can have light-colored bark and somewhat delicate branches, though birches have distinct peeling bark.",
+          "Negative Prompt": "A slender deciduous tree with white, papery bark and small, triangular leaves."
+        }
+      ]
+    },
+    "wolf": {
+      "Short Label": "Wolf",
+      "Fine-grained Descriptions": [
+        "A wild canid known for living in packs, with thick fur and sharp teeth.",
+        "Has a strong social structure led by dominant members, hunting cooperatively for prey.",
+        "Found in forests, tundras, and mountain regions, communicating with howls."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Coyote",
+          "Reason for Confusion": "Both are wild canines, sharing a similar silhouette and coloration in certain regions.",
+          "Negative Prompt": "A smaller canid with a narrower muzzle, living in diverse habitats and known for its high-pitched howls."
+        }
+      ]
+    },
+    "woman": {
+      "Short Label": "Woman",
+      "Fine-grained Descriptions": [
+        "An adult female human, recognizable by mature physical characteristics.",
+        "Occupies a wide range of societal roles, with variations in dress, culture, and lifestyle.",
+        "May exhibit feminine traits but individual appearances differ greatly."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Teenage Girl",
+          "Reason for Confusion": "Both are female humans of similar height or build, though a teenager is still maturing.",
+          "Negative Prompt": "A female adolescent approaching adulthood, possibly sharing mature characteristics but still in development."
+        }
+      ]
+    },
+    "worm": {
+      "Short Label": "Worm",
+      "Fine-grained Descriptions": [
+        "A legless invertebrate with a soft, elongated body, often found in soil.",
+        "Helps aerate and enrich the earth by consuming organic matter.",
+        "Has segmented anatomy in many species, lacking a defined head or limbs."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Slug",
+          "Reason for Confusion": "Both are soft-bodied creatures found in damp soil or gardens, but slugs are mollusks with distinct head structures.",
+          "Negative Prompt": "A shell-less gastropod that creeps along surfaces, leaving a slimy trail as it feeds on plant material."
+        }
+      ]
+    }
+  }

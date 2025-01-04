@@ -1,0 +1,2805 @@
+{
+    "goldfish": {
+      "Fine-grained Descriptions": [
+        "A small, bright orange freshwater fish with a fan-like tail fin.",
+        "Often found in home aquariums and garden ponds, recognized by its round body shape.",
+        "Has metallic, reflective scales and can display variations in finnage and color."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "koi",
+          "Reason for Confusion": "Both are ornamental carp species with bright colors, commonly kept in ponds.",
+          "Negative Prompt": "A larger, elongated fish with vibrant patterns of orange, white, and black often found in ornamental ponds."
+        }
+      ]
+    },
+    "European fire salamander": {
+      "Fine-grained Descriptions": [
+        "A black salamander with bright yellow markings, often found in damp woodlands.",
+        "Has a smooth, glossy skin and a robust body shape with a long tail.",
+        "Can secrete toxins from skin glands as a defense mechanism."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "tiger salamander",
+          "Reason for Confusion": "Both are black amphibians with bright spots or stripes.",
+          "Negative Prompt": "A stout amphibian with dark skin and bold yellow stripes, found in moist environments."
+        }
+      ]
+    },
+    "bullfrog": {
+      "Fine-grained Descriptions": [
+        "A large, robust frog with greenish-brown skin and a big, round body.",
+        "Characteristic deep, resonant croak typically heard near freshwater ponds or lakes.",
+        "Often has a noticeable ridge running behind the eye and eardrum."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "green toad",
+          "Reason for Confusion": "Both are greenish amphibians with bumpy skin and can be found near water.",
+          "Negative Prompt": "A small, warty amphibian with a mottled green coloration and a distinctive call."
+        }
+      ]
+    },
+    "tailed frog": {
+      "Fine-grained Descriptions": [
+        "A small frog with a short, tail-like extension near the cloaca, unique among frogs.",
+        "Brownish or olive-toned coloration to blend in with fast-flowing streams.",
+        "Flattened body shape and suction pads on toes for clinging to rocky surfaces."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "torrent salamander",
+          "Reason for Confusion": "Both are small, aquatic amphibians living in fast-moving streams, with similar subdued coloration.",
+          "Negative Prompt": "A slender salamander with muted green hues, found clinging to rocks in clear, cold streams."
+        }
+      ]
+    },
+    "American alligator": {
+      "Fine-grained Descriptions": [
+        "A large reptile with a broad snout and dark, armored scales.",
+        "Found in freshwater habitats of the southeastern United States.",
+        "Notable for showing only the top of its eyes and snout while floating."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "saltwater crocodile",
+          "Reason for Confusion": "Both are big reptiles with rugged scales and exposed teeth, commonly confused.",
+          "Negative Prompt": "A massive reptile with a long, tapered snout and a lighter body color, inhabiting brackish or coastal waters."
+        }
+      ]
+    },
+    "boa constrictor": {
+      "Fine-grained Descriptions": [
+        "A large, non-venomous snake known for constricting its prey.",
+        "Has distinctive saddle-like markings that can appear brown or reddish.",
+        "Commonly found in tropical forests of Central and South America."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "python",
+          "Reason for Confusion": "Both are large, non-venomous constrictors with similar body patterns.",
+          "Negative Prompt": "A thick-bodied snake with irregular blotches and a powerful coil-based hunting method."
+        }
+      ]
+    },
+    "trilobite": {
+      "Fine-grained Descriptions": [
+        "An extinct marine arthropod with a segmented exoskeleton divided into three lobes.",
+        "Commonly found as fossils with an oval shape and ridged segments.",
+        "Existed during the Paleozoic era, often showing intricate exoskeletal details."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "horseshoe crab",
+          "Reason for Confusion": "Both have hard exoskeletons and a segmented appearance, associated with marine environments.",
+          "Negative Prompt": "A living marine arthropod with a domed carapace and a long tail spine, dwelling on sandy seabeds."
+        }
+      ]
+    },
+    "scorpion": {
+      "Fine-grained Descriptions": [
+        "An arachnid with a segmented tail ending in a venomous stinger.",
+        "Often brown or black, found in deserts and other warm environments.",
+        "Has large pincers at the front for grasping prey."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "vinegaroon",
+          "Reason for Confusion": "Both are whip-tailed arachnids with pincers, living in similar arid habitats.",
+          "Negative Prompt": "A dark arachnid with a whip-like tail that sprays acetic acid instead of a venomous sting."
+        }
+      ]
+    },
+    "black widow": {
+      "Fine-grained Descriptions": [
+        "A small, shiny black spider with a distinctive red hourglass on its abdomen.",
+        "Often found in dark, secluded areas, known for a potent venom.",
+        "Has a round abdomen and spindly legs, typically solitary in nature."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "redback spider",
+          "Reason for Confusion": "Both are venomous black spiders with a prominent red marking on the abdomen.",
+          "Negative Prompt": "A glossy black spider with a bright red stripe on its upper abdomen, hiding in dark corners."
+        }
+      ]
+    },
+    "tarantula": {
+      "Fine-grained Descriptions": [
+        "A large, hairy spider often brown or black in color.",
+        "Dwells in burrows or hidden crevices, mostly in tropical or desert regions.",
+        "Has thick legs and a bulky body, can flick urticating hairs as defense."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "wolf spider",
+          "Reason for Confusion": "Both are relatively large, hairy spiders that hunt on the ground.",
+          "Negative Prompt": "A robust, greyish-brown spider with good eyesight, actively chasing prey instead of building webs."
+        }
+      ]
+    },
+    "centipede": {
+      "Fine-grained Descriptions": [
+        "A long, flattened arthropod with numerous body segments and one pair of legs per segment.",
+        "Has venomous front claws used to subdue prey.",
+        "Often found in damp soil or under logs, can move quickly with many tiny legs."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "millipede",
+          "Reason for Confusion": "Both are elongated arthropods with many legs, often found in similar environments.",
+          "Negative Prompt": "A cylindrical, worm-like arthropod with two pairs of legs per segment and a slower, rolling defense."
+        }
+      ]
+    },
+    "goose": {
+      "Fine-grained Descriptions": [
+        "A large waterfowl with a long neck and webbed feet.",
+        "Often gray or white plumage, known for loud honking calls.",
+        "Typically forms V-shaped migratory flocks, grazing on grasslands."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "swan",
+          "Reason for Confusion": "Both are large white waterfowl with long necks, found on lakes and ponds.",
+          "Negative Prompt": "A graceful waterfowl with pure white plumage, an elongated neck, and a black bill base."
+        }
+      ]
+    },
+    "koala": {
+      "Fine-grained Descriptions": [
+        "A small, tree-dwelling marsupial with fluffy ears and a button nose.",
+        "Primarily feeds on eucalyptus leaves and sleeps for long hours.",
+        "Has grey fur and a stout body, often cradling itself in tree branches."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "wombat",
+          "Reason for Confusion": "Both are Australian marsupials with stocky bodies and fuzzy fur, living in forested areas.",
+          "Negative Prompt": "A short-legged marsupial with a sturdy body, coarse fur, and known for burrowing underground."
+        }
+      ]
+    },
+    "jellyfish": {
+      "Fine-grained Descriptions": [
+        "A gelatinous marine animal with a bell-shaped body and trailing tentacles.",
+        "Often transparent or translucent, drifting in ocean currents.",
+        "Can deliver stings through specialized cells to capture prey."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Portuguese man o' war",
+          "Reason for Confusion": "Both are floating, tentacled marine creatures with stinging cells.",
+          "Negative Prompt": "A colonial marine organism with a gas-filled float and long, stinging tentacles extending below."
+        }
+      ]
+    },
+    "brain coral": {
+      "Fine-grained Descriptions": [
+        "A reef-building coral with a rounded shape and grooved surface resembling a brain.",
+        "Slow-growing and hard-shelled, found in warm tropical seas.",
+        "Displays intricate maze-like patterns formed by coral polyps."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "staghorn coral",
+          "Reason for Confusion": "Both are reef-building corals with calcified structures in similar habitats.",
+          "Negative Prompt": "A branching coral forming antler-like structures, commonly found in shallow, tropical reefs."
+        }
+      ]
+    },
+    "snail": {
+      "Fine-grained Descriptions": [
+        "A small gastropod with a coiled, protective shell on its back.",
+        "Moves slowly using a muscular foot and leaves a slimy trail.",
+        "Found in gardens, forests, or damp habitats, often with varied shell patterns."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "hermit crab",
+          "Reason for Confusion": "Both have external shells and crawl slowly, living in similar coastal or damp habitats.",
+          "Negative Prompt": "A crustacean with a borrowed seashell on its back, scuttling on sandy or rocky shorelines."
+        }
+      ]
+    },
+    "slug": {
+      "Fine-grained Descriptions": [
+        "A shell-less gastropod with a soft, elongated body.",
+        "Secretes mucus for protection and to help movement.",
+        "Often found in moist gardens or under logs, leaving a slimy trail."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "leech",
+          "Reason for Confusion": "Both are soft-bodied, slimy creatures found in damp environments.",
+          "Negative Prompt": "A small, worm-like creature with suckers on each end, often found in freshwater habitats."
+        }
+      ]
+    },
+    "sea slug": {
+      "Fine-grained Descriptions": [
+        "A colorful, soft-bodied marine gastropod, often called a nudibranch.",
+        "Has striking patterns and exposed gills on its back.",
+        "Found in coral reefs and rocky seabeds, gliding gracefully over surfaces."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "flatworm",
+          "Reason for Confusion": "Both are small, vividly colored marine creatures with a flattened body shape.",
+          "Negative Prompt": "A simple, soft-bodied invertebrate with bright patterns, sliding along coral reefs."
+        }
+      ]
+    },
+    "American lobster": {
+      "Fine-grained Descriptions": [
+        "A large crustacean with two heavy claws and a dark blue-green shell that turns red when cooked.",
+        "Has a long, segmented body and grows to impressive sizes in cold Atlantic waters.",
+        "Widely fished for seafood, featuring spiny antennae and a muscular tail."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "spiny crab",
+          "Reason for Confusion": "Both are large crustaceans with protrusions on their shell, found in ocean environments.",
+          "Negative Prompt": "A crab with a tough, spiky carapace and long legs, dwelling on the ocean floor."
+        }
+      ]
+    },
+    "spiny lobster": {
+      "Fine-grained Descriptions": [
+        "A lobster-like crustacean with long, spiny antennae but lacking large claws.",
+        "Has a spiked exoskeleton and a somewhat flattened tail region.",
+        "Often found in warm waters, hiding in rocky crevices and reefs."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "slipper lobster",
+          "Reason for Confusion": "Both are clawless lobsters with thick exoskeletons found in tropical waters.",
+          "Negative Prompt": "A flattened lobster with broad, plate-like antennae and a sturdy shell, crawling along the seafloor."
+        }
+      ]
+    },
+    "black stork": {
+      "Fine-grained Descriptions": [
+        "A large wading bird with glossy black plumage on its back and wings, and white underparts.",
+        "Has a long, red beak and red legs, often found near wetlands.",
+        "Less common and more solitary than the white stork, with a slender silhouette."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "black crane",
+          "Reason for Confusion": "Both are tall, black-feathered wading birds with long legs and beaks.",
+          "Negative Prompt": "A tall, slender bird with dark plumage, wading through shallow waters in wetlands."
+        }
+      ]
+    },
+    "king penguin": {
+      "Fine-grained Descriptions": [
+        "A large penguin species with bright orange markings on its neck and head.",
+        "Tall and sleek, second only in size to the emperor penguin.",
+        "Breeds on subantarctic islands, forming large, noisy colonies."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "emperor penguin",
+          "Reason for Confusion": "Both are large, similarly patterned penguins with bright neck markings.",
+          "Negative Prompt": "A tall penguin with a deeper orange patch around the ears and a bulkier body in Antarctic regions."
+        }
+      ]
+    },
+    "albatross": {
+      "Fine-grained Descriptions": [
+        "A large seabird with long, narrow wings built for gliding across oceans.",
+        "Often white-bodied with dark wingtips, capable of traveling vast distances.",
+        "Known for a hooked beak and nesting on remote island colonies."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "giant petrel",
+          "Reason for Confusion": "Both are large, soaring seabirds with similar color patterns and oceanic habitats.",
+          "Negative Prompt": "A hefty seabird with a strong, hooked beak and dark-tipped feathers, scavenging near marine life."
+        }
+      ]
+    },
+    "dugong": {
+      "Fine-grained Descriptions": [
+        "A large, marine mammal with a stout, torpedo-shaped body and a downward-facing snout.",
+        "Feeds on seagrass in shallow coastal waters, known as a 'sea cow'.",
+        "Has paddle-like forelimbs and a fluked tail similar to a whale."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "manatee",
+          "Reason for Confusion": "Both are round-bodied, herbivorous marine mammals commonly referred to as sea cows.",
+          "Negative Prompt": "A bulbous, grey aquatic mammal with a wide snout and paddle-shaped tail, grazing in coastal rivers."
+        }
+      ]
+    },
+    "Chihuahua": {
+      "Fine-grained Descriptions": [
+        "A tiny dog breed with large, upright ears and a round head.",
+        "Often has short or long fur, known for being alert and bold.",
+        "Comes in various coat colors, frequently seen as a companion or lapdog."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Italian Greyhound",
+          "Reason for Confusion": "Both can be small and slender dogs with short coats, sometimes confused for toy breeds.",
+          "Negative Prompt": "A sleek, miniature sighthound with long legs and a delicate frame, often wearing a sweater in cool weather."
+        }
+      ]
+    },
+    "Yorkshire terrier": {
+      "Fine-grained Descriptions": [
+        "A small toy dog with silky, steel-blue and tan coat.",
+        "Known for its long, flowing hair, often tied in a topknot.",
+        "Energetic and bold, originally bred for catching rats in mills."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Maltese",
+          "Reason for Confusion": "Both are small companion dogs with long, silky coats and often groomed hair.",
+          "Negative Prompt": "A petite, white toy dog with a floor-length coat, often adorned with a topknot bow."
+        }
+      ]
+    },
+    "golden retriever": {
+      "Fine-grained Descriptions": [
+        "A medium-large dog with a wavy golden coat and a friendly demeanor.",
+        "Originally bred for retrieving waterfowl, known for intelligence and trainability.",
+        "Has a strong build with feathered tail and ears, often used as a family pet."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "English cocker spaniel",
+          "Reason for Confusion": "Both have golden or buff coats with feathery ears and gentle expressions.",
+          "Negative Prompt": "A medium-sized dog with long, silky ears and a wagging tail, often in golden or liver coloration."
+        }
+      ]
+    },
+    "Labrador retriever": {
+      "Fine-grained Descriptions": [
+        "A sturdy, medium-large dog with a short, dense coat, common in yellow, black, or chocolate.",
+        "Friendly, outgoing, and highly trainable, widely used as service dogs.",
+        "Has a strong otter-like tail and webbed feet for swimming."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Chesapeake Bay Retriever",
+          "Reason for Confusion": "Both are retriever breeds with a muscular build and water-friendly coats.",
+          "Negative Prompt": "A rugged, curly-coated dog with a broad chest and powerful stride, adept at waterfowl retrieval."
+        }
+      ]
+    },
+    "German shepherd": {
+      "Fine-grained Descriptions": [
+        "A large, agile dog with a tan and black coat and erect ears.",
+        "Highly intelligent and versatile, often used in police and service work.",
+        "Has a bushy tail and a sloping back, prized for loyalty and guarding instincts."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Belgian Malinois",
+          "Reason for Confusion": "Both are similarly colored, intelligent herding dogs frequently used in police and military roles.",
+          "Negative Prompt": "A lean, tan dog with a black mask and upright ears, prized for speed and precision in working tasks."
+        }
+      ]
+    },
+    "standard poodle": {
+      "Fine-grained Descriptions": [
+        "A medium to large dog with a curly, hypoallergenic coat.",
+        "Elegant posture and a long muzzle, often groomed with distinctive clips.",
+        "Intelligent, active, and skilled in various dog sports."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Portuguese water dog",
+          "Reason for Confusion": "Both are curly-coated dogs of similar size, often seen in water-related activities.",
+          "Negative Prompt": "A strong, curly-haired breed, typically black or brown, known for its love of swimming and retrieving."
+        }
+      ]
+    },
+    "tabby": {
+      "Fine-grained Descriptions": [
+        "A domestic cat with distinctive stripes, swirls, or spots on its fur.",
+        "Patterns can include classic, mackerel, or spotted varieties, often with an 'M' marking on the forehead.",
+        "Comes in many colors, but commonly brown or grey with darker stripes."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Bengal cat",
+          "Reason for Confusion": "Both have spotted or striped coats with striking patterns that can look similar.",
+          "Negative Prompt": "A sleek, energetic cat with leopard-like rosettes and a bright, glossy coat, known for its playful nature."
+        }
+      ]
+    },
+    "Persian cat": {
+      "Fine-grained Descriptions": [
+        "A long-haired cat breed with a round face and short muzzle.",
+        "Has a thick, luxurious coat requiring regular grooming.",
+        "Known for a calm demeanor and a flat, pansy-like face."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Himalayan cat",
+          "Reason for Confusion": "Both are fluffy cats with similar facial structure, but Himalayans have color-point patterns.",
+          "Negative Prompt": "A long-haired cat with creamy fur and darker points on the face, ears, paws, and tail."
+        }
+      ]
+    },
+    "Egyptian cat": {
+      "Fine-grained Descriptions": [
+        "An elegant, short-haired cat breed that may refer to the Egyptian Mau, known for natural spotting.",
+        "Often silver or bronze with distinctive dark markings and a graceful build.",
+        "Has a striking, alert expression, large ears, and a lithe, athletic body."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Abyssinian cat",
+          "Reason for Confusion": "Both are lean, athletic cats with a regal stance and roots traced to northeast Africa.",
+          "Negative Prompt": "A sleek, ticked-coat cat with large ears and a lively curiosity, known as the 'clown of the cat kingdom.'"
+        }
+      ]
+    },
+    "cougar": {
+      "Fine-grained Descriptions": [
+        "A large, solid-colored wild cat with a tawny coat and a long tail.",
+        "Also called a mountain lion, found in the Americas.",
+        "Has a muscular build and rounded ears, typically solitary."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "bobcat",
+          "Reason for Confusion": "Both are North American wild cats with similar coloration, though bobcats are smaller and have a shorter tail.",
+          "Negative Prompt": "A medium-sized, spotted wild cat with tufted ears and a distinctive bobbed tail, found in forests and swamps."
+        }
+      ]
+    },
+    "lion": {
+      "Fine-grained Descriptions": [
+        "A large, muscular cat with a tawny coat, the males often have a dark mane.",
+        "Lives in prides and roams the savannas of Africa.",
+        "Known as the 'king of the jungle,' recognized for its majestic roar."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "tiger",
+          "Reason for Confusion": "Both are big cats, apex predators, and have a similar body shape and formidable presence.",
+          "Negative Prompt": "A large striped cat with orange fur and black stripes, often solitary in Asian jungles."
+        }
+      ]
+    },
+    "brown bear": {
+      "Fine-grained Descriptions": [
+        "A large, heavy-built bear with brown fur, including grizzly and Eurasian varieties.",
+        "Can have a prominent shoulder hump and a concave facial profile.",
+        "Omnivorous, found in forests, mountains, and tundra regions."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "black bear",
+          "Reason for Confusion": "Both are bear species with overlapping habitats and color can be confusing in certain individuals.",
+          "Negative Prompt": "A medium-sized bear with dark black fur, often found in forested regions and known to climb trees."
+        }
+      ]
+    },
+    "ladybug": {
+      "Fine-grained Descriptions": [
+        "A small, round beetle typically red or orange with black spots.",
+        "Known as a beneficial insect, feeding on plant pests like aphids.",
+        "Has a dome-shaped shell that hides translucent wings underneath."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "firebug",
+          "Reason for Confusion": "Both are small, red insects with black patterns, commonly found in gardens.",
+          "Negative Prompt": "A flattened, red-and-black bug with distinct symmetrical markings, often clustering around tree bases."
+        }
+      ]
+    },
+    "fly": {
+      "Fine-grained Descriptions": [
+        "A small, winged insect with large, compound eyes and transparent wings.",
+        "Common household pest that feeds on organic material.",
+        "Has rapid flight and can reproduce quickly."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "gnat",
+          "Reason for Confusion": "Both are tiny flying insects often found near decaying matter or moist environments.",
+          "Negative Prompt": "A minuscule insect with slender bodies and narrow wings, often hovering in swarms near damp areas."
+        }
+      ]
+    },
+    "bee": {
+      "Fine-grained Descriptions": [
+        "A flying insect with a fuzzy thorax and black-and-yellow striped abdomen.",
+        "Lives in colonies, producing honey and pollinating flowers.",
+        "Has a barbed stinger for defense, found near hives or flowering plants."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "wasp",
+          "Reason for Confusion": "Both are stinging insects with a similar body shape and yellow-and-black coloration.",
+          "Negative Prompt": "A slender, smooth-bodied insect with a narrow waist and a painful sting, often building papery nests."
+        }
+      ]
+    },
+    "grasshopper": {
+      "Fine-grained Descriptions": [
+        "A medium-sized insect with powerful hind legs for jumping.",
+        "Often green or brown, camouflaged among grasses.",
+        "Has long antennae and can produce chirping sounds by rubbing wings."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "locust",
+          "Reason for Confusion": "Both are grasshopper-like insects, but locusts can swarm in large numbers.",
+          "Negative Prompt": "A swarming grasshopper species that changes color and behavior when in dense groups, causing crop damage."
+        }
+      ]
+    },
+    "walking stick": {
+      "Fine-grained Descriptions": [
+        "A stick-like insect with a long, thin body that mimics twigs.",
+        "Brown or green coloration for camouflage among branches.",
+        "Moves slowly and can remain motionless for extended periods."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "leaf insect",
+          "Reason for Confusion": "Both are masters of camouflage, resembling plant matter, but the leaf insect has leafy appendages.",
+          "Negative Prompt": "A green insect with flattened, leaf-like limbs blending perfectly with foliage."
+        }
+      ]
+    },
+    "cockroach": {
+      "Fine-grained Descriptions": [
+        "A flat-bodied, fast-moving insect with long antennae, typically brown or black.",
+        "Nocturnal and often associated with human dwellings.",
+        "Tough exoskeleton and can survive in a wide range of environments."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "water bug",
+          "Reason for Confusion": "Both are large, brown insects often mistaken for each other in homes.",
+          "Negative Prompt": "A robust aquatic insect with a flattened body and paddle-like hind legs, lurking near water."
+        }
+      ]
+    },
+    "mantis": {
+      "Fine-grained Descriptions": [
+        "A slender insect with folded forelegs held in a 'praying' posture.",
+        "Has a triangular head with large compound eyes, a predatory ambush hunter.",
+        "Often green or brown, blending into foliage to catch prey."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "mantidfly",
+          "Reason for Confusion": "Both have raptorial forelegs and mantis-like appearance, but mantidflies are actually related to lacewings.",
+          "Negative Prompt": "A delicate insect with transparent wings and extended raptorial front legs, resembling a cross between a mantis and a fly."
+        }
+      ]
+    },
+    "dragonfly": {
+      "Fine-grained Descriptions": [
+        "A fast-flying insect with a slender abdomen and two pairs of transparent wings.",
+        "Has large, bulging compound eyes and hunts near ponds or lakes.",
+        "Often brightly colored, hovering and darting gracefully over water surfaces."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "damselfly",
+          "Reason for Confusion": "Both are winged insects near water with slender bodies, but damselflies fold wings over their back at rest.",
+          "Negative Prompt": "A slender insect with delicate wings held closed when perched, found flitting near streams."
+        }
+      ]
+    },
+    "monarch": {
+      "Fine-grained Descriptions": [
+        "A bright orange butterfly with black veins and white spots along the wing edges.",
+        "Famous for its long-distance migration across North America.",
+        "Caterpillars feed on milkweed, storing toxins as a defense."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "painted lady",
+          "Reason for Confusion": "Both are orange-and-black butterflies with similar size and shape, often seen migrating.",
+          "Negative Prompt": "An orange-brown butterfly with black and white spots on the forewings, found worldwide in various habitats."
+        }
+      ]
+    },
+    "sulphur butterfly": {
+      "Fine-grained Descriptions": [
+        "A small to medium-sized butterfly with lemon-yellow or pale greenish wings.",
+        "Often seen fluttering around open fields and gardens in sunny weather.",
+        "Has a delicate, fluttery flight and may show slight orange markings on the wings."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "swallowtail butterfly",
+          "Reason for Confusion": "Both are bright-colored butterflies with large wings, found near flowers.",
+          "Negative Prompt": "A large, striking butterfly with elongated tails on the hindwings, often vivid yellow or black patterns."
+        }
+      ]
+    },
+    "sea cucumber": {
+      "Fine-grained Descriptions": [
+        "A soft-bodied echinoderm with an elongated, tubular shape.",
+        "Often found on the seafloor, feeding on detritus and plankton.",
+        "Can expel internal organs as a defense mechanism, then regenerate them."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "sea sponge",
+          "Reason for Confusion": "Both are sedentary, soft-bodied marine animals that can appear similarly shapeless on the ocean floor.",
+          "Negative Prompt": "A porous, sessile creature anchored to rocks, filtering nutrients from passing water."
+        }
+      ]
+    },
+    "guinea pig": {
+      "Fine-grained Descriptions": [
+        "A small, stocky rodent with a short face and no visible tail.",
+        "Often kept as a household pet, known for vocal chirps and squeaks.",
+        "Has various coat lengths and colors, from smooth to long-haired varieties."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "hamster",
+          "Reason for Confusion": "Both are small, furry rodents often kept as pets with somewhat similar body shapes.",
+          "Negative Prompt": "A tiny rodent with expandable cheek pouches and a short tail, commonly found in cages running on wheels."
+        }
+      ]
+    },
+    "hog": {
+      "Fine-grained Descriptions": [
+        "A domesticated pig that can grow quite large with a stout body and a short, curled tail.",
+        "Has coarse bristles, a snout for rooting, and a robust build.",
+        "Raised for pork or sometimes seen feral, causing damage to fields."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "warthog",
+          "Reason for Confusion": "Both are pig-like animals with tusks and a robust body, living on different continents.",
+          "Negative Prompt": "A wild African pig with a large head, curved tusks, and warty protuberances, grazing on savannas."
+        }
+      ]
+    },
+    "ox": {
+      "Fine-grained Descriptions": [
+        "A large, domesticated bovine often used as a draft animal.",
+        "Typically has a strong, muscular build and long horns or horn stumps.",
+        "Known for pulling heavy loads or plowing fields, docile in temperament."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "water buffalo",
+          "Reason for Confusion": "Both are large bovines used in agriculture with curved horns, sometimes confused in appearance.",
+          "Negative Prompt": "A hefty, dark-coated bovine with sweeping, crescent-shaped horns, often submerged in muddy waters."
+        }
+      ]
+    },
+    "bison": {
+      "Fine-grained Descriptions": [
+        "A massive, hump-backed bovine with shaggy fur around its head and shoulders.",
+        "North American bison (buffalo) roam grasslands in herds.",
+        "Has a thick beard and a large head with short horns."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "yak",
+          "Reason for Confusion": "Both are large, shaggy bovines living in cold climates with a bulky frame.",
+          "Negative Prompt": "A long-haired, thick-bodied bovine native to high-altitude regions, often carrying heavy loads."
+        }
+      ]
+    },
+    "bighorn": {
+      "Fine-grained Descriptions": [
+        "A wild sheep with massive curved horns, found in mountainous areas.",
+        "Has a sturdy, muscular body and brownish coat with a white rump.",
+        "Males engage in head-butting during rut to establish dominance."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "mouflon",
+          "Reason for Confusion": "Both are wild sheep species with curled horns and similar coloration.",
+          "Negative Prompt": "A wild sheep with spiral horns and a dark, reddish-brown coat, roaming hilly or mountainous terrain."
+        }
+      ]
+    },
+    "gazelle": {
+      "Fine-grained Descriptions": [
+        "A slender antelope with graceful legs and ringed horns.",
+        "Lives in open grasslands and savannas, known for swift running and bounding leaps.",
+        "Has a tan coat with a white belly and distinct dark side stripes."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "impala",
+          "Reason for Confusion": "Both are medium-sized African antelopes with slender builds and horns, commonly seen in herds.",
+          "Negative Prompt": "A reddish-brown antelope with lyre-shaped horns and a characteristic 'M' pattern on the rear."
+        }
+      ]
+    },
+    "Arabian camel": {
+      "Fine-grained Descriptions": [
+        "A desert mammal with a single hump for fat storage, also called a dromedary.",
+        "Has long legs, a curved neck, and thick eyelashes for sand protection.",
+        "Domesticated for transport and milk, well-adapted to arid climates."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "llama",
+          "Reason for Confusion": "Both are large, domesticated ungulates with long necks, used as pack animals, but from different continents.",
+          "Negative Prompt": "A tall, woolly South American camelid with large ears and a calm disposition, often used to carry loads."
+        }
+      ]
+    },
+    "orangutan": {
+      "Fine-grained Descriptions": [
+        "A large, red-haired ape native to the rainforests of Borneo and Sumatra.",
+        "Known for its long arms and hand-like feet, spends most time in trees.",
+        "Intelligent, with a high forehead and expressive eyes."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "gibbon",
+          "Reason for Confusion": "Both are tree-dwelling apes in Southeast Asia with long arms and agile brachiation.",
+          "Negative Prompt": "A smaller ape with very long arms and no tail, swinging swiftly through forest canopies."
+        }
+      ]
+    },
+    "chimpanzee": {
+      "Fine-grained Descriptions": [
+        "A highly intelligent great ape with black hair and human-like hands.",
+        "Lives in social groups, found in African forests and savannas.",
+        "Uses tools and displays complex social behaviors."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "bonobo",
+          "Reason for Confusion": "Both are closely related African apes with similar appearance and behavior.",
+          "Negative Prompt": "A smaller, slender ape with dark facial features, living in matriarchal groups in the Congo Basin."
+        }
+      ]
+    },
+    "baboon": {
+      "Fine-grained Descriptions": [
+        "A large Old World monkey with a long, dog-like snout and powerful jaws.",
+        "Forms complex social hierarchies in troops, typically found on the savannah.",
+        "Has a bare, calloused rump and strong limbs for terrestrial movement."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "mandrill",
+          "Reason for Confusion": "Both are large, ground-dwelling African monkeys with prominent muzzles and social groups.",
+          "Negative Prompt": "A colorful primate with a bright blue and red face, a stocky body, and a short tail, inhabiting rainforests."
+        }
+      ]
+    },
+    "African elephant": {
+      "Fine-grained Descriptions": [
+        "The largest land mammal with grey skin, large ears, and a long trunk.",
+        "Has curved tusks and a prominent forehead, found in sub-Saharan Africa.",
+        "Lives in matriarchal herds, known for intelligence and strong familial bonds."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Asian elephant",
+          "Reason for Confusion": "Both are massive elephants with trunks and tusks, but differ in ear size and skull shape.",
+          "Negative Prompt": "A slightly smaller elephant with smaller, rounded ears and a two-domed forehead, used often in logging or ceremonies."
+        }
+      ]
+    },
+    "lesser panda": {
+      "Fine-grained Descriptions": [
+        "Also called the red panda, a small, reddish-brown mammal with a bushy ringed tail.",
+        "Lives in Asian bamboo forests, feeding primarily on bamboo shoots.",
+        "Has a masked face with white markings and a waddling gait."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "raccoon",
+          "Reason for Confusion": "Both have a masked facial pattern, ringed tail, and can climb trees.",
+          "Negative Prompt": "A nocturnal omnivore with greyish fur, a banded tail, and a black facial mask, often scavenging near homes."
+        }
+      ]
+    },
+    "abacus": {
+      "Fine-grained Descriptions": [
+        "An ancient counting device with beads sliding on rods.",
+        "Often wooden-framed, used for basic arithmetic operations.",
+        "Prominent in some traditional markets or as a learning tool."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "calculator",
+          "Reason for Confusion": "Both are tools for arithmetic, but one is electronic while the other is manual.",
+          "Negative Prompt": "A small, handheld electronic device with a digital display and keypad for mathematical calculations."
+        }
+      ]
+    },
+    "academic gown": {
+      "Fine-grained Descriptions": [
+        "A long, flowing robe worn during graduation or formal academic ceremonies.",
+        "Often black, with variations in color or trim denoting different fields of study.",
+        "Typically accompanied by a mortarboard cap or hood."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "judge's robe",
+          "Reason for Confusion": "Both are long, formal black garments worn in official contexts.",
+          "Negative Prompt": "A plain black robe with wide sleeves, worn by a judge presiding over court proceedings."
+        }
+      ]
+    },
+    "altar": {
+      "Fine-grained Descriptions": [
+        "A raised, often decorated table or platform used in religious ceremonies.",
+        "Commonly found at the front of a church or temple.",
+        "May hold religious objects such as candles, chalices, and sacred texts."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "shrine",
+          "Reason for Confusion": "Both are religious focal points with sacred objects, but a shrine is more of a dedicated holy place or cabinet.",
+          "Negative Prompt": "A sacred spot or small structure housing revered items or images, often the center of worship or offerings."
+        }
+      ]
+    },
+    "apron": {
+      "Fine-grained Descriptions": [
+        "A protective garment worn over the front of the body while cooking or working.",
+        "Often tied at the waist, sometimes covering the chest, made from cloth or waterproof material.",
+        "Used to keep clothing clean and may have pockets for utensils."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "chef's coat",
+          "Reason for Confusion": "Both are kitchen attire offering protection, but a chef's coat is a full garment with sleeves.",
+          "Negative Prompt": "A double-breasted white jacket with long sleeves and heat-resistant buttons, signifying professional kitchen attire."
+        }
+      ]
+    },
+    "backpack": {
+      "Fine-grained Descriptions": [
+        "A cloth or leather bag carried on the back by two shoulder straps.",
+        "Used for carrying personal items or supplies, from school books to hiking gear.",
+        "Varies in size, often includes multiple compartments and zippers."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "messenger bag",
+          "Reason for Confusion": "Both are personal carry bags, but a messenger bag is worn over one shoulder with a crossbody strap.",
+          "Negative Prompt": "A rectangular bag with a long shoulder strap, worn across the body, often used for documents or laptops."
+        }
+      ]
+    },
+    "bannister": {
+      "Fine-grained Descriptions": [
+        "A handrail running along a staircase or balcony for support.",
+        "Typically made of wood, metal, or stone, attached to balusters or posts.",
+        "Helps prevent falls and adds decorative detail to staircases."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "handrail",
+          "Reason for Confusion": "Both provide support while ascending or descending, but a handrail can exist without spindles or a full bannister structure.",
+          "Negative Prompt": "A simple rail mounted on brackets along walls or walkways for balance and safety."
+        }
+      ]
+    },
+    "barbershop": {
+      "Fine-grained Descriptions": [
+        "A small business offering haircuts, beard trimming, and shaves.",
+        "Often features a striped barber's pole outside.",
+        "Has chairs, mirrors, and grooming equipment, with a classic, nostalgic atmosphere."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "hair salon",
+          "Reason for Confusion": "Both provide hair services, but a salon caters to a broader clientele with styling, coloring, etc.",
+          "Negative Prompt": "A stylish interior with multiple stations, hair products, and specialized treatments for various hair types."
+        }
+      ]
+    },
+    "barn": {
+      "Fine-grained Descriptions": [
+        "A large farm building used to store hay, equipment, or house livestock.",
+        "Typically wooden with a high roof and wide doors, often painted red.",
+        "Commonly found in rural areas, sometimes with a loft for extra storage."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "stable",
+          "Reason for Confusion": "Both are farm structures for animals, but stables are specifically designed for housing horses.",
+          "Negative Prompt": "A long, low building with individual stalls, bedding, and feed storage, dedicated to equine care."
+        }
+      ]
+    },
+    "barrel": {
+      "Fine-grained Descriptions": [
+        "A cylindrical wooden container bound with metal hoops.",
+        "Traditionally used for storing liquids like wine or whiskey.",
+        "Rounded sides allow rolling and efficient stacking in cellars."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "cask",
+          "Reason for Confusion": "Both are wooden containers used for storing spirits or wine, but casks can vary in shape and size from typical barrels.",
+          "Negative Prompt": "A stout, wooden vessel with curved staves and metal hoops, often used to mature aging beverages."
+        }
+      ]
+    },
+    "basketball": {
+      "Fine-grained Descriptions": [
+        "An orange, spherical ball with black rib lines, used in the sport of basketball.",
+        "Typically made of rubber or leather, providing good grip and bounce.",
+        "Standard size fits comfortably in two hands and is dribbled on a court."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "volleyball",
+          "Reason for Confusion": "Both are similar-sized spherical sports balls, but volleyballs are lighter and designed for volleying over a net.",
+          "Negative Prompt": "A lighter, white or multicolored ball with a smooth surface, used for passing and spiking in court or beach settings."
+        }
+      ]
+    },
+    "bathtub": {
+      "Fine-grained Descriptions": [
+        "A large, fixed basin used for soaking and bathing in water.",
+        "Usually made of porcelain or acrylic, with a smooth, curved interior.",
+        "Often installed in a bathroom with faucets and a drain at one end."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "hot tub",
+          "Reason for Confusion": "Both involve submerging in heated water and can look similar in shape, though hot tubs are typically larger and used socially.",
+          "Negative Prompt": "A round or square heated tub with jets, often situated outdoors for communal relaxation."
+        }
+      ]
+    },
+    "beach wagon": {
+      "Fine-grained Descriptions": [
+        "A station-wagon style vehicle with extra cargo space, often used for beach outings.",
+        "Has a rear hatch and ample room for surfboards, coolers, and gear.",
+        "Typically has a roof rack and durable interior for sand and wet items."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "SUV",
+          "Reason for Confusion": "Both are large family vehicles with a spacious trunk area, commonly used for travel.",
+          "Negative Prompt": "A tall, versatile vehicle with high ground clearance and ample cargo space, often used off-road."
+        }
+      ]
+    },
+    "beacon": {
+      "Fine-grained Descriptions": [
+        "A bright light or signal placed high to guide or warn.",
+        "Often found on towers, lighthouses, or mountaintops.",
+        "Used historically for navigation or as an alert signal."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "lighthouse lamp",
+          "Reason for Confusion": "Both emit guiding lights over distances, but the lighthouse lamp is specifically mounted in a coastal tower.",
+          "Negative Prompt": "A powerful rotating lamp fixed atop a coastal structure to guide ships through treacherous waters."
+        }
+      ]
+    },
+    "beaker": {
+      "Fine-grained Descriptions": [
+        "A cylindrical glass container with a flat bottom and pouring lip, used in laboratories.",
+        "Has measurement markings on the side and is heat-resistant for scientific experiments.",
+        "Commonly used to mix or heat chemicals in scientific settings."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "graduated cylinder",
+          "Reason for Confusion": "Both are marked glassware for measuring liquids, but a graduated cylinder is taller and narrower.",
+          "Negative Prompt": "A tall, cylindrical measuring tool with precise volume markings for accurate liquid measurements."
+        }
+      ]
+    },
+    "beer bottle": {
+      "Fine-grained Descriptions": [
+        "A narrow-necked glass container, typically brown or green, used to hold beer.",
+        "Often sealed with a metal cap to preserve carbonation.",
+        "Comes in various sizes but generally small enough for a single serving."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "cider bottle",
+          "Reason for Confusion": "Both often share similar glass shapes, coloration, and capped tops for carbonated drinks.",
+          "Negative Prompt": "A slender, tinted bottle containing a fermented apple beverage, sealed with a metal cap."
+        }
+      ]
+    },
+    "bikini": {
+      "Fine-grained Descriptions": [
+        "A two-piece women's swimsuit with separate top and bottom.",
+        "Often made of quick-drying, stretchy fabric in various colors or patterns.",
+        "Commonly worn at beaches and pools for sunbathing or swimming."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "tankini",
+          "Reason for Confusion": "Both are women's swimsuits with two separate pieces, but a tankini has a longer top for more coverage.",
+          "Negative Prompt": "A swim set with a tank-style top and a matching bottom, offering moderate coverage around the torso."
+        }
+      ]
+    },
+    "binoculars": {
+      "Fine-grained Descriptions": [
+        "A handheld optical device with two parallel telescopes for magnified vision at a distance.",
+        "Often used for birdwatching, sports events, or military observation.",
+        "Features a central focus wheel and adjustable eye cups."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "monocular",
+          "Reason for Confusion": "Both are used for magnification, but a monocular has a single lens tube instead of two.",
+          "Negative Prompt": "A small, single-barrel telescope held to one eye to view distant objects with magnification."
+        }
+      ]
+    },
+    "birdhouse": {
+      "Fine-grained Descriptions": [
+        "A small shelter or nesting box designed for birds to roost or raise chicks.",
+        "Typically made of wood with a small entrance hole and a perch.",
+        "Often hung from trees or mounted on poles to attract backyard birds."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "bat house",
+          "Reason for Confusion": "Both are wooden structures attached to trees or walls for animal roosting, but bat houses have narrower crevices.",
+          "Negative Prompt": "A flat, vertical wooden shelter with a small opening on the bottom, providing a roosting spot for bats."
+        }
+      ]
+    },
+    "bow tie": {
+      "Fine-grained Descriptions": [
+        "A small, bow-shaped necktie often worn with formal or semi-formal attire.",
+        "Has two loops connected in the center, wrapping around the collar.",
+        "Can be pre-tied or self-tied, available in various colors and patterns."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "cravat",
+          "Reason for Confusion": "Both are neckwear items that can be worn for formal occasions, but a cravat is longer and tucked into the collar.",
+          "Negative Prompt": "A wide piece of fabric wrapped around the neck and tucked into a shirt front, creating a decorative knot."
+        }
+      ]
+    },
+    "brass": {
+      "Fine-grained Descriptions": [
+        "A bright, gold-colored alloy of copper and zinc, often used for musical instruments or ornaments.",
+        "Has a distinct metallic sheen and can be polished to a high luster.",
+        "Commonly used for decorative fixtures like door handles and candlesticks."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "bronze",
+          "Reason for Confusion": "Both are copper-based alloys with a similar golden-brown appearance, often used in sculptures or fixtures.",
+          "Negative Prompt": "A warm, brownish metal alloy of copper and tin, commonly seen in statues and historical artifacts."
+        }
+      ]
+    },
+    "broom": {
+      "Fine-grained Descriptions": [
+        "A cleaning tool with stiff bristles attached to a long handle, used for sweeping floors.",
+        "Traditionally made of bound straw, now also synthetic fibers.",
+        "Used to gather dirt and debris into a pile for disposal."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "mop",
+          "Reason for Confusion": "Both are floor-cleaning tools with long handles, but a mop uses absorbent material for wet cleaning.",
+          "Negative Prompt": "A cleaning implement with a sponge or yarn head, dipped in water to wash and wipe floors."
+        }
+      ]
+    },
+    "bucket": {
+      "Fine-grained Descriptions": [
+        "A cylindrical container with a handle, used to carry liquids or materials.",
+        "Often made of plastic or metal, sometimes has measurement marks on the side.",
+        "Commonly used for cleaning tasks or transporting water and sand."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "pail",
+          "Reason for Confusion": "Both are containers with handles, but 'pail' often refers to a smaller, lighter version, sometimes specifically for children's sand play.",
+          "Negative Prompt": "A lightweight, open-top container with a bail handle, commonly used by kids at the beach."
+        }
+      ]
+    },
+    "bullet train": {
+      "Fine-grained Descriptions": [
+        "A high-speed passenger train with a sleek, aerodynamic design.",
+        "Operates on specialized tracks, often exceeding speeds of 200 mph.",
+        "Typically found in countries like Japan, known as Shinkansen."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "maglev train",
+          "Reason for Confusion": "Both are high-speed train systems with modern, streamlined looks, though maglevs use magnetic levitation instead of wheels.",
+          "Negative Prompt": "A futuristic floating train system propelled by magnetic forces along an elevated guideway."
+        }
+      ]
+    },
+    "butcher shop": {
+      "Fine-grained Descriptions": [
+        "A retail store specializing in the preparation and sale of meat cuts.",
+        "Often displays various cuts of beef, pork, and poultry in refrigerated cases.",
+        "May feature a counter where customers request custom cuts or special orders."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "deli",
+          "Reason for Confusion": "Both sell meat products, but a deli focuses on prepared foods and cold cuts, not raw meat.",
+          "Negative Prompt": "A shop offering sliced meats, cheeses, and sandwiches, often with a small seating area for quick meals."
+        }
+      ]
+    },
+    "candle": {
+      "Fine-grained Descriptions": [
+        "A cylinder of wax with a central wick that produces light when lit.",
+        "Comes in various sizes, shapes, and scents for decorative or religious use.",
+        "Slowly melts as it burns, releasing heat and possibly fragrance."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "oil lamp",
+          "Reason for Confusion": "Both produce light through an ignited wick, but an oil lamp uses liquid fuel instead of wax.",
+          "Negative Prompt": "A small, open container filled with oil, featuring a wick that draws fuel for a steady flame."
+        }
+      ]
+    },
+    "cannon": {
+      "Fine-grained Descriptions": [
+        "A large, heavy artillery weapon designed to fire projectiles at a distance.",
+        "Historically made of cast iron or bronze, mounted on wheels or naval carriages.",
+        "Uses explosive charges to propel cannonballs or shells."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "howitzer",
+          "Reason for Confusion": "Both are artillery pieces that fire large projectiles, but howitzers have a shorter barrel and higher trajectory.",
+          "Negative Prompt": "A short-barreled artillery device designed for high-angle fire, lobbing shells onto targets behind obstacles."
+        }
+      ]
+    },
+    "cardigan": {
+      "Fine-grained Descriptions": [
+        "A knitted sweater that opens at the front, usually with buttons or a zipper.",
+        "Often worn as a light layer, suitable for casual or semi-formal occasions.",
+        "Can be made from wool, cotton, or synthetic fibers, sometimes with pockets."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "pullover",
+          "Reason for Confusion": "Both are sweaters, but a pullover has no front opening and is slipped over the head.",
+          "Negative Prompt": "A one-piece sweater that must be pulled over the head, often with a ribbed collar or crew neck."
+        }
+      ]
+    },
+    "cash machine": {
+      "Fine-grained Descriptions": [
+        "An automated teller machine (ATM) used to withdraw cash or handle bank transactions.",
+        "Often found in public places, featuring a card slot, keypad, and screen.",
+        "Allows customers to check balances, deposit funds, or transfer money without a human teller."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "vending machine",
+          "Reason for Confusion": "Both are free-standing machines with a keypad or touch interface, but vending machines dispense goods like snacks or drinks, not cash.",
+          "Negative Prompt": "A tall, automated machine that accepts payments and dispenses packaged items through a front retrieval door."
+        }
+      ]
+    },
+    "CD player": {
+      "Fine-grained Descriptions": [
+        "A device designed to read Compact Discs and play audio files.",
+        "Typically has a disc tray or slot-loading mechanism and playback controls.",
+        "Uses an optical laser to scan the digital data on the disc."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "DVD player",
+          "Reason for Confusion": "Both are disc-reading devices that look similar, but a DVD player can handle video discs as well.",
+          "Negative Prompt": "A slim, rectangular device with a disc tray, playing movie DVDs and sometimes audio CDs through a TV setup."
+        }
+      ]
+    },
+    "chain": {
+      "Fine-grained Descriptions": [
+        "A series of linked metal loops used for fastening or lifting.",
+        "Commonly made of steel or iron, varying in thickness and length.",
+        "Used in securing objects, pulling, or transmitting mechanical power."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "rope",
+          "Reason for Confusion": "Both can be used to tie or secure objects, but rope is made of twisted or braided fibers, not metal links.",
+          "Negative Prompt": "A thick cord composed of entwined strands of natural or synthetic fibers, used for binding or lifting."
+        }
+      ]
+    },
+    "chest": {
+      "Fine-grained Descriptions": [
+        "A large, sturdy box with a hinged lid, often used for storage or transport.",
+        "Traditionally made of wood, sometimes reinforced with metal bands.",
+        "Can store clothing, valuables, or tools, often found at the foot of a bed."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "trunk",
+          "Reason for Confusion": "Both are sizable storage containers with a lid, often wooden or metal, used for travel or safekeeping.",
+          "Negative Prompt": "A heavy-duty storage box, frequently with handles on the sides, used for luggage or long-term storage."
+        }
+      ]
+    },
+    "Christmas stocking": {
+      "Fine-grained Descriptions": [
+        "A large, sock-shaped pouch hung by the fireplace during the holiday season.",
+        "Traditionally filled with small gifts or treats on Christmas morning.",
+        "Often decorated with festive designs, names, or pom-poms."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "Santa hat",
+          "Reason for Confusion": "Both are red, festive Christmas items with white trim, commonly displayed during the holidays.",
+          "Negative Prompt": "A conical, bright red hat with a white fur trim and a fluffy pom-pom on the tip."
+        }
+      ]
+    },
+    "cliff dwelling": {
+      "Fine-grained Descriptions": [
+        "An ancient home built into or under the overhang of a cliff face.",
+        "Often constructed by indigenous peoples, featuring stone or adobe walls.",
+        "Provides natural shelter and insulation, often accessed by ladders or pathways."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "cave house",
+          "Reason for Confusion": "Both involve living spaces within rock formations, but a cave house is a naturally hollowed space adapted for habitation.",
+          "Negative Prompt": "A natural cavern or hollowed-out space converted into a dwelling, sometimes with man-made entrances and windows."
+        }
+      ]
+    },
+    "computer keyboard": {
+      "Fine-grained Descriptions": [
+        "A flat input device with an arrangement of keys for typing and commands.",
+        "Connects to a computer via USB cable or wireless signal.",
+        "Keys are labeled with letters, numbers, and symbols, often including special function keys."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "typewriter",
+          "Reason for Confusion": "Both have a set of keys arranged for text input, but a typewriter prints characters directly on paper without electronic components.",
+          "Negative Prompt": "A mechanical device with metal type bars or ball heads striking ink onto paper as keys are pressed."
+        }
+      ]
+    },
+    "confectionery": {
+      "Fine-grained Descriptions": [
+        "A shop or section selling sweets, chocolates, and candy treats.",
+        "Displays colorful arrays of candies, sugar confections, and pastries.",
+        "Often has glass cases or jars filled with assorted sweet goods."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "bakery",
+          "Reason for Confusion": "Both offer sweet products, but a bakery focuses on bread, cakes, and pastries made from dough or batter.",
+          "Negative Prompt": "A storefront filled with the aroma of fresh bread and pastries, showcasing various baked goods in display cases."
+        }
+      ]
+    },
+    "convertible": {
+      "Fine-grained Descriptions": [
+        "A car with a retractable or removable roof, allowing open-air driving.",
+        "Usually has two doors and a sleek, sporty design.",
+        "The soft or hard top can be folded down or stowed electronically."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "roadster",
+          "Reason for Confusion": "Both are sporty, open-top cars, but a roadster typically has only two seats and a simpler roof mechanism.",
+          "Negative Prompt": "A lightweight two-seater sports car with a minimalistic folding roof, built for spirited driving."
+        }
+      ]
+    },
+    "crane": {
+      "Fine-grained Descriptions": [
+        "A tall, mechanical structure used for lifting and moving heavy loads at construction sites.",
+        "Features a long boom or jib with a hoist cable and pulley system.",
+        "Operates via counterweights and motors to handle large building materials."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "telehandler",
+          "Reason for Confusion": "Both are construction machines used for lifting, but a telehandler is more like a forklift with an extending boom.",
+          "Negative Prompt": "A rough-terrain vehicle with a telescoping boom on the front, capable of lifting heavy materials at various angles."
+        }
+      ]
+    },
+    "dam": {
+      "Fine-grained Descriptions": [
+        "A large barrier built across a river or stream to control water flow and create a reservoir.",
+        "Often made of concrete or earth, providing hydroelectric power and flood control.",
+        "Has spillways or gates to manage water levels and discharge."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "levee",
+          "Reason for Confusion": "Both are water-control structures, but a levee is an embankment built along riverbanks to prevent flooding rather than blocking the flow entirely.",
+          "Negative Prompt": "A long earthen or concrete embankment running parallel to a river, preventing overflow onto adjacent land."
+        }
+      ]
+    },
+    "desk": {
+      "Fine-grained Descriptions": [
+        "A piece of furniture with a flat work surface and often drawers or compartments.",
+        "Used for writing, computing, or office tasks, typically made of wood or metal.",
+        "Comes in various designs such as standing desks or executive desks."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "table",
+          "Reason for Confusion": "Both have flat surfaces for placing items, but a desk usually includes storage and is intended for work or study.",
+          "Negative Prompt": "A simple piece of furniture with a flat top supported by legs, used for dining or general use."
+        }
+      ]
+    },
+    "dining table": {
+      "Fine-grained Descriptions": [
+        "A table designed for meals, often seating multiple people.",
+        "Typically made of wood or glass, may have extension leaves for larger gatherings.",
+        "Central in a dining room, sometimes decorated with a tablecloth or centerpiece."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "kitchen island",
+          "Reason for Confusion": "Both provide a surface for food-related activities, but a kitchen island is usually built-in with storage and countertops.",
+          "Negative Prompt": "A fixed countertop structure in the kitchen, often equipped with cabinets or appliances, used for meal prep and casual dining."
+        }
+      ]
+    },
+    "drumstick": {
+      "Fine-grained Descriptions": [
+        "A stick or mallet used by drummers to strike the drum heads or cymbals.",
+        "Usually made of wood or synthetic materials, tapered towards the tip.",
+        "Often sold in pairs, varying in length, diameter, and tip shape for different music styles."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "mallet",
+          "Reason for Confusion": "Both are percussion implements that strike instruments, but mallets have a padded or bulbous head for softer, resonant hits.",
+          "Negative Prompt": "A pair of percussion beaters with rounded, felt or rubber heads, used for xylophones or timpani."
+        }
+      ]
+    },
+    "dumbbell": {
+      "Fine-grained Descriptions": [
+        "A short bar with weighted ends, used for strength training exercises.",
+        "Allows for unilateral workouts, often made of iron or coated in rubber.",
+        "Used in gyms or homes, typically sold in pairs with varying weights."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "kettlebell",
+          "Reason for Confusion": "Both are free weights for strength training, but a kettlebell has a round body and a handle on top.",
+          "Negative Prompt": "A cast-iron or steel ball with a single handle, used for swings, squats, and other dynamic strength exercises."
+        }
+      ]
+    },
+    "flagpole": {
+      "Fine-grained Descriptions": [
+        "A tall pole used to display a flag, often made of metal or wood.",
+        "Can stand upright in the ground or be mounted to a building.",
+        "Equipped with a pulley system to raise and lower the flag."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "lamp post",
+          "Reason for Confusion": "Both are tall, vertical poles found outdoors, but a lamp post has a light fixture on top for illumination.",
+          "Negative Prompt": "A standing metal pole with a luminaire at the top, illuminating streets or sidewalks at night."
+        }
+      ]
+    },
+    "fountain": {
+      "Fine-grained Descriptions": [
+        "A decorative water feature that sprays or flows water, often found in parks or plazas.",
+        "May include sculptures, basins, or lights for visual appeal.",
+        "Continuously recirculates water through a pump system."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "waterfall feature",
+          "Reason for Confusion": "Both are ornamental water elements, but a waterfall feature mimics natural falling water instead of spraying jets.",
+          "Negative Prompt": "An artificial cascade of water flowing over rocks or stepped structures, often in garden landscapes."
+        }
+      ]
+    },
+    "freight car": {
+      "Fine-grained Descriptions": [
+        "A railroad car used to transport cargo, such as goods or raw materials.",
+        "Comes in various types: boxcars, flatcars, tankers, or hoppers.",
+        "Pulled by locomotives on train tracks, often forming long cargo trains."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "cargo truck",
+          "Reason for Confusion": "Both transport goods, but a cargo truck travels on roads, not rails.",
+          "Negative Prompt": "A large, wheeled vehicle with an enclosed trailer or open bed, hauling freight over highways."
+        }
+      ]
+    },
+    "frying pan": {
+      "Fine-grained Descriptions": [
+        "A shallow cooking pan with a flat bottom and a long handle, used for frying or sautéing.",
+        "Often made of cast iron, stainless steel, or nonstick coatings.",
+        "Used on stovetops for quick cooking with oil or butter."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "saucepan",
+          "Reason for Confusion": "Both are stovetop pans with handles, but a saucepan is deeper and primarily for boiling or simmering liquids.",
+          "Negative Prompt": "A deeper pot with a single handle, used for making sauces, soups, or boiling water."
+        }
+      ]
+    },
+    "fur coat": {
+      "Fine-grained Descriptions": [
+        "An outer garment made from animal fur, offering warmth and luxury.",
+        "Typically long or mid-length, with a thick, plush texture.",
+        "Regarded as a high-end fashion piece, often controversial for ethical reasons."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "faux fur jacket",
+          "Reason for Confusion": "Both have a similar fluffy appearance and shape, but faux fur is synthetic and animal-friendly.",
+          "Negative Prompt": "A soft, plush coat made of synthetic fibers mimicking real fur, providing warmth without using animal pelts."
+        }
+      ]
+    },
+    "gasmask": {
+      "Fine-grained Descriptions": [
+        "A protective mask covering the face to filter out toxic gases or particles.",
+        "Often has a respirator canister, large eye lenses, and adjustable straps.",
+        "Used in hazardous environments, military situations, or chemical spills."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "respirator mask",
+          "Reason for Confusion": "Both are protective facewear filtering harmful particles, but a respirator mask is typically smaller and lacks full face coverage.",
+          "Negative Prompt": "A compact mask that covers the nose and mouth with a replaceable filter cartridge, used in dusty or contaminated air."
+        }
+      ]
+    },
+    "go-kart": {
+      "Fine-grained Descriptions": [
+        "A small, open-wheel vehicle designed for racing or recreational use on tracks.",
+        "Has a simple frame, low seat, and a small engine for quick acceleration.",
+        "Features four wheels, minimal bodywork, and responsive steering."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "ATV",
+          "Reason for Confusion": "Both are small recreational vehicles with four wheels, but an ATV is designed for off-road terrain with higher clearance.",
+          "Negative Prompt": "A rugged, four-wheeled vehicle with thick tires and a raised suspension, built for traversing rough, muddy paths."
+        }
+      ]
+    },
+    "gondola": {
+      "Fine-grained Descriptions": [
+        "A long, narrow boat used in the canals of Venice, propelled by a single oar.",
+        "Has a flat bottom and a distinctive curved prow.",
+        "Traditionally painted black, with seating for passengers inside."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "punt",
+          "Reason for Confusion": "Both are flat-bottomed boats propelled by a pole or oar, commonly used in calm waters.",
+          "Negative Prompt": "A shallow, rectangular boat pushed along with a long pole, often seen on rivers near universities."
+        }
+      ]
+    },
+    "hourglass": {
+      "Fine-grained Descriptions": [
+        "A time-measuring device with two glass bulbs connected by a narrow neck, through which sand flows.",
+        "Measures a fixed duration, typically a few minutes.",
+        "Needs to be inverted when the upper bulb is empty to start timing again."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "egg timer",
+          "Reason for Confusion": "Both are short-duration timers, but an egg timer is often mechanical or digital rather than sand-based.",
+          "Negative Prompt": "A small, standalone timer with a rotating dial or digital display, commonly used to time boiling eggs."
+        }
+      ]
+    },
+    "iPod": {
+      "Fine-grained Descriptions": [
+        "A portable media player designed by Apple for music and audio playback.",
+        "Features a click wheel or touchscreen interface, depending on the model.",
+        "Commonly used with earphones, storing digital music files."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "MP3 player",
+          "Reason for Confusion": "Both are handheld devices used for audio playback, but an MP3 player can be any brand or design, not just Apple's.",
+          "Negative Prompt": "A small, portable gadget with minimal buttons or a simple screen for playing digital audio files on the go."
+        }
+      ]
+    },
+    "jinrikisha": {
+      "Fine-grained Descriptions": [
+        "A traditional, human-powered rickshaw pulled by a person on foot.",
+        "Consists of two large wheels and a seat for one or two passengers.",
+        "Originated in Asia, used historically as a form of taxi or short-distance transport."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "pedicab",
+          "Reason for Confusion": "Both are passenger carts powered by a person, but a pedicab is typically bicycle-driven rather than pulled on foot.",
+          "Negative Prompt": "A tricycle-like cart with a seat for passengers, propelled by a cyclist and used for short urban rides."
+        }
+      ]
+    },
+    "kimono": {
+      "Fine-grained Descriptions": [
+        "A traditional Japanese robe with wide sleeves, tied at the waist with an obi belt.",
+        "Made from silk or synthetic fabrics, often featuring colorful patterns or motifs.",
+        "Worn on special occasions such as festivals or ceremonies."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "hanbok",
+          "Reason for Confusion": "Both are traditional East Asian garments with vibrant colors and unique silhouettes, but hanbok is Korean.",
+          "Negative Prompt": "A traditional Korean outfit with a high-waisted skirt and short jacket, often in bright, festive hues."
+        }
+      ]
+    },
+    "lampshade": {
+      "Fine-grained Descriptions": [
+        "A cover placed over a light bulb to diffuse and direct its brightness.",
+        "Often conical or cylindrical, made from fabric, paper, or glass.",
+        "Attaches to a lamp base, adding style and reducing glare."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "lantern",
+          "Reason for Confusion": "Both enclose a light source, but a lantern is portable and usually has transparent sides or a metal frame.",
+          "Negative Prompt": "A handheld or hanging fixture with a protective enclosure for a candle, oil lamp, or electric bulb."
+        }
+      ]
+    },
+    "lawn mower": {
+      "Fine-grained Descriptions": [
+        "A machine with rotating blades that cut grass to an even height.",
+        "Powered by gasoline, electricity, or battery, pushed or ridden across a lawn.",
+        "Features adjustable height settings and a grass-catcher bag on some models."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "weed trimmer",
+          "Reason for Confusion": "Both are garden tools for cutting grass or weeds, but a trimmer uses a spinning line for edges and tight spaces.",
+          "Negative Prompt": "A handheld device with a motorized spinning nylon line, used to trim grass along fences and around obstacles."
+        }
+      ]
+    },
+    "lifeboat": {
+      "Fine-grained Descriptions": [
+        "A small, sturdy boat carried on ships for emergency evacuation.",
+        "Typically equipped with oars, life jackets, and emergency supplies.",
+        "Designed to be easily lowered into the water in case of sinking or distress."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "dinghy",
+          "Reason for Confusion": "Both are small boats, but a dinghy can be a simple inflatable or wooden vessel used for short trips from shore to larger boats.",
+          "Negative Prompt": "A small, open boat, often inflatable or wooden, used for transporting people or goods over short distances."
+        }
+      ]
+    },
+    "limousine": {
+      "Fine-grained Descriptions": [
+        "A long, luxury car with a partition separating the driver from the passengers.",
+        "Often used for special events, featuring plush interiors and extra legroom.",
+        "Typically driven by a chauffeur, can seat multiple passengers comfortably."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "town car",
+          "Reason for Confusion": "Both are upscale sedans commonly used for executive transport, but a town car is standard length and less extravagant.",
+          "Negative Prompt": "A large, refined sedan with a spacious back seat, often used for airport pickups or business travel."
+        }
+      ]
+    },
+    "magnetic compass": {
+      "Fine-grained Descriptions": [
+        "A navigation instrument with a magnetized needle pointing toward Earth's magnetic north.",
+        "Usually housed in a circular casing with degree markings for orientation.",
+        "Used in hiking, sailing, or surveying to determine directional bearings."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "gyrocompass",
+          "Reason for Confusion": "Both determine directional headings, but a gyrocompass uses a rapidly spinning rotor and Earth's rotation, not magnetism.",
+          "Negative Prompt": "A shipboard device that relies on a spinning rotor to align with true north, unaffected by magnetic fields."
+        }
+      ]
+    },
+    "maypole": {
+      "Fine-grained Descriptions": [
+        "A tall pole adorned with ribbons or flowers, central to May Day or spring festivals.",
+        "Participants dance around it, intertwining ribbons in folk celebrations.",
+        "Often associated with European cultural traditions and village greens."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "festivus pole",
+          "Reason for Confusion": "Both are poles used in holiday celebrations, but a Festivus pole is a minimalist aluminum pole from a fictional holiday tradition.",
+          "Negative Prompt": "A plain, unadorned metal pole used as a humorous holiday centerpiece, part of a parody celebration."
+        }
+      ]
+    },
+    "military uniform": {
+      "Fine-grained Descriptions": [
+        "A standardized outfit worn by members of the armed forces, indicating rank and branch.",
+        "Often includes camouflage patterns, medals, or insignia on the chest.",
+        "Designed for functionality, discipline, and group identity."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "police uniform",
+          "Reason for Confusion": "Both are official uniforms signifying authority, but police uniforms typically involve badges and different color schemes for law enforcement.",
+          "Negative Prompt": "A dark-colored outfit with a badge, duty belt, and insignia indicating law enforcement affiliation."
+        }
+      ]
+    },
+    "miniskirt": {
+      "Fine-grained Descriptions": [
+        "A short skirt that falls above the knees, often a fashion statement.",
+        "Typically worn in casual or club settings, can be made of various fabrics.",
+        "Emphasizes the legs, frequently paired with tights or stockings."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "pencil skirt",
+          "Reason for Confusion": "Both are skirts, but a pencil skirt is knee-length and form-fitting, typically worn in professional settings.",
+          "Negative Prompt": "A slim, straight skirt ending at or just below the knee, tailored for a sleek silhouette in office attire."
+        }
+      ]
+    },
+    "moving van": {
+      "Fine-grained Descriptions": [
+        "A large boxy truck used to transport household goods during relocation.",
+        "Often rented with a cargo area, ramp, and tie-downs for furniture.",
+        "Driven on roads, providing ample space for boxes, sofas, and appliances."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "delivery truck",
+          "Reason for Confusion": "Both are box-shaped trucks carrying cargo, but a delivery truck makes multiple stops for package drop-offs rather than household moves.",
+          "Negative Prompt": "A mid-sized vehicle with a cargo box, used by couriers and logistics companies to distribute goods door-to-door."
+        }
+      ]
+    },
+    "nail": {
+      "Fine-grained Descriptions": [
+        "A small metal spike with a flat head, used to fasten materials together.",
+        "Driven into wood or other surfaces using a hammer.",
+        "Common in construction, with varying lengths and thicknesses."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "screw",
+          "Reason for Confusion": "Both are metal fasteners inserted into materials, but a screw has threads and requires a screwdriver or drill.",
+          "Negative Prompt": "A threaded metal fastener designed to be twisted into wood or metal for a more secure hold."
+        }
+      ]
+    },
+    "neck brace": {
+      "Fine-grained Descriptions": [
+        "A supportive collar worn around the neck to immobilize or stabilize the cervical spine.",
+        "Often made of foam or rigid plastic, used after injuries or surgeries.",
+        "Limits neck movement to aid recovery and reduce pain."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "cervical collar (soft)",
+          "Reason for Confusion": "Both wrap around the neck for support, but a soft cervical collar is less rigid and offers minimal stabilization.",
+          "Negative Prompt": "A foam wrap around the neck providing mild support, used for minor sprains or whiplash injuries."
+        }
+      ]
+    },
+    "obelisk": {
+      "Fine-grained Descriptions": [
+        "A tall, four-sided stone monument tapering to a pyramidal top, often seen in ancient Egyptian architecture.",
+        "Typically carved from a single piece of stone, inscribed with hieroglyphs.",
+        "Serves as a monument or decorative landmark in various historical sites."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "monolith",
+          "Reason for Confusion": "Both are large, singular stone structures, but a monolith is not necessarily shaped like an obelisk or inscribed.",
+          "Negative Prompt": "A massive, singular stone or rock formation standing upright, often naturally occurring or left unadorned."
+        }
+      ]
+    },
+    "oboe": {
+      "Fine-grained Descriptions": [
+        "A woodwind instrument with a double reed and a distinctive, penetrating tone.",
+        "Slim, cylindrical body made of wood or synthetic material with silver keys.",
+        "Commonly featured in orchestras, known for tuning the ensemble with its pitch."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "clarinet",
+          "Reason for Confusion": "Both are black woodwind instruments with similar shape, but a clarinet uses a single reed mouthpiece and has a mellower tone.",
+          "Negative Prompt": "A slender woodwind instrument with a single reed mouthpiece and a cylindrical bore, producing a rich, smooth sound."
+        }
+      ]
+    },
+    "organ": {
+      "Fine-grained Descriptions": [
+        "A large keyboard instrument producing sound by air passing through pipes, or electronically in modern versions.",
+        "Commonly found in churches or concert halls, with multiple keyboards and foot pedals.",
+        "Can produce a wide range of tones and volumes, from gentle flutes to thunderous bass."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "piano",
+          "Reason for Confusion": "Both have keyboards and can be sizable, but a piano uses hammers striking strings for acoustic sound.",
+          "Negative Prompt": "A wooden acoustic instrument with black and white keys, producing music by felt hammers striking tuned metal strings."
+        }
+      ]
+    },
+    "parking meter": {
+      "Fine-grained Descriptions": [
+        "A curbside device where drivers pay for parking time.",
+        "Equipped with a coin or card slot, a timer display, and sometimes a receipt printer.",
+        "Monitored by local authorities to regulate parking durations and fees."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "ticket machine",
+          "Reason for Confusion": "Both involve payment for time-based services in public areas, but a ticket machine is often used for transit tickets rather than parking.",
+          "Negative Prompt": "A stand-alone kiosk where users purchase public transport tickets, featuring a screen and payment options."
+        }
+      ]
+    },
+    "pay-phone": {
+      "Fine-grained Descriptions": [
+        "A public telephone that accepts coins or cards to make calls.",
+        "Typically enclosed in a small booth or mounted on a pedestal.",
+        "Once common in cities and bus stations, now rare due to mobile phones."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "emergency call box",
+          "Reason for Confusion": "Both are public telecommunication devices, but an emergency call box directly connects to emergency services with no payment required.",
+          "Negative Prompt": "A roadside or campus-mounted phone box with a direct line to police or emergency responders, often in bright colors."
+        }
+      ]
+    },
+    "picket fence": {
+      "Fine-grained Descriptions": [
+        "A fence made of spaced wooden boards, often painted white, emblematic of suburban homes.",
+        "Features pointed tops on evenly spaced vertical boards attached to horizontal rails.",
+        "Provides a decorative boundary while still allowing partial visibility."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "privacy fence",
+          "Reason for Confusion": "Both are wooden fences, but a privacy fence has no gaps between planks for full coverage.",
+          "Negative Prompt": "A tall fence constructed with tightly placed boards, blocking visibility and providing complete enclosure for a yard."
+        }
+      ]
+    },
+    "pill bottle": {
+      "Fine-grained Descriptions": [
+        "A small, cylindrical plastic container with a child-resistant cap, used to store prescription medications.",
+        "Usually orange or translucent, labeled with dosage instructions.",
+        "Commonly given by pharmacies for controlled distribution of pills."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "vitamin bottle",
+          "Reason for Confusion": "Both are small containers holding capsules or tablets, but a vitamin bottle may not have child-proof caps and often comes from retail stores.",
+          "Negative Prompt": "A plastic or glass container with dietary supplements, often colorful pills or gummies, labeled for general health use."
+        }
+      ]
+    },
+    "plunger": {
+      "Fine-grained Descriptions": [
+        "A tool with a rubber suction cup attached to a wooden or plastic handle, used to unclog drains.",
+        "Works by creating pressure and suction in toilet bowls or sinks.",
+        "Often found in household bathrooms and maintenance kits."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "toilet brush",
+          "Reason for Confusion": "Both are cleaning tools kept near the toilet, but a toilet brush has bristles for scrubbing rather than a suction cup.",
+          "Negative Prompt": "A handle with stiff bristles designed to scrub the inside of a toilet bowl and remove stains."
+        }
+      ]
+    },
+    "pole": {
+      "Fine-grained Descriptions": [
+        "A long, slender rod typically made of wood or metal.",
+        "Used for structural support, as a marker, or in sporting activities (like pole vault).",
+        "Often set upright or used horizontally depending on function."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "rod",
+          "Reason for Confusion": "Both are cylindrical and slender, but a rod is usually shorter or used for fishing or construction reinforcement.",
+          "Negative Prompt": "A straight, cylindrical bar often made of metal or fiberglass, used in building frameworks or fishing reels."
+        }
+      ]
+    },
+    "police van": {
+      "Fine-grained Descriptions": [
+        "A specialized law enforcement vehicle used to transport officers or detained individuals.",
+        "Typically has reinforced windows, sirens, and secure compartments.",
+        "Marked with police insignia and lights on the roof for emergency response."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "ambulance",
+          "Reason for Confusion": "Both are emergency vehicles with flashing lights and sirens, but an ambulance is equipped for medical transport and care.",
+          "Negative Prompt": "A white or brightly colored van with medical equipment, used by paramedics to treat and transport injured people."
+        }
+      ]
+    },
+    "poncho": {
+      "Fine-grained Descriptions": [
+        "A loose-fitting garment with an opening for the head, typically a single large piece of fabric.",
+        "Often used as a rainproof covering or a traditional garment in some cultures.",
+        "Drapes over the shoulders and body without sleeves."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "cape",
+          "Reason for Confusion": "Both are sleeveless coverings worn over the shoulders, but a cape is open at the front and typically doesn't have a head opening.",
+          "Negative Prompt": "A flowing garment that hangs from the neck or shoulders, often worn for drama or as part of a superhero costume."
+        }
+      ]
+    },
+    "pop bottle": {
+      "Fine-grained Descriptions": [
+        "A tall plastic or glass container designed for carbonated soft drinks.",
+        "Features a twist-off cap to seal in the fizz, often with a brand label.",
+        "Has a contoured shape for easy grip and to withstand pressurized contents."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "water bottle",
+          "Reason for Confusion": "Both are cylindrical containers holding beverages, but water bottles typically contain still water without carbonation.",
+          "Negative Prompt": "A simple plastic or metal container filled with plain, non-carbonated water, often reused for hydration."
+        }
+      ]
+    },
+    "potter's wheel": {
+      "Fine-grained Descriptions": [
+        "A rotating circular platform used to shape clay into pottery.",
+        "Operated by foot pedal or electric motor, allowing symmetrical forming of pots.",
+        "Central in ceramic workshops, spinning steadily for sculpting and molding."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "lathe",
+          "Reason for Confusion": "Both involve spinning an object for shaping, but a lathe is typically for wood or metal turning with cutting tools.",
+          "Negative Prompt": "A machine tool that rotates wood or metal against a chisel, carving symmetrical shapes or threading."
+        }
+      ]
+    },
+    "projectile": {
+      "Fine-grained Descriptions": [
+        "Any object propelled through the air by an external force, like a bullet or rocket.",
+        "Travels along a trajectory influenced by gravity and initial velocity.",
+        "Common in ballistics, warfare, or sports involving launched objects."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "firework shell",
+          "Reason for Confusion": "Both are launched objects flying through the air, but a firework shell explodes with pyrotechnics rather than functioning purely as a projectile.",
+          "Negative Prompt": "A pyrotechnic charge launched skyward, bursting into colorful sparks or effects when ignited."
+        }
+      ]
+    },
+    "punching bag": {
+      "Fine-grained Descriptions": [
+        "A cylindrical or tear-drop shaped bag used for boxing or martial arts training.",
+        "Filled with dense material to absorb impact and hung from a sturdy support.",
+        "Allows athletes to practice strikes, improving strength and technique."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "body opponent bag",
+          "Reason for Confusion": "Both are striking targets for combat training, but a body opponent bag is molded like a human torso rather than a generic cylinder.",
+          "Negative Prompt": "A freestanding, life-like torso made of rubber, used to practice realistic punches and kicks."
+        }
+      ]
+    },
+    "reel": {
+      "Fine-grained Descriptions": [
+        "A cylindrical device that holds flexible material like fishing line or film.",
+        "Often attached to fishing rods or film projectors for winding and unwinding.",
+        "Features a central spindle with side flanges to prevent tangles."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "spool",
+          "Reason for Confusion": "Both store long strands of thread or wire, but a spool is typically smaller and used for sewing threads or cables.",
+          "Negative Prompt": "A small cylinder with rims, holding narrow thread or wire, often used in a sewing machine or craft project."
+        }
+      ]
+    },
+    "refrigerator": {
+      "Fine-grained Descriptions": [
+        "A large, insulated appliance used to keep food and drinks cool or frozen.",
+        "Equipped with shelves, door compartments, and often a separate freezer section.",
+        "Operates by circulating refrigerant to maintain low internal temperatures."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "chest freezer",
+          "Reason for Confusion": "Both keep items cold, but a chest freezer is a top-opening unit designed solely for freezing, lacking separate refrigeration compartments.",
+          "Negative Prompt": "A boxy appliance accessed from above, entirely devoted to keeping foods at sub-zero temperatures."
+        }
+      ]
+    },
+    "remote control": {
+      "Fine-grained Descriptions": [
+        "A handheld device with buttons to wirelessly operate electronic appliances.",
+        "Often uses infrared or radio signals to adjust volume, channels, or power.",
+        "Commonly paired with TVs, set-top boxes, or media players."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "game controller",
+          "Reason for Confusion": "Both are handheld devices with buttons, but a game controller is designed specifically for interactive gaming and has joysticks or triggers.",
+          "Negative Prompt": "A console accessory with directional pads, joysticks, and action buttons for navigating and playing video games."
+        }
+      ]
+    },
+    "rocking chair": {
+      "Fine-grained Descriptions": [
+        "A wooden or cushioned seat mounted on curved rockers, allowing a gentle sway.",
+        "Often used for relaxation or soothing infants, found in living rooms or porches.",
+        "Has a backrest, armrests, and a smooth motion when pushed."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "glider chair",
+          "Reason for Confusion": "Both provide a swaying motion, but a glider chair moves back and forth on a fixed track instead of curved rockers.",
+          "Negative Prompt": "A seat attached to a stationary base through a sliding mechanism, creating a smooth forward-and-back gliding movement."
+        }
+      ]
+    },
+    "rugby ball": {
+      "Fine-grained Descriptions": [
+        "An oval-shaped ball with a textured surface and pointed ends, used in rugby.",
+        "Slightly larger than an American football, typically brown or white with brand markings.",
+        "Designed for carrying, passing, and kicking in contact sports."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "american football",
+          "Reason for Confusion": "Both are prolate spheroid balls with pointed ends, but an American football is typically more pointed and used in a different sport with distinct rules.",
+          "Negative Prompt": "A brown, leather-like oval ball with white laces on top, central to gridiron-based tackle play."
+        }
+      ]
+    },
+    "sandal": {
+      "Fine-grained Descriptions": [
+        "An open-toed shoe with straps securing it to the foot, allowing airflow.",
+        "Often used in warm climates or casual settings, exposing most of the foot.",
+        "Made from materials like leather, rubber, or fabric, sometimes with a heel strap."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "flip-flop",
+          "Reason for Confusion": "Both are open footwear, but flip-flops have a simple thong strap and a post between the toes, offering minimal support.",
+          "Negative Prompt": "A light, foam-soled sandal with a Y-shaped strap, often used for casual beachwear."
+        }
+      ]
+    },
+    "school bus": {
+      "Fine-grained Descriptions": [
+        "A large, yellow bus designed to transport students to and from school.",
+        "Equipped with bench seats, flashing lights, and a stop sign arm for safety.",
+        "Often has high, horizontal windows and a distinctive front engine hood."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "shuttle bus",
+          "Reason for Confusion": "Both are passenger buses used for short routes, but a shuttle bus serves airports or hotels without the iconic yellow design.",
+          "Negative Prompt": "A smaller commuter vehicle transporting passengers along short routes, typically painted white or branded for a specific service."
+        }
+      ]
+    },
+    "scoreboard": {
+      "Fine-grained Descriptions": [
+        "A large display tracking points or statistics in sports events.",
+        "Often electronic, showing team names, time, and scores in real time.",
+        "Located prominently in stadiums or arenas for spectators' reference."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "ticker display",
+          "Reason for Confusion": "Both are electronic displays providing updated information, but a ticker display scrolls text (e.g., stock prices) rather than game scores.",
+          "Negative Prompt": "A long, narrow LED strip that scrolls news or financial data across its screen, typically seen in public areas."
+        }
+      ]
+    },
+    "sewing machine": {
+      "Fine-grained Descriptions": [
+        "A device that stitches fabric together using a needle and thread, powered mechanically or electrically.",
+        "Features a foot pedal, bobbin compartment, and adjustable settings for stitch type.",
+        "Used for creating or repairing garments and textiles at home or in factories."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "serger",
+          "Reason for Confusion": "Both are sewing-related machines with needles and thread, but a serger trims and overlocks edges in a single step, creating a finished seam.",
+          "Negative Prompt": "A specialized machine that uses multiple threads to stitch and cut fabric edges simultaneously, preventing fraying."
+        }
+      ]
+    },
+    "snorkel": {
+      "Fine-grained Descriptions": [
+        "A curved breathing tube that allows a swimmer to inhale air at the water’s surface while facing down.",
+        "Often used with a diving mask for observing underwater life.",
+        "Has a mouthpiece and sometimes a splash guard on top to prevent water entry."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "scuba regulator",
+          "Reason for Confusion": "Both are breathing apparatuses used underwater, but a scuba regulator connects to a pressurized air tank rather than drawing air from the surface.",
+          "Negative Prompt": "A mouthpiece attached to a hose and air tank, delivering breathable air at varying depths beneath the water."
+        }
+      ]
+    },
+    "sock": {
+      "Fine-grained Descriptions": [
+        "A knitted garment covering the foot and ankle, sometimes extending to the calf.",
+        "Worn under shoes for comfort, moisture absorption, or style.",
+        "Comes in various materials like cotton, wool, or synthetic blends."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "stocking",
+          "Reason for Confusion": "Both are foot coverings, but stockings are typically thinner, longer, and more form-fitting, often used for fashion or formal wear.",
+          "Negative Prompt": "A sheer or opaque legwear piece extending above the knee, worn for style or under dresses."
+        }
+      ]
+    },
+    "sombrero": {
+      "Fine-grained Descriptions": [
+        "A traditional Mexican wide-brimmed hat with a high, pointed crown.",
+        "Provides shade in sunny climates, often made of straw or felt.",
+        "Decorated with colorful bands or patterns around the crown and brim."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "cowboy hat",
+          "Reason for Confusion": "Both have wide brims and tall crowns, but a cowboy hat has a different shape and is associated with Western attire.",
+          "Negative Prompt": "A high-crowned, wide-brimmed hat made of felt or straw, symbolic of ranch culture and rodeo style."
+        }
+      ]
+    },
+    "space heater": {
+      "Fine-grained Descriptions": [
+        "A portable device that warms a small area by electrical or fuel-based heating elements.",
+        "Often has adjustable thermostats or fan settings for temperature control.",
+        "Used to supplement central heating or heat specific rooms."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "humidifier",
+          "Reason for Confusion": "Both are small appliances placed in rooms, but a humidifier adds moisture to the air instead of heating it.",
+          "Negative Prompt": "A portable device that releases water vapor or steam into the air to increase humidity levels in a room."
+        }
+      ]
+    },
+    "spider web": {
+      "Fine-grained Descriptions": [
+        "A silk structure spun by spiders, often featuring intricate radial and spiral patterns.",
+        "Used for catching prey, with sticky threads and structural support strands.",
+        "Glitters with dew in the morning sun, revealing its delicate geometry."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "cobweb",
+          "Reason for Confusion": "Both are spider silk formations, but a cobweb generally refers to abandoned or dusty webs with irregular patterns.",
+          "Negative Prompt": "An old, tangled mass of spider silk gathering dust in corners, lacking the organized radial design of a fresh web."
+        }
+      ]
+    },
+    "sports car": {
+      "Fine-grained Descriptions": [
+        "A low-slung, high-performance automobile with a sleek design.",
+        "Emphasizes speed, agility, and aerodynamic styling.",
+        "Often has two seats, powerful engines, and a sporty interior."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "grand tourer",
+          "Reason for Confusion": "Both are high-end performance vehicles, but a grand tourer is designed for long-distance comfort and luxury rather than pure sportiness.",
+          "Negative Prompt": "A premium coupe with a powerful engine and plush cabin, built for comfortable high-speed travel on extended trips."
+        }
+      ]
+    },
+    "steel arch bridge": {
+      "Fine-grained Descriptions": [
+        "A bridge structure supported by a curved steel arch beneath or above the roadway.",
+        "Often constructed with riveted or welded steel segments, creating a strong arched frame.",
+        "Seen spanning rivers, valleys, or roads with an iconic sweeping shape."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "truss bridge",
+          "Reason for Confusion": "Both are metal-framed bridges, but a truss bridge uses triangular frameworks instead of an arched form.",
+          "Negative Prompt": "A bridge composed of interconnected steel beams forming repeated triangular patterns to distribute loads."
+        }
+      ]
+    },
+    "stopwatch": {
+      "Fine-grained Descriptions": [
+        "A handheld timepiece that starts, stops, and resets with precise accuracy.",
+        "Used in sports, labs, or any activity requiring exact timing.",
+        "Often has a digital or analog interface with clearly labeled buttons."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "timer",
+          "Reason for Confusion": "Both measure time intervals, but a timer counts down from a set duration rather than capturing elapsed time at will.",
+          "Negative Prompt": "A device where you set a specific time interval and it alerts you when that period has passed, often used in kitchens."
+        }
+      ]
+    },
+    "sunglasses": {
+      "Fine-grained Descriptions": [
+        "Eyewear with tinted or polarized lenses to protect eyes from bright sunlight.",
+        "Available in various frame styles, from aviators to wayfarers.",
+        "Commonly worn outdoors for comfort and to reduce glare, also as a fashion accessory."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "reading glasses",
+          "Reason for Confusion": "Both are eyeglasses placed on the face, but reading glasses have clear magnifying lenses for close work rather than sun protection.",
+          "Negative Prompt": "A pair of spectacles with corrective lenses used to enlarge text, often worn when reading or doing detail work."
+        }
+      ]
+    },
+    "suspension bridge": {
+      "Fine-grained Descriptions": [
+        "A long-span bridge supported by cables hung between tall towers.",
+        "Roadway or deck is suspended by vertical cables attached to main suspension cables.",
+        "Famous for spanning wide waterways or valleys, like the Golden Gate Bridge."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "cable-stayed bridge",
+          "Reason for Confusion": "Both use cables and tall towers, but a cable-stayed bridge has cables directly connected from the tower to the deck in a fan or harp pattern.",
+          "Negative Prompt": "A bridge where each section of roadway is supported by cables running straight from a central tower, creating a striking geometric display."
+        }
+      ]
+    },
+    "swimming trunks": {
+      "Fine-grained Descriptions": [
+        "Shorts worn by men for swimming, typically quick-drying and above the knee.",
+        "Have an elastic waist or drawstring, sometimes with a mesh lining.",
+        "Often brightly colored or patterned for beach or pool use."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "board shorts",
+          "Reason for Confusion": "Both are men's swim apparel, but board shorts are longer, reaching near the knee and often used for surfing.",
+          "Negative Prompt": "Longer-style surf shorts with a tie-front closure, typically featuring vibrant prints and no internal liner."
+        }
+      ]
+    },
+    "syringe": {
+      "Fine-grained Descriptions": [
+        "A medical instrument with a hollow needle attached to a cylindrical barrel, used to inject or withdraw fluids.",
+        "Has a plunger that controls liquid flow, marked with measurement gradations.",
+        "Commonly used for vaccines, medication administration, or medical sampling."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "pipette",
+          "Reason for Confusion": "Both measure and transfer liquids in precise volumes, but a pipette is lab glassware without a needle for injection.",
+          "Negative Prompt": "A slender, tube-like instrument used in laboratories to measure and dispense small amounts of liquids, often with a bulb or mechanical plunger."
+        }
+      ]
+    },
+    "teapot": {
+      "Fine-grained Descriptions": [
+        "A vessel with a spout and a handle, designed for brewing and pouring tea.",
+        "Often has a removable lid for adding tea leaves and hot water.",
+        "Comes in ceramic, glass, or metal, sometimes with an infuser basket."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "coffee carafe",
+          "Reason for Confusion": "Both hold hot beverages with a handle and pouring spout, but a coffee carafe is designed for brewed coffee machines.",
+          "Negative Prompt": "A glass or thermal container used in drip coffee makers, featuring a spout for easy pouring of filtered coffee."
+        }
+      ]
+    },
+    "teddy": {
+      "Fine-grained Descriptions": [
+        "A soft, stuffed bear toy often made from plush fabric.",
+        "Typically has button or embroidered eyes, and a round muzzle.",
+        "Commonly given as a gift or comfort item for children or collectors."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "plush rabbit",
+          "Reason for Confusion": "Both are cuddly stuffed animals with similar soft construction, but one is a bear and the other is a bunny.",
+          "Negative Prompt": "A fluffy stuffed rabbit toy with long ears, stitched facial features, and a cotton-like tail."
+        }
+      ]
+    },
+    "thatch": {
+      "Fine-grained Descriptions": [
+        "A roof covering made from straw, reeds, or palm leaves, often found in traditional cottages.",
+        "Laid in overlapping layers for insulation and water resistance.",
+        "Provides rustic charm and natural aesthetic in rural architecture."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "shingle roof",
+          "Reason for Confusion": "Both are roofing materials layered to protect buildings, but shingles are typically made of asphalt or wood instead of straw.",
+          "Negative Prompt": "A roof surface covered with overlapping rectangular tiles of asphalt or cedar, creating a more modern look."
+        }
+      ]
+    },
+    "torch": {
+      "Fine-grained Descriptions": [
+        "A handheld light source consisting of a stick with combustible material at one end.",
+        "Historically used before electric lights, often in ceremonies or processions.",
+        "Burns openly, providing illumination and sometimes symbolic significance."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "flashlight",
+          "Reason for Confusion": "Both are portable light sources held by hand, but a flashlight is battery-powered with an electric bulb.",
+          "Negative Prompt": "A small, cylindrical handheld device emitting light from a bulb or LED, powered by batteries."
+        }
+      ]
+    },
+    "tractor": {
+      "Fine-grained Descriptions": [
+        "A powerful vehicle with large rear tires, used on farms for pulling or towing agricultural implements.",
+        "Often equipped with a diesel engine and a cab or open seat.",
+        "Essential for plowing, tilling, and other heavy fieldwork."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "bulldozer",
+          "Reason for Confusion": "Both are heavy machinery for moving soil, but a bulldozer has a large front blade and tracks for construction sites.",
+          "Negative Prompt": "A tracked earth-moving machine with a massive metal blade at the front for pushing large quantities of dirt or rubble."
+        }
+      ]
+    },
+    "triumphal arch": {
+      "Fine-grained Descriptions": [
+        "A monumental structure with arched gateways, celebrating military victories or important events.",
+        "Often decorated with reliefs, inscriptions, or statues.",
+        "Originated in ancient Roman architecture, symbolizing power and honor."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "city gate",
+          "Reason for Confusion": "Both can be ornate arch-like structures marking an entry, but a city gate primarily serves as a functional entrance to fortified walls.",
+          "Negative Prompt": "A historic entrance through town walls or fortifications, sometimes adorned with watchtowers or defensive features."
+        }
+      ]
+    },
+    "trolleybus": {
+      "Fine-grained Descriptions": [
+        "An electric bus drawing power from overhead wires via trolley poles.",
+        "Runs on rubber tires along city streets, connected to an overhead electrical grid.",
+        "Emits no direct exhaust, commonly found in urban public transport systems."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "tram",
+          "Reason for Confusion": "Both are electrically powered public transport vehicles, but a tram runs on rails rather than rubber tires.",
+          "Negative Prompt": "A rail-based city vehicle operating on embedded tracks, powered by overhead lines or ground-level power systems."
+        }
+      ]
+    },
+    "turnstile": {
+      "Fine-grained Descriptions": [
+        "A gate-like mechanism with rotating arms that allows one person at a time to pass through.",
+        "Used to control entry in subways, stadiums, or restricted areas, often requiring a ticket or token.",
+        "Ensures orderly flow of pedestrian traffic and prevents unauthorized access."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "barrier gate",
+          "Reason for Confusion": "Both regulate entry, but a barrier gate typically lifts or swings open for vehicles rather than rotating arms for pedestrians.",
+          "Negative Prompt": "A horizontal pole that rises or pivots aside for vehicular traffic, often used at toll booths or parking entrances."
+        }
+      ]
+    },
+    "umbrella": {
+      "Fine-grained Descriptions": [
+        "A collapsible canopy with metal or fiberglass ribs, used as protection from rain or sunlight.",
+        "Has a central shaft and a curved handle, closing into a compact form.",
+        "Often made of waterproof fabric, carried by hand when walking outdoors."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "parasol",
+          "Reason for Confusion": "Both are handheld canopies, but a parasol is primarily for sun protection and often lacks waterproof fabric.",
+          "Negative Prompt": "A light, decorative canopy with a slender handle, designed to provide shade under bright sunlight."
+        }
+      ]
+    },
+    "vestment": {
+      "Fine-grained Descriptions": [
+        "A ceremonial robe or garment worn by clergy during religious services.",
+        "Often ornate, featuring embroidered symbols or colors denoting rank or occasion.",
+        "Varies by tradition, such as chasubles in Christianity or robes in other faiths."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "choir robe",
+          "Reason for Confusion": "Both are long, formal robes used in religious contexts, but a choir robe is worn by singers rather than officiants and tends to have simpler designs.",
+          "Negative Prompt": "A uniform garment worn by choir members, typically plain with minimal adornments, covering the torso and legs."
+        }
+      ]
+    },
+    "viaduct": {
+      "Fine-grained Descriptions": [
+        "A long bridge-like structure of arches, carrying a road or railway over a valley.",
+        "Often made of stone or concrete arches supported by piers.",
+        "Allows safe passage across wide spans or lower terrain with multiple arch supports."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "aqueduct",
+          "Reason for Confusion": "Both are arch-based elevated structures, but an aqueduct specifically transports water rather than vehicles or trains.",
+          "Negative Prompt": "A channel or bridge-like structure designed to carry water, often visible as a row of tall arches in ancient civilizations."
+        }
+      ]
+    },
+    "volleyball": {
+      "Fine-grained Descriptions": [
+        "A spherical ball used in volleyball, typically white or multi-colored with a soft, lightweight design.",
+        "Inflated to maintain a consistent bounce and easily hit across the net.",
+        "Commonly seen in gymnasiums, beaches, or recreational leagues."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "beach ball",
+          "Reason for Confusion": "Both are inflatable balls used outdoors, but a beach ball is larger, lighter, and meant for casual play rather than official sports.",
+          "Negative Prompt": "A large, colorful inflatable ball that is extremely light, often used for fun at the beach or pool parties."
+        }
+      ]
+    },
+    "water jug": {
+      "Fine-grained Descriptions": [
+        "A container with a handle and a wide mouth or spout, used for storing and pouring water.",
+        "Often made of plastic, glass, or ceramic, holding several liters.",
+        "Kept in kitchens or dining areas to dispense water for drinking or cooking."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "pitcher",
+          "Reason for Confusion": "Both are used for pouring drinks, but a pitcher may be more decorative and can hold various beverages like juice or iced tea.",
+          "Negative Prompt": "A tall, decorative container with a handle and spout, often used to serve beverages at a dining table."
+        }
+      ]
+    },
+    "water tower": {
+      "Fine-grained Descriptions": [
+        "A tall structure supporting a large tank that stores and pressurizes a water supply.",
+        "Often seen in rural towns or industrial areas, towering over buildings.",
+        "Relies on gravity to distribute water through pipes to homes and businesses."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "grain silo",
+          "Reason for Confusion": "Both are tall, cylindrical structures dominating a skyline, but a grain silo stores harvested grains instead of water.",
+          "Negative Prompt": "A large, vertical cylinder on a farm used to store corn or wheat, with a sealed top to protect contents from weather."
+        }
+      ]
+    },
+    "wok": {
+      "Fine-grained Descriptions": [
+        "A deep, bowl-shaped pan originating from Chinese cuisine, ideal for stir-frying.",
+        "Has a round bottom and high, sloping sides to contain splattering oil.",
+        "Often made of carbon steel, requiring seasoning before use."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "sauté pan",
+          "Reason for Confusion": "Both are used for cooking on stovetops, but a sauté pan has straight sides and a flat bottom, designed for shallow frying or searing.",
+          "Negative Prompt": "A wide, shallow pan with vertical edges and a lid, used for browning, sautéing, or simmering sauces."
+        }
+      ]
+    },
+    "wooden spoon": {
+      "Fine-grained Descriptions": [
+        "A cooking utensil made from wood, used for stirring or mixing ingredients.",
+        "Gentle on non-stick surfaces and doesn't conduct heat quickly.",
+        "Commonly found in kitchens, useful for soups, sauces, and batters."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "spatula",
+          "Reason for Confusion": "Both are handheld cooking tools for stirring or flipping, but a spatula has a flat or slotted head instead of a spoon-shaped bowl.",
+          "Negative Prompt": "A flat-bladed utensil for turning or lifting items in a pan, often made of metal or heat-resistant plastic."
+        }
+      ]
+    },
+    "comic book": {
+      "Fine-grained Descriptions": [
+        "A publication featuring sequential art and dialogue balloons telling a story.",
+        "Typically printed in color on glossy paper, often starring superheroes or fantasy tales.",
+        "Collected by enthusiasts for their illustrations, story arcs, and collectible value."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "graphic novel",
+          "Reason for Confusion": "Both contain illustrated narratives, but a graphic novel is usually longer, more complex, and published as a standalone book rather than periodic issues.",
+          "Negative Prompt": "A bound, book-length work of sequential art with a more mature or continuous storyline, often more text-heavy than typical comics."
+        }
+      ]
+    },
+    "plate": {
+      "Fine-grained Descriptions": [
+        "A flat dish, usually round, used to serve individual portions of food.",
+        "Often made of ceramic, porcelain, or glass, sometimes with decorative rims.",
+        "Common tableware found in homes and restaurants, holding main courses or appetizers."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "bowl",
+          "Reason for Confusion": "Both are dishware for serving food, but a bowl has a deeper, concave shape suited for soups or liquids.",
+          "Negative Prompt": "A rounded vessel with higher sides, ideal for holding cereal, soup, or other dishes containing broth."
+        }
+      ]
+    },
+    "guacamole": {
+      "Fine-grained Descriptions": [
+        "A creamy green dip made primarily from mashed avocados, often with lime and cilantro.",
+        "Served with tortilla chips or as a topping in Mexican cuisine.",
+        "Can include diced onions, tomatoes, and peppers for extra flavor and texture."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "hummus",
+          "Reason for Confusion": "Both are thick, savory dips served cold, but hummus is made from chickpeas and tahini rather than avocados.",
+          "Negative Prompt": "A smooth, beige-colored spread made from blended chickpeas, tahini, lemon juice, and garlic, often garnished with olive oil."
+        }
+      ]
+    },
+    "ice cream": {
+      "Fine-grained Descriptions": [
+        "A sweet, frozen dairy dessert with a smooth, creamy texture.",
+        "Comes in various flavors like chocolate, vanilla, or fruit, often served in cones or bowls.",
+        "Melts quickly at room temperature, often a favorite summer treat."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "gelato",
+          "Reason for Confusion": "Both are frozen confections, but gelato has a denser texture and lower butterfat content, often served at slightly warmer temperatures.",
+          "Negative Prompt": "A dense, Italian-style frozen dessert churned slowly for a smooth, rich consistency, typically displayed in metal pans."
+        }
+      ]
+    },
+    "ice lolly": {
+      "Fine-grained Descriptions": [
+        "A frozen treat on a stick made from sweetened flavored water or juice.",
+        "Colorful and refreshing, often fruit-flavored with various artificial or natural colors.",
+        "Eaten by licking or biting, especially popular on hot days."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "popsicle cup",
+          "Reason for Confusion": "Both are frozen treats, but a popsicle cup is frozen in a small cup with a spoon rather than on a stick.",
+          "Negative Prompt": "A single-serve plastic cup containing flavored ice, eaten with a spoon once partially thawed."
+        }
+      ]
+    },
+    "pretzel": {
+      "Fine-grained Descriptions": [
+        "A baked bread snack twisted into a knot shape, often sprinkled with salt.",
+        "Has a chewy texture and a glossy, brown exterior from a lye bath or baking soda wash.",
+        "Eaten plain or with dips like mustard, especially popular in German or American snack culture."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "bagel",
+          "Reason for Confusion": "Both are ring-shaped bread products with a dense texture, but a bagel is round with a hole in the middle and typically boiled before baking.",
+          "Negative Prompt": "A round, doughy bread roll with a hole in the center, often topped with seeds and typically served sliced with spreads."
+        }
+      ]
+    },
+    "mashed potato": {
+      "Fine-grained Descriptions": [
+        "A soft dish made by mashing boiled potatoes with butter, milk, or cream.",
+        "Has a fluffy, smooth consistency, often seasoned with salt and pepper.",
+        "Commonly served as a comforting side dish in many cuisines."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "polenta",
+          "Reason for Confusion": "Both can be served as a warm, creamy side, but polenta is made from cornmeal rather than mashed potatoes.",
+          "Negative Prompt": "A yellow, cornmeal-based dish cooked to a thick consistency, often served with sauce or cheese."
+        }
+      ]
+    },
+    "cauliflower": {
+      "Fine-grained Descriptions": [
+        "A cruciferous vegetable with a dense white head (curd) surrounded by green leaves.",
+        "Eaten raw or cooked in various dishes, sometimes used as a low-carb substitute.",
+        "Has a mild, slightly nutty flavor, often roasted, steamed, or blended into soups."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "broccoli",
+          "Reason for Confusion": "Both belong to the same family with a similar structure, but broccoli has green florets instead of white.",
+          "Negative Prompt": "A green, tree-like vegetable with tightly clustered flower buds, commonly steamed or stir-fried."
+        }
+      ]
+    },
+    "bell pepper": {
+      "Fine-grained Descriptions": [
+        "A brightly colored, hollow vegetable with thick, crisp walls, also called a sweet pepper.",
+        "Varieties include green, red, yellow, and orange, each with slightly different flavor and sweetness.",
+        "Eaten raw in salads or cooked in stir-fries and sauces."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "jalapeño",
+          "Reason for Confusion": "Both are peppers, but a jalapeño is smaller, spicier, and generally dark green with a mild to moderate heat.",
+          "Negative Prompt": "A small, elongated green chili pepper with a moderate spicy kick, commonly used in salsas and Mexican cuisine."
+        }
+      ]
+    },
+    "mushroom": {
+      "Fine-grained Descriptions": [
+        "An edible fungus with a stalk and a cap, commonly white or brown varieties like button or portobello.",
+        "Grows in damp, shaded environments, often used in soups, sauces, or as a meat substitute.",
+        "Has a savory, earthy flavor and spongy texture when cooked."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "toadstool",
+          "Reason for Confusion": "Both are umbrella-shaped fungi, but a toadstool generally refers to inedible or poisonous varieties with bright colors.",
+          "Negative Prompt": "A potentially toxic fungus with a vibrant red cap and white spots, found in forests and fairy tales."
+        }
+      ]
+    },
+    "orange": {
+      "Fine-grained Descriptions": [
+        "A round citrus fruit with a bright orange rind and juicy segments inside.",
+        "High in vitamin C, commonly eaten fresh or squeezed into juice.",
+        "Peel is zesty and aromatic, sometimes used in cooking or candying."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "tangerine",
+          "Reason for Confusion": "Both are orange-colored citrus fruits with similar taste, but tangerines are smaller and easier to peel.",
+          "Negative Prompt": "A small, bright citrus fruit with a thinner, looser skin, known for its sweet, juicy segments."
+        }
+      ]
+    },
+    "lemon": {
+      "Fine-grained Descriptions": [
+        "A bright yellow citrus fruit with a sour, acidic taste.",
+        "Commonly used for flavoring in cooking, baking, or as a refreshing drink.",
+        "Has a thick rind and juicy segments, often squeezed for its tangy juice."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "lime",
+          "Reason for Confusion": "Both are small, sour citrus fruits, but a lime is green and often used in Mexican or Thai cuisine.",
+          "Negative Prompt": "A small, green citrus fruit with tart juice, frequently added to cocktails or spicy dishes."
+        }
+      ]
+    },
+    "banana": {
+      "Fine-grained Descriptions": [
+        "A long, curved fruit with a yellow peel and soft, sweet flesh.",
+        "Grows in bunches on tropical plants, often eaten raw as a snack.",
+        "High in potassium, used in smoothies, baking, or desserts."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "plantain",
+          "Reason for Confusion": "Both are similar-looking elongated fruits, but a plantain is starchy, less sweet, and typically cooked before eating.",
+          "Negative Prompt": "A green or yellow banana-like fruit with a firmer texture, commonly fried or boiled in savory dishes."
+        }
+      ]
+    },
+    "pomegranate": {
+      "Fine-grained Descriptions": [
+        "A round fruit with a tough, red outer skin housing juicy, ruby-colored seeds (arils).",
+        "Seeds are burstingly sweet-tart, eaten raw or used for juice and garnishes.",
+        "Associated with health benefits, rich in antioxidants and vitamin C."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "passion fruit",
+          "Reason for Confusion": "Both have vibrant-colored interiors with edible seeds, but passion fruit has a wrinkled purple rind and a tangy, pulpy center.",
+          "Negative Prompt": "A golf-ball-sized tropical fruit with a firm rind and fragrant, seed-filled pulp that tastes sweet yet tart."
+        }
+      ]
+    },
+    "meat loaf": {
+      "Fine-grained Descriptions": [
+        "A savory dish made from ground meat (often beef) mixed with breadcrumbs and seasonings, baked in a loaf shape.",
+        "Sliced and served hot with sauces like ketchup or gravy.",
+        "Common comfort food in home cooking, often accompanied by mashed potatoes."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "terrine",
+          "Reason for Confusion": "Both are loaf-like meat dishes, but a terrine is often more refined, layered, and served cold in slices.",
+          "Negative Prompt": "A molded dish of layered meats, vegetables, or foie gras, typically served chilled and sliced as an appetizer."
+        }
+      ]
+    },
+    "pizza": {
+      "Fine-grained Descriptions": [
+        "A round flatbread topped with tomato sauce, cheese, and various toppings, baked in an oven.",
+        "Often cut into slices, with crust textures ranging from thin to deep-dish.",
+        "A beloved fast-food or restaurant staple originating from Italian cuisine."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "flatbread",
+          "Reason for Confusion": "Both can have a round, dough base with toppings, but a flatbread isn't always topped with sauce or cheese like a pizza.",
+          "Negative Prompt": "A simple, often unleavened dough rolled thin and baked, sometimes lightly topped with herbs or oils."
+        }
+      ]
+    },
+    "potpie": {
+      "Fine-grained Descriptions": [
+        "A savory pie filled with meat and vegetables in a thick sauce, topped with pastry crust.",
+        "Baked until the crust is golden, often served as a hearty meal.",
+        "Typically contains chicken, turkey, or beef, along with peas and carrots."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "shepherd's pie",
+          "Reason for Confusion": "Both are savory pies, but shepherd's pie is topped with mashed potatoes instead of pastry dough.",
+          "Negative Prompt": "A casserole of ground meat and veggies covered with a layer of mashed potatoes, baked until golden."
+        }
+      ]
+    },
+    "espresso": {
+      "Fine-grained Descriptions": [
+        "A concentrated coffee brewed by forcing hot water under pressure through finely-ground beans.",
+        "Served in small, strong shots with a creamy foam called crema on top.",
+        "Forms the base of many coffee drinks like lattes or cappuccinos."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "drip coffee",
+          "Reason for Confusion": "Both are brewed coffee beverages, but drip coffee is made by pouring hot water over grounds, lacking espresso's pressure-based extraction.",
+          "Negative Prompt": "A milder coffee produced by hot water filtering through grounds in a paper or mesh filter into a pot."
+        }
+      ]
+    },
+    "alp": {
+      "Fine-grained Descriptions": [
+        "A high mountain, typically part of the European Alps, known for dramatic peaks and snow-capped summits.",
+        "Features steep slopes, alpine meadows, and valleys often dotted with chalets.",
+        "Popular for skiing, hiking, and breathtaking scenic views."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "volcano",
+          "Reason for Confusion": "Both are towering landforms rising above the surrounding terrain, but a volcano has a magma chamber and can erupt.",
+          "Negative Prompt": "A conical mountain with a crater at the summit, occasionally spewing molten lava or ash clouds."
+        }
+      ]
+    },
+    "cliff": {
+      "Fine-grained Descriptions": [
+        "A steep, vertical or nearly vertical rock face, often found along coasts or mountainsides.",
+        "Formed by erosion or geological uplift, presenting dramatic drop-offs.",
+        "Can be composed of rock, soil, or chalk, sometimes offering panoramic views."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "escarpment",
+          "Reason for Confusion": "Both are steep slopes or long cliffs, but an escarpment refers specifically to a significant break in the landscape's elevation, often spanning large areas.",
+          "Negative Prompt": "A continuous steep slope or long cliff forming the boundary between two different land elevations, sometimes stretching for miles."
+        }
+      ]
+    },
+    "coral reef": {
+      "Fine-grained Descriptions": [
+        "An underwater ecosystem formed by the calcium carbonate skeletons of tiny marine invertebrates called coral polyps.",
+        "Teems with vibrant fish, coral species, and marine life in warm, shallow seas.",
+        "Fragile and highly biodiverse habitats threatened by climate change and pollution."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "kelp forest",
+          "Reason for Confusion": "Both are rich marine ecosystems supporting diverse species, but a kelp forest is composed of large seaweeds anchored to the ocean floor.",
+          "Negative Prompt": "An underwater habitat dominated by tall, swaying seaweed stalks reaching toward the surface, sheltering marine life."
+        }
+      ]
+    },
+    "lakeside": {
+      "Fine-grained Descriptions": [
+        "The area along the shore of a lake, often with calm waters and scenic views.",
+        "May feature docks, small beaches, or walking paths near the water’s edge.",
+        "Used for recreational activities like fishing, boating, or picnics."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "riverside",
+          "Reason for Confusion": "Both are waterfront areas, but a riverside follows flowing water rather than a still lake.",
+          "Negative Prompt": "A bank or edge alongside a flowing river current, often with narrower, winding water passageways."
+        }
+      ]
+    },
+    "seashore": {
+      "Fine-grained Descriptions": [
+        "A coastal area where land meets the ocean, featuring sandy or rocky beaches.",
+        "Influenced by tides, with waves washing over shells and seaweed.",
+        "Popular for sunbathing, swimming, and scenic ocean views."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "lakeshore",
+          "Reason for Confusion": "Both are shorelines with water meeting land, but a lakeshore borders a lake instead of the ocean with different tidal dynamics.",
+          "Negative Prompt": "A calm, freshwater bank where still waters lap gently, often surrounded by reeds or forest."
+        }
+      ]
+    },
+    "acorn": {
+      "Fine-grained Descriptions": [
+        "A nut from oak trees, consisting of a single seed enclosed in a tough shell and capped with a scaly cup.",
+        "Typically brown when mature, commonly found on forest floors in autumn.",
+        "Eaten by wildlife like squirrels and sometimes used in crafts or ornamental displays."
+      ],
+      "Hard Negatives": [
+        {
+          "NegativeClassName": "hazelnut",
+          "Reason for Confusion": "Both are small, brown nuts that grow on trees, but hazelnuts come from hazel trees and have a rounder shape without a cap.",
+          "Negative Prompt": "A round, shiny brown nut enclosed in a fibrous husk, commonly used in chocolate spreads or roasted snacks."
+        }
+      ]
+    }
+  }
+  
+  
+  
