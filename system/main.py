@@ -359,6 +359,7 @@ if __name__ == "__main__":
                         help="The threthold for droping slow clients")
 
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--num_workers", type=int, default=0)
 
 
 

@@ -12,6 +12,9 @@
 /visualization_logs/
 /system/flcore/trainmodel/bert-base-uncased
 /system/flcore/trainmodel/clip-ViT-B-32.pt
+/system/batch_shell_*.sh
+/logs_20250107/
+/save_20250107/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
