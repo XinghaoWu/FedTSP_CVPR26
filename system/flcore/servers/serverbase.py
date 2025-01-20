@@ -344,6 +344,55 @@ class Server(object):
         }
         self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
+    # evaluate top 5 accuracy on the local/global dataset
+    def top5_accuracy(self, type='local'):
+        test_acc_for_each_client = []
+        total_correct = 0
+        total_samples = 0
+        if type == 'global':
+            test_dataset_global = []
+            for client_id in range(self.num_clients):
+                test_data = read_client_data(self.dataset, client_id, is_train=False)
+                test_dataset_global.extend(test_data)
+            test_data_loader_global = DataLoader(test_dataset_global, 200, drop_last=False, shuffle=False)
+
+            # evaluate on each client
+            for client in self.clients:
+                acc_num, total_num, _ = client.top5_accuracy(test_data_loader_global)
+                total_correct += acc_num
+                total_samples += total_num
+                print(acc_num, total_num)
+                test_acc_for_each_client.append(acc_num / total_num)
+                print(f'client {client.id}, acc {acc_num / total_num}')
+                self.logger.info(f'client {client.id}, acc {acc_num / total_num}')
+        elif type == 'local':
+            # evaluate on each client
+            for client in self.clients:
+                test_data = read_client_data(self.dataset, client.id, is_train=False)
+                test_data_loader_local = DataLoader(test_data, 200, drop_last=False, shuffle=False)
+                acc_num, total_num, _ = client.top5_accuracy(test_data_loader_local)
+                total_correct += acc_num
+                total_samples += total_num
+                print(acc_num, total_num)
+                test_acc_for_each_client.append(acc_num / total_num)
+                print(f'client {client.id}, acc {acc_num / total_num}')
+                self.logger.info(f'client {client.id}, acc {acc_num / total_num}')
+        else:
+            raise NotImplementedError
+        print(f'Accuracy for each client: {test_acc_for_each_client}')
+        print(f'Average accuracy: {total_correct / total_samples}')
+        self.logger.info(f'Accuracy for each client: {test_acc_for_each_client}')
+        self.logger.info(f'Average accuracy: {total_correct / total_samples}')
+
+        hyperparameters = {
+            'seed': self.args.seed,
+            'type': type
+        }
+        results = {
+            'Average Accuracy': total_correct / total_samples
+        }
+        self.log_experiment_results(self.final_log_path, hyperparameters, results)
+
 
     def print_(self, test_acc, test_auc, train_loss):
         print("Average Test Accurancy: {:.4f}".format(test_acc))
