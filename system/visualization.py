@@ -378,6 +378,7 @@ if __name__ == "__main__":
                         help="The threthold for droping slow clients")
 
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--num_workers", type=int, default=0)
 
     # FedProto/ours/FedDistill (gamma)
     parser.add_argument('-lam', "--lamda", type=float, default=6.0)

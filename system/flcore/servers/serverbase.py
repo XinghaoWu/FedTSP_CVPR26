@@ -99,6 +99,9 @@ class Server(object):
         self.logger = set_logger(logFilePath + 'textlog.log')
 
     def log_experiment_results(self, log_file, hyperparameters, results):
+        summary_dir = os.path.dirname(log_file)
+        if not os.path.exists(summary_dir):
+            os.makedirs(summary_dir)
         with open(log_file, 'a') as f:
             f.write('Hyperparameters: \n')
             for key, value in hyperparameters.items():
