@@ -14,6 +14,7 @@ len_prompt=$9
 batch_size=${10:-100}
 device_id=${11:-0}
 global_rounds=${12:-60}
+save_model=${13:-1}
 
 echo "参数列表:"
 echo "dataset: ${dataset}"
@@ -28,6 +29,7 @@ echo "len_prompt: ${len_prompt}"
 echo "batch_size: ${batch_size}"
 echo "device_id: ${device_id}"
 echo "global_rounds: ${global_rounds}"
+echo "save_model: ${save_model}"
 
 if [ -z "$noniid" ] || [ -z "$alpha" ] || [ -z "$num_clients" ] || [ -z "$model_family" ] || [ -z "$lamda" ]; then
   echo "请提供 noniid alpha, num_clients, model_family, lamda 和 seed 参数，例如："
@@ -61,5 +63,5 @@ do
         --device_id=${device_id} \
         --manual_prompt=0 \
         --negative_class=0 \
-        --save_model=1
+        --save_model=${save_model}
 done
