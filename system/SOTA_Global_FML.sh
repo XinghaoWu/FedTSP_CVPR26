@@ -10,6 +10,9 @@ model_family=$6
 batch_size=${7:-100}
 device_id=${8:-0}
 global_rounds=${9:-300}
+visualization_mode=${10:-test}
+visualization_dataset_type=${11:-test}
+test_data_mode=${12:-global}
 
 echo "参数列表:"
 echo "dataset: ${dataset}"
@@ -46,8 +49,8 @@ do
         --seed=${seed} \
         --device_id=${device_id} \
         --save_model=0 \
-        --visualization_mode=test \
-        --visualization_dataset_type=test \
-        --test_data_mode=global
+        --visualization_mode=${visualization_mode} \
+        --visualization_dataset_type=${visualization_dataset_type} \
+        --test_data_mode=${test_data_mode}
 done
 

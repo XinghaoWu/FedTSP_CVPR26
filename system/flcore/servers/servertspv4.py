@@ -41,7 +41,7 @@ class FedTSPv4(Server):
         if 'main.py' in self.caller_script:
             self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary_{args.server_model}.txt'
         else:
-            self.final_log_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary_{args.server_model}.txt'
+            self.final_log_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})/summary_{args.server_model}.txt'
 
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
@@ -148,19 +148,24 @@ class FedTSPv4(Server):
                 old_prompts = copy.deepcopy(prompts)
                 optimizer_prompts = torch.optim.SGD([prompts], lr=self.prompt_lr)
                 optimizer_logit_scale = torch.optim.SGD([self.global_model.logit_scale], lr=self.prompt_lr)
-                for j in range(self.args.prompt_epoch):
-                    clip_logits = self.global_model(self.global_vision_protos)
-                    loss = F.cross_entropy(clip_logits, torch.tensor([i for i in range(self.num_classes)]).to(self.device))
-                    optimizer_prompts.zero_grad()
-                    optimizer_logit_scale.zero_grad()
-                    loss.backward()
-                    optimizer_prompts.step()
-                    optimizer_logit_scale.step()
-                    print(f'Prompt training epoch {j}, loss: {loss.item()}')
-                    self.logger.info(f'Prompt training epoch {j}, loss: {loss.item()}')
-                    print(f'logit_scale: {self.global_model.logit_scale.item()}')
-                prompts.data = self.args.prompt_EMA_alpha * old_prompts.data + (1 - self.args.prompt_EMA_alpha) * prompts.data
-
+                try:
+                    for j in range(self.args.prompt_epoch):
+                        clip_logits = self.global_model(self.global_vision_protos)
+                        loss = F.cross_entropy(clip_logits, torch.tensor([i for i in range(self.num_classes)]).to(self.device))
+                        optimizer_prompts.zero_grad()
+                        optimizer_logit_scale.zero_grad()
+                        loss.backward()
+                        optimizer_prompts.step()
+                        optimizer_logit_scale.step()
+                        print(f'Prompt training epoch {j}, loss: {loss.item()}')
+                        self.logger.info(f'Prompt training epoch {j}, loss: {loss.item()}')
+                        print(f'logit_scale: {self.global_model.logit_scale.item()}')
+                    prompts.data = self.args.prompt_EMA_alpha * old_prompts.data + (1 - self.args.prompt_EMA_alpha) * prompts.data
+                except Exception as e:
+                    print(e)
+                    print('Prompt training failed. Give up this round.')
+                    self.logger.error(e)
+                    self.logger.error('Prompt training failed. Give up this round.')
 
 
 

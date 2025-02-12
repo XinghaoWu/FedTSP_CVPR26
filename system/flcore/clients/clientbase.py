@@ -156,6 +156,38 @@ class Client(object):
 
         self.model.to('cpu')
         return test_acc, test_num, losses
+
+    # obtain top 5 accuracy on specific dataset
+    def top5_accuracy(self, dataloader):
+        self.model.to(self.device)
+        self.model.eval()
+        test_loader = dataloader
+        test_num = 0
+        losses = 0
+        top5_acc = 0  # Initialize Top-5 Accuracy counter
+
+        with torch.no_grad():
+            for x, y in test_loader:
+                if type(x) == type([]):
+                    x[0] = x[0].to(self.device)
+                else:
+                    x = x.to(self.device)
+                y = y.to(self.device)
+                output = self.model(x)
+
+                # # Top-1 Accuracy
+                # test_acc += (torch.sum(torch.argmax(output, dim=1) == y)).item()
+
+                # Top-5 Accuracy
+                _, top5_pred = torch.topk(output, k=5, dim=1)  # Get top 5 predictions
+                top5_acc += torch.sum(torch.any(top5_pred == y.view(-1, 1), dim=1)).item()
+
+                test_num += y.shape[0]
+                loss = self.loss(output, y)
+                losses += loss.item() * y.shape[0]
+
+        self.model.to('cpu')
+        return top5_acc, test_num, losses
         
 
     def save_model(self, save_dir):

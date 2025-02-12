@@ -305,6 +305,10 @@ def run(args):
             server.load_model()
             server.evaluate_after_training(args.test_data_mode)
 
+        if args.visualization_mode == 'top5acc':
+            server.load_model()
+            server.top5_accuracy(args.test_data_mode)
+
         if args.visualization_mode == 'super_sim':
             server.visualize_global_protos_superclass_similarity()
 
@@ -374,6 +378,7 @@ if __name__ == "__main__":
                         help="The threthold for droping slow clients")
 
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--num_workers", type=int, default=0)
 
     # FedProto/ours/FedDistill (gamma)
     parser.add_argument('-lam', "--lamda", type=float, default=6.0)
@@ -440,7 +445,7 @@ if __name__ == "__main__":
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
 
     # visualization arguments
-    parser.add_argument('--visualization_mode', type=str, default='super_sim', choices=['TSNE', 'proto_sim', 'super_sim', 'test'])
+    parser.add_argument('--visualization_mode', type=str, default='super_sim', choices=['TSNE', 'proto_sim', 'super_sim', 'test', 'top5acc'])
     parser.add_argument('--visualization_dataset_type', type=str, default='test', help='visualize train or test datasets')
     parser.add_argument('--test_data_mode', type=str, default='local', help='test on local or global data', choices=['local', 'global'])
     parser.add_argument('--similarity_mode', type=str, default="cosine", help='cosine or euclidean')

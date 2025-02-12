@@ -14,7 +14,9 @@ len_prompt=$9
 batch_size=${10:-100}
 device_id=${11:-0}
 global_rounds=${12:-60}
-save_model=${13:-1}
+visualization_mode=${13:-test}
+visualization_dataset_type=${14:-test}
+test_data_mode=${15:-global}
 
 echo "参数列表:"
 echo "dataset: ${dataset}"
@@ -29,7 +31,6 @@ echo "len_prompt: ${len_prompt}"
 echo "batch_size: ${batch_size}"
 echo "device_id: ${device_id}"
 echo "global_rounds: ${global_rounds}"
-echo "save_model: ${save_model}"
 
 if [ -z "$noniid" ] || [ -z "$alpha" ] || [ -z "$num_clients" ] || [ -z "$model_family" ] || [ -z "$lamda" ]; then
   echo "请提供 noniid alpha, num_clients, model_family, lamda 和 seed 参数，例如："
@@ -42,7 +43,7 @@ dataset="${dataset}_${noniid}_${alpha}_balance_${num_clients}"
 
 for seed in 0 1 2;
 do
-    python main.py --dataset=${dataset} \
+    python visualization.py --dataset=${dataset} \
         --num_classes=${num_classes} \
         --model_family=${model_family} \
         --local_learning_rate=0.01 \
@@ -63,5 +64,8 @@ do
         --device_id=${device_id} \
         --manual_prompt=0 \
         --negative_class=0 \
-        --save_model=${save_model}
+        --save_model=0 \
+        --visualization_mode=${visualization_mode} \
+        --visualization_dataset_type=${visualization_dataset_type} \
+        --test_data_mode=${test_data_mode}
 done
