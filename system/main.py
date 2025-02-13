@@ -207,6 +207,22 @@ def run(args):
                 'TransformerModel(ntoken=args.vocab_size, d_model=args.feature_dim, nhead=8, nlayers=8, num_classes=args.num_classes, max_len=args.max_len)',
                 'TransformerModel(ntoken=args.vocab_size, d_model=args.feature_dim, nhead=16, nlayers=16, num_classes=args.num_classes, max_len=args.max_len)',
             ]
+        
+        elif args.model_family == 'NLP_new':
+            args.models = [
+                'fastText(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
+                'TextLogisticRegression(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'GRUNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'LSTMNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
+            ]
+        
+        elif args.model_familt == 'bert_zoo':
+            args.models = [
+                'Bertzoo(model_name=distilbert, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'Bertzoo(model_name=bert, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'Bertzoo(model_name=albert, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'Bertzoo(model_name=tinybert, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+            ]
 
         elif args.model_family == "MLPs":
             args.models = [
