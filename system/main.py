@@ -25,6 +25,7 @@ from flcore.servers.serverours import FedOurs
 from flcore.servers.servertspv2 import FedTSPv2
 from flcore.servers.servertspv3 import FedTSPv3
 from flcore.servers.servertspv4 import FedTSPv4
+from flcore.servers.servertspv4_ablation import FedTSPv4_ablation
 
 
 from utils.result_utils import average_data
@@ -295,6 +296,9 @@ def run(args):
         elif args.algorithm == "FedTSPv4":
             server = FedTSPv4(args, i)
 
+        elif args.algorithm == "FedTSPv4_ablation":
+            server = FedTSPv4_ablation(args, i)
+
         # elif args.algorithm == "FedKTL-stylegan-xl":
         #     server = FedKTL_stylegan_xl(args, i)
         #
@@ -433,6 +437,10 @@ if __name__ == "__main__":
     # FedTSPv4
     parser.add_argument('--manual_prompt', type=int, default=1, help='whether to use manual prompt')
     parser.add_argument('--negative_class', type=int, default=0, help='whether add negative class')
+
+    # FedTSPv4 ablation
+    parser.add_argument('--LLM_prompt_file', type=str, default='LLM_prompts', help='LLM prompt file')
+    parser.add_argument('LLM_prompt_number', type=int, default=-1, help='LLM prompt number. set -1 to select all prompts')
 
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
