@@ -65,7 +65,9 @@ class PromptLearner_client(nn.Module):
         random_init=True,
         manual_prompt=True,
         negative_class=False,
-        dataset=None
+        dataset=None,
+        LLM_prompt_file='LLM_prompts',
+        LLM_prompt_number=-1
     ):
         super().__init__()
         self.n_ctx = n_ctx_num
@@ -79,6 +81,10 @@ class PromptLearner_client(nn.Module):
         self.dtype = clip_model.dtype
         ctx_dim = clip_model.ln_final.weight.shape[0]
 
+        print(f'='*50)
+        print(f'Prompt File:{LLM_prompt_file}; Prompt number:{LLM_prompt_number}')
+        print(f'='*50)
+
         # 1) 构造所有文本 Prompt (正样本 + 负样本)，并分别 tokenize
         all_prompts = []
         prompt_index_map = []  # 记录每个类别的正负样本索引
@@ -86,7 +92,7 @@ class PromptLearner_client(nn.Module):
         # 读取 JSON 中的 prompt 数据
         if dataset is not None:
             dataset_core = dataset.split('_')[0]
-            prompt_dir = f'../dataset/LLM_prompts/{dataset_core}/text_encoder_prompts.json'
+            prompt_dir = f'../dataset/{LLM_prompt_file}/{dataset_core}/text_encoder_prompts.json'
             with open(prompt_dir, 'r') as f:
                 text_encoder_prompts = json.load(f)
         else:
@@ -103,7 +109,10 @@ class PromptLearner_client(nn.Module):
                 pos_count = 1
             else:
                 # 正样本 Prompt: 从 Fine-grained Descriptions 中取出多个描述
-                desc_list = text_encoder_prompts[cname]["Fine-grained Descriptions"]
+                if LLM_prompt_number > 0:
+                    desc_list = text_encoder_prompts[cname]["Fine-grained Descriptions"][0:LLM_prompt_number]
+                else:
+                    desc_list = text_encoder_prompts[cname]["Fine-grained Descriptions"]
                 class_prompts = [f"A photo of a {c_proc}: {desc}" for desc in desc_list]
                 print(f'[{cname}] {class_prompts}')
                 pos_count = len(desc_list)  # 一般为3
@@ -217,7 +226,9 @@ class TextEncoder_server(nn.Module):
         random_init=True,
         manual_prompt=True,
         negative_class=False,
-        dataset=None
+        dataset=None,
+        LLM_prompt_file='LLM_prompts',
+        LLM_prompt_number=-1
     ):
         super().__init__()
         self.prompt_learner = PromptLearner_client(
@@ -228,7 +239,9 @@ class TextEncoder_server(nn.Module):
             random_init,
             manual_prompt=manual_prompt,
             negative_class=negative_class,
-            dataset=dataset
+            dataset=dataset,
+            LLM_prompt_file=LLM_prompt_file,
+            LLM_prompt_number=LLM_prompt_number
         )
         self.tokenized_prompts = self.prompt_learner.tokenized_prompts
         self.text_encoder = TextEncoder(clip_model)

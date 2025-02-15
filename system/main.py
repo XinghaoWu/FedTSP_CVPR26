@@ -440,7 +440,7 @@ if __name__ == "__main__":
 
     # FedTSPv4 ablation
     parser.add_argument('--LLM_prompt_file', type=str, default='LLM_prompts', help='LLM prompt file')
-    parser.add_argument('LLM_prompt_number', type=int, default=-1, help='LLM prompt number. set -1 to select all prompts')
+    parser.add_argument('--LLM_prompt_number', type=int, default=-1, help='LLM prompt number. set -1 to select all prompts')
 
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
