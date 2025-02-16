@@ -141,7 +141,7 @@ class PromptLearner_client(nn.Module):
             })
 
         # Tokenize 所有 Prompts
-        tokenized_prompts = torch.cat([clip.tokenize(p) for p in all_prompts])  # (batch_total, seq_len)
+        tokenized_prompts = torch.cat([clip.tokenize(p, truncate=True) for p in all_prompts])  # (batch_total, seq_len). set truncate=True in case LLM generates too long prompts.
         self.register_buffer("tokenized_prompts", tokenized_prompts)  # (batch_total, seq_len)
         self.prompt_index_map = prompt_index_map
         self.batch_total = len(all_prompts)

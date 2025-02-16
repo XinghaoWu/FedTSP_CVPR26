@@ -83,7 +83,7 @@ class FedTSPv4_ablation(Server):
             clip_model.to(self.device)
             self.global_model = TextEncoder_server(self.args.classes, clip_model, self.args.len_prompt, self.args.CSC,
                                                    self.args.prompt_random_init, self.args.manual_prompt,
-                                                   self.args.negative_class, self.args.dataset, self.args.LLM_prompt_file, self.LLM_prompt_number).to(self.device)
+                                                   self.args.negative_class, self.args.dataset, self.args.LLM_prompt_file, self.args.LLM_prompt_number).to(self.device)
             for name, param in self.global_model.named_parameters():
                 if 'ctx_global' in name or 'logit_scale' in name:
                     param.requires_grad_(True)
@@ -96,7 +96,7 @@ class FedTSPv4_ablation(Server):
                                                         random_init=self.args.prompt_random_init,
                                                         manual_prompt=self.args.manual_prompt,
                                                         negative_class=self.args.negative_class,
-                                                        dataset=self.args.dataset, LLM_prompt_file=self.args.LLM_prompt_file, LLM_prompt_number=self.LLM_prompt_number).to(self.device)
+                                                        dataset=self.args.dataset, LLM_prompt_file=self.args.LLM_prompt_file, LLM_prompt_number=self.args.LLM_prompt_number).to(self.device)
             for name, param in self.global_model.named_parameters():
                 if 'ctx_global' in name or 'logit_scale' in name:
                     param.requires_grad_(True)

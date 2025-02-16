@@ -51,7 +51,7 @@ do
         --model_family=${model_family} \
         --local_learning_rate=0.01 \
         --global_rounds=${global_rounds} \
-        --algorithm=FedTSPv4 \
+        --algorithm=FedTSPv4_ablation \
         --local_epochs=5 \
         --batch_size=${batch_size} \
         --num_clients=${num_clients} \
