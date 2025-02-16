@@ -179,7 +179,9 @@ def run(args):
                 'LSTMNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
                 'BiLSTM_TextClassification(input_size=args.vocab_size, hidden_size=args.feature_dim, output_size=args.num_classes, num_layers=1, embedding_dropout=0, lstm_dropout=0, attention_dropout=0, embedding_length=args.feature_dim)', 
                 'TextCNN(hidden_dim=args.feature_dim, max_len=args.max_len, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
-                'TransformerModel(ntoken=args.vocab_size, d_model=args.feature_dim, nhead=8, nlayers=2, num_classes=args.num_classes, max_len=args.max_len)'
+                'TransformerModel(ntoken=args.vocab_size, d_model=args.feature_dim, nhead=8, nlayers=2, num_classes=args.num_classes, max_len=args.max_len)',
+                'TextLogisticRegression(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'GRUNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)'
             ]
 
         elif args.model_family == "NLP_Transformers-nhead=8":
@@ -217,12 +219,12 @@ def run(args):
                 'LSTMNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
             ]
         
-        elif args.model_familt == 'bert_zoo':
+        elif args.model_family == 'bert_zoo':
             args.models = [
-                'Bertzoo(model_name=distilbert, vocab_size=args.vocab_size, num_classes=args.num_classes)',
-                'Bertzoo(model_name=bert, vocab_size=args.vocab_size, num_classes=args.num_classes)',
-                'Bertzoo(model_name=albert, vocab_size=args.vocab_size, num_classes=args.num_classes)',
-                'Bertzoo(model_name=tinybert, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'Bertzoo(model_name="distilbert", vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                # 'Bertzoo(model_name="bert", vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                # 'Bertzoo(model_name="albert", vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'Bertzoo(model_name="tinybert", vocab_size=args.vocab_size, num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "MLPs":
