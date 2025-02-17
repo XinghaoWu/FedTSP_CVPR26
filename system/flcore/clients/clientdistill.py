@@ -60,9 +60,9 @@ class clientDistill(Client):
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
-
         save_item(model, self.role, 'model', self.save_folder_name)
         save_item(agg_func(logits), self.role, 'logits', self.save_folder_name)
+        self.model.to('cpu')
 
         self.train_time_cost['num_rounds'] += 1
         self.train_time_cost['total_cost'] += time.time() - start_time
