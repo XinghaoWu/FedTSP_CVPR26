@@ -26,6 +26,7 @@ from flcore.servers.servertspv2 import FedTSPv2
 from flcore.servers.servertspv3 import FedTSPv3
 from flcore.servers.servertspv4 import FedTSPv4
 from flcore.servers.servertspv4_ablation import FedTSPv4_ablation
+from flcore.servers.servermrl import FedMRL
 
 
 from utils.result_utils import average_data
@@ -286,6 +287,9 @@ def run(args):
         elif args.algorithm == "AlignFed":
             server = AlignFed(args, i)
 
+        elif args.algorithm == "FedMRL":
+            server = FedMRL(args, i)
+        
         elif args.algorithm == "FedOurs":
             server = FedOurs(args, i)
 
@@ -412,6 +416,9 @@ if __name__ == "__main__":
     parser.add_argument('-gbs', "--gen_batch_size", type=int, default=4,
                         help="Not related to the performance. A small value saves GPU memory.")
     parser.add_argument('-mu', "--mu", type=float, default=50.0)
+    
+    # FedMRL
+    parser.add_argument('-sfd', "--sub_feature_dim", type=int, default=128)
 
     # ours
     parser.add_argument('--len_prompt', default=20, type=int, help='the length of prompts') # v2

@@ -136,10 +136,12 @@ class FedKD(Server):
             
         for cid in self.uploaded_ids:
             client = self.clients[cid]
-            compressed_param = load_item(client.role, 'compressed_param', client.save_folder_name)
-            client_param = recover(compressed_param)
+            client_param = load_item(client.role, 'compressed_param', client.save_folder_name)  # 改为直接加载
+            # compressed_param = load_item(client.role, 'compressed_param', client.save_folder_name)
+            # client_param = recover(compressed_param)
             for server_k, client_k in zip(global_param.keys(), client_param.keys()):
                 global_param[server_k] += client_param[client_k] * 1/len(self.uploaded_ids)
-
-        compressed_param = decomposition(global_param.items(), self.energy)
-        save_item(compressed_param, self.role, 'compressed_param', self.save_folder_name)
+                
+        save_item(global_param, self.role, 'compressed_param', self.save_folder_name)  # 直接存储
+        # compressed_param = F(global_param.items(), self.energy)
+        # save_item(compressed_param, self.role, 'compressed_param', self.save_folder_name)

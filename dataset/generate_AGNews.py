@@ -67,7 +67,7 @@ def generate_dataset(niid, balance, partition, args):
         return
 
     # Get AG_News data
-    trainset, testset = torchtext.datasets.AG_NEWS(root=dir_path+"rawdata/AGNews")
+    trainset, testset = torchtext.datasets.AG_NEWS(root="rawdata/AGNews")
 
     trainlabel, traintext = list(zip(*trainset))
     testlabel, testtext = list(zip(*testset))
