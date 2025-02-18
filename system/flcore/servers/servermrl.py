@@ -25,6 +25,21 @@ class FedMRL(Server):
         # self.load_model()
         self.Budget = []
 
+        # set logger
+        if 'main.py' in self.caller_script:
+            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_sub_feature{args.sub_feature_dim}_seed{args.seed}/'
+        else:
+            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_sub_feature{args.sub_feature_dim}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
+        
+        self.set_loggers(logger_path)
+
+        self.model_save_path = f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_sub_feature{args.sub_feature_dim}_seed{args.seed}/'
+
+        if 'main.py' in self.caller_script:
+            self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary.txt'
+        else:
+            self.final_log_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})/summary.txt'
+
 
     def train(self):
         for i in range(self.global_rounds+1):
@@ -34,7 +49,11 @@ class FedMRL(Server):
             if i%self.eval_gap == 0:
                 print(f"\n-------------Round number: {i}-------------")
                 print("\nEvaluate heterogeneous models")
+                self.current_epoch = i
                 self.evaluate()
+                if self.best_epoch == i:
+                    if self.args.save_model != 0:
+                        self.save_model()
 
             for client in self.selected_clients:
                 client.train()
@@ -59,6 +78,15 @@ class FedMRL(Server):
         print(max(self.rs_test_acc))
         print("\nAverage time cost per round.")
         print(sum(self.Budget[1:])/len(self.Budget[1:]))
+
+        hyperparameters = {
+            'seed': self.args.seed
+        }
+        results = {
+            'Best accuracy': self.best_acc,
+            'Best epoch': self.best_epoch,
+        }
+        self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
         self.save_results()
         
