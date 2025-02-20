@@ -73,9 +73,9 @@ class clientKD(Client):
                 loss.backward(retain_graph=True)
                 loss_g.backward()
                 # prevent divergency on specifical tasks
-                torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
-                torch.nn.utils.clip_grad_norm_(global_model.parameters(), 10)
-                torch.nn.utils.clip_grad_norm_(W_h.parameters(), 10)
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 1)
+                torch.nn.utils.clip_grad_norm_(global_model.parameters(), 1)
+                torch.nn.utils.clip_grad_norm_(W_h.parameters(), 1)
                 optimizer.step()
                 optimizer_g.step()
                 optimizer_W.step()

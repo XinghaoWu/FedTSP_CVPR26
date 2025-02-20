@@ -51,9 +51,6 @@ class FedMRL(Server):
                 print("\nEvaluate heterogeneous models")
                 self.current_epoch = i
                 self.evaluate()
-                if self.best_epoch == i:
-                    if self.args.save_model != 0:
-                        self.save_model()
 
             for client in self.selected_clients:
                 client.train()
