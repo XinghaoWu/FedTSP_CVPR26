@@ -562,7 +562,8 @@ class Server(object):
         import matplotlib
         matplotlib.rcParams['pdf.fonttype'] = 42
         plt.rcParams['font.family'] = 'Times New Roman'
-        self.load_model()
+        matplotlib.rcParams["font.family"] = "Times New Roman"
+        # self.load_model()
 
         global_protos = self.get_global_protos()
         global_protos = global_protos / global_protos.norm(dim=-1, keepdim=True)
@@ -577,6 +578,11 @@ class Server(object):
                         break
             global_protos = torch.stack(plot_proto)
 
+        if 'Cifar10' in self.args.dataset:
+            # Rearrange the order of classes
+            new_order = [2, 3, 4, 5, 7, 6, 8, 9, 1, 0]  # Rearranged order
+            global_protos = global_protos[new_order]  # Reorder prototype vectors
+
         if self.args.similarity_mode == 'cosine':
             similarity_matrix = global_protos @ global_protos.T
         elif self.args.similarity_mode == 'euclidean':
@@ -586,7 +592,7 @@ class Server(object):
 
         # Convert to numpy for visualization
         similarity_matrix_np = similarity_matrix.detach().cpu().numpy()
-        np.fill_diagonal(similarity_matrix_np, np.nan)
+        # np.fill_diagonal(similarity_matrix_np, np.nan)
         if self.args.scaler == 'minmax':
             mask = ~np.eye(similarity_matrix_np.shape[0], dtype=bool)
             non_diag_elements = similarity_matrix_np[mask]
@@ -600,22 +606,32 @@ class Server(object):
         # Get class names from self.args.classes
         class_names = self.args.tsne_classes if hasattr(self.args, 'tsne_classes') else [f'Class {i}' for i in
                                                                                range(similarity_matrix_np.shape[0])]
-
+        if 'Cifar10' in self.args.dataset:
+            # Rearrange the order of classes
+            new_order = [2, 3, 4, 5, 7, 6, 8, 9, 1, 0] # Rearranged order
+            class_names = [self.args.classes[i] for i in new_order]  # Reorder class names
+        
+        import matplotlib.colors as mcolors
+        norm = mcolors.PowerNorm(gamma=2.6, vmin=0, vmax=1)
         # Plot heatmap with values
         plt.figure(figsize=(10, 8))
         if self.args.similarity_mode == 'cosine':
-            sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
-                        xticklabels=class_names, yticklabels=class_names, vmin=0, vmax=1, annot_kws={"size": 16})
+            # sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
+            #             xticklabels=class_names, yticklabels=class_names, vmin=0, vmax=1, annot_kws={"size": 16})
+            ax = sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='viridis', cbar=True,
+                        xticklabels=class_names, yticklabels=class_names, norm=norm, annot_kws={"size": 17})
         else:
-            sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
+            ax = sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
                         xticklabels=class_names, yticklabels=class_names)
+        cbar = ax.collections[0].colorbar
+        cbar.ax.tick_params(labelsize=12)  # 将color bar标签的字体大小设置为12
         # plt.title('Global Prototype Similarity Heatmap')
-        plt.xlabel('Prototypes', fontsize=18)
-        plt.ylabel('Prototypes', fontsize=18)
-        plt.xticks(rotation=45, ha='right', fontsize=16)  # Rotate x-axis labels for better readability
-        plt.yticks(rotation=0, fontsize=16)
+        # plt.xlabel('Prototypes', fontsize=18)
+        # plt.ylabel('Prototypes', fontsize=18)
+        plt.xticks(rotation=45, ha='right', fontsize=24)  # Rotate x-axis labels for better readability
+        plt.yticks(rotation=0, fontsize=24)
         plt.tight_layout()  # Adjust layout to prevent label cutoff
-        plt.savefig(f'{self.args.algorithm}.png', dpi=480)
+        plt.savefig(f'{self.args.dataset}_{self.args.model_family}_{self.args.algorithm}.png')
         plt.show()
 
         return similarity_matrix
