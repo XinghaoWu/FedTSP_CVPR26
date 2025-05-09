@@ -1,0 +1,602 @@
+{
+    "apple": {
+      "Short Label": "Apple",
+      "Fine-grained Descriptions": [
+        "An apple is a round fruit, typically red, green, or yellow, with a smooth skin and a crisp, juicy interior. It has a slightly sweet flavor and a firm texture, often consumed raw or used in cooking and baking."
+      ]
+    },
+    "aquarium_fish": {
+      "Short Label": "Aquarium Fish",
+      "Fine-grained Descriptions": [
+        "Aquarium fish are small, colorful species often kept in home aquariums. They come in a variety of shapes and sizes, from bright tetras and guppies to more exotic species like angelfish and goldfish. These fish are often kept in water tanks with plants and decorative ornaments."
+      ]
+    },
+    "baby": {
+      "Short Label": "Baby",
+      "Fine-grained Descriptions": [
+        "A baby is a young human being, typically from birth to a few years old. Babies are known for their small size, delicate features, and rapid development. They communicate through crying and cooing and need constant care and attention from their caregivers."
+      ]
+    },
+    "bear": {
+      "Short Label": "Bear",
+      "Fine-grained Descriptions": [
+        "Bears are large mammals with thick fur, sharp claws, and a stocky body. They are typically solitary animals, found in forests, mountains, and arctic regions. Bears can be omnivores, eating both plants and animals, and are known for their hibernation behavior in winter."
+      ]
+    },
+    "beaver": {
+      "Short Label": "Beaver",
+      "Fine-grained Descriptions": [
+        "Beavers are large, nocturnal rodents known for their dam-building skills. They have strong, flat tails and sharp teeth for gnawing on trees. Beavers are primarily found near rivers or lakes and are famous for creating elaborate dams and lodges out of wood and mud."
+      ]
+    },
+    "bed": {
+      "Short Label": "Bed",
+      "Fine-grained Descriptions": [
+        "A bed is a piece of furniture designed for sleeping or resting. It typically consists of a mattress supported by a frame, with additional features such as headboards, footboards, and side rails. Beds come in various sizes, including twin, queen, and king."
+      ]
+    },
+    "bee": {
+      "Short Label": "Bee",
+      "Fine-grained Descriptions": [
+        "A bee is a flying insect known for its role in pollination and the production of honey and beeswax. Bees are typically small, with fuzzy bodies that are black and yellow, and are essential for the pollination of many plants, including flowers and crops."
+      ]
+    },
+    "beetle": {
+      "Short Label": "Beetle",
+      "Fine-grained Descriptions": [
+        "Beetles are a group of insects that have a hard shell covering their wings. They vary in size and color, from small, shiny species to large, brown or black varieties. Beetles are found in nearly every habitat on Earth and play significant roles in ecosystems, including decomposing organic material."
+      ]
+    },
+    "bicycle": {
+      "Short Label": "Bicycle",
+      "Fine-grained Descriptions": [
+        "A bicycle is a human-powered vehicle with two wheels, pedals, handlebars, and a seat. It is used for transportation, exercise, and recreation. Bicycles come in various types, including road bikes, mountain bikes, and hybrid bikes, with different frame materials and design features."
+      ]
+    },
+    "bottle": {
+      "Short Label": "Bottle",
+      "Fine-grained Descriptions": [
+        "A bottle is a container, typically made of glass, plastic, or metal, used for storing liquids. Bottles can vary in size, from small containers for beverages to larger containers for liquids like oil or cleaning products. Most bottles have a narrow neck and a cap or cork to seal them."
+      ]
+    },
+    "bowl": {
+      "Short Label": "Bowl",
+      "Fine-grained Descriptions": [
+        "A bowl is a round, deep container used for holding food or liquids. Bowls are typically made of ceramic, glass, or plastic and come in various sizes. They are commonly used for serving soup, salad, cereal, and other foods that require containment."
+      ]
+    },
+    "boy": {
+      "Short Label": "Boy",
+      "Fine-grained Descriptions": [
+        "A boy is a young male human, typically ranging from birth to adolescence. Boys are characterized by their active nature, energetic play, and curiosity. As they grow, they go through various stages of physical, emotional, and cognitive development."
+      ]
+    },
+    "bridge": {
+      "Short Label": "Bridge",
+      "Fine-grained Descriptions": [
+        "A bridge is a structure built to span a physical obstacle, such as a river, valley, or road, allowing people or vehicles to pass over. Bridges can be made from various materials, including concrete, steel, and wood, and they come in different types, including suspension, arch, and beam bridges."
+      ]
+    },
+    "bus": {
+      "Short Label": "Bus",
+      "Fine-grained Descriptions": [
+        "A bus is a large motor vehicle designed for transporting a large number of passengers. Buses typically have several rows of seats and may be used for public transit, school routes, or long-distance travel. They are commonly seen in urban environments and come in different sizes and designs."
+      ]
+    },
+    "butterfly": {
+      "Short Label": "Butterfly",
+      "Fine-grained Descriptions": [
+        "A butterfly is an insect with large, colorful wings, often with intricate patterns. Butterflies go through a metamorphic life cycle, starting as larvae (caterpillars), then cocooning and emerging as winged adults. They are known for their delicate flight and are important pollinators."
+      ]
+    },
+    "camel": {
+      "Short Label": "Camel",
+      "Fine-grained Descriptions": [
+        "Camels are large mammals known for their distinctive humps, which store fat. They are well adapted to desert life, with long legs, thick fur, and the ability to go for long periods without water. Camels are often used as pack animals and for transportation in arid regions."
+      ]
+    },
+    "can": {
+      "Short Label": "Can",
+      "Fine-grained Descriptions": [
+        "A can is a cylindrical container, typically made of metal, used for storing food or beverages. Cans are sealed to preserve the contents and are commonly used for products like soda, soup, and vegetables. They come in various sizes, from small drink cans to larger containers for bulk items."
+      ]
+    },
+    "castle": {
+      "Short Label": "Castle",
+      "Fine-grained Descriptions": [
+        "A castle is a large fortified building or complex, typically built during the Middle Ages. Castles are characterized by their stone walls, towers, battlements, and gates. They were used by royalty or nobility for defense and as a residence, and many are now popular tourist attractions."
+      ]
+    },
+    "caterpillar": {
+      "Short Label": "Caterpillar",
+      "Fine-grained Descriptions": [
+        "A caterpillar is the larval stage of a butterfly or moth. Caterpillars have segmented bodies, six true legs, and several pairs of prolegs. They are usually covered in tiny hairs or bristles and are known for their voracious appetite, feeding on leaves before undergoing metamorphosis into adults."
+      ]
+    },
+    "cattle": {
+      "Short Label": "Cattle",
+      "Fine-grained Descriptions": [
+        "Cattle are large domesticated herbivores, typically raised for meat, milk, and leather. They have hooves, horns, and thick coats. Cattle are important livestock animals, found in farms and ranches, and are vital to agricultural economies worldwide."
+      ]
+    },
+    "chair": {
+    "Short Label": "Chair",
+    "Fine-grained Descriptions": [
+      "A chair is a piece of furniture designed for sitting. It typically consists of a seat, a backrest, and four legs, though variations exist, such as recliners or folding chairs. Chairs are made from a variety of materials, including wood, metal, and plastic, and are commonly found in homes, offices, and public spaces."
+    ]
+  },
+  "chimpanzee": {
+    "Short Label": "Chimpanzee",
+    "Fine-grained Descriptions": [
+      "Chimpanzees are great apes known for their high intelligence and social behavior. They are native to the forests and savannas of West and Central Africa. Chimpanzees are omnivorous and are capable of using tools. They have a similar genetic makeup to humans, making them one of our closest living relatives."
+    ]
+  },
+  "clock": {
+    "Short Label": "Clock",
+    "Fine-grained Descriptions": [
+      "A clock is a device used to measure and indicate time. It typically features a dial with rotating hands (hour, minute, second) or a digital display. Clocks are used in homes, workplaces, and public spaces, and they come in various forms, such as wall clocks, wristwatches, and alarm clocks."
+    ]
+  },
+  "cloud": {
+    "Short Label": "Cloud",
+    "Fine-grained Descriptions": [
+      "A cloud is a visible mass of condensed water vapor floating in the sky. Clouds come in various shapes and sizes, from fluffy cumulus clouds to wispy cirrus clouds. They play an essential role in the Earth's weather system by influencing rainfall, temperature, and air pressure."
+    ]
+  },
+  "cockroach": {
+    "Short Label": "Cockroach",
+    "Fine-grained Descriptions": [
+      "A cockroach is a small, brown or black insect with a flat, oval body and long antennae. Known for their ability to adapt to various environments, cockroaches are typically found in warm, humid places. They are considered pests due to their tendency to invade homes and their ability to spread disease."
+    ]
+  },
+  "couch": {
+    "Short Label": "Couch",
+    "Fine-grained Descriptions": [
+      "A couch is a piece of upholstered furniture designed for seating multiple people. It typically has a cushioned seat, armrests, and a backrest. Couches come in various styles and sizes, from compact two-seater models to large sectional sofas, and are commonly found in living rooms or lounges."
+    ]
+  },
+  "crab": {
+    "Short Label": "Crab",
+    "Fine-grained Descriptions": [
+      "Crabs are crustaceans with a hard exoskeleton, pincers, and a short, broad body. They typically walk sideways and are found in both marine and freshwater environments. Crabs are omnivores and feed on plants, algae, and small animals. Some species, such as the king crab, are commercially important."
+    ]
+  },
+  "crocodile": {
+    "Short Label": "Crocodile",
+    "Fine-grained Descriptions": [
+      "Crocodiles are large, predatory reptiles with long, powerful jaws, sharp teeth, and tough, scaly skin. They are found in tropical and subtropical regions and are known for their ambush hunting technique, lurking in water to catch prey. Crocodiles are often seen in rivers, lakes, and marshes."
+    ]
+  },
+  "cup": {
+    "Short Label": "Cup",
+    "Fine-grained Descriptions": [
+      "A cup is a small, typically cylindrical container used for drinking liquids. It is usually made of ceramic, glass, or plastic, with a handle for easy holding. Cups are commonly used for beverages such as tea, coffee, or water, and they come in various sizes and designs."
+    ]
+  },
+  "dinosaur": {
+    "Short Label": "Dinosaur",
+    "Fine-grained Descriptions": [
+      "Dinosaurs were a group of reptiles that lived millions of years ago, during the Mesozoic Era. They were diverse in size, shape, and behavior, ranging from small, herbivorous species to massive, carnivorous predators. Dinosaurs are now extinct, but fossil evidence provides insight into their appearance and behavior."
+    ]
+  },
+  "dolphin": {
+    "Short Label": "Dolphin",
+    "Fine-grained Descriptions": [
+      "Dolphins are marine mammals known for their intelligence, social behavior, and acrobatic abilities. They are found in oceans and seas worldwide and are recognized for their streamlined bodies, sharp beaks, and playful nature. Dolphins often live in groups called pods and are known for communicating through clicks and whistles."
+    ]
+  },
+  "elephant": {
+    "Short Label": "Elephant",
+    "Fine-grained Descriptions": [
+      "Elephants are the largest land mammals, characterized by their large ears, long trunks, and tusks. They are herbivorous and found in Africa and Asia, living in herds led by a matriarch. Elephants are known for their intelligence, strong social bonds, and memory, and they play a crucial role in ecosystems."
+    ]
+  },
+  "flatfish": {
+    "Short Label": "Flatfish",
+    "Fine-grained Descriptions": [
+      "Flatfish are a type of fish with a flattened, asymmetrical body. They live on the ocean floor and are known for their ability to camouflage with their surroundings. Species such as flounder and halibut are common types of flatfish, which are often caught for food."
+    ]
+  },
+  "forest": {
+    "Short Label": "Forest",
+    "Fine-grained Descriptions": [
+      "A forest is a large area covered chiefly with trees and undergrowth. Forests provide habitat for numerous species of animals and plants and play a key role in regulating the Earth's climate and air quality. They can be found in various regions, including tropical, temperate, and boreal zones."
+    ]
+  },
+  "fox": {
+    "Short Label": "Fox",
+    "Fine-grained Descriptions": [
+      "Foxes are small to medium-sized carnivorous mammals with pointed ears, sharp noses, and bushy tails. They are known for their cunning and adaptability, living in diverse habitats, including forests, grasslands, and urban areas. Foxes are omnivorous and often hunt small mammals and birds."
+    ]
+  },
+  "girl": {
+    "Short Label": "Girl",
+    "Fine-grained Descriptions": [
+      "A girl is a young female human, typically ranging from birth to adolescence. Girls are characterized by their energetic and playful nature. As they grow, they develop physically, emotionally, and socially, going through stages such as childhood, pre-adolescence, and adolescence."
+    ]
+  },
+  "hamster": {
+    "Short Label": "Hamster",
+    "Fine-grained Descriptions": [
+      "A hamster is a small, nocturnal rodent often kept as a pet. Hamsters are typically round and have soft fur, small ears, and short tails. They are known for storing food in their cheek pouches and are active in the evening and nighttime. Hamsters live in burrows or cages when domesticated."
+    ]
+  },
+  "house": {
+    "Short Label": "House",
+    "Fine-grained Descriptions": [
+      "A house is a building designed for people to live in. It typically includes rooms for sleeping, eating, and bathing, as well as living and storage spaces. Houses come in various styles, from single-family homes to multi-story buildings, and they are constructed using materials such as wood, brick, and concrete."
+    ]
+  },
+  "kangaroo": {
+    "Short Label": "Kangaroo",
+    "Fine-grained Descriptions": [
+      "Kangaroos are large marsupials native to Australia, known for their powerful hind legs and long, muscular tails. They are herbivores and travel in groups called mobs. Kangaroos are unique in their method of locomotion, hopping on their hind legs at great speeds, which is an efficient way to cover long distances."
+    ]
+  },
+  "keyboard": {
+    "Short Label": "Keyboard",
+    "Fine-grained Descriptions": [
+      "A keyboard is a set of keys or buttons used for inputting data into a computer or electronic device. It typically includes letters, numbers, function keys, and other specialized keys. Keyboards are essential peripherals for typing, gaming, and controlling various software applications."
+    ]
+  },
+  "lamp": {
+    "Short Label": "Lamp",
+    "Fine-grained Descriptions": [
+      "A lamp is a device used to provide light, typically consisting of a bulb or light source, a lampshade, and a base. Lamps come in various forms, including table lamps, floor lamps, and wall-mounted lamps, and are used for both practical lighting and decorative purposes."
+    ]
+  },
+  "lawn_mower": {
+    "Short Label": "Lawn Mower",
+    "Fine-grained Descriptions": [
+      "A lawn mower is a machine used for cutting grass in a lawn to an even height. It typically consists of a rotating blade that is powered by a gas engine or electricity. Lawn mowers come in various designs, including push mowers, riding mowers, and robotic models."
+    ]
+  },
+  "leopard": {
+    "Short Label": "Leopard",
+    "Fine-grained Descriptions": [
+      "Leopards are large, carnivorous cats known for their spotted coats and powerful build. They are native to Africa and parts of Asia and are skilled hunters, capable of climbing trees and swimming. Leopards are solitary animals and are known for their adaptability to various habitats."
+    ]
+  },
+  "lion": {
+    "Short Label": "Lion",
+    "Fine-grained Descriptions": [
+      "Lions are large, powerful carnivores with a tawny coat and a distinctive mane in males. They are native to Africa, with a small population in India. Lions live in prides, social groups led by a dominant male. They are apex predators, primarily hunting large herbivores."
+    ]
+  },
+  "lizard": {
+    "Short Label": "Lizard",
+    "Fine-grained Descriptions": [
+      "Lizards are reptiles with scaly skin, long tails, and four legs. They are found in various environments, from deserts to rainforests. Lizards are cold-blooded and exhibit a wide range of behaviors, from climbing trees to burrowing in the ground. Some species are known for their ability to regenerate lost tails."
+    ]
+  },
+  "lobster": {
+    "Short Label": "Lobster",
+    "Fine-grained Descriptions": [
+      "Lobsters are large marine crustaceans with hard shells, long antennae, and powerful claws. They are typically found on the ocean floor, where they scavenge for food. Lobsters are considered a delicacy in many cuisines and are known for their sweet, tender meat."
+    ]
+  },
+  "man": {
+    "Short Label": "Man",
+    "Fine-grained Descriptions": [
+      "A man is an adult male human. Men are characterized by their physical strength and typically larger size compared to women. Throughout history, men have been associated with various social roles, and they play key roles in society, often being leaders, providers, or workers in different fields."
+    ]
+  },
+  "maple_tree": {
+    "Short Label": "Maple Tree",
+    "Fine-grained Descriptions": [
+      "A maple tree is a deciduous tree known for its lobed leaves and the production of sap, which is used to make maple syrup. The tree has distinctive bark and grows in a variety of climates, predominantly in North America. Maple trees are also known for their vibrant autumn foliage, which turns red or yellow."
+    ]
+  },
+  "motorcycle": {
+    "Short Label": "Motorcycle",
+    "Fine-grained Descriptions": [
+      "A motorcycle is a two-wheeled motorized vehicle designed for quick transportation. It is powered by an engine and typically features handlebars for steering, along with a seat for the rider. Motorcycles vary in size and design, including cruiser, sport, and touring types, and are known for their speed and maneuverability."
+    ]
+  },
+  "mountain": {
+    "Short Label": "Mountain",
+    "Fine-grained Descriptions": [
+      "A mountain is a large landform that rises prominently above its surroundings, typically having a peak or summit. Mountains are formed through tectonic forces or volcanic activity and are found in ranges or individual formations. They can vary in size and are often home to unique ecosystems."
+    ]
+  },
+  "mouse": {
+    "Short Label": "Mouse",
+    "Fine-grained Descriptions": [
+      "A mouse is a small rodent, typically characterized by its rounded ears, long tail, and whiskers. Mice are commonly found in homes, fields, and forests, where they scavenge for food. As a prey species, they are an important part of the food chain, serving as food for many predators."
+    ]
+  },
+  "mushroom": {
+    "Short Label": "Mushroom",
+    "Fine-grained Descriptions": [
+      "A mushroom is the fruiting body of a fungus, typically consisting of a cap and stem. Mushrooms can vary in size, color, and shape, with some species being edible and others toxic. They are often used in cooking for their distinct flavor and texture and are commonly found in forests and fields."
+    ]
+  },
+  "oak_tree": {
+    "Short Label": "Oak Tree",
+    "Fine-grained Descriptions": [
+      "An oak tree is a large deciduous tree with a strong, broad trunk, lobed leaves, and acorns as seeds. Oak trees are known for their longevity and are common in temperate regions. They provide shade, shelter, and are important in various ecosystems as well as for producing high-quality wood."
+    ]
+  },
+  "orange": {
+    "Short Label": "Orange",
+    "Fine-grained Descriptions": [
+      "An orange is a round citrus fruit with a thick, orange peel and a juicy, tangy interior. Oranges are commonly eaten raw, juiced, or used in cooking and baking. They are rich in vitamin C and have a refreshing, sweet flavor. Oranges are one of the most widely consumed fruits in the world."
+    ]
+  },
+  "orchid": {
+    "Short Label": "Orchid",
+    "Fine-grained Descriptions": [
+      "An orchid is a type of flowering plant known for its intricate, often fragrant blooms. Orchids have unique, symmetrical flowers with a wide range of colors and shapes. They are prized in horticulture and are typically found in tropical and subtropical regions, though some species also grow in temperate climates."
+    ]
+  },
+  "otter": {
+    "Short Label": "Otter",
+    "Fine-grained Descriptions": [
+      "Otters are small to medium-sized mammals known for their playful behavior and love of water. They have sleek bodies, webbed feet, and thick fur that keeps them warm in cold aquatic environments. Otters are found in rivers, lakes, and coastal areas, where they feed on fish and other aquatic animals."
+    ]
+  },
+  "palm_tree": {
+    "Short Label": "Palm Tree",
+    "Fine-grained Descriptions": [
+      "A palm tree is a type of tree with long, slender trunks and large, fan-like or feathered leaves. Palm trees are commonly found in tropical and subtropical regions, often near coastal areas. They are known for their tall stature and are a source of food, such as coconuts, and materials like palm oil."
+    ]
+  },
+  "pear": {
+    "Short Label": "Pear",
+    "Fine-grained Descriptions": [
+      "A pear is a sweet, juicy fruit with a bulbous base and a tapering top. It has a smooth skin that can vary in color, including green, yellow, and red. Pears have a soft, grainy texture and are commonly eaten fresh, in salads, or used in desserts. They are a rich source of fiber and vitamins."
+    ]
+  },
+  "pickup_truck": {
+    "Short Label": "Pickup Truck",
+    "Fine-grained Descriptions": [
+      "A pickup truck is a type of motor vehicle with an open cargo area at the back. It is designed for carrying goods or equipment and typically has a higher ground clearance than standard cars. Pickup trucks are often used in work and recreational settings, including farming, construction, and off-roading."
+    ]
+  },
+  "pine_tree": {
+    "Short Label": "Pine Tree",
+    "Fine-grained Descriptions": [
+      "A pine tree is a type of coniferous tree characterized by long, needle-like leaves and cones. Pine trees are commonly found in forests, particularly in colder climates, and are known for their ability to withstand harsh weather conditions. Their wood is used in construction, and their resin is used for various products."
+    ]
+  },
+  "plain": {
+    "Short Label": "Plain",
+    "Fine-grained Descriptions": [
+      "A plain is a large, flat area of land with minimal changes in elevation. Plaines are typically covered with grass or shrubs and are often found in temperate or tropical regions. They are important for agriculture due to their fertile soil and are often used for farming or grazing animals."
+    ]
+  },
+  "plate": {
+    "Short Label": "Plate",
+    "Fine-grained Descriptions": [
+      "A plate is a flat, typically round dish used for serving food. Plates are commonly made of materials such as ceramic, porcelain, glass, or plastic. They come in various sizes and designs, and are used for meals ranging from appetizers to main courses and desserts."
+    ]
+  },
+  "poppy": {
+    "Short Label": "Poppy",
+    "Fine-grained Descriptions": [
+      "A poppy is a flowering plant known for its colorful, often vibrant blooms. The flowers come in a variety of colors, such as red, orange, and yellow, and are commonly associated with remembrance. Poppies are also cultivated for their seeds, which are used in baking and cooking."
+    ]
+  },
+  "porcupine": {
+    "Short Label": "Porcupine",
+    "Fine-grained Descriptions": [
+      "A porcupine is a large rodent known for its protective quills. These sharp, stiff hairs can be easily shed when the porcupine feels threatened. Porcupines are herbivorous and typically live in forests, feeding on bark, leaves, and fruits. They are slow-moving animals, often found climbing trees."
+    ]
+  },
+  "possum": {
+    "Short Label": "Possum",
+    "Fine-grained Descriptions": [
+      "A possum is a small to medium-sized marsupial found in North America, Australia, and nearby regions. Possums are nocturnal and have prehensile tails, which help them grip tree branches. They are known for their ability to play dead when threatened, a defense mechanism known as 'playing possum.'"
+    ]
+  },
+  "rabbit": {
+    "Short Label": "Rabbit",
+    "Fine-grained Descriptions": [
+      "A rabbit is a small mammal known for its long ears, soft fur, and strong hind legs. Rabbits are herbivores, feeding primarily on grass, leaves, and vegetables. They are known for their rapid reproduction and are often kept as pets or farm animals. Rabbits live in burrows or warrens in the wild."
+    ]
+  },
+  "raccoon": {
+    "Short Label": "Raccoon",
+    "Fine-grained Descriptions": [
+      "A raccoon is a small, nocturnal mammal known for its distinctive black mask of fur around its eyes. Raccoons are highly adaptable and can be found in urban and rural areas. They are omnivorous and are skilled at using their dexterous front paws to manipulate objects, often rummaging through trash for food."
+    ]
+  },
+  "ray": {
+    "Short Label": "Ray",
+    "Fine-grained Descriptions": [
+      "A ray is a type of cartilaginous fish with a flattened body and wing-like pectoral fins. Rays are closely related to sharks and are typically found in oceans and freshwater rivers. They are known for their graceful swimming motion and often have venomous spines or barbs for defense."
+    ]
+  },
+  "road": {
+    "Short Label": "Road",
+    "Fine-grained Descriptions": [
+      "A road is a paved or gravel path used for vehicular or pedestrian travel. Roads are essential for transportation, providing routes for cars, trucks, buses, and bicycles. They vary in size and function, from narrow residential streets to wide highways, and are an integral part of infrastructure."
+    ]
+  },
+  "rocket": {
+    "Short Label": "Rocket",
+    "Fine-grained Descriptions": [
+      "A rocket is a vehicle that uses controlled explosions of propellant to propel itself into space or to distant locations. Rockets are used for scientific exploration, satellite launches, and military purposes. They are characterized by their cylindrical shape and are often seen during launches or space missions."
+    ]
+  },
+  "rose": {
+    "Short Label": "Rose",
+    "Fine-grained Descriptions": [
+      "A rose is a flowering plant known for its fragrant, colorful blooms and thorns. Roses come in various colors, including red, white, yellow, and pink, and are commonly associated with love and romance. They are grown in gardens, used in floral arrangements, and are popular in perfumes."
+    ]
+  },
+  "sea": {
+    "Short Label": "Sea",
+    "Fine-grained Descriptions": [
+      "The sea is a large body of saltwater that covers most of the Earth's surface. It is often used to describe smaller bodies of water that are connected to oceans, such as the Mediterranean Sea or the Caribbean Sea. Seas are home to diverse marine life and play a crucial role in regulating the Earth's climate."
+    ]
+  },
+  "seal": {
+    "Short Label": "Seal",
+    "Fine-grained Descriptions": [
+      "A seal is a marine mammal with a streamlined body, flippers, and a thick layer of blubber for insulation. Seals are found in coastal areas and oceans, where they hunt fish and other sea creatures. They are known for their playful behavior and are often seen basking on rocks or swimming gracefully."
+    ]
+  },
+  "shark": {
+    "Short Label": "Shark",
+    "Fine-grained Descriptions": [
+      "A shark is a large, carnivorous fish known for its sleek body, sharp teeth, and powerful swimming ability. Sharks are apex predators in marine ecosystems, often feeding on fish, seals, and other marine animals. They are found in oceans worldwide and play a crucial role in maintaining the balance of marine life."
+    ]
+  },
+  "shrew": {
+    "Short Label": "Shrew",
+    "Fine-grained Descriptions": [
+      "A shrew is a small, mouse-like mammal with a pointed snout, tiny eyes, and a high metabolic rate. Shrews are insectivores and spend most of their time foraging for insects, worms, and other small invertebrates. They are found in a wide range of habitats, including forests, grasslands, and gardens."
+    ]
+  },
+  "skunk": {
+    "Short Label": "Skunk",
+    "Fine-grained Descriptions": [
+      "A skunk is a small to medium-sized mammal known for its distinctive black and white fur and its ability to spray a foul-smelling liquid as a defense mechanism. Skunks are nocturnal omnivores, feeding on insects, small animals, fruits, and plants. They are found in North and South America."
+    ]
+  },
+  "skyscraper": {
+    "Short Label": "Skyscraper",
+    "Fine-grained Descriptions": [
+      "A skyscraper is a tall, multi-story building, often exceeding 150 meters in height, and typically made of steel and glass. Skyscrapers are often used for commercial, office, or residential purposes and are symbols of modern architecture and urbanization in major cities."
+    ]
+  },
+  "snail": {
+    "Short Label": "Snail",
+    "Fine-grained Descriptions": [
+      "A snail is a small mollusk known for its coiled shell and slow movement. Snails can be found in a variety of environments, including gardens, forests, and oceans. They are primarily herbivorous and secrete mucus to aid in movement, which also protects their soft bodies from rough surfaces."
+    ]
+  },
+  "snake": {
+    "Short Label": "Snake",
+    "Fine-grained Descriptions": [
+      "A snake is a long, legless reptile with a cylindrical body and a scaly texture. Snakes are carnivorous and use constriction or venom to capture and kill prey. They are found in diverse habitats, from deserts to rainforests, and are known for their ability to slither and camouflage."
+    ]
+  },
+  "spider": {
+    "Short Label": "Spider",
+    "Fine-grained Descriptions": [
+      "A spider is an arachnid with eight legs and a body divided into two parts: the cephalothorax and abdomen. Spiders are found in almost every habitat and are known for spinning webs to catch prey. They are carnivorous and feed mainly on insects and other small animals."
+    ]
+  },
+  "squirrel": {
+    "Short Label": "Squirrel",
+    "Fine-grained Descriptions": [
+      "A squirrel is a small rodent with a bushy tail, sharp claws, and large, round eyes. Squirrels are omnivorous and spend much of their time foraging for food such as nuts, seeds, and fruits. They are commonly seen in parks, forests, and urban areas, and are known for their ability to climb trees."
+    ]
+  },
+  "streetcar": {
+    "Short Label": "Streetcar",
+    "Fine-grained Descriptions": [
+      "A streetcar is a type of public transportation vehicle that runs on tracks, typically in urban areas. Streetcars are powered by electricity and are often used for short-distance travel, providing an eco-friendly alternative to buses and cars. They are commonly seen in cities like San Francisco and New Orleans."
+    ]
+  },
+  "sunflower": {
+    "Short Label": "Sunflower",
+    "Fine-grained Descriptions": [
+      "A sunflower is a tall, bright yellow flowering plant with large, round blooms that follow the sun as it moves across the sky. Known for its seeds, which are consumed as snacks or used to make oil, sunflowers are cultivated worldwide and are also a symbol of happiness and positivity."
+    ]
+  },
+  "sweet_pepper": {
+    "Short Label": "Sweet Pepper",
+    "Fine-grained Descriptions": [
+      "A sweet pepper, also known as a bell pepper, is a mild-flavored fruit with a thick, crunchy flesh and a variety of colors, including red, yellow, green, and orange. Sweet peppers are used in cooking for their sweet, tangy flavor and are rich in vitamins A and C."
+    ]
+  },
+  "table": {
+    "Short Label": "Table",
+    "Fine-grained Descriptions": [
+      "A table is a flat surface supported by legs, typically used for eating, working, or displaying objects. Tables are commonly made of wood, metal, or glass, and come in various sizes and designs, from small coffee tables to large dining tables."
+    ]
+  },
+  "tank": {
+    "Short Label": "Tank",
+    "Fine-grained Descriptions": [
+      "A tank is a heavily armored military vehicle designed for battlefield combat. Tanks are equipped with large-caliber guns, tracks for mobility, and protective armor. They are used in ground warfare and can operate in various terrains, including deserts, forests, and urban environments."
+    ]
+  },
+  "telephone": {
+    "Short Label": "Telephone",
+    "Fine-grained Descriptions": [
+      "A telephone is a device used to transmit and receive sound over long distances. Telephones work by converting sound waves into electrical signals that can be sent over a network. They are used for personal communication, business calls, and emergency services."
+    ]
+  },
+  "television": {
+    "Short Label": "Television",
+    "Fine-grained Descriptions": [
+      "A television is an electronic device used to display visual and audio content, such as shows, movies, and news broadcasts. It typically consists of a screen, speakers, and a set of controls for selecting channels or streaming content. Televisions have evolved from bulky models to sleek, high-definition displays."
+    ]
+  },
+  "tiger": {
+    "Short Label": "Tiger",
+    "Fine-grained Descriptions": [
+      "A tiger is a large carnivorous feline with a striking orange coat and black stripes. Tigers are apex predators, found primarily in Asia, and are known for their strength, agility, and solitary nature. They are endangered due to habitat loss and poaching."
+    ]
+  },
+  "tractor": {
+    "Short Label": "Tractor",
+    "Fine-grained Descriptions": [
+      "A tractor is a large, heavy-duty vehicle used primarily for farming and agricultural tasks. It is equipped with powerful engines and specialized attachments like plows, harrows, and mowers. Tractors are used for tasks such as plowing fields, towing trailers, and planting crops."
+    ]
+  },
+  "train": {
+    "Short Label": "Train",
+    "Fine-grained Descriptions": [
+      "A train is a form of transportation consisting of a series of connected vehicles that move along railway tracks. Trains are used for both passengers and freight, and they are known for their efficiency in transporting large numbers of people or goods over long distances. Trains can be powered by steam, electricity, or diesel engines."
+    ]
+  },
+  "trout": {
+    "Short Label": "Trout",
+    "Fine-grained Descriptions": [
+      "A trout is a species of freshwater fish, typically found in rivers, lakes, and streams. Trout have streamlined bodies with colorful markings, and they are known for their strong, active swimming abilities. They are often targeted by anglers and are valued for their mild, delicate flavor."
+    ]
+  },
+  "tulip": {
+    "Short Label": "Tulip",
+    "Fine-grained Descriptions": [
+      "A tulip is a spring-blooming flower with cup-shaped petals that come in a wide range of colors, including red, pink, yellow, and purple. Tulips are commonly grown in gardens and are known for their vibrant, striking blooms. They are native to Eurasia and are a popular symbol of spring."
+    ]
+  },
+  "turtle": {
+    "Short Label": "Turtle",
+    "Fine-grained Descriptions": [
+      "A turtle is a slow-moving reptile with a hard, protective shell that covers its body. Turtles are found in various habitats, including land, freshwater, and marine environments. They are known for their longevity and are herbivores or omnivores, depending on the species."
+    ]
+  },
+  "wardrobe": {
+    "Short Label": "Wardrobe",
+    "Fine-grained Descriptions": [
+      "A wardrobe is a large, usually freestanding cabinet used for storing clothes and other personal items. It typically has doors, shelves, and hanging rods for garments. Wardrobes come in various sizes and styles and are a common piece of furniture in bedrooms and dressing rooms."
+    ]
+  },
+  "whale": {
+    "Short Label": "Whale",
+    "Fine-grained Descriptions": [
+      "A whale is a large marine mammal known for its size and intelligence. Whales are divided into two main groups: baleen whales, which filter feed on small organisms, and toothed whales, which hunt larger prey. Whales are found in oceans worldwide and are an important part of marine ecosystems."
+    ]
+  },
+  "willow_tree": {
+    "Short Label": "Willow Tree",
+    "Fine-grained Descriptions": [
+      "A willow tree is a deciduous tree known for its long, slender branches and narrow, lance-shaped leaves. Willows are typically found near water sources, such as rivers and lakes. They are known for their graceful appearance, with branches that often droop towards the ground."
+    ]
+  },
+  "wolf": {
+    "Short Label": "Wolf",
+    "Fine-grained Descriptions": [
+      "A wolf is a carnivorous mammal and a close relative of domestic dogs. Wolves live in packs and are known for their cooperative hunting skills. They have a strong, muscular build, a thick fur coat, and are found in forests, grasslands, and tundra regions across the world."
+    ]
+  },
+  "woman": {
+    "Short Label": "Woman",
+    "Fine-grained Descriptions": [
+      "A woman is an adult female human. Women are characterized by their physical attributes and reproductive system, though their roles in society can vary widely. Women contribute to all aspects of society, including family life, the workforce, and leadership roles."
+    ]
+  },
+  "worm": {
+    "Short Label": "Worm",
+    "Fine-grained Descriptions": [
+      "A worm is a small, elongated invertebrate that typically has a soft, segmented body. Worms are often found in soil, where they play a crucial role in aerating and enriching the earth. Earthworms are known for their ability to decompose organic matter and help maintain soil fertility."
+    ]
+  }
+  }

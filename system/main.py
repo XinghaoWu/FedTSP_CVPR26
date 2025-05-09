@@ -25,6 +25,8 @@ from flcore.servers.serverours import FedOurs
 from flcore.servers.servertspv2 import FedTSPv2
 from flcore.servers.servertspv3 import FedTSPv3
 from flcore.servers.servertspv4 import FedTSPv4
+from flcore.servers.servertspv4_ablation import FedTSPv4_ablation
+from flcore.servers.servermrl import FedMRL
 
 
 from utils.result_utils import average_data
@@ -177,8 +179,33 @@ def run(args):
                 'fastText(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
                 'LSTMNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
                 'BiLSTM_TextClassification(input_size=args.vocab_size, hidden_size=args.feature_dim, output_size=args.num_classes, num_layers=1, embedding_dropout=0, lstm_dropout=0, attention_dropout=0, embedding_length=args.feature_dim)', 
-                'TextCNN(hidden_dim=args.feature_dim, max_len=args.max_len, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
-                'TransformerModel(ntoken=args.vocab_size, d_model=args.feature_dim, nhead=8, nlayers=2, num_classes=args.num_classes, max_len=args.max_len)'
+                # 'TextCNN(hidden_dim=args.feature_dim, max_len=args.max_len, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'TransformerModel(ntoken=args.vocab_size, d_model=args.feature_dim, nhead=8, nlayers=2, num_classes=args.num_classes, max_len=args.max_len)',
+                'TextLogisticRegression(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'GRUNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)'
+            ]
+
+        elif args.model_family == "NLP_2":
+            args.models = [
+                'fastText(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'TextLogisticRegression(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)'
+            ]
+
+        elif args.model_family == "NLP_4":
+            args.models = [
+                'fastText(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'TextLogisticRegression(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'LSTMNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'BiLSTM_TextClassification(input_size=args.vocab_size, hidden_size=args.feature_dim, output_size=args.num_classes, num_layers=1, embedding_dropout=0, lstm_dropout=0, attention_dropout=0, embedding_length=args.feature_dim)'
+            ]
+
+        elif args.model_family == "NLP_5":
+            args.models = [
+                'fastText(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'TextLogisticRegression(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'LSTMNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'BiLSTM_TextClassification(input_size=args.vocab_size, hidden_size=args.feature_dim, output_size=args.num_classes, num_layers=1, embedding_dropout=0, lstm_dropout=0, attention_dropout=0, embedding_length=args.feature_dim)',
+                'GRUNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)'
             ]
 
         elif args.model_family == "NLP_Transformers-nhead=8":
@@ -206,6 +233,22 @@ def run(args):
                 'TransformerModel(ntoken=args.vocab_size, d_model=args.feature_dim, nhead=4, nlayers=4, num_classes=args.num_classes, max_len=args.max_len)',
                 'TransformerModel(ntoken=args.vocab_size, d_model=args.feature_dim, nhead=8, nlayers=8, num_classes=args.num_classes, max_len=args.max_len)',
                 'TransformerModel(ntoken=args.vocab_size, d_model=args.feature_dim, nhead=16, nlayers=16, num_classes=args.num_classes, max_len=args.max_len)',
+            ]
+        
+        elif args.model_family == 'NLP_new':
+            args.models = [
+                'fastText(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
+                'TextLogisticRegression(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'GRUNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'LSTMNet(hidden_dim=args.feature_dim, vocab_size=args.vocab_size, num_classes=args.num_classes)', 
+            ]
+        
+        elif args.model_family == 'bert_zoo':
+            args.models = [
+                'Bertzoo(model_name="distilbert", vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                # 'Bertzoo(model_name="bert", vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                # 'Bertzoo(model_name="albert", vocab_size=args.vocab_size, num_classes=args.num_classes)',
+                'Bertzoo(model_name="tinybert", vocab_size=args.vocab_size, num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "MLPs":
@@ -267,6 +310,9 @@ def run(args):
         elif args.algorithm == "AlignFed":
             server = AlignFed(args, i)
 
+        elif args.algorithm == "FedMRL":
+            server = FedMRL(args, i)
+        
         elif args.algorithm == "FedOurs":
             server = FedOurs(args, i)
 
@@ -278,6 +324,9 @@ def run(args):
         
         elif args.algorithm == "FedTSPv4":
             server = FedTSPv4(args, i)
+
+        elif args.algorithm == "FedTSPv4_ablation":
+            server = FedTSPv4_ablation(args, i)
 
         # elif args.algorithm == "FedKTL-stylegan-xl":
         #     server = FedKTL_stylegan_xl(args, i)
@@ -390,6 +439,9 @@ if __name__ == "__main__":
     parser.add_argument('-gbs', "--gen_batch_size", type=int, default=4,
                         help="Not related to the performance. A small value saves GPU memory.")
     parser.add_argument('-mu', "--mu", type=float, default=50.0)
+    
+    # FedMRL
+    parser.add_argument('-sfd', "--sub_feature_dim", type=int, default=128)
 
     # ours
     parser.add_argument('--len_prompt', default=20, type=int, help='the length of prompts') # v2
@@ -417,6 +469,10 @@ if __name__ == "__main__":
     # FedTSPv4
     parser.add_argument('--manual_prompt', type=int, default=1, help='whether to use manual prompt')
     parser.add_argument('--negative_class', type=int, default=0, help='whether add negative class')
+
+    # FedTSPv4 ablation
+    parser.add_argument('--LLM_prompt_file', type=str, default='LLM_prompts', help='LLM prompt file')
+    parser.add_argument('--LLM_prompt_number', type=int, default=-1, help='LLM prompt number. set -1 to select all prompts')
 
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')

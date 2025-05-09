@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # 从命令行解析参数
-# 从命令行解析参数
 dataset=$1
 num_classes=$2
 noniid=$3
@@ -15,6 +14,8 @@ batch_size=${10:-100}
 device_id=${11:-0}
 global_rounds=${12:-60}
 save_model=${13:-1}
+LLM_prompt_file=${14:-"LLM_prompts"}
+LLM_prompt_number=${15:-(-1)}
 
 echo "参数列表:"
 echo "dataset: ${dataset}"
@@ -30,6 +31,9 @@ echo "batch_size: ${batch_size}"
 echo "device_id: ${device_id}"
 echo "global_rounds: ${global_rounds}"
 echo "save_model: ${save_model}"
+echo "LLM_prompt_file: ${LLM_prompt_file}"
+echo "LLM_prompt_number: ${LLM_prompt_number}"
+
 
 if [ -z "$noniid" ] || [ -z "$alpha" ] || [ -z "$num_clients" ] || [ -z "$model_family" ] || [ -z "$lamda" ]; then
   echo "请提供 noniid alpha, num_clients, model_family, lamda 和 seed 参数，例如："
@@ -47,7 +51,7 @@ do
         --model_family=${model_family} \
         --local_learning_rate=0.01 \
         --global_rounds=${global_rounds} \
-        --algorithm=FedTSPv4 \
+        --algorithm=FedTSPv4_ablation \
         --local_epochs=5 \
         --batch_size=${batch_size} \
         --num_clients=${num_clients} \
@@ -63,5 +67,7 @@ do
         --device_id=${device_id} \
         --manual_prompt=0 \
         --negative_class=0 \
+        --LLM_prompt_file=${LLM_prompt_file} \
+        --LLM_prompt_number=${LLM_prompt_number} \
         --save_model=${save_model}
 done

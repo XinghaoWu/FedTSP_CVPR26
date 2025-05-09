@@ -73,6 +73,7 @@ class clientTGP(Client):
 
         self.collect_protos()
         save_item(model, self.role, 'model', self.save_folder_name)
+        self.model.to('cpu')
 
         self.train_time_cost['num_rounds'] += 1
         self.train_time_cost['total_cost'] += time.time() - start_time
@@ -102,61 +103,62 @@ class clientTGP(Client):
 
         save_item(agg_func(protos), self.role, 'protos', self.save_folder_name)
 
-    # def test_metrics(self):
-    #     testloader = self.load_test_data()
-    #     model = load_item(self.role, 'model', self.save_folder_name)
-    #     global_protos = load_item('Server', 'global_protos', self.save_folder_name)
-    #     model.eval()
-    #
-    #     test_acc = 0
-    #     test_num = 0
-    #
-    #     if global_protos is not None:
-    #         with torch.no_grad():
-    #             for x, y in testloader:
-    #                 if type(x) == type([]):
-    #                     x[0] = x[0].to(self.device)
-    #                 else:
-    #                     x = x.to(self.device)
-    #                 y = y.to(self.device)
-    #                 rep = model.base(x)
-    #
-    #                 output = float('inf') * torch.ones(y.shape[0], self.num_classes).to(self.device)
-    #                 for i, r in enumerate(rep):
-    #                     for j, pro in global_protos.items():
-    #                         if type(pro) != type([]):
-    #                             output[i, j] = self.loss_mse(r, pro)
-    #
-    #                 test_acc += (torch.sum(torch.argmin(output, dim=1) == y)).item()
-    #                 test_num += y.shape[0]
-    #
-    #         return test_acc, test_num, 0
-    #     else:
-    #         return 0, 1e-5, 0
-
-    def test_metrics(self, specific_testloader=None):
-        testloader = self.load_test_data() if specific_testloader is None else specific_testloader
-        # model = self.model
+    def test_metrics(self):
+        testloader = self.load_test_data()
         model = load_item(self.role, 'model', self.save_folder_name)
-        # global_protos = load_item('Server', 'global_protos', self.save_folder_name)
+        global_protos = load_item('Server', 'global_protos', self.save_folder_name)
         model.eval()
 
         test_acc = 0
         test_num = 0
 
-        with torch.no_grad():
-            for x, y in testloader:
-                if type(x) == type([]):
-                    x[0] = x[0].to(self.device)
-                else:
-                    x = x.to(self.device)
-                y = y.to(self.device)
-                output = model(x)
+        if global_protos is not None:
+            with torch.no_grad():
+                for x, y in testloader:
+                    if type(x) == type([]):
+                        x[0] = x[0].to(self.device)
+                    else:
+                        x = x.to(self.device)
+                    y = y.to(self.device)
+                    rep = model.base(x)
 
-                test_acc += (torch.sum(torch.argmax(output, dim=1) == y)).item()
-                test_num += y.shape[0]
+                    output = float('inf') * torch.ones(y.shape[0], self.num_classes).to(self.device)
+                    for i, r in enumerate(rep):
+                        for j, pro in global_protos.items():
+                            if type(pro) != type([]):
+                                output[i, j] = self.loss_mse(r, pro)
+
+                    test_acc += (torch.sum(torch.argmin(output, dim=1) == y)).item()
+                    test_num += y.shape[0]
 
             return test_acc, test_num, 0
+        else:
+            return 0, 1e-5, 0
+
+    # def test_metrics(self, specific_testloader=None):
+    #     testloader = self.load_test_data() if specific_testloader is None else specific_testloader
+    #     # model = self.model
+    #     model = load_item(self.role, 'model', self.save_folder_name)
+    #     # global_protos = load_item('Server', 'global_protos', self.save_folder_name)
+    #     model.to(self.device)
+    #     model.eval()
+    #
+    #     test_acc = 0
+    #     test_num = 0
+    #
+    #     with torch.no_grad():
+    #         for x, y in testloader:
+    #             if type(x) == type([]):
+    #                 x[0] = x[0].to(self.device)
+    #             else:
+    #                 x = x.to(self.device)
+    #             y = y.to(self.device)
+    #             output = model(x)
+    #
+    #             test_acc += (torch.sum(torch.argmax(output, dim=1) == y)).item()
+    #             test_num += y.shape[0]
+    #
+    #         return test_acc, test_num, 0
 
 
     def train_metrics(self):

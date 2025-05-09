@@ -73,9 +73,9 @@ class clientKD(Client):
                 loss.backward(retain_graph=True)
                 loss_g.backward()
                 # prevent divergency on specifical tasks
-                torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
-                torch.nn.utils.clip_grad_norm_(global_model.parameters(), 10)
-                torch.nn.utils.clip_grad_norm_(W_h.parameters(), 10)
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 1)
+                torch.nn.utils.clip_grad_norm_(global_model.parameters(), 1)
+                torch.nn.utils.clip_grad_norm_(W_h.parameters(), 1)
                 optimizer.step()
                 optimizer_g.step()
                 optimizer_W.step()
@@ -83,8 +83,9 @@ class clientKD(Client):
         save_item(model, self.role, 'model', self.save_folder_name)
         save_item(global_model, self.role, 'global_model', self.save_folder_name)
         save_item(W_h, self.role, 'W_h', self.save_folder_name)
-        compressed_param = decomposition(global_model.named_parameters(), self.energy)
-        save_item(compressed_param, self.role, 'compressed_param', self.save_folder_name)
+        save_item({name: param.detach().cpu().numpy() for name, param in global_model.named_parameters()}, self.role, 'compressed_param', self.save_folder_name)
+        # compressed_param = decomposition(global_model.named_parameters(), self.energy)
+        # save_item(compressed_param, self.role, 'compressed_param', self.save_folder_name)
 
         self.train_time_cost['num_rounds'] += 1
         self.train_time_cost['total_cost'] += time.time() - start_time
@@ -112,8 +113,9 @@ class clientKD(Client):
         
     def set_parameters(self):
         global_model = load_item(self.role, 'global_model', self.save_folder_name)
-        compressed_param = load_item('Server', 'compressed_param', self.save_folder_name)
-        param = recover(compressed_param)
+        param = load_item('Server', 'compressed_param', self.save_folder_name)  # 直接加载完整参数
+        # compressed_param = load_item('Server', 'compressed_param', self.save_folder_name)
+        # param = recover(compressed_param)
         for name, old_param in global_model.named_parameters():
             if name in param:
                 old_param.data = torch.tensor(param[name], device=self.device).data.clone()

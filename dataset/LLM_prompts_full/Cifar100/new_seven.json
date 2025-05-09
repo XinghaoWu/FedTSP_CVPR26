@@ -1,0 +1,1202 @@
+{
+    "apple": {
+        "Short Label": "Apple",
+        "Fine-grained Descriptions": [
+            "A red or green fruit typically eaten fresh.",
+            "A round fruit with a smooth skin and a sweet taste.",
+            "Grows on a tree with thick green leaves.",
+            "Commonly seen in orchards or grocery stores.",
+            "Has a shiny, smooth surface and a stem at the top.",
+            "Used in making apple pie and cider.",
+            "A symbol of health and nutrition, often depicted in ads."
+        ]
+    },
+    "aquarium_fish": {
+        "Short Label": "Aquarium Fish",
+        "Fine-grained Descriptions": [
+            "Small, colorful fish often kept in fish tanks.",
+            "Has vibrant scales, typically orange, yellow, or blue.",
+            "Swims gracefully in water and thrives in aquatic environments.",
+            "Popular in home aquariums for decoration and relaxation.",
+            "Often found in both fresh and saltwater tanks.",
+            "May have various shapes, such as elongated or round.",
+            "Careful maintenance of the tank water is needed for their survival."
+        ]
+    },
+    "baby": {
+        "Short Label": "Baby",
+        "Fine-grained Descriptions": [
+            "An infant, typically under one year old.",
+            "Small, with soft skin and a high-pitched voice.",
+            "Known for crawling and starting to babble or talk.",
+            "A child who depends on adults for care and nourishment.",
+            "Usually seen in a crib, stroller, or being held by parents.",
+            "Has big, expressive eyes and tiny hands and feet.",
+            "Often dressed in baby clothes like onesies and booties."
+        ]
+    },
+    "bear": {
+        "Short Label": "Bear",
+        "Fine-grained Descriptions": [
+            "A large mammal with thick fur, often brown or black.",
+            "Known for its powerful build and large paws.",
+            "Commonly found in forests, mountains, and cold regions.",
+            "Feeds on a diet of berries, fish, and small animals.",
+            "Has a strong, muscular body and large, rounded ears.",
+            "Usually hibernates during winter in a den.",
+            "Often depicted in wilderness and adventure settings."
+        ]
+    },
+    "beaver": {
+        "Short Label": "Beaver",
+        "Fine-grained Descriptions": [
+            "A large rodent with thick fur and a flat tail.",
+            "Famous for building dams in rivers and streams.",
+            "Has sharp teeth used for gnawing on wood.",
+            "Lives in aquatic environments, often near lakes and rivers.",
+            "Constructs lodges and homes out of sticks and mud.",
+            "Often seen in wetlands or forested areas.",
+            "The tail is used for swimming and balancing."
+        ]
+    },
+    "bed": {
+        "Short Label": "Bed",
+        "Fine-grained Descriptions": [
+            "A piece of furniture used for sleeping or resting.",
+            "Composed of a mattress, bed frame, and possibly a headboard.",
+            "Commonly found in bedrooms or guest rooms.",
+            "Varies in size, such as twin, queen, or king-sized.",
+            "May include pillows, blankets, and sheets.",
+            "Designed for comfort and support during sleep.",
+            "Often decorated with bed covers or comforters."
+        ]
+    },
+    "bee": {
+        "Short Label": "Bee",
+        "Fine-grained Descriptions": [
+            "A small, flying insect known for its role in pollination.",
+            "Has black and yellow stripes across its body.",
+            "Produces honey and is essential for crop pollination.",
+            "Typically found buzzing around flowers in gardens.",
+            "Its wings create a high-pitched buzzing sound.",
+            "Carries pollen from plant to plant to facilitate fertilization.",
+            "Can sting if threatened, leaving a painful mark."
+        ]
+    },
+    "beetle": {
+        "Short Label": "Beetle",
+        "Fine-grained Descriptions": [
+            "A small to medium-sized insect with hard, protective wings.",
+            "Can be black, brown, or brightly colored with distinctive patterns.",
+            "Known for its strong exoskeleton and often found on plants.",
+            "Some beetles are beneficial as they control pests in crops.",
+            "Has a hard outer shell that covers the soft wings beneath.",
+            "Found in a wide range of environments, from gardens to forests.",
+            "Many species are nocturnal and hide during the day."
+        ]
+    },
+    "bicycle": {
+        "Short Label": "Bicycle",
+        "Fine-grained Descriptions": [
+            "A two-wheeled vehicle powered by pedaling.",
+            "Used for transportation, exercise, or recreation.",
+            "Has handlebars for steering and pedals for movement.",
+            "Commonly seen on roads, bike lanes, or in parks.",
+            "May include gears, brakes, and a seat for comfort.",
+            "Can be made of lightweight materials like aluminum or carbon.",
+            "Some bicycles are designed for off-road use, like mountain bikes."
+        ]
+    },
+    "bottle": {
+        "Short Label": "Bottle",
+        "Fine-grained Descriptions": [
+            "A container used to hold liquids, often made of glass or plastic.",
+            "Has a narrow neck and a cap to prevent spills.",
+            "Commonly used for beverages like water, soda, or juice.",
+            "May come in various sizes, from small to large.",
+            "Often labeled with branding or information about the contents.",
+            "Used for both single-use and reusable purposes.",
+            "Found in households, stores, and during outdoor activities."
+        ]
+    },
+    "bowl": {
+        "Short Label": "Bowl",
+        "Fine-grained Descriptions": [
+            "A round, deep dish used for serving food.",
+            "Can be made from ceramic, glass, or plastic materials.",
+            "Commonly used for soup, salad, or cereal.",
+            "May have a smooth or patterned surface.",
+            "Often found in kitchens and dining rooms.",
+            "Some bowls are small for snacks, others large for meals.",
+            "Can be stacked for easy storage in cabinets."
+        ]
+    },
+  "boy": {
+        "Short Label": "Boy",
+        "Fine-grained Descriptions": [
+            "A young male child, typically under the age of 12.",
+            "Often seen playing with toys, running, or riding a bike.",
+            "Wears casual clothes like t-shirts, shorts, or jeans.",
+            "Usually has short hair and a cheerful demeanor.",
+            "Can be found in schools, playgrounds, or parks.",
+            "Often depicted in a variety of active and playful scenarios.",
+            "Typically full of energy and curiosity."
+        ]
+    },
+    "bridge": {
+        "Short Label": "Bridge",
+        "Fine-grained Descriptions": [
+            "A structure built to span a gap or body of water.",
+            "Can be made from materials like wood, steel, or concrete.",
+            "Allows vehicles or pedestrians to cross over obstacles.",
+            "Often seen spanning rivers, valleys, or highways.",
+            "Varies in shape, from arches to suspension types.",
+            "Some are designed with aesthetic features and lighting.",
+            "Important infrastructure for transportation networks."
+        ]
+    },
+    "bus": {
+        "Short Label": "Bus",
+        "Fine-grained Descriptions": [
+            "A large vehicle designed to carry many passengers.",
+            "Used for public transport in cities or rural areas.",
+            "Has large windows, and is typically painted with bright colors.",
+            "Can be used for short or long-distance travel.",
+            "Often seen on city streets, highways, or at bus stations.",
+            "Typically powered by diesel or electric engines.",
+            "Can carry up to several dozen passengers at once."
+        ]
+    },
+    "butterfly": {
+        "Short Label": "Butterfly",
+        "Fine-grained Descriptions": [
+            "A delicate insect with colorful wings and a thin body.",
+            "Known for its symmetrical, vibrant wings with patterns.",
+            "Flutters gently through gardens, feeding on flowers.",
+            "Undergoes a metamorphosis from caterpillar to adult.",
+            "Commonly seen in spring and summer seasons.",
+            "Appears in various colors, from bright yellows to deep blues.",
+            "Symbolizes beauty, freedom, and transformation."
+        ]
+    },
+    "camel": {
+        "Short Label": "Camel",
+        "Fine-grained Descriptions": [
+            "A large, desert-dwelling mammal with a hump on its back.",
+            "Adapted to survive in arid climates with minimal water.",
+            "Used for transportation and as a source of milk in deserts.",
+            "Has long legs, a long neck, and a distinctive facial appearance.",
+            "Commonly seen in deserts and arid regions of the world.",
+            "Its hump stores fat, not water, which it uses for energy.",
+            "Often associated with Middle Eastern and African landscapes."
+        ]
+    },
+    "can": {
+        "Short Label": "Can",
+        "Fine-grained Descriptions": [
+            "A cylindrical container, usually made of metal.",
+            "Used to store beverages, food, or other products.",
+            "Often seen with a pull-tab or twist-off top for easy opening.",
+            "Typically filled with soda, beer, or canned goods.",
+            "Made of aluminum or steel for durability and recyclability.",
+            "Can be found in most kitchens, convenience stores, and restaurants.",
+            "May come in different sizes, from small soda cans to larger containers."
+        ]
+    },
+    "castle": {
+        "Short Label": "Castle",
+        "Fine-grained Descriptions": [
+            "A large fortified structure, often built in medieval times.",
+            "Made of stone or brick, with high walls and towers.",
+            "Usually surrounded by a moat or defensive features.",
+            "Historically, it was a residence for nobility or royalty.",
+            "May include a drawbridge, ramparts, and a courtyard.",
+            "Commonly found in historical European cities and landscapes.",
+            "Symbolizes strength, defense, and ancient history."
+        ]
+    },
+    "caterpillar": {
+        "Short Label": "Caterpillar",
+        "Fine-grained Descriptions": [
+            "The larval stage of a butterfly or moth.",
+            "Has a long, segmented body, often covered in tiny hairs.",
+            "Feeds on leaves and other vegetation to grow.",
+            "Commonly seen crawling on plants or trees.",
+            "Varies in color, often green, yellow, or brown.",
+            "Undergoes metamorphosis to become a butterfly or moth.",
+            "Often considered a symbol of transformation."
+        ]
+    },
+    "cattle": {
+        "Short Label": "Cattle",
+        "Fine-grained Descriptions": [
+            "Large domesticated animals raised for meat, milk, or labor.",
+            "Has a strong, muscular body and typically a short coat of fur.",
+            "Commonly found on farms or ranches.",
+            "Includes species like cows and bulls.",
+            "Used for dairy production, beef, and leather.",
+            "Has horns in some breeds, and can vary in color.",
+            "Known for grazing on grass in pastures."
+        ]
+    },
+    "chair": {
+        "Short Label": "Chair",
+        "Fine-grained Descriptions": [
+            "A piece of furniture designed for sitting.",
+            "Usually has a seat, backrest, and four legs.",
+            "Made from wood, metal, or plastic materials.",
+            "Common in offices, dining rooms, and living spaces.",
+            "May have cushioned seating for comfort.",
+            "Can come in various designs, from simple to ornate.",
+            "Some chairs include armrests for additional support."
+        ]
+    },
+    "chimpanzee": {
+        "Short Label": "Chimpanzee",
+        "Fine-grained Descriptions": [
+            "A large ape species closely related to humans.",
+            "Has dark fur, a wide face, and strong hands.",
+            "Known for its intelligence and social behavior.",
+            "Lives in tropical forests of Africa.",
+            "Often seen in family groups, engaging in cooperative activities.",
+            "Uses tools for foraging and other tasks.",
+            "Often depicted in studies of primate behavior."
+        ]
+    },
+    "clock": {
+        "Short Label": "Clock",
+        "Fine-grained Descriptions": [
+            "A device used to measure and display time.",
+            "Typically has a round or square face with hands indicating hours and minutes.",
+            "May be powered by electricity, batteries, or mechanical movements.",
+            "Commonly found on walls, desks, or as wristwatches.",
+            "Can have analog or digital displays.",
+            "May include additional features like alarms or timers.",
+            "Used for punctuality, appointments, and managing daily routines."
+        ]
+    },
+    "cloud": {
+        "Short Label": "Cloud",
+        "Fine-grained Descriptions": [
+            "A visible mass of condensed water vapor in the sky.",
+            "Can be white, gray, or black, depending on the weather.",
+            "Moves across the sky, often driven by wind currents.",
+            "Can bring rain, snow, or clear skies depending on its type.",
+            "Forms when warm, moist air rises and cools.",
+            "Visible in various shapes, often used in weather forecasting.",
+            "Symbolizes fluidity and change in many cultures."
+        ]
+    },
+    "cockroach": {
+        "Short Label": "Cockroach",
+        "Fine-grained Descriptions": [
+            "A small, nocturnal insect known for its flat body.",
+            "Has long antennae and six legs for swift movement.",
+            "Common in kitchens, basements, and areas with food waste.",
+            "Usually brown or black, with a smooth exoskeleton.",
+            "Can survive in harsh conditions, making it resilient.",
+            "Considered a pest in urban environments.",
+            "May scurry across floors or walls in search of food."
+        ]
+    },
+  "couch": {
+        "Short Label": "Couch",
+        "Fine-grained Descriptions": [
+            "A piece of furniture designed for sitting or lounging.",
+            "Typically larger than a chair, often found in living rooms.",
+            "Can accommodate multiple people, with cushions and soft fabric.",
+            "Commonly used for relaxing, watching TV, or socializing.",
+            "Usually made of leather, fabric, or microfiber materials.",
+            "Often has armrests and a backrest for comfort.",
+            "Available in various styles, from traditional to modern."
+        ]
+    },
+    "crab": {
+        "Short Label": "Crab",
+        "Fine-grained Descriptions": [
+            "A small to medium-sized crustacean with a hard shell.",
+            "Has ten legs, with two front pincers that are often large.",
+            "Commonly found on beaches, in oceans, and sometimes freshwater.",
+            "Moves sideways using its legs and pincers.",
+            "Its hard exoskeleton provides protection from predators.",
+            "Crabs are often seen scavenging or hunting for food.",
+            "Can be found in various colors, including red, brown, or blue."
+        ]
+    },
+    "crocodile": {
+        "Short Label": "Crocodile",
+        "Fine-grained Descriptions": [
+            "A large reptile known for its tough, scaly skin.",
+            "Has a long, muscular body, with powerful jaws and sharp teeth.",
+            "Lives in freshwater rivers, lakes, and swamps.",
+            "Typically green or brown with a lighter underbelly.",
+            "Known for its aggressive nature and excellent swimming skills.",
+            "Often seen basking on riverbanks or lurking in water.",
+            "An apex predator, preying on fish, birds, and mammals."
+        ]
+    },
+    "cup": {
+        "Short Label": "Cup",
+        "Fine-grained Descriptions": [
+            "A small container typically used for drinking liquids.",
+            "Usually made of ceramic, glass, or plastic materials.",
+            "Has a handle for easy holding and a rim for drinking.",
+            "Commonly used for tea, coffee, or hot beverages.",
+            "Can vary in size and shape, from small espresso cups to large mugs.",
+            "Often has decorative designs or logos printed on it.",
+            "Used daily in homes, offices, and cafes."
+        ]
+    },
+    "dinosaur": {
+        "Short Label": "Dinosaur",
+        "Fine-grained Descriptions": [
+            "A group of extinct reptiles that lived millions of years ago.",
+            "Can range in size from small, bird-like creatures to massive giants.",
+            "Some dinosaurs were carnivores, others were herbivores.",
+            "Characterized by scaly skin, sharp teeth, or long necks.",
+            "Fossils of dinosaurs are found in many parts of the world.",
+            "Often depicted with large tails, claws, and bony ridges.",
+            "The T-Rex is one of the most well-known species."
+        ]
+    },
+    "dolphin": {
+        "Short Label": "Dolphin",
+        "Fine-grained Descriptions": [
+            "A marine mammal known for its intelligence and playful behavior.",
+            "Has a sleek, streamlined body and a fin on its back.",
+            "Lives in oceans and is often seen in pods.",
+            "Known for its friendly and social nature towards humans.",
+            "Can communicate using clicks and whistles.",
+            "Dolphins are fast swimmers and often perform acrobatics in the water.",
+            "Their skin is smooth, typically gray or blue in color."
+        ]
+    },
+    "elephant": {
+        "Short Label": "Elephant",
+        "Fine-grained Descriptions": [
+            "The largest land mammal, known for its massive size and long trunk.",
+            "Has large ears that help regulate its body temperature.",
+            "Typically gray in color with wrinkled skin and tusks.",
+            "Lives in both African and Asian habitats, including forests and savannahs.",
+            "Feeds on grass, fruit, and tree bark.",
+            "Known for its strong social bonds within herds.",
+            "An iconic symbol of wisdom and memory in various cultures."
+        ]
+    },
+    "flatfish": {
+        "Short Label": "Flatfish",
+        "Fine-grained Descriptions": [
+            "A type of fish known for its flattened body shape.",
+            "Has both eyes on one side of its body, allowing it to lie flat on the ocean floor.",
+            "Found in shallow waters and on sandy seabeds.",
+            "Often brown or gray in color, blending with its environment.",
+            "Examples include flounders, soles, and halibuts.",
+            "They feed on small invertebrates and fish.",
+            "Commercially important for the fishing industry."
+        ]
+    },
+    "forest": {
+        "Short Label": "Forest",
+        "Fine-grained Descriptions": [
+            "A dense area of trees, plants, and wildlife.",
+            "Home to many species of animals, birds, and insects.",
+            "Forests are typically found in temperate or tropical regions.",
+            "Made up of different layers, including the canopy and understory.",
+            "Can be made up of coniferous or deciduous trees.",
+            "Often a source of wood, oxygen, and biodiversity.",
+            "Forests play an important role in regulating climate and water cycles."
+        ]
+    },
+    "fox": {
+        "Short Label": "Fox",
+        "Fine-grained Descriptions": [
+            "A small to medium-sized mammal known for its bushy tail.",
+            "Typically has reddish-brown fur, with white markings on the chest and face.",
+            "Found in forests, grasslands, and suburban areas.",
+            "Known for its cunning behavior and sharp senses.",
+            "A nocturnal animal, often hunting at night for small mammals.",
+            "Has pointed ears and a long snout.",
+            "The fox is often associated with intelligence and trickery in folklore."
+        ]
+    },
+    "girl": {
+        "Short Label": "Girl",
+        "Fine-grained Descriptions": [
+            "A young female child, typically under the age of 12.",
+            "Has long or short hair, often styled in various ways.",
+            "Wears colorful clothes, such as dresses, skirts, or pants.",
+            "Often seen playing, studying, or interacting with peers.",
+            "Can be found in schools, parks, or at home.",
+            "Has a cheerful and energetic demeanor.",
+            "Commonly depicted in educational or recreational settings."
+        ]
+    },
+    "hamster": {
+        "Short Label": "Hamster",
+        "Fine-grained Descriptions": [
+            "A small rodent commonly kept as a pet.",
+            "Has soft fur and a short tail, with large, round cheeks.",
+            "Known for storing food in its cheek pouches.",
+            "Typically nocturnal, with activity during the night.",
+            "Lives in small cages with tunnels, wheels, and bedding.",
+            "Often found in shades of golden, white, or gray.",
+            "A popular pet for children due to its small size and playful nature."
+        ]
+    },
+    "house": {
+        "Short Label": "House",
+        "Fine-grained Descriptions": [
+            "A building designed for human habitation.",
+            "Typically consists of walls, windows, and a roof.",
+            "Can be made from wood, brick, or concrete materials.",
+            "Usually contains rooms like bedrooms, a kitchen, and a bathroom.",
+            "Commonly found in neighborhoods or rural areas.",
+            "Can have additional features like a garden, garage, or porch.",
+            "Serves as a home for individuals or families."
+        ]
+    },
+  "kangaroo": {
+        "Short Label": "Kangaroo",
+        "Fine-grained Descriptions": [
+            "A large marsupial native to Australia, known for its strong hind legs.",
+            "Has a long tail that helps with balance while hopping.",
+            "Typically covered in brown or gray fur, with a powerful build.",
+            "Lives in grasslands, forests, and bushland regions.",
+            "Often seen hopping long distances in search of food.",
+            "The female carries her young in a pouch until they are mature.",
+            "Known for its powerful jump and ability to travel at high speeds."
+        ]
+    },
+    "keyboard": {
+        "Short Label": "Keyboard",
+        "Fine-grained Descriptions": [
+            "A device used to input text and commands into a computer or other devices.",
+            "Consists of an array of keys, including letters, numbers, and special characters.",
+            "Can be wired or wireless and often connected via USB or Bluetooth.",
+            "Found in offices, homes, and used for gaming or work.",
+            "Often includes additional keys for shortcuts and multimedia control.",
+            "Commonly made from plastic with a tactile or mechanical response.",
+            "Used for typing, programming, gaming, and other digital tasks."
+        ]
+    },
+    "lamp": {
+        "Short Label": "Lamp",
+        "Fine-grained Descriptions": [
+            "A source of artificial light, typically used in homes or offices.",
+            "Can be powered by electricity, batteries, or solar power.",
+            "Comes in various forms, including desk lamps, floor lamps, and ceiling lights.",
+            "May have adjustable arms or dimmer switches for brightness control.",
+            "Often features a lampshade to diffuse light and add style.",
+            "Commonly made from materials like metal, wood, or plastic.",
+            "Used for reading, ambiance, or general lighting in indoor spaces."
+        ]
+    },
+    "lawn_mower": {
+        "Short Label": "Lawn Mower",
+        "Fine-grained Descriptions": [
+            "A machine used to cut grass in gardens, lawns, and parks.",
+            "Has a rotating blade that cuts the grass to a uniform height.",
+            "Typically powered by gasoline, electricity, or batteries.",
+            "Can be push-operated, self-propelled, or ride-on.",
+            "Commonly used during the warmer months to maintain lawns.",
+            "May have a grass collector or bag for collecting clippings.",
+            "Designed for efficient grass cutting with adjustable height settings."
+        ]
+    },
+    "leopard": {
+        "Short Label": "Leopard",
+        "Fine-grained Descriptions": [
+            "A large carnivorous feline with a spotted coat.",
+            "Found in Africa and parts of Asia, often in savannahs and forests.",
+            "Known for its stealth and hunting prowess.",
+            "Has powerful legs and sharp claws for climbing and hunting.",
+            "Typically golden with black spots, though color can vary.",
+            "Leopards are solitary animals, often seen stalking prey.",
+            "The tail helps with balance during high-speed chases."
+        ]
+    },
+    "lion": {
+        "Short Label": "Lion",
+        "Fine-grained Descriptions": [
+            "A large, muscular cat known for its majestic mane.",
+            "Found in grasslands and savannahs, particularly in Africa.",
+            "Known as the 'King of the Jungle' due to its powerful build.",
+            "Lives in prides, with social structures dominated by females.",
+            "Hunts in groups, preying on herbivores like zebras and antelopes.",
+            "Has a golden-brown coat and a bushy mane around its neck.",
+            "Lions are iconic symbols of strength, courage, and royalty."
+        ]
+    },
+    "lizard": {
+        "Short Label": "Lizard",
+        "Fine-grained Descriptions": [
+            "A small to medium-sized reptile with scaly skin.",
+            "Found in various environments, including deserts, forests, and tropical regions.",
+            "Often seen basking in the sun to regulate body temperature.",
+            "Has four legs and a long, slender tail.",
+            "Lizards come in many colors, from green to brown to brightly patterned.",
+            "Commonly eats insects, small plants, and sometimes other animals.",
+            "Some species, like chameleons, can change their skin color."
+        ]
+    },
+    "lobster": {
+        "Short Label": "Lobster",
+        "Fine-grained Descriptions": [
+            "A marine crustacean known for its large claws and hard shell.",
+            "Found at the bottom of oceans or rivers, typically in rocky areas.",
+            "Has a long body, a hard exoskeleton, and antennae.",
+            "The claws are large and asymmetrical, with one being larger than the other.",
+            "Lobsters are often caught for their meat, which is considered a delicacy.",
+            "Their body is typically a reddish-brown color, turning red when cooked.",
+            "They molt to grow, shedding their exoskeleton as they mature."
+        ]
+    },
+    "man": {
+        "Short Label": "Man",
+        "Fine-grained Descriptions": [
+            "An adult male human, typically in their 20s to 50s.",
+            "Has a range of hair colors, typically short or medium-length.",
+            "Often seen wearing shirts, pants, or suits for work or casual occasions.",
+            "Typically taller and more muscular than women on average.",
+            "Can be found working, relaxing, or engaging in various social activities.",
+            "Known for various roles in society, including leaders, workers, and creators.",
+            "Man's clothing and style vary based on culture, occasion, and personal preference."
+        ]
+    },
+    "maple_tree": {
+        "Short Label": "Maple Tree",
+        "Fine-grained Descriptions": [
+            "A type of tree known for its distinctive leaf shape and vibrant fall colors.",
+            "Has lobed leaves that turn red or yellow in autumn.",
+            "Produces sap that is used to make maple syrup.",
+            "Commonly found in temperate climates, particularly in North America.",
+            "Can grow quite tall, often reaching 30-40 feet in height.",
+            "The wood is strong and often used in furniture and flooring.",
+            "Maple trees are also known for their ability to thrive in various soil types."
+        ]
+    },
+    "motorcycle": {
+        "Short Label": "Motorcycle",
+        "Fine-grained Descriptions": [
+            "A two-wheeled motor vehicle used for transportation or recreation.",
+            "Typically powered by gasoline, with a small engine.",
+            "Has handlebars for steering and foot pegs for balance.",
+            "Can be used for commuting, racing, or off-road adventures.",
+            "Motorcycles are often faster and more fuel-efficient than cars.",
+            "Available in various styles, including cruisers, sport bikes, and choppers.",
+            "Motorcyclists wear helmets and protective gear for safety."
+        ]
+    },
+    "mountain": {
+        "Short Label": "Mountain",
+        "Fine-grained Descriptions": [
+            "A large natural elevation of the Earth's surface, typically with steep slopes.",
+            "Often covered with snow or vegetation, depending on the region.",
+            "Mountains can form as a result of tectonic activity or erosion.",
+            "Often found in mountain ranges or as isolated peaks.",
+            "Popular destinations for hiking, skiing, and mountaineering.",
+            "The highest mountains are found in ranges like the Himalayas and the Andes.",
+            "Mountains are vital for biodiversity and climate regulation."
+        ]
+    },
+    "mouse": {
+        "Short Label": "Mouse",
+        "Fine-grained Descriptions": [
+            "A small rodent with a pointed nose and long tail.",
+            "Typically gray, brown, or white in color.",
+            "Found in homes, fields, and forests, often near food sources.",
+            "Known for its quick movements and ability to squeeze through tiny spaces.",
+            "Commonly used as a laboratory animal in scientific research.",
+            "A mouse is often kept as a pet in cages with bedding and food.",
+            "Has large ears and whiskers, which help with navigation in the dark."
+        ]
+    },
+    "mushroom": {
+        "Short Label": "Mushroom",
+        "Fine-grained Descriptions": [
+            "A type of fungi that grows in moist environments.",
+            "Composed of a cap, stem, and gills that release spores.",
+            "Commonly found in forests, fields, or gardens.",
+            "Some mushrooms are edible, while others are toxic.",
+            "Can vary in size, shape, and color, from small buttons to large caps.",
+            "Often used in cooking, especially in soups, salads, and pizzas.",
+            "Mushrooms can also be grown commercially in controlled environments."
+        ]
+    },
+    "oak_tree": {
+        "Short Label": "Oak Tree",
+        "Fine-grained Descriptions": [
+            "A large deciduous tree known for its strength and longevity.",
+            "Has lobed leaves that change color in autumn.",
+            "Produces acorns, which are a food source for various animals.",
+            "Common in forests and parks, especially in temperate climates.",
+            "Wood is strong and often used in construction and furniture making.",
+            "Oak trees can grow to impressive heights, often over 60 feet.",
+            "A symbol of strength and endurance in many cultures."
+        ]
+    },
+  "orange": {
+        "Short Label": "Orange",
+        "Fine-grained Descriptions": [
+            "A round citrus fruit with a bright orange peel.",
+            "Has a sweet, tangy taste and is typically eaten fresh.",
+            "Rich in vitamin C, commonly used in juices and desserts.",
+            "The skin is often peeled off to reveal juicy segments.",
+            "Grows on trees in warm, tropical climates.",
+            "The fruit is commonly associated with health and freshness.",
+            "Can be found in grocery stores, often in baskets or trays."
+        ]
+    },
+    "orchid": {
+        "Short Label": "Orchid",
+        "Fine-grained Descriptions": [
+            "A flowering plant known for its delicate and colorful blooms.",
+            "Commonly found in tropical and subtropical climates.",
+            "Has a wide range of colors, including purple, white, yellow, and pink.",
+            "The flowers often have an intricate, symmetrical shape.",
+            "Orchids are a symbol of beauty and luxury.",
+            "Often used in bouquets or as ornamental house plants.",
+            "Requires specific care, including well-drained soil and indirect light."
+        ]
+    },
+    "otter": {
+        "Short Label": "Otter",
+        "Fine-grained Descriptions": [
+            "A playful aquatic mammal known for its sleek, streamlined body.",
+            "Has thick fur to keep warm in cold water.",
+            "Often found along rivers, lakes, and coastlines.",
+            "Known for swimming and diving, and using tools to crack shells.",
+            "Otters are social animals and often live in family groups.",
+            "They feed on fish, mollusks, and other small aquatic creatures.",
+            "Usually spotted playing in the water or on riverbanks."
+        ]
+    },
+    "palm_tree": {
+        "Short Label": "Palm Tree",
+        "Fine-grained Descriptions": [
+            "A tall tree with long, narrow leaves that resemble a fan or feather.",
+            "Commonly found in tropical and subtropical regions.",
+            "The trunk is usually tall and slender, topped with fronds.",
+            "Palm trees are often seen in beach areas, gardens, and resorts.",
+            "Produces coconuts or dates, which are valuable resources.",
+            "The leaves are used for making hats, mats, and other products.",
+            "Palm trees provide shade and are a symbol of tropical paradise."
+        ]
+    },
+    "pear": {
+        "Short Label": "Pear",
+        "Fine-grained Descriptions": [
+            "A sweet, juicy fruit with a rounded bottom and tapering top.",
+            "Often green or yellow, with smooth, waxy skin.",
+            "The flesh is soft and grainy, with a sweet flavor.",
+            "Commonly eaten fresh, or used in pies, jams, and juices.",
+            "Pear trees are grown in temperate climates.",
+            "Typically harvested in late summer or fall.",
+            "A healthy snack, high in fiber and vitamin C."
+        ]
+    },
+    "pickup_truck": {
+        "Short Label": "Pickup Truck",
+        "Fine-grained Descriptions": [
+            "A motor vehicle with an open cargo area at the back.",
+            "Designed to transport goods, equipment, and other materials.",
+            "Has a powerful engine, typically used for both work and leisure.",
+            "Often used in construction, farming, or outdoor activities.",
+            "Can carry large loads in the truck bed, with seating for several passengers.",
+            "The bed may be covered or left open for flexibility.",
+            "Available in various sizes, including compact and full-size models."
+        ]
+    },
+    "pine_tree": {
+        "Short Label": "Pine Tree",
+        "Fine-grained Descriptions": [
+            "A type of coniferous tree that produces pinecones.",
+            "Has long, slender needles and a tall, straight trunk.",
+            "Commonly found in forests and mountainous areas.",
+            "The needles are typically green throughout the year.",
+            "Pine trees are valued for their wood, which is used in construction and furniture.",
+            "The seeds from pinecones are consumed by wildlife.",
+            "Pine trees are often associated with winter landscapes and Christmas."
+        ]
+    },
+    "plain": {
+        "Short Label": "Plain",
+        "Fine-grained Descriptions": [
+            "A large area of flat, open land with little vegetation.",
+            "Commonly found in regions like grasslands and savannahs.",
+            "Typically covered with grass, shrubs, or sparse trees.",
+            "Plains are often fertile and used for agriculture.",
+            "Can be found in various climates, including temperate and tropical.",
+            "Often home to a wide range of wildlife, including grazing animals.",
+            "The landscape is vast and uninterrupted by mountains or hills."
+        ]
+    },
+    "plate": {
+        "Short Label": "Plate",
+        "Fine-grained Descriptions": [
+            "A flat, round dish typically used for serving food.",
+            "Made from materials like ceramic, glass, or plastic.",
+            "Can be large for dinner or small for appetizers and desserts.",
+            "Often has a decorative edge or pattern around the rim.",
+            "Used in homes, restaurants, and at formal dinners.",
+            "May be used for serving meals, salads, or snacks.",
+            "Can be stacked for easy storage in cabinets or cupboards."
+        ]
+    },
+    "poppy": {
+        "Short Label": "Poppy",
+        "Fine-grained Descriptions": [
+            "A flowering plant known for its vibrant red petals.",
+            "Has delicate, silky flowers with a black center.",
+            "Commonly seen in fields, meadows, and gardens.",
+            "The seeds are used in cooking and baking, especially in bread.",
+            "Poppies are symbols of remembrance and are associated with World War I.",
+            "They have a strong presence in art and literature.",
+            "The plant produces poppy seeds, which contain opium."
+        ]
+    },
+    "porcupine": {
+        "Short Label": "Porcupine",
+        "Fine-grained Descriptions": [
+            "A rodent with sharp quills covering its back and tail.",
+            "Found in forests, deserts, and grasslands.",
+            "Uses its quills for defense against predators.",
+            "Has a large, round body with a short tail.",
+            "Porcupines are herbivores, feeding on leaves, bark, and roots.",
+            "Often nocturnal and solitary in nature.",
+            "Their quills are barbed and can detach when touched."
+        ]
+    },
+    "possum": {
+        "Short Label": "Possum",
+        "Fine-grained Descriptions": [
+            "A nocturnal marsupial known for its ability to play dead.",
+            "Has a long, prehensile tail and sharp claws for climbing.",
+            "Found in Australia, North America, and parts of Asia.",
+            "Possums are scavengers, feeding on fruits, insects, and small animals.",
+            "Their fur is soft, usually gray or brown.",
+            "Often found in trees, on the ground, or in urban areas.",
+            "Possums can be a pest in gardens, but are essential to ecosystems."
+        ]
+    },
+    "rabbit": {
+        "Short Label": "Rabbit",
+        "Fine-grained Descriptions": [
+            "A small mammal known for its long ears and fluffy tail.",
+            "Commonly found in forests, fields, and as a pet.",
+            "Rabbits are herbivores, feeding on grass, leaves, and vegetables.",
+            "Have strong hind legs for jumping and fast movement.",
+            "Often seen in burrows or dens, where they seek shelter.",
+            "Their fur can be brown, gray, white, or spotted.",
+            "Rabbits are known for their rapid breeding and large litters."
+        ]
+    },
+    "raccoon": {
+        "Short Label": "Raccoon",
+        "Fine-grained Descriptions": [
+            "A nocturnal mammal with a distinctive black mask of fur around its eyes.",
+            "Has a bushy tail with black rings and a grayish coat.",
+            "Known for its dexterous paws, often used to forage for food.",
+            "Found in urban areas, forests, and near water sources.",
+            "Raccoons are omnivores, eating fruits, small animals, and garbage.",
+            "Often seen rummaging through trash cans at night.",
+            "They are highly adaptable and can live in a variety of environments."
+        ]
+    },
+    "ray": {
+        "Short Label": "Ray",
+        "Fine-grained Descriptions": [
+            "A flat-bodied fish related to sharks, typically found in oceans.",
+            "Has wide, wing-like pectoral fins that resemble wings.",
+            "Known for its smooth, cartilaginous body and long tail.",
+            "Rays are often seen gliding along the sea floor or swimming gracefully.",
+            "They feed on mollusks, crustaceans, and small fish.",
+            "Some species, like manta rays, are quite large and are popular in marine tourism.",
+            "Rays are often found in coastal waters and coral reefs."
+        ]
+    },
+    "road": {
+        "Short Label": "Road",
+        "Fine-grained Descriptions": [
+            "A paved or gravel path designed for vehicles and pedestrians.",
+            "Connects cities, towns, and other destinations for transportation.",
+            "Can vary in size, from narrow lanes to multi-lane highways.",
+            "Often lined with signs, lights, and markings for safety.",
+            "Roads can be straight, winding, or hilly depending on the terrain.",
+            "Important infrastructure for commerce, travel, and emergency services.",
+            "Roads are maintained by governments and local authorities."
+        ]
+    },
+  "rocket": {
+        "Short Label": "Rocket",
+        "Fine-grained Descriptions": [
+            "A vehicle designed for space exploration or military use.",
+            "Typically powered by liquid or solid propellants.",
+            "Has a long, cylindrical shape and often features multiple stages.",
+            "Rockets are launched vertically and travel at high speeds.",
+            "Used to transport satellites, astronauts, or cargo into space.",
+            "Commonly seen in space launches and major space missions.",
+            "Symbolizes progress and exploration beyond Earth."
+        ]
+    },
+    "rose": {
+        "Short Label": "Rose",
+        "Fine-grained Descriptions": [
+            "A type of flowering plant with fragrant, colorful blooms.",
+            "Known for its large, fragrant flowers in shades of red, white, yellow, and pink.",
+            "The petals are soft and velvety, arranged in a spiral pattern.",
+            "Roses are often used in gardens, bouquets, and for decorative purposes.",
+            "Has thorns on its stem for protection.",
+            "A symbol of love, romance, and beauty in various cultures.",
+            "Requires a sunny location and regular watering to thrive."
+        ]
+    },
+    "sea": {
+        "Short Label": "Sea",
+        "Fine-grained Descriptions": [
+            "A large body of saltwater that covers much of the Earth’s surface.",
+            "Typically home to diverse marine life, including fish, whales, and corals.",
+            "Can be calm with gentle waves or rough with stormy waters.",
+            "Surrounded by land, sometimes referred to as a 'sea' or 'ocean'.",
+            "Used for transportation, fishing, and recreation.",
+            "Important for climate regulation and the water cycle.",
+            "A natural resource that connects continents and countries."
+        ]
+    },
+    "seal": {
+        "Short Label": "Seal",
+        "Fine-grained Descriptions": [
+            "A marine mammal known for its sleek, streamlined body.",
+            "Has a layer of blubber to keep warm in cold waters.",
+            "Seals are excellent swimmers and often seen in coastal waters.",
+            "Known for their playful and social behavior.",
+            "Their diet consists mainly of fish and squid.",
+            "Seals are often found resting on beaches or ice floes.",
+            "They are often depicted in circuses or marine wildlife shows."
+        ]
+    },
+    "shark": {
+        "Short Label": "Shark",
+        "Fine-grained Descriptions": [
+            "A large predatory fish with a streamlined body and sharp teeth.",
+            "Known for its powerful jaws and hunting abilities.",
+            "Found in oceans worldwide, ranging from shallow waters to deep seas.",
+            "Sharks are carnivores, often feeding on fish, seals, and other marine animals.",
+            "Typically gray or blue with a white underbelly.",
+            "They have multiple rows of teeth that are replaced regularly.",
+            "Sharks are feared by some but are also important to marine ecosystems."
+        ]
+    },
+    "shrew": {
+        "Short Label": "Shrew",
+        "Fine-grained Descriptions": [
+            "A small mammal with a pointed nose and small eyes.",
+            "Has a high metabolism and needs to eat frequently.",
+            "Shrews are found in forests, grasslands, and gardens.",
+            "Known for their speed and agility as they scurry across the ground.",
+            "They often feed on insects, earthworms, and small invertebrates.",
+            "Has a short, velvety coat, often brown or gray.",
+            "Shrews are known for their sharp teeth and constant foraging."
+        ]
+    },
+    "skunk": {
+        "Short Label": "Skunk",
+        "Fine-grained Descriptions": [
+            "A small to medium-sized mammal known for its distinctive black and white fur.",
+            "Famous for its ability to spray a foul-smelling liquid as a defense mechanism.",
+            "Has a bushy tail that is often raised when threatened.",
+            "Typically found in forests, grasslands, and suburban areas.",
+            "Skunks are omnivores, feeding on insects, plants, and small animals.",
+            "They are generally nocturnal, foraging at night.",
+            "Their spray can deter predators, but it also makes them easy to identify."
+        ]
+    },
+    "skyscraper": {
+        "Short Label": "Skyscraper",
+        "Fine-grained Descriptions": [
+            "A tall, multi-story building that reaches great heights.",
+            "Common in large urban areas and cities with limited space.",
+            "Made from steel and glass, designed to resist wind and weather.",
+            "Skyscrapers are used for offices, apartments, or commercial purposes.",
+            "Can be seen towering above other buildings in city skylines.",
+            "Some skyscrapers include observation decks, restaurants, or retail spaces.",
+            "They are a symbol of modern architecture and urban development."
+        ]
+    },
+    "snail": {
+        "Short Label": "Snail",
+        "Fine-grained Descriptions": [
+            "A small mollusk with a coiled shell on its back.",
+            "Moves slowly, leaving a trail of mucus behind.",
+            "Typically found in gardens, forests, and damp environments.",
+            "Has a soft, segmented body, and a long antennae.",
+            "Feeds on plants, algae, and decaying matter.",
+            "Some species of snails are used in cooking or as pets.",
+            "Snails protect themselves by retracting into their shells when threatened."
+        ]
+    },
+    "snake": {
+        "Short Label": "Snake",
+        "Fine-grained Descriptions": [
+            "A long, legless reptile known for its ability to slither.",
+            "Has scales covering its body and no eyelids.",
+            "Some snakes are venomous, while others are non-venomous.",
+            "They are found in a variety of habitats, from deserts to rainforests.",
+            "Snakes hunt by constricting their prey or injecting venom.",
+            "Their diet consists of small animals, including rodents, birds, and amphibians.",
+            "Commonly known for their distinctive hiss and forked tongue."
+        ]
+    },
+    "spider": {
+        "Short Label": "Spider",
+        "Fine-grained Descriptions": [
+            "A small arachnid with eight legs and a two-part body.",
+            "Most spiders spin webs to catch prey, such as insects.",
+            "Has fangs that inject venom to subdue prey.",
+            "Found in almost every environment, from forests to homes.",
+            "Spiders are beneficial for controlling insect populations.",
+            "Many species are harmless to humans, though some can be dangerous.",
+            "The body is often segmented, and many have distinct markings."
+        ]
+    },
+    "squirrel": {
+        "Short Label": "Squirrel",
+        "Fine-grained Descriptions": [
+            "A small rodent known for its bushy tail and quick movements.",
+            "Commonly found in forests, parks, and urban areas.",
+            "Squirrels are excellent climbers and can leap between trees.",
+            "They feed on nuts, seeds, and sometimes fruits.",
+            "Has sharp claws for gripping tree bark and hiding food.",
+            "Known for gathering and storing food in burrows or tree hollows.",
+            "Squirrels are often seen running or jumping with great agility."
+        ]
+    },
+    "streetcar": {
+        "Short Label": "Streetcar",
+        "Fine-grained Descriptions": [
+            "A form of public transportation that runs on tracks in city streets.",
+            "Typically powered by electricity and operates on a fixed route.",
+            "Common in cities with historical or modern tram systems.",
+            "Often used for short-distance travel within urban areas.",
+            "Streetcars can carry multiple passengers and are a sustainable form of transport.",
+            "Usually has open windows and multiple connected carriages.",
+            "A symbol of urban mobility and public transit systems."
+        ]
+    },
+    "sunflower": {
+        "Short Label": "Sunflower",
+        "Fine-grained Descriptions": [
+            "A tall, bright yellow flower known for following the sun.",
+            "Has large, round petals surrounding a central disk of seeds.",
+            "Commonly grown in gardens and fields for their beauty and seeds.",
+            "Sunflowers thrive in sunny, warm environments.",
+            "The seeds are edible and commonly used in snacks and oils.",
+            "The flower is a symbol of positivity and growth.",
+            "Sunflowers are often seen as symbols of summer and harvest."
+        ]
+    },
+    "sweet_pepper": {
+        "Short Label": "Sweet Pepper",
+        "Fine-grained Descriptions": [
+            "A vegetable known for its mild, sweet flavor and crunchy texture.",
+            "Comes in a variety of colors, including red, yellow, and green.",
+            "Used in salads, sandwiches, and as a garnish in cooking.",
+            "Grows on plants that are usually about 1-2 feet tall.",
+            "The fruit is smooth and can be eaten raw or cooked.",
+            "Sweet peppers are rich in vitamin C and antioxidants.",
+            "Often grown in home gardens or commercially in warm climates."
+        ]
+    },
+  "table": {
+        "Short Label": "Table",
+        "Fine-grained Descriptions": [
+            "A flat, typically rectangular surface supported by four legs.",
+            "Used for eating, working, or holding items in various settings.",
+            "Commonly found in kitchens, dining rooms, and offices.",
+            "Can be made from materials such as wood, glass, or metal.",
+            "Tables come in different shapes, including round, square, and oval.",
+            "May have additional features like drawers or a built-in shelf.",
+            "Used for daily activities such as meals, writing, and meetings."
+        ]
+    },
+    "tank": {
+        "Short Label": "Tank",
+        "Fine-grained Descriptions": [
+            "A heavily armored military vehicle used for ground combat.",
+            "Equipped with a large cannon and treads for movement.",
+            "Typically designed to withstand harsh battlefield conditions.",
+            "Used in warfare for assault, defense, and support roles.",
+            "Can be seen in military parades and exercises.",
+            "Often painted in camouflage to blend with the environment.",
+            "Some tanks are equipped with advanced technologies, including targeting systems."
+        ]
+    },
+    "telephone": {
+        "Short Label": "Telephone",
+        "Fine-grained Descriptions": [
+            "A device used for voice communication over long distances.",
+            "Consists of a microphone, speaker, and keypad or touchscreen.",
+            "Has evolved from landline models to modern mobile phones.",
+            "Used for personal calls, business communication, and emergency services.",
+            "Originally operated via copper wires, now increasingly mobile and wireless.",
+            "Can also serve as a camera, internet browser, and multimedia device.",
+            "Telephones are now ubiquitous, seen in homes, offices, and public places."
+        ]
+    },
+    "television": {
+        "Short Label": "Television",
+        "Fine-grained Descriptions": [
+            "An electronic device used for viewing visual media and broadcasts.",
+            "Typically has a screen that displays moving images and sound.",
+            "Commonly used for entertainment, news, and education.",
+            "Has evolved from bulky CRT models to flat-screen, high-definition devices.",
+            "Often connected to cable, satellite, or internet streaming services.",
+            "Used in living rooms, bedrooms, and public spaces for viewing.",
+            "Can range in size from small portable units to large wall-mounted displays."
+        ]
+    },
+    "tiger": {
+        "Short Label": "Tiger",
+        "Fine-grained Descriptions": [
+            "A large, predatory cat with orange fur and black stripes.",
+            "Native to Asia, typically found in forests and grasslands.",
+            "Known for its strength, agility, and hunting skills.",
+            "Tigers are solitary animals, often marking their territory.",
+            "They are apex predators, preying on large mammals such as deer and wild boar.",
+            "Has a powerful build with muscular legs and sharp claws.",
+            "Tigers are often associated with majesty and courage in various cultures."
+        ]
+    },
+    "tractor": {
+        "Short Label": "Tractor",
+        "Fine-grained Descriptions": [
+            "A large vehicle used in agriculture and construction.",
+            "Equipped with powerful wheels or tracks for driving over rough terrain.",
+            "Used for plowing, towing, and operating machinery like plows or harvesters.",
+            "Typically found on farms or construction sites.",
+            "Has a robust, durable design to handle heavy workloads.",
+            "Tractors may also be used for landscaping and road maintenance.",
+            "Can be either gas or diesel-powered, with a variety of attachments."
+        ]
+    },
+    "train": {
+        "Short Label": "Train",
+        "Fine-grained Descriptions": [
+            "A series of connected vehicles that travel on railroad tracks.",
+            "Used for transportation of passengers, freight, and goods.",
+            "Composed of locomotives that pull carriages or freight cars.",
+            "Trains are commonly used in urban transit systems and for long-distance travel.",
+            "Powered by steam, diesel, or electricity, depending on the system.",
+            "Typically faster and more efficient for mass transit than buses or cars.",
+            "Trains can travel through tunnels, bridges, and across vast landscapes."
+        ]
+    },
+    "trout": {
+        "Short Label": "Trout",
+        "Fine-grained Descriptions": [
+            "A freshwater fish known for its streamlined body and spotted skin.",
+            "Often found in rivers, lakes, and streams.",
+            "Trout are prized by anglers for their challenging catch and delicate taste.",
+            "They have a long, sleek body and are typically green, brown, or silver.",
+            "Their diet consists of small fish, insects, and aquatic larvae.",
+            "Trout can be farmed or wild-caught, with some species migrating to the sea.",
+            "They are often served in restaurants, known for their delicate flavor."
+        ]
+    },
+    "tulip": {
+        "Short Label": "Tulip",
+        "Fine-grained Descriptions": [
+            "A bulbous spring-flowering plant with bright, colorful blooms.",
+            "Has smooth, waxy petals that come in a wide range of colors.",
+            "Tulips are often seen in gardens, parks, and flowerbeds during spring.",
+            "They typically have a tall, slender stem and large, cup-shaped flowers.",
+            "Common colors include red, yellow, pink, white, and purple.",
+            "Tulips are symbols of renewal and are popular in flower arrangements.",
+            "They are typically grown from bulbs and require well-drained soil."
+        ]
+    },
+    "turtle": {
+        "Short Label": "Turtle",
+        "Fine-grained Descriptions": [
+            "A reptile with a hard, protective shell that covers its body.",
+            "Known for its slow movement and longevity.",
+            "Turtles live in both aquatic and terrestrial environments.",
+            "Their shells are made of bone and cartilage, providing defense from predators.",
+            "Some turtles are freshwater dwellers, while others live on land or in the sea.",
+            "They are often seen basking in the sun or swimming in ponds.",
+            "Turtles feed on plants, small animals, or insects, depending on the species."
+        ]
+    },
+    "wardrobe": {
+        "Short Label": "Wardrobe",
+        "Fine-grained Descriptions": [
+            "A tall, freestanding closet used for storing clothes.",
+            "Usually has doors and shelves for organization.",
+            "Made from wood, metal, or other durable materials.",
+            "Often found in bedrooms or dressing rooms.",
+            "Some wardrobes have mirrors attached to the front or inside.",
+            "Used to store clothing, shoes, accessories, and sometimes linens.",
+            "Wardrobes may have built-in hangers or hooks for hanging clothes."
+        ]
+    },
+    "whale": {
+        "Short Label": "Whale",
+        "Fine-grained Descriptions": [
+            "A large marine mammal known for its immense size and intelligence.",
+            "Found in oceans and seas worldwide, with some species migrating long distances.",
+            "Whales are filter feeders or predators, depending on the species.",
+            "They have a streamlined body shape and large fins for swimming.",
+            "Whales communicate using complex songs and vocalizations.",
+            "Some species, like blue whales, are the largest animals on Earth.",
+            "Whales are often featured in marine conservation efforts and research."
+        ]
+    },
+    "willow_tree": {
+        "Short Label": "Willow Tree",
+        "Fine-grained Descriptions": [
+            "A tree with slender branches and long, narrow leaves.",
+            "Typically found near water sources like rivers and lakes.",
+            "Known for its graceful, weeping branches that hang down.",
+            "The leaves turn yellow in the fall before they fall off.",
+            "Willows are used for their flexible wood, often in furniture-making.",
+            "Commonly associated with sadness or reflection in literature and art.",
+            "These trees grow rapidly and thrive in damp, wet soil."
+        ]
+    },
+    "wolf": {
+        "Short Label": "Wolf",
+        "Fine-grained Descriptions": [
+            "A large carnivorous mammal with a thick fur coat and sharp teeth.",
+            "Typically found in forests, tundras, and grasslands.",
+            "Known for their social structure and pack behavior.",
+            "Wolves hunt in coordinated groups, often targeting large prey.",
+            "Their fur is usually gray, brown, or white, with a bushy tail.",
+            "Wolves are symbolic of wildness, strength, and independence.",
+            "They are often depicted in folklore as both a fearsome predator and a loyal companion."
+        ]
+    },
+    "woman": {
+        "Short Label": "Woman",
+        "Fine-grained Descriptions": [
+            "An adult human female, typically of reproductive age or older.",
+            "Has a variety of hair types and colors, often styled in various ways.",
+            "Usually wears dresses, skirts, pants, or other clothing suited to occasion.",
+            "Women often play roles in families, communities, and careers.",
+            "In many cultures, women are celebrated for their contributions to society.",
+            "Women are depicted in literature, art, and media as multifaceted individuals.",
+            "Their clothing, appearance, and role vary based on culture and personal choice."
+        ]
+    },
+    "worm": {
+        "Short Label": "Worm",
+        "Fine-grained Descriptions": [
+            "A small, elongated invertebrate that often lives in soil.",
+            "Has a soft, segmented body and is usually brown or pink.",
+            "Worms are important for soil health as they aerate and decompose organic matter.",
+            "Common in gardens, compost piles, and forests.",
+            "They move by contracting and expanding their muscles.",
+            "Worms feed on decaying plant matter and other organic substances.",
+            "Some species, like earthworms, are used in composting and agriculture."
+        ]
+    }
+}

@@ -73,7 +73,7 @@ class Client(object):
     def test_metrics(self):
         testloaderfull = self.load_test_data()
         model = load_item(self.role, 'model', self.save_folder_name)
-        # model.to(self.device)
+        model.to(self.device)
         model.eval()
 
         test_acc = 0
@@ -106,13 +106,13 @@ class Client(object):
         y_true = np.concatenate(y_true, axis=0)
 
         auc = metrics.roc_auc_score(y_true, y_prob, average='micro')
-        
+        model.to('cpu')
         return test_acc, test_num, auc
 
     def train_metrics(self):
         trainloader = self.load_train_data()
         model = load_item(self.role, 'model', self.save_folder_name)
-        # model.to(self.device)
+        model.to(self.device)
         model.eval()
 
         train_num = 0
@@ -128,7 +128,7 @@ class Client(object):
                 loss = self.loss(output, y)
                 train_num += y.shape[0]
                 losses += loss.item() * y.shape[0]
-
+        model.to('cpu')
         return losses, train_num
     
     # used for evaluation on specific dataset

@@ -21,7 +21,9 @@ class BERTPromptLearner(nn.Module):
         random_init=True,
         manual_prompt=True,
         negative_class=False,
-        dataset=None
+        dataset=None,
+        LLM_prompt_file='LLM_prompts',
+        LLM_prompt_number=-1
     ):
         super().__init__()
         self.n_ctx = n_ctx
@@ -43,13 +45,18 @@ class BERTPromptLearner(nn.Module):
         self.pos_prompts_per_class = 3 if not manual_prompt else 1  # 如果 manual_prompt=False，默认为3条描述
         self.neg_prompts_per_class = 1 if negative_class else 0
 
+
+        print(f'='*50)
+        print(f'Prompt File:{LLM_prompt_file}; Prompt number:{LLM_prompt_number}')
+        print(f'='*50)
+
         # --------- 1) 生成所有 Prompt (pos + neg)，并记录到 prompt_index_map ---------
         all_prompts = []
         prompt_index_map = []  # 用于记录每个类别在 all_prompts 中的起始下标、正负样本数量
 
         if dataset is not None:
             dataset_core = dataset.split('_')[0]
-            prompt_dir = f'../dataset/LLM_prompts/{dataset_core}/text_encoder_prompts.json'
+            prompt_dir = f'../dataset/{LLM_prompt_file}/{dataset_core}/text_encoder_prompts.json'
             with open(prompt_dir, 'r') as f:
                 text_encoder_prompts = json.load(f)
         else:
@@ -66,7 +73,10 @@ class BERTPromptLearner(nn.Module):
                 n_pos = 1
             else:
                 # 从 text_encoder_prompts 里取 Fine-grained Descriptions
-                desc_list = text_encoder_prompts[cname]["Fine-grained Descriptions"]
+                if LLM_prompt_number > 0:
+                    desc_list = text_encoder_prompts[cname]["Fine-grained Descriptions"][0:LLM_prompt_number]
+                else:
+                    desc_list = text_encoder_prompts[cname]["Fine-grained Descriptions"]
                 pos_prompts = [f"A photo of a {c_proc}: {desc}" for desc in desc_list]
                 print(f'[{cname}] {pos_prompts}')
                 n_pos = len(desc_list)  # 通常=3
@@ -196,7 +206,9 @@ class TextEncoder_server_bert(nn.Module):
         random_init=True,
         manual_prompt=True,
         negative_class=False,
-        dataset=None
+        dataset=None,
+        LLM_prompt_file='LLM_prompts',
+        LLM_prompt_number=-1
     ):
         super().__init__()
         # BERTPromptLearner 负责生成 embedding (含可学习上下文)
@@ -208,7 +220,9 @@ class TextEncoder_server_bert(nn.Module):
             random_init,
             manual_prompt,
             negative_class,
-            dataset
+            dataset,
+            LLM_prompt_file=LLM_prompt_file,
+            LLM_prompt_number=LLM_prompt_number
         )
         self.bert_model = BertModel.from_pretrained(pretrained_model_name)
         self.bert_model.eval()  # 如果你只在这里做推理，可 eval(); 若要finetune则改成train()
