@@ -1,0 +1,113 @@
+{
+  "TSNE class backup2": [
+    "aquarium fish", "flatfish", "ray", "shark", "trout",
+    "baby", "boy", "girl", "man", "woman"
+
+  ],
+
+  "TSNE class2": [
+    "dolphin", "whale",
+    "shark", "trout",
+    "orchid", "rose",
+    "bottle", "can",
+    "apple", "pear",
+    "telephone", "television",
+    "chair", "table",
+    "beetle", "cockroach",
+    "lion", "tiger",
+    "castle", "skyscraper"
+  ],
+
+  "TSNE class1": [
+    "dolphin", "whale",
+    "shark", "trout",
+    "orchid", "rose",
+    "bottle", "can",
+    "apple", "pear",
+    "telephone", "television",
+    "chair", "table",
+    "beetle", "cockroach",
+    "lion", "tiger",
+    "castle", "skyscraper",
+    "cloud", "sea",
+    "camel", "elephant",
+    "fox", "cattle",
+    "crab", "lobster",
+    "man", "woman",
+    "crocodile", "dinosaur",
+    "hamster", "mouse",
+    "maple", "oak",
+    "bicycle", "motorcycle",
+    "tank", "tractor"
+  ],
+
+  "TSNE class": ["apple","aquarium_fish","baby","bear","beaver","bed","bee","beetle","bicycle","bottle","bowl","boy","bridge","bus","butterfly","camel","can","castle","caterpillar","cattle","chair","chimpanzee","clock","cloud","cockroach","couch","crab","crocodile","cup","dinosaur","dolphin","elephant","flatfish","forest","fox","girl","hamster","house","kangaroo","keyboard","lamp","lawn_mower","leopard","lion","lizard","lobster","man","maple_tree","motorcycle","mountain","mouse","mushroom","oak_tree","orange","orchid","otter","palm_tree","pear","pickup_truck","pine_tree","plain","plate","poppy","porcupine","possum","rabbit","raccoon","ray","road","rocket","rose","sea","seal","shark","shrew","skunk","skyscraper","snail","snake","spider","squirrel","streetcar","sunflower","sweet_pepper","table","tank","telephone","television","tiger","tractor","train","trout","tulip","turtle","wardrobe","whale","willow_tree","wolf","woman","worm"],
+
+  "superclass": {
+    "0": ["beaver", "dolphin", "otter", "seal", "whale"],
+    "1": ["aquarium_fish", "flatfish", "ray", "shark", "trout"],
+    "2": ["orchid", "poppy", "rose", "sunflower", "tulip"],
+    "3": ["bottle", "bowl", "can", "cup", "plate"],
+    "4": ["apple", "mushroom", "orange", "pear", "sweet_pepper"],
+    "5": ["clock", "keyboard", "lamp", "telephone", "television"],
+    "6": ["bed", "chair", "couch", "table", "wardrobe"],
+    "7": ["bee", "beetle", "butterfly", "caterpillar", "cockroach"],
+    "8": ["bear", "leopard", "lion", "tiger", "wolf"],
+    "9": ["bridge", "castle", "house", "road", "skyscraper"],
+    "10": ["cloud", "forest", "mountain", "plain", "sea"],
+    "11": ["camel", "cattle", "chimpanzee", "elephant", "kangaroo"],
+    "12": ["fox", "porcupine", "possum", "raccoon", "skunk"],
+    "13": ["crab", "lobster", "snail", "spider", "worm"],
+    "14": ["baby", "boy", "girl", "man", "woman"],
+    "15": ["crocodile", "dinosaur", "lizard", "snake", "turtle"],
+    "16": ["hamster", "mouse", "rabbit", "shrew", "squirrel"],
+    "17": ["maple_tree", "oak_tree", "palm_tree", "pine_tree", "willow_tree"],
+    "18": ["bicycle", "bus", "motorcycle", "pickup_truck", "train"],
+    "19": ["lawn_mower", "rocket", "streetcar", "tank", "tractor"]
+  },
+  "superclassname": {
+    "0": "水生哺乳动物",
+    "1": "鱼",
+    "2": "花卉",
+    "3": "食品容器",
+    "4": "水果和蔬菜",
+    "5": "家用电器",
+    "6": "家用家具",
+    "7": "昆虫",
+    "8": "大型食肉动物",
+    "9": "大型人造户外用品",
+    "10": "大自然的户外场景",
+    "11": "大杂食动物和食草动物",
+    "12": "中型哺乳动物",
+    "13": "非昆虫无脊椎动物",
+    "14": "人",
+    "15": "爬行动物",
+    "16": "小型哺乳动物",
+    "17": "树木",
+    "18": "车辆1",
+    "19": "车辆2"
+  },
+
+  "superclassnam_en": {
+    "0": "aquatic mammal",
+    "1": "fish",
+    "2": "flower",
+    "3": "container",
+    "4": "fruit",
+    "5": "device",
+    "6": "furniture",
+    "7": "insect",
+    "8": "carnivore",
+    "9": "building",
+    "10": "landscape",
+    "11": "herbivores",
+    "12": "medium mammal",
+    "13": "invertebrates",
+    "14": "human",
+    "15": "reptile",
+    "16": "small mammal",
+    "17": "trees",
+    "18": "vehicle1",
+    "19": "vehicle2"
+  }
+}

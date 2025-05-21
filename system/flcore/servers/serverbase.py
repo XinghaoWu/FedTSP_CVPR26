@@ -563,11 +563,12 @@ class Server(object):
         matplotlib.rcParams['pdf.fonttype'] = 42
         plt.rcParams['font.family'] = 'Times New Roman'
         matplotlib.rcParams["font.family"] = "Times New Roman"
-        # self.load_model()
+        if self.args.algorithm != "FedTSPv4":
+            self.load_model()
 
         global_protos = self.get_global_protos()
         global_protos = global_protos / global_protos.norm(dim=-1, keepdim=True)
-
+        print(f'tsne class:{self.args.tsne_classes}')
         # select partial class to visualize
         if self.args.tsne_classes is not None:
             plot_proto = []
@@ -578,7 +579,7 @@ class Server(object):
                         break
             global_protos = torch.stack(plot_proto)
 
-        if 'Cifar10' in self.args.dataset:
+        if 'Cifar10_' in self.args.dataset:
             # Rearrange the order of classes
             new_order = [2, 3, 4, 5, 7, 6, 8, 9, 1, 0]  # Rearranged order
             global_protos = global_protos[new_order]  # Reorder prototype vectors
@@ -602,11 +603,17 @@ class Server(object):
             similarity_matrix_np[mask] = normalized_values
         print(similarity_matrix_np)
 
+        # save the similarity matrix
+        os.makedirs(self.model_save_path, exist_ok=True)
+        save_path = os.path.join(self.model_save_path, f'{self.args.dataset}_{self.args.model_family}_{self.args.algorithm}_global_prototype_similarity_matrix.pt')
+        print(f'similarity matrix save path:{save_path}')
+        torch.save(torch.tensor(similarity_matrix_np), save_path)
+
         print(self.args)
         # Get class names from self.args.classes
         class_names = self.args.tsne_classes if hasattr(self.args, 'tsne_classes') else [f'Class {i}' for i in
                                                                                range(similarity_matrix_np.shape[0])]
-        if 'Cifar10' in self.args.dataset:
+        if 'Cifar10_' in self.args.dataset:
             # Rearrange the order of classes
             new_order = [2, 3, 4, 5, 7, 6, 8, 9, 1, 0] # Rearranged order
             class_names = [self.args.classes[i] for i in new_order]  # Reorder class names
@@ -631,7 +638,8 @@ class Server(object):
         plt.xticks(rotation=45, ha='right', fontsize=24)  # Rotate x-axis labels for better readability
         plt.yticks(rotation=0, fontsize=24)
         plt.tight_layout()  # Adjust layout to prevent label cutoff
-        plt.savefig(f'{self.args.dataset}_{self.args.model_family}_{self.args.algorithm}.png')
+        # plt.savefig(f'{self.args.dataset}_{self.args.model_family}_{self.args.algorithm}.png')
+        plt.savefig(f'{self.args.dataset}_{self.args.model_family}_{self.args.algorithm}_test.png')
         plt.show()
 
         return similarity_matrix
