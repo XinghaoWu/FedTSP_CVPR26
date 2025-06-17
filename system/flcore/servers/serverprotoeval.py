@@ -58,6 +58,10 @@ class FedProto(Server):
                 if self.best_epoch == i:
                     if self.args.save_model != 0:
                         self.save_model()
+                        # self.get_prototype_semantic_similarity(round=i)
+            
+            if i % 5 == 0:
+                self.get_prototype_semantic_similarity(round=i)
 
             for client in self.selected_clients:
                 client.train()

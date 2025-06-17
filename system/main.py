@@ -28,6 +28,8 @@ from flcore.servers.servertspv4 import FedTSPv4
 from flcore.servers.servertspv4_ablation import FedTSPv4_ablation
 from flcore.servers.servermrl import FedMRL
 
+from flcore.servers.serverword import FedWord
+from flcore.servers.serverstruct import FedStruct
 
 from utils.result_utils import average_data
 from utils.mem_utils import MemReporter
@@ -336,7 +338,13 @@ def run(args):
         #
         # elif args.algorithm == "FedKTL-stable-diffusion":
         #     server = FedKTL_stable_diffusion(args, i)
-            
+        
+        elif args.algorithm == "FedWord":
+            server = FedWord(args, i)
+        
+        elif args.algorithm == 'FedStruct':
+            server = FedStruct(args, i)
+
         else:
             raise NotImplementedError
         print("CUDA_VISIBLE_DEVICES:", os.environ.get("CUDA_VISIBLE_DEVICES", "Not set"))
@@ -474,6 +482,8 @@ if __name__ == "__main__":
     parser.add_argument('--LLM_prompt_file', type=str, default='LLM_prompts', help='LLM prompt file')
     parser.add_argument('--LLM_prompt_number', type=int, default=-1, help='LLM prompt number. set -1 to select all prompts')
 
+    # FedStruct
+    parser.add_argument('--version', type=int, default=1, help='distinguish the version of the proposed method')
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
 

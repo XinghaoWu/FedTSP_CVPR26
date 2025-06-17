@@ -1,6 +1,6 @@
 import time
 import numpy as np
-from flcore.clients.clientproto import clientProto
+from flcore.clients.clientstruct import clientStruct
 from flcore.servers.serverbase import Server
 from flcore.clients.clientbase import load_item, save_item
 from utils.data_utils import read_client_data
@@ -10,13 +10,13 @@ import os, copy
 import torch
 
 
-class FedProto(Server):
+class FedStruct(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
 
         # select slow clients
         self.set_slow_clients()
-        self.set_clients(clientProto)
+        self.set_clients(clientStruct)
 
         print(f"\nJoin ratio / total clients: {self.join_ratio} / {self.num_clients}")
         print("Finished creating server and clients.")
@@ -27,21 +27,23 @@ class FedProto(Server):
 
         # set logger
         if 'main.py' in self.caller_script:
-            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_seed{args.seed}/'
+            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_beta{args.beta}_seed{args.seed}/'
         else:
-            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
+            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_beta{args.beta}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
         self.set_loggers(logger_path)
 
-        self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_seed{args.seed}')
+        self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_'
+                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_beta{args.beta}_seed{args.seed}')
 
-        self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_seed{args.seed}')
+        self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_'
+                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_beta{args.beta}_seed{args.seed}')
 
         if 'main.py' in self.caller_script:
-            self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary.txt'
+            self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary.txt'
         else:
-            self.final_log_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})/summary.txt'
+            self.final_log_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})/summary.txt'
+        
+        self.global_proto = None
 
     def train(self):
         for i in range(self.global_rounds+1):
@@ -58,6 +60,10 @@ class FedProto(Server):
                 if self.best_epoch == i:
                     if self.args.save_model != 0:
                         self.save_model()
+                        # self.get_prototype_semantic_similarity(round=i)
+            
+            # if i % 5 == 0:
+            #     self.get_prototype_semantic_similarity(round=i)
 
             for client in self.selected_clients:
                 client.train()
@@ -68,6 +74,7 @@ class FedProto(Server):
             # [t.join() for t in threads]
 
             self.receive_protos()
+            self.send_protos()
 
             self.Budget.append(time.time() - s_t)
             print('-'*50, self.Budget[-1])
@@ -77,6 +84,7 @@ class FedProto(Server):
 
         hyperparameters = {
             'lamda': self.args.lamda,
+            'beta': self.args.beta,
             'seed': self.args.seed
         }
         results = {
@@ -99,7 +107,8 @@ class FedProto(Server):
 
         # save server proto
         try:
-            PROTO = load_item(self.role, 'global_protos', self.save_folder_name)
+            # PROTO = load_item(self.role, 'global_protos', self.save_folder_name)
+            PROTO = self.global_proto
             torch.save(PROTO, f'{self.model_save_path}/global_proto.pth')
         except:
             print('No global protos to save')
@@ -137,63 +146,101 @@ class FedProto(Server):
         global_protos = torch.stack([global_protos[class_id] for class_id in range(self.num_classes)])
         return global_protos
 
-    # def visualize_global_prototype_similarity(self):
-    #     import matplotlib.pyplot as plt
-    #     import seaborn as sns
-    #     import matplotlib
-    #     matplotlib.rcParams['pdf.fonttype'] = 42
-    #
-    #     self.load_model()
-    #     global_protos = self.get_global_protos()
-    #     print(global_protos)
-    #
-    #     global_protos = global_protos / global_protos.norm(dim=-1, keepdim=True)
-    #     if self.args.similarity_mode == 'cosine':
-    #         similarity_matrix = global_protos @ global_protos.T
-    #     elif self.args.similarity_mode == 'euclidean':
-    #         similarity_matrix = torch.cdist(global_protos, global_protos, p=2)
-    #     else:
-    #         raise ValueError(f'Invalid similarity mode: {self.args.similarity_mode}')
-    #
-    #     # Convert to numpy for visualization
-    #     similarity_matrix_np = similarity_matrix.detach().cpu().numpy()
-    #     print(similarity_matrix_np)
-    #     print(similarity_matrix_np.shape)
-    #     print(similarity_matrix_np.min(), similarity_matrix_np.max())
-    #     print(len(self.args.classes), similarity_matrix_np.shape[0])
-    #
-    #     # Get class names from self.args.classes
-    #     class_names = self.args.classes if hasattr(self.args, 'classes') else [f'Class {i}' for i in
-    #                                                                            range(similarity_matrix_np.shape[0])]
-    #     # Plot heatmap with values
-    #     plt.figure(figsize=(10, 8))
-    #     if self.args.similarity_mode == 'cosine':
-    #         sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
-    #                     xticklabels=class_names, yticklabels=class_names, vmin=0, vmax=1)
-    #     else:
-    #         sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
-    #                     xticklabels=class_names, yticklabels=class_names)
-    #     plt.title('Global Prototype Similarity Heatmap')
-    #     plt.xlabel('Prototypes')
-    #     plt.ylabel('Prototypes')
-    #     plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
-    #     plt.tight_layout()  # Adjust layout to prevent label cutoff
-    #     plt.show()
-    #
-    #     return similarity_matrix
+    def send_protos(self):
+        for client in self.clients:
+            client.global_proto = copy.deepcopy(self.global_proto)
 
     def receive_protos(self):
-        assert (len(self.selected_clients) > 0)
-
+        assert len(self.selected_clients) > 0
         self.uploaded_ids = []
-        uploaded_protos = []
+        uploaded_proto_dicts, weights = [], []
+        self.label_order = list(range(self.num_classes))
+
         for client in self.selected_clients:
             self.uploaded_ids.append(client.id)
-            protos = load_item(client.role, 'protos', client.save_folder_name)
-            uploaded_protos.append(protos)
-            
-        global_protos = proto_aggregation(uploaded_protos)
-        save_item(global_protos, self.role, 'global_protos', self.save_folder_name)
+            # uploaded_proto_dicts.append(load_item(client.role, 'protos', client.save_folder_name))
+            uploaded_proto_dicts.append(copy.deepcopy(client.local_proto))
+            weights.append(float(client.train_samples))
+
+        # ---------------- 非 version 3：保持原逻辑 ----------------
+        if self.args.version not in [3, 4]:
+            global_protos = proto_aggregation(uploaded_proto_dicts)
+            # save_item(global_protos, self.role, 'global_protos', self.save_folder_name)
+            self.global_proto = copy.deepcopy(global_protos)
+            return
+
+        # ---------------- version 3：等权逐类聚合 ----------------
+        # P_g_dict = load_item('Server', 'global_protos', self.save_folder_name)
+        P_g_dict = copy.deepcopy(self.global_proto)
+
+        # 首轮无全局 → 先用 FedProto 均值 boot-strap，再退出
+        if P_g_dict is None:
+            # save_item(proto_aggregation(uploaded_proto_dicts),
+            #         self.role, 'global_protos', self.save_folder_name)
+            self.global_proto = proto_aggregation(uploaded_proto_dicts)
+            print("[BOOTSTRAP] global_protos saved (FedProto mean).")
+            return
+
+        print('Orthogonal-Procrustes (per-class equal mean).')
+
+        # 全局原型 (C,D) & 中心化
+        P_g, _ = dict_to_mat(P_g_dict, self.label_order, self.device)
+        P_g_c  = P_g - P_g.mean(0, keepdim=True)
+        g_mean = P_g.mean(0, keepdim=True)          # (1,D) 用于加回平移
+
+        # 桶：label -> list[tensor(D,)]
+        agg_bucket = defaultdict(list)
+
+        # ----- 遍历客户端：旋转对齐 + 填充桶 -----
+        for proto_dict in uploaded_proto_dicts:
+            P_k, mask = dict_to_mat(proto_dict, self.label_order,
+                                    self.device, fill_mat=P_g)   # (C,D)
+            P_k_c = P_k - P_k.mean(0, keepdim=True)
+
+            # 仅用真实行估计旋转 R_small
+            idx = mask.nonzero(as_tuple=True)[0]
+            # print(f'idx numel:{idx.numel()}')
+            if idx.numel() >= 2:
+                M     = P_k_c[idx] @ P_g_c[idx].T
+                U, _, Vt = torch.linalg.svd(M, full_matrices=False)
+                R_small  = Vt.T @ U.T                              # (C',C')
+                # 嵌入完整 R_full
+                R_full = torch.eye(self.num_classes, device=self.device)
+                # if idx.numel() == 2:
+                #     print(f'变换前的大矩阵:{R_full}')
+                #     print(f'变换前的小矩阵:{R_small}')
+                R_full[idx.unsqueeze(1), idx] = R_small
+                # R_full[torch.ix_(idx, idx)] = R_small
+                    # print(idx)
+                    # print(f'嵌入后的大矩阵:{R_full}')
+                    # exit(1)
+            else:
+                R_full = torch.eye(self.num_classes, device=self.device)
+
+            # 旋转后加回全局平移
+            P_k_align = (R_full @ P_k_c) + g_mean                  # (C,D)
+
+            # 只把真实行放进桶
+            for lbl_idx in idx.tolist():
+                agg_bucket[lbl_idx].append(P_k_align[lbl_idx])
+
+        # ----- 逐类等权平均 + 行级 EMA -----
+        beta = getattr(self.args, "beta", 0.1)
+        new_Pg = {}
+
+        for lbl_idx in self.label_order:
+            if lbl_idx in agg_bucket:                             # 至少有一个客户端拥有该类
+                mean_vec = torch.stack(agg_bucket[lbl_idx], 0).mean(0)
+                old_vec  = P_g[lbl_idx]
+                new_Pg[lbl_idx] = ((1 - beta) * old_vec + beta * mean_vec).detach().cpu()
+            else:
+                # 仍无人持有该类 → 直接保持旧值
+                new_Pg[lbl_idx] = P_g[lbl_idx].detach().cpu()
+
+        # save_item(new_Pg, self.role, 'global_protos', self.save_folder_name)
+        self.global_proto = copy.deepcopy(new_Pg)
+        print(f"[UPDATE] global_protos saved (β={beta}).")
+
     
     def test_cka_sensitivity(self):
         self.load_model()
@@ -238,34 +285,6 @@ class FedProto(Server):
         global_prototye = proto_aggregation(client_protos)
         client_proto_dict[len(self.clients)] = global_prototye
 
-        # # 预先存储每个客户端的“上三角向量”和中心化 Gram
-        # tri_vec, gram_c = {}, {}
-        # for cid, P in client_proto_dict.items():
-        #     tri_vec[cid] = upper_tri(cosine_matrix(P))
-        #     print(f'client {cid}, similarity matrix:  {tri_vec[cid]}')
-        #     if 'cka' in metrics:
-        #         gram_c[cid] = centered_gram(P - P.mean(0, keepdims=True))
-
-        # # 初始化结果容器（NxN，对角线置 1）
-        # results = {m: np.eye(n) for m in metrics}
-
-        # # 双重循环计算 pair-wise
-        # for i, ci in enumerate(client_ids):
-        #     for j, cj in enumerate(client_ids):
-        #         if j <= i:
-        #             continue  # 跳过下三角和对角线
-        #         if 'pearson' in metrics:
-        #             r, _ = pearsonr(tri_vec[ci], tri_vec[cj])
-        #             results['pearson'][i, j] = results['pearson'][j, i] = r
-        #         if 'spearman' in metrics:
-        #             r, _ = spearmanr(tri_vec[ci], tri_vec[cj])
-        #             results['spearman'][i, j] = results['spearman'][j, i] = r
-        #         if 'cka' in metrics:
-        #             Kx, Ky = gram_c[ci], gram_c[cj]
-        #             hsic_xy = (Kx * Ky).sum()
-        #             cka = hsic_xy / np.sqrt((Kx * Kx).sum() * (Ky * Ky).sum() + 1e-10)
-        #             results['cka'][i, j] = results['cka'][j, i] = cka
-
         client_ids = list(client_proto_dict.keys())
         results = compute_prototype_similarity_missing_safe(client_proto_dict, client_ids, metrics=('pearson', 'spearman', 'cka'))
 
@@ -285,7 +304,33 @@ class FedProto(Server):
         plot_similarity_heatmap(cosine_matrix_dis, client_ids, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_Cosine_Distance', round=round)
         plot_similarity_heatmap(mse_matrix_dis, client_ids, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_MSE_Distance', round=round)
         return client_ids, results
-        
+
+# --------------- 工具：dict <-> tensor ----------------       
+def dict_to_mat(proto_dict, label_order, device, fill_mat=None):
+    C = len(label_order)
+    # 推断 D（若 dict 为空，回退到 fill_mat.shape[1]）
+    if proto_dict:
+        D = next(iter(proto_dict.values())).numel()
+    else:
+        assert fill_mat is not None, "Cannot infer prototype dim."
+        D = fill_mat.shape[1]
+
+    mat   = torch.zeros(C, D, device=device)
+    mask  = torch.zeros(C, dtype=torch.bool, device=device)
+
+    for idx, lbl in enumerate(label_order):
+        if lbl in proto_dict:
+            mat[idx]  = proto_dict[lbl].to(device)
+            mask[idx] = True
+        elif fill_mat is not None:
+            mat[idx]  = fill_mat[idx]           # 用上一轮 P_g 行占位
+    return mat, mask
+
+
+def mat_to_dict(mat, label_order):
+    """(C, D) -> {label: tensor(D,)}"""
+    return {lbl: mat[idx].detach().cpu() for idx, lbl in enumerate(label_order)}
+# -----------------------------------------------------
 
 def compute_prototype_similarity_missing_safe(client_proto_dict, client_ids, metrics=('pearson', 'spearman', 'cka')):
     """Computes similarity between clients based on shared class subset."""
