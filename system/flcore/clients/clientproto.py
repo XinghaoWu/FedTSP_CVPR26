@@ -6,6 +6,8 @@ import time
 from flcore.clients.clientbase import Client, load_item, save_item
 from collections import defaultdict
 import torch.nn.functional as F
+from utils.data_utils import read_client_data
+from torch.utils.data import DataLoader
 
 
 class clientProto(Client):
@@ -83,62 +85,62 @@ class clientProto(Client):
         # print(f'client: {self.id}. logit_scale: {self.logit_scale.item()}')
 
 
-    def test_metrics(self):
-        testloader = self.load_test_data()
-        model = load_item(self.role, 'model', self.save_folder_name)
-        global_protos = load_item('Server', 'global_protos', self.save_folder_name)
-        model.eval()
-
-        test_acc = 0
-        test_num = 0
-
-        if global_protos is not None:
-            with torch.no_grad():
-                for x, y in testloader:
-                    if type(x) == type([]):
-                        x[0] = x[0].to(self.device)
-                    else:
-                        x = x.to(self.device)
-                    y = y.to(self.device)
-                    rep = model.base(x)
-
-                    output = float('inf') * torch.ones(y.shape[0], self.num_classes).to(self.device)
-                    for i, r in enumerate(rep):
-                        for j, pro in global_protos.items():
-                            if type(pro) != type([]):
-                                output[i, j] = self.loss_mse(r, pro)
-
-                    test_acc += (torch.sum(torch.argmin(output, dim=1) == y)).item()
-                    test_num += y.shape[0]
-
-            return test_acc, test_num, 0
-        else:
-            return 0, 1e-5, 0
-
-    # def test_metrics(self, specific_testloader=None):
-    #     testloader = self.load_test_data() if specific_testloader is None else specific_testloader
-    #     # model = self.model
+    # def test_metrics(self):
+    #     testloader = self.load_test_data()
     #     model = load_item(self.role, 'model', self.save_folder_name)
-    #     # global_protos = load_item('Server', 'global_protos', self.save_folder_name)
+    #     global_protos = load_item('Server', 'global_protos', self.save_folder_name)
     #     model.eval()
-    #
+
     #     test_acc = 0
     #     test_num = 0
-    #
-    #
-    #     with torch.no_grad():
-    #         for x, y in testloader:
-    #             if type(x) == type([]):
-    #                 x[0] = x[0].to(self.device)
-    #             else:
-    #                 x = x.to(self.device)
-    #             y = y.to(self.device)
-    #             output = model(x)
-    #
-    #             test_acc += (torch.sum(torch.argmax(output, dim=1) == y)).item()
-    #             test_num += y.shape[0]
-    #
+
+    #     if global_protos is not None:
+    #         with torch.no_grad():
+    #             for x, y in testloader:
+    #                 if type(x) == type([]):
+    #                     x[0] = x[0].to(self.device)
+    #                 else:
+    #                     x = x.to(self.device)
+    #                 y = y.to(self.device)
+    #                 rep = model.base(x)
+
+    #                 output = float('inf') * torch.ones(y.shape[0], self.num_classes).to(self.device)
+    #                 for i, r in enumerate(rep):
+    #                     for j, pro in global_protos.items():
+    #                         if type(pro) != type([]):
+    #                             output[i, j] = self.loss_mse(r, pro)
+
+    #                 test_acc += (torch.sum(torch.argmin(output, dim=1) == y)).item()
+    #                 test_num += y.shape[0]
+
     #         return test_acc, test_num, 0
+    #     else:
+    #         return 0, 1e-5, 0
+
+    def test_metrics(self, specific_testloader=None):
+        testloader = self.load_test_data() if specific_testloader is None else specific_testloader
+        # model = self.model
+        model = load_item(self.role, 'model', self.save_folder_name)
+        # global_protos = load_item('Server', 'global_protos', self.save_folder_name)
+        model.eval()
+    
+        test_acc = 0
+        test_num = 0
+    
+    
+        with torch.no_grad():
+            for x, y in testloader:
+                if type(x) == type([]):
+                    x[0] = x[0].to(self.device)
+                else:
+                    x = x.to(self.device)
+                y = y.to(self.device)
+                output = model(x)
+    
+                test_acc += (torch.sum(torch.argmax(output, dim=1) == y)).item()
+                test_num += y.shape[0]
+    
+            return test_acc, test_num, 0
 
 
     def train_metrics(self):
@@ -172,6 +174,40 @@ class clientProto(Client):
                 losses += loss.item() * y.shape[0]
 
         return losses, train_num
+
+    def get_local_prototpye(self):
+        trainloader = self.load_train_data()
+        self.model.to(self.device)
+        self.model.train()
+        protos = defaultdict(list)
+        for i, (x, y) in enumerate(trainloader):
+            if type(x) == type([]):
+                x[0] = x[0].to(self.device)
+            else:
+                x = x.to(self.device)
+            y = y.to(self.device)
+            if self.train_slow:
+                time.sleep(0.1 * np.abs(np.random.rand()))
+            rep = self.model.base(x)
+
+            for i, yy in enumerate(y):
+                y_c = yy.item()
+                protos[y_c].append(rep[i, :].detach().data)
+
+        self.model.to('cpu')
+
+        proto_dict = agg_func(protos)
+        return proto_dict
+        # label_order = [i for i in range(self.args.num_classes)]
+        # K = len(label_order)
+        # D = next(iter(proto_dict.values())).numel()          # 特征维
+        # mat = np.zeros((K, D), dtype=np.float32)            # 先全 0
+        # for i, lbl in enumerate(label_order):
+        #     if lbl in proto_dict:                           # 该客户端有该类
+        #         mat[i] = proto_dict[lbl].detach().cpu().numpy()
+        #         # 若你想用“缺失类掩码”而非 0 占位，可在这里记录一个 mask
+        # # print(f'Client {self.id}, prototype {mat}')
+        # return mat
 
 
 # https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L205

@@ -30,7 +30,7 @@ fi
 # 动态生成 dataset 参数
 dataset="${dataset}_${noniid}_${alpha}_balance_${num_clients}"
 
-for seed in 0 1 2;
+for seed in 0;
 do
     python main.py --dataset=${dataset} \
         --num_classes=${num_classes} \

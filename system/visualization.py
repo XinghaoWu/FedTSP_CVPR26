@@ -28,6 +28,7 @@ from flcore.servers.serverours import FedOurs
 from flcore.servers.servertspv2 import FedTSPv2
 from flcore.servers.servertspv3 import FedTSPv3
 from flcore.servers.servertspv4 import FedTSPv4
+from flcore.servers.serverstruct import FedStruct
 
 from utils.result_utils import average_data
 from utils.mem_utils import MemReporter
@@ -292,6 +293,9 @@ def run(args):
         # elif args.algorithm == "FedKTL-stable-diffusion":
         #     server = FedKTL_stable_diffusion(args, i)
 
+        elif args.algorithm == 'FedStruct':
+            server = FedStruct(args, i)
+
         else:
             raise NotImplementedError
 
@@ -311,6 +315,20 @@ def run(args):
 
         if args.visualization_mode == 'super_sim':
             server.visualize_global_protos_superclass_similarity()
+        
+        if args.visualization_mode == 'client_prototype_semantic_similarity':
+            if hasattr(server, 'get_prototype_semantic_similarity'):
+                method = getattr(server, 'get_prototype_semantic_similarity')
+                result = method()
+            else:
+                print(f'{args.algorithm} does not have this method.')
+
+        if args.visualization_mode == 'cka':
+            if hasattr(server, 'test_cka_sensitivity'):
+                method = getattr(server, 'test_cka_sensitivity')
+                result = method()
+            else:
+                print(f'{args.algorithm} does not have this method.')
 
 
         time_list.append(time.time() - start)
@@ -441,11 +459,14 @@ if __name__ == "__main__":
     parser.add_argument('--manual_prompt', type=int, default=1, help='whether to use manual prompt')
     parser.add_argument('--negative_class', type=int, default=0, help='whether add negative class')
 
+    # FedStruct
+    parser.add_argument('--version', type=int, default=1, help='distinguish the version of the proposed method')
+
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
 
     # visualization arguments
-    parser.add_argument('--visualization_mode', type=str, default='super_sim', choices=['TSNE', 'proto_sim', 'super_sim', 'test', 'top5acc'])
+    parser.add_argument('--visualization_mode', type=str, default='super_sim', choices=['TSNE', 'proto_sim', 'super_sim', 'test', 'top5acc',  'client_prototype_semantic_similarity', 'cka'])
     parser.add_argument('--visualization_dataset_type', type=str, default='test', help='visualize train or test datasets')
     parser.add_argument('--test_data_mode', type=str, default='local', help='test on local or global data', choices=['local', 'global'])
     parser.add_argument('--similarity_mode', type=str, default="cosine", help='cosine or euclidean')
