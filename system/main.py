@@ -484,6 +484,8 @@ if __name__ == "__main__":
 
     # FedStruct
     parser.add_argument('--version', type=int, default=1, help='distinguish the version of the proposed method')
+    parser.add_argument('--gamma', type=float, default=1, help='weight of feature CKA loss')
+    parser.add_argument('--rotation', type=int, default=1, help='whether rotate local proto before aggregation. set 0 to rotate')
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
 

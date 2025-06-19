@@ -33,6 +33,7 @@ class clientStruct(Client):
 
         self.loss_mse = nn.MSELoss()
         self.lamda = args.lamda
+        self.gamma = args.gamma
 
         self.model = load_item(self.role, 'model', self.save_folder_name)
 
@@ -122,7 +123,7 @@ class clientStruct(Client):
                         
                             cka_loss_val = cka_loss(rep, proto_new)
                             # print(f'CKA Loss:{cka_loss_val.item()}')
-                            loss += cka_loss_val * self.lamda  # Add CKA loss to the total loss
+                            loss += cka_loss_val * self.gamma  # Add CKA loss to the total loss
                     
 
                 for i, yy in enumerate(y):

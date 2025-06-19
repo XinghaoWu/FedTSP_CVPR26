@@ -27,16 +27,16 @@ class FedStruct(Server):
 
         # set logger
         if 'main.py' in self.caller_script:
-            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_beta{args.beta}_seed{args.seed}/'
+            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_seed{args.seed}/'
         else:
-            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_beta{args.beta}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
+            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
         self.set_loggers(logger_path)
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_'
-                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_beta{args.beta}_seed{args.seed}')
+                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_seed{args.seed}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_'
-                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_beta{args.beta}_seed{args.seed}')
+                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_seed{args.seed}')
 
         if 'main.py' in self.caller_script:
             self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary.txt'
@@ -84,7 +84,9 @@ class FedStruct(Server):
 
         hyperparameters = {
             'lamda': self.args.lamda,
+            'gamma': self.args.gamma,
             'beta': self.args.beta,
+            'rotation': self.args.rotation,
             'seed': self.args.seed
         }
         results = {
@@ -163,7 +165,7 @@ class FedStruct(Server):
             weights.append(float(client.train_samples))
 
         # ---------------- 非 version 3：保持原逻辑 ----------------
-        if self.args.version not in [3, 4]:
+        if self.args.version not in [3, 4] or self.args.rotation == 0:
             global_protos = proto_aggregation(uploaded_proto_dicts)
             # save_item(global_protos, self.role, 'global_protos', self.save_folder_name)
             self.global_proto = copy.deepcopy(global_protos)

@@ -230,6 +230,55 @@ class Client(object):
 
         self.model.to('cpu')
         return all_features, all_labels
+    
+    # =========== CKA alignment plugin ===========
+    def sample_level_CKA_alignment(rep, y, global_protos):
+        """
+        对应原 version==1 / version==4 中的逐样本对齐：
+            用 global_protos[y] 覆盖当前样本的表征，再做 CKA。
+        """
+        if global_protos is None:
+            return 0.0
+
+        proto_new = copy.deepcopy(rep.detach())
+        for idx, cls in enumerate(y):
+            cls_id = cls.item()
+            if not isinstance(global_protos[cls_id], list):
+                proto_new[idx] = global_protos[cls_id].to(rep.device)
+
+        return cka_loss(rep, proto_new)
+
+    def class_level_CKA_alignment(rep, y, global_protos, device):
+        """
+        对应原 version in [2,3,4] 的“局部 batch 原型 vs 全局原型”对齐。
+        """
+        if global_protos is None:
+            return 0.0
+
+        classes_in_batch = torch.unique(y)                 # e.g. [1, 3, 7]
+        n_cls = classes_in_batch.size(0)
+
+        # 1) 计算局部 prototype
+        proto_local = torch.zeros(n_cls, rep.size(1), device=device)
+        for idx_c, c in enumerate(classes_in_batch):
+            mask = (y == c)
+            proto_local[idx_c] = rep[mask].mean(0)
+
+        # 2) 取出存在全局原型的类别
+        selected_global, valid_idx = [], []
+        for idx_c, c in enumerate(classes_in_batch):
+            g_proto = global_protos[c.item()]
+            if not isinstance(g_proto, list):
+                selected_global.append(g_proto.to(device))
+                valid_idx.append(idx_c)
+
+        if len(selected_global) == 0:
+            return 0.0                                      # 当前 batch 没有可对齐的类
+
+        proto_global = torch.stack(selected_global, 0)      # (N_valid, D)
+        proto_local  = proto_local[valid_idx]               # (N_valid, D)
+        return cka_loss(proto_local, proto_global)
+    # =========== CKA alignment plugin ===========
 
 
 def save_item(item, role, item_name, item_path=None):
@@ -243,3 +292,20 @@ def load_item(role, item_name, item_path=None):
     except FileNotFoundError:
         print(role, item_name, 'Not Found')
         return None
+
+def cka_loss(X, Y):
+    """
+    Calculate the CKA loss between two feature sets X and Y.
+    """
+    # Centering the matrices
+    X_centered = X - X.mean(dim=0, keepdim=True)
+    Y_centered = Y - Y.mean(dim=0, keepdim=True)
+
+    # Compute Gram matrices (similarity matrices)
+    gram_X = X_centered @ X_centered.T
+    gram_Y = Y_centered @ Y_centered.T
+
+    # Compute the CKA score
+    cka_value = torch.trace(gram_X @ gram_Y) / (torch.norm(gram_X) * torch.norm(gram_Y))
+
+    return 1 - cka_value  # Return 1 - CKA to make it a loss
