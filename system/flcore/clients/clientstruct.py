@@ -87,7 +87,7 @@ class clientStruct(Client):
                         loss += cka_loss_val * self.lamda  # Add CKA loss to the total loss
 
                         # loss += self.loss_mse(proto_new, rep) * self.lamda
-                elif self.args.version in [2, 3, 4]:
+                elif self.args.version in [2, 3, 4, 5]:
                     classes_in_batch = torch.unique(y)                 # e.g. [1, 3, 7]
                     n_cls = classes_in_batch.size(0)
 
@@ -113,7 +113,7 @@ class clientStruct(Client):
                         # print(f'cka loss:{cka_loss_val.item()}')
                         loss += cka_loss_val * self.lamda
 
-                    if self.args.version in [4]:
+                    if self.args.version in [4, 5]:
                         if global_protos is not None:
                             proto_new = copy.deepcopy(rep.detach())
                             for i, yy in enumerate(y):
@@ -125,10 +125,14 @@ class clientStruct(Client):
                             # print(f'CKA Loss:{cka_loss_val.item()}')
                             loss += cka_loss_val * self.gamma  # Add CKA loss to the total loss
                     
-
-                for i, yy in enumerate(y):
-                    y_c = yy.item()
-                    protos[y_c].append(rep[i, :].detach().data)
+                # In Version 5, only calculate prototypes from the features in the last epoch
+                accumulate_features = True
+                if self.args.version in [5] and step != max_local_epochs - 1:
+                        accumulate_features = False
+                if accumulate_features:
+                    for i, yy in enumerate(y):
+                        y_c = yy.item()
+                        protos[y_c].append(rep[i, :].detach().data)
 
                 optimizer.zero_grad()
                 # optimizer_logit_scale.zero_grad()

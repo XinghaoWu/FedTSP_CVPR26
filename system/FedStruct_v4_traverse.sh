@@ -10,8 +10,8 @@ batch_size=100
 global_rounds=100
 
 # 卡配置
-num_gpus=1
-max_tasks_per_gpu=8
+num_gpus=4
+max_tasks_per_gpu=6
 total_parallel_tasks=$((num_gpus * max_tasks_per_gpu))
 
 # 超参数列表
@@ -23,7 +23,7 @@ task_idx=0
 pids=()
 
 # 遍历参数组合
-for alpha in 0.1; do
+for alpha in 0.5 1.0; do
     for rotation in 0 1; do
         for lamda in "${lamda_list[@]}"; do
             for gamma in "${gamma_list[@]}"; do

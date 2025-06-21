@@ -165,7 +165,7 @@ class FedStruct(Server):
             weights.append(float(client.train_samples))
 
         # ---------------- 非 version 3：保持原逻辑 ----------------
-        if self.args.version not in [3, 4] or self.args.rotation == 0:
+        if self.args.version not in [3, 4, 5] or self.args.rotation == 0:
             global_protos = proto_aggregation(uploaded_proto_dicts)
             # save_item(global_protos, self.role, 'global_protos', self.save_folder_name)
             self.global_proto = copy.deepcopy(global_protos)
