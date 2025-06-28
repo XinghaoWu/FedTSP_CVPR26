@@ -31,6 +31,9 @@ from flcore.servers.servermrl import FedMRL
 from flcore.servers.serverword import FedWord
 from flcore.servers.serverstruct import FedStruct
 
+from flcore.servers.serveralignstruct import AlignFedStruct
+from flcore.servers.servertgpstruct import FedTGPStruct
+
 from utils.result_utils import average_data
 from utils.mem_utils import MemReporter
 
@@ -344,6 +347,12 @@ def run(args):
         
         elif args.algorithm == 'FedStruct':
             server = FedStruct(args, i)
+        
+        elif args.algorithm == 'AlignFedStruct':
+            server = AlignFedStruct(args, i)
+        
+        elif args.algorithm == 'FedTGPStruct':
+            server = FedTGPStruct(args, i)
 
         else:
             raise NotImplementedError

@@ -232,7 +232,7 @@ class Client(object):
         return all_features, all_labels
     
     # =========== CKA alignment plugin ===========
-    def sample_level_CKA_alignment(rep, y, global_protos):
+    def sample_level_CKA_alignment(self, rep, y, global_protos):
         """
         对应原 version==1 / version==4 中的逐样本对齐：
             用 global_protos[y] 覆盖当前样本的表征，再做 CKA。
@@ -248,7 +248,7 @@ class Client(object):
 
         return cka_loss(rep, proto_new)
 
-    def class_level_CKA_alignment(rep, y, global_protos, device):
+    def class_level_CKA_alignment(self, rep, y, global_protos, device):
         """
         对应原 version in [2,3,4] 的“局部 batch 原型 vs 全局原型”对齐。
         """
@@ -272,7 +272,7 @@ class Client(object):
                 selected_global.append(g_proto.to(device))
                 valid_idx.append(idx_c)
 
-        if len(selected_global) == 0:
+        if len(selected_global) <= 1:
             return 0.0                                      # 当前 batch 没有可对齐的类
 
         proto_global = torch.stack(selected_global, 0)      # (N_valid, D)
@@ -309,3 +309,12 @@ def cka_loss(X, Y):
     cka_value = torch.trace(gram_X @ gram_Y) / (torch.norm(gram_X) * torch.norm(gram_Y))
 
     return 1 - cka_value  # Return 1 - CKA to make it a loss
+
+def matrix_to_dict_proto(proto_matrix):
+    """
+    将 (C, D) prototype 矩阵转换为 dict 格式，便于 CKA 函数使用
+    """
+    proto_dict = {}
+    for i in range(proto_matrix.size(0)):
+        proto_dict[i] = proto_matrix[i]
+    return proto_dict
