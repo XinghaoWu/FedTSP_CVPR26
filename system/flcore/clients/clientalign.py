@@ -21,7 +21,7 @@ class clientAlign(Client):
 
         self.global_prototype = None
         self.global_round = 0
-        self.loss_dis_center_func = Contrastive_Loss_Center(temperature=1)
+        self.loss_dis_center_func = Contrastive_Loss_Center(temperature=1, device=self.device)
 
 
     def train(self):
