@@ -8,7 +8,7 @@ from collections import defaultdict
 import torch.nn.functional as F
 
 
-class clientProto(Client):
+class clientProtoEval(Client):
     def __init__(self, args, id, train_samples, test_samples, **kwargs):
         super().__init__(args, id, train_samples, test_samples, **kwargs)
         torch.manual_seed(0)

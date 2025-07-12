@@ -1,6 +1,6 @@
 import time
 import numpy as np
-from flcore.clients.clientproto import clientProto
+from flcore.clients.clientprotoeval import clientProtoEval
 from flcore.servers.serverbase import Server
 from flcore.clients.clientbase import load_item, save_item
 from utils.data_utils import read_client_data
@@ -8,15 +8,16 @@ from threading import Thread
 from collections import defaultdict
 import os, copy
 import torch
+from scipy.stats import pearsonr, spearmanr
 
 
-class FedProto(Server):
+class FedProtoEval(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
 
         # select slow clients
         self.set_slow_clients()
-        self.set_clients(clientProto)
+        self.set_clients(clientProtoEval)
 
         print(f"\nJoin ratio / total clients: {self.join_ratio} / {self.num_clients}")
         print("Finished creating server and clients.")
@@ -58,10 +59,6 @@ class FedProto(Server):
                 if self.best_epoch == i:
                     if self.args.save_model != 0:
                         self.save_model()
-                        # self.get_prototype_semantic_similarity(round=i)
-            
-            if i % 5 == 0:
-                self.get_prototype_semantic_similarity(round=i)
 
             for client in self.selected_clients:
                 client.train()
@@ -219,12 +216,58 @@ class FedProto(Server):
         
         client_proto_dict[selected_client[-1]] = temp_prototype
 
-        results = compute_prototype_similarity_missing_safe(client_proto_dict, selected_client, metrics=('pearson', 'spearman', 'cka'))
-        cosine_matrix_dis = compute_cosine_distance_matrix(client_proto_dict)
-        mse_matrix_dis = compute_mse_distance_matrix(client_proto_dict)
-        results['cosine'] = cosine_matrix_dis
-        results['mse'] = mse_matrix_dis
+        results = compute_prototype_similarity_missing_safe(client_proto_dict, selected_client, metrics=('pearson', 'spearman', 'cka', 'cosine', 'mse'))
         print(results)
+
+    def testing_feature_difference(self, round=None):
+        """
+        ① 计算 |log s|、θ、CKA 三张矩阵
+        ② 基于 self.args.model_family (示例: 'HtFE9') 把 pair 分成同构 vs. 异构
+        ③ 打印三种指标的整体均值以及同构/异构均值
+        """
+        if round is None:
+            self.load_model()
+
+        # -------- 1. 收集原型 --------
+        client_proto_dict = {}
+        for client in self.clients:
+            client_proto_dict[client.id] = client.get_local_prototpye()
+        client_ids = list(client_proto_dict.keys())          # 默认按 id 排序
+
+        # -------- 2. 计算指标矩阵 --------
+        metric_mats = compute_coord_metric_matrices(client_proto_dict, client_ids)
+        print(f'metric_mats: {metric_mats}')
+
+        # -------- 3. 针对模型架构生成 arch_id 列表 --------
+        # self.args.model_family 形如 'HtFE4' → 提取数字
+        import re
+        m = re.search(r'HtFE(\d+)', self.args.model_family)
+        if m is None:
+            raise ValueError(f"model_family '{self.args.model_family}' 不符合 HtFE# 格式")
+        num_arch = int(m.group(1))
+        arch_ids = [cid % num_arch for cid in client_ids]    # id 取模确定架构
+        # print(f'arch_ids: {arch_ids}')
+
+        # -------- 4. 打印统计 --------
+        print("=== Overall Mean (上三角, 排除 NaN) ===")
+        for name, mat in metric_mats.items():
+            valid = mat[np.triu_indices_from(mat, k=1)]
+            valid = valid[~np.isnan(valid)]
+            print(f"{name:10}: {valid.mean():.4f}  (N={valid.size})")
+
+        print("\n=== Homogeneous vs. Heterogeneous ===")
+        for name, mat in metric_mats.items():
+            stats = compute_hom_het_stats(mat, arch_ids)
+            hom_mean, hom_N = stats['hom_mean']
+            het_mean, het_N = stats['het_mean']
+            print(f"{name:10}: hom {hom_mean:.4f} (N={hom_N}) | "
+                f"het {het_mean:.4f} (N={het_N})")
+
+        # -------- 5. 返回供后续绘图 / 保存 --------
+        return metric_mats
+            
+        
+        
 
     
     def get_prototype_semantic_similarity(self, metrics=('pearson', 'spearman', 'cka'), round=None):
@@ -240,35 +283,7 @@ class FedProto(Server):
         
         # 增加计算全局prototype，将其作为最后一个客户端计算相似度
         global_prototye = proto_aggregation(client_protos)
-        client_proto_dict[len(self.clients)] = global_prototye
-
-        # # 预先存储每个客户端的“上三角向量”和中心化 Gram
-        # tri_vec, gram_c = {}, {}
-        # for cid, P in client_proto_dict.items():
-        #     tri_vec[cid] = upper_tri(cosine_matrix(P))
-        #     print(f'client {cid}, similarity matrix:  {tri_vec[cid]}')
-        #     if 'cka' in metrics:
-        #         gram_c[cid] = centered_gram(P - P.mean(0, keepdims=True))
-
-        # # 初始化结果容器（NxN，对角线置 1）
-        # results = {m: np.eye(n) for m in metrics}
-
-        # # 双重循环计算 pair-wise
-        # for i, ci in enumerate(client_ids):
-        #     for j, cj in enumerate(client_ids):
-        #         if j <= i:
-        #             continue  # 跳过下三角和对角线
-        #         if 'pearson' in metrics:
-        #             r, _ = pearsonr(tri_vec[ci], tri_vec[cj])
-        #             results['pearson'][i, j] = results['pearson'][j, i] = r
-        #         if 'spearman' in metrics:
-        #             r, _ = spearmanr(tri_vec[ci], tri_vec[cj])
-        #             results['spearman'][i, j] = results['spearman'][j, i] = r
-        #         if 'cka' in metrics:
-        #             Kx, Ky = gram_c[ci], gram_c[cj]
-        #             hsic_xy = (Kx * Ky).sum()
-        #             cka = hsic_xy / np.sqrt((Kx * Kx).sum() * (Ky * Ky).sum() + 1e-10)
-        #             results['cka'][i, j] = results['cka'][j, i] = cka
+        # client_proto_dict[len(self.clients)] = global_prototye
 
         client_ids = list(client_proto_dict.keys())
         results = compute_prototype_similarity_missing_safe(client_proto_dict, client_ids, metrics=('pearson', 'spearman', 'cka'))
@@ -281,14 +296,34 @@ class FedProto(Server):
         results['cosine'] = cosine_matrix_dis
         results['mse'] = mse_matrix_dis
 
-        print(results)
-        client_ids = [i for i in range(self.args.num_clients)]
-        plot_similarity_heatmap(results['pearson'], client_ids, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_Pearson', round=round)
-        plot_similarity_heatmap(results['spearman'], client_ids, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_Spearman', round=round)
-        plot_similarity_heatmap(results['cka'], client_ids, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_cka', round=round)
-        plot_similarity_heatmap(cosine_matrix_dis, client_ids, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_Cosine_Distance', round=round)
-        plot_similarity_heatmap(mse_matrix_dis, client_ids, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_MSE_Distance', round=round)
-        return client_ids, results
+        # print('原始相似度:')
+        # print(results)
+        
+        # 计算原始相似度的平均值
+        original_averages = compute_similarity_averages(results)
+        print('原始相似度平均值（排除对角线）:')
+        for metric, avg in original_averages.items():
+            print(f'{metric}: {avg:.4f}')
+        
+        # ===== Procrustes对齐后的相似度计算 =====
+        print('开始Procrustes对齐...')
+        results_procrustes = compute_prototype_similarity_procrustes(client_proto_dict, client_ids, metrics=('pearson', 'spearman', 'cka', 'cosine', 'mse'))
+        
+        # 计算Procrustes对齐后相似度的平均值
+        procrustes_averages = compute_similarity_averages(results_procrustes)
+        print('Procrustes对齐后相似度平均值（排除对角线）:')
+        for metric, avg in procrustes_averages.items():
+            print(f'{metric}: {avg:.4f}')
+        
+        client_ids_plot = [i for i in range(self.args.num_clients)]
+        # plot_similarity_heatmap(results['pearson'], client_ids_plot, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_Pearson', round=round)
+        # plot_similarity_heatmap(results['spearman'], client_ids_plot, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_Spearman', round=round)
+        # plot_similarity_heatmap(results['cka'], client_ids_plot, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_cka', round=round)
+        # plot_similarity_heatmap(cosine_matrix_dis, client_ids_plot, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_Cosine_Distance', round=round)
+        # plot_similarity_heatmap(mse_matrix_dis, client_ids_plot, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_MSE_Distance', round=round)
+
+        
+        return client_ids, results, results_procrustes
         
 
 def compute_prototype_similarity_missing_safe(client_proto_dict, client_ids, metrics=('pearson', 'spearman', 'cka')):
@@ -351,6 +386,94 @@ def compute_prototype_similarity_missing_safe(client_proto_dict, client_ids, met
     return results
 
 
+def compute_prototype_similarity_procrustes(client_proto_dict, client_ids, metrics=('pearson', 'spearman', 'cka')):
+    """Computes similarity between clients after Procrustes alignment."""
+    n = len(client_ids)
+    results = {m: np.full((n, n), np.nan) for m in metrics}
+
+    for i, ci in enumerate(client_ids):
+        for j, cj in enumerate(client_ids):
+            if j <= i:
+                continue
+
+            proto_i, proto_j = client_proto_dict[ci], client_proto_dict[cj]
+            shared_labels = get_shared_classes(proto_i, proto_j)
+            if len(shared_labels) < 2:
+                continue  # too few to form meaningful comparison
+
+            # 转换为numpy矩阵
+            Pi = protos_to_matrix(proto_i, shared_labels)
+            Pj = protos_to_matrix(proto_j, shared_labels)
+            
+            # Procrustes对齐：将Pi对齐到Pj的空间
+            Pi_aligned = procrustes_align(Pi, Pj)
+            
+            # 计算对齐后的相似度矩阵
+            Si = upper_tri(cosine_matrix(Pi_aligned))
+            Sj = upper_tri(cosine_matrix(Pj))
+
+            if 'pearson' in metrics and len(shared_labels) > 2:
+                r, _ = pearsonr(Si, Sj)
+                results['pearson'][i, j] = results['pearson'][j, i] = r
+            if 'spearman' in metrics and len(shared_labels) > 2:
+                r, _ = spearmanr(Si, Sj)
+                results['spearman'][i, j] = results['spearman'][j, i] = r
+            if 'cka' in metrics:
+                Pi_centered = Pi_aligned - Pi_aligned.mean(0, keepdims=True)
+                Pj_centered = Pj - Pj.mean(0, keepdims=True)
+                Kx = centered_gram(Pi_centered)
+                Ky = centered_gram(Pj_centered)
+                hsic_xy = (Kx * Ky).sum()
+                cka_val = hsic_xy / np.sqrt((Kx * Kx).sum() * (Ky * Ky).sum() + 1e-10)
+                results['cka'][i, j] = results['cka'][j, i] = cka_val
+            if 'cosine' in metrics and len(shared_labels) > 0:
+                Pi_aligned_norm = Pi_aligned / np.linalg.norm(Pi_aligned, axis=1, keepdims=True)
+                Pj_norm = Pj / np.linalg.norm(Pj, axis=1, keepdims=True)
+                cos_sim = np.sum(Pi_aligned_norm * Pj_norm, axis=1)
+                avg_cos = cos_sim.mean()
+                results['cosine'][i, j] = results['cosine'][j, i] = avg_cos
+            if 'mse' in metrics and len(shared_labels) > 0:
+                mse = ((Pi_aligned - Pj) ** 2).mean()
+                results['mse'][i, j] = results['mse'][j, i] = mse
+
+    # Set diagonals appropriately
+    for m in metrics:
+        if m == 'mse':
+            np.fill_diagonal(results[m], 0.0)  # MSE距离，自己与自己的距离为0
+        else:
+            np.fill_diagonal(results[m], 1.0)  # 相似度指标，自己与自己的相似度为1
+
+    return results
+
+
+def procrustes_align(X, Y):
+    """
+    使用Procrustes分析将X对齐到Y的空间
+    
+    Args:
+        X: 需要对齐的矩阵 (K, D)
+        Y: 目标空间的矩阵 (K, D)
+    
+    Returns:
+        X_aligned: 对齐后的X矩阵
+    """
+    # 中心化
+    X_centered = X - X.mean(0, keepdims=True)
+    Y_centered = Y - Y.mean(0, keepdims=True)
+    
+    # 计算SVD
+    M = X_centered.T @ Y_centered
+    U, _, Vt = np.linalg.svd(M, full_matrices=False)
+    
+    # 计算旋转矩阵
+    R = Vt.T @ U.T
+    
+    # 应用旋转和对齐
+    X_aligned = (X_centered @ R) + Y.mean(0, keepdims=True)
+    
+    return X_aligned
+
+
 def cosine_matrix(protos: np.ndarray) -> np.ndarray:
     """类-类余弦相似度矩阵，K×K"""
     protos = protos / np.linalg.norm(protos, axis=1, keepdims=True)  # L2 归一化
@@ -376,6 +499,38 @@ def protos_to_matrix(proto_dict, label_list):
     """Converts a prototype dictionary to a matrix aligned to a given label list."""
     return np.stack([proto_dict[k].detach().cpu().numpy() for k in label_list], axis=0)
 
+
+def compute_similarity_averages(similarity_results):
+    """
+    计算各个相似度指标的平均值，排除对角线元素（自己与自己的相似度）
+    
+    Args:
+        similarity_results (dict): 包含不同相似度指标的字典，每个指标对应一个矩阵
+        
+    Returns:
+        dict: 每个指标的平均值
+    """
+    averages = {}
+    for metric_name, matrix in similarity_results.items():
+        if matrix is None or np.isnan(matrix).all():
+            averages[metric_name] = np.nan
+            continue
+            
+        # 创建上三角矩阵的掩码（排除对角线）
+        n = matrix.shape[0]
+        mask = np.triu(np.ones((n, n)), k=1)  # k=1 排除对角线
+        
+        # 应用掩码并计算平均值
+        masked_values = matrix[mask.astype(bool)]
+        # 排除NaN值
+        valid_values = masked_values[~np.isnan(masked_values)]
+        
+        if len(valid_values) > 0:
+            averages[metric_name] = np.mean(valid_values)
+        else:
+            averages[metric_name] = np.nan
+    
+    return averages
 
 def compute_cosine_distance_matrix(client_proto_dict):
     """Returns a pairwise cosine distance matrix between clients, handling missing classes."""
@@ -477,3 +632,159 @@ def proto_aggregation(local_protos_list):
             agg_protos_label[label] = proto_list[0].data
 
     return agg_protos_label
+
+
+# ---------- 单对客户端的缩放 |log s|、旋转角 θ、CKA ----------
+def procrustes_coord_metrics(P: np.ndarray, Q: np.ndarray):
+    """
+    Args
+    ----
+        P, Q : (K, D) numpy arrays (同一组 shared_labels)
+    Returns
+    -------
+        abs_log_s : float  |log s|
+        theta_deg : float  平均旋转角 (°)
+        cka       : float  线性 CKA ∈ [0,1]
+    """
+    # --- 去均值 ---
+    Pc = P - P.mean(0, keepdims=True)
+    Qc = Q - Q.mean(0, keepdims=True)
+
+    # --- SVD 求最优旋转 & 缩放 ---
+    M = Pc.T @ Qc                       # (D,D)
+    U, S, Vt = np.linalg.svd(M, full_matrices=False)
+    R = U @ Vt                          # 旋转
+    s = S.sum() / (np.linalg.norm(Pc)**2 + 1e-12)
+
+    abs_log_s = abs(np.log(s + 1e-12))  # 对称尺度差异
+
+    # # --- 旋转角：用对角平均近似 principal angle ---
+    # cos_theta = np.clip(np.diag(R).mean(), -1.0, 1.0)
+    # theta_deg = np.degrees(np.arccos(cos_theta))
+
+    def mean_principal_angle(P, Q, k=None):
+        from scipy.linalg import subspace_angles, svd
+
+        """
+        P, Q : (K, D)  numpy arrays  (同一组 shared labels)
+        k    : 取多少维的列空间做比较；默认取 rank(PQ) 的最小值
+        """
+        # 1) 去均值
+        Pc = P - P.mean(0, keepdims=True)
+        Qc = Q - Q.mean(0, keepdims=True)
+
+        # 2) 取列空间 (左奇异向量)
+        Ui, _, _ = svd(Pc, full_matrices=False)
+        Uj, _, _ = svd(Qc, full_matrices=False)
+
+        if k is None:
+            k = min(Ui.shape[1], Uj.shape[1])
+        Ui, Uj = Ui[:, :k], Uj[:, :k]
+
+        # 3) principal angles
+        angles_rad = subspace_angles(Ui, Uj)       # 返回长度 = k
+        return np.degrees(angles_rad).mean()
+    
+    theta_deg = mean_principal_angle(P, Q, k=min(2, P.shape[1]))
+
+    # --- 线性 CKA ---
+    def linear_cka(X, Y):
+        if not isinstance(X, torch.Tensor):
+            X = torch.tensor(X, dtype=torch.float32)
+        if not isinstance(Y, torch.Tensor):
+            Y = torch.tensor(Y, dtype=torch.float32)
+        X_centered = X - X.mean(dim=0, keepdim=True)
+        Y_centered = Y - Y.mean(dim=0, keepdim=True)
+
+        # Compute Gram matrices (similarity matrices)
+        gram_X = X_centered @ X_centered.T
+        gram_Y = Y_centered @ Y_centered.T
+
+        # Compute the CKA score
+        cka_value = torch.trace(gram_X @ gram_Y) / (torch.norm(gram_X) * torch.norm(gram_Y))
+        return cka_value
+
+    cka_val = linear_cka(P, Q)
+    return abs_log_s, theta_deg, cka_val
+
+
+# ---------- 全客户端两两计算矩阵 ----------
+def compute_coord_metric_matrices(client_proto_dict, client_ids):
+    """
+    Returns
+    -------
+        metrics : dict
+            {
+              'abs_log_s': np.ndarray (n,n),
+              'theta'    : np.ndarray (n,n),
+              'cka'      : np.ndarray (n,n),
+            }
+    """
+    n = len(client_ids)
+    mats = {m: np.full((n, n), np.nan) for m in ('abs_log_s', 'theta', 'cka')}
+
+    for i, ci in enumerate(client_ids):
+        for j, cj in enumerate(client_ids):
+            if j <= i:
+                continue
+            proto_i, proto_j = client_proto_dict[ci], client_proto_dict[cj]
+            shared = get_shared_classes(proto_i, proto_j)
+            if len(shared) < 2:
+                # 若共享类不足 2，统计意义不够；保持 NaN
+                continue
+
+            Pi = protos_to_matrix(proto_i, shared)  # (K,D)
+            Pj = protos_to_matrix(proto_j, shared)
+
+            abs_log_s, theta, cka = procrustes_coord_metrics(Pi, Pj)
+
+            # 对称填充
+            mats['abs_log_s'][i, j] = mats['abs_log_s'][j, i] = abs_log_s
+            mats['theta'][i, j]     = mats['theta'][j, i]     = theta
+            mats['cka'][i, j]       = mats['cka'][j, i]       = cka
+
+    # 对角线：自己与自己
+    np.fill_diagonal(mats['abs_log_s'], 0.0)
+    np.fill_diagonal(mats['theta'],      0.0)
+    np.fill_diagonal(mats['cka'],        1.0)
+    return mats
+
+
+from typing import Dict, Tuple, List
+
+def compute_hom_het_stats(metric_mat: np.ndarray,
+                          arch_ids: List[int]) -> Dict[str, Tuple[float, int]]:
+    """
+    Args
+    ----
+        metric_mat : (n,n) numpy 矩阵，主对角已设 0/1，可能含 NaN
+        arch_ids   : 长度 n 的列表，每个客户端的“架构编号”
+                     — 同构: arch_ids[i] == arch_ids[j]
+                     — 异构: arch_ids[i] != arch_ids[j]
+
+    Returns
+    -------
+        dict{ 'hom_mean': (均值, 样本数),
+              'het_mean': (均值, 样本数) }
+        若某组无有效样本，均值设为 np.nan，样本数 0
+    """
+    n = metric_mat.shape[0]
+    assert len(arch_ids) == n
+
+    tri_idx = np.triu_indices(n, k=1)          # 上三角排除对角
+    # print(f'tri_idx: {tri_idx}')
+    vals    = metric_mat[tri_idx]
+    i_idx, j_idx = tri_idx
+
+    hom_mask = (np.array(arch_ids)[i_idx] == np.array(arch_ids)[j_idx])
+    het_mask = ~hom_mask
+    # print(f'hom_mask: {hom_mask}')
+    # print(f'het_mask: {het_mask}')
+
+    def _stat(mask):
+        v = vals[mask]
+        v = v[~np.isnan(v)]
+        return (v.mean() if v.size else np.nan, v.size)
+
+    return {'hom_mean': _stat(hom_mask),
+            'het_mean': _stat(het_mask)}

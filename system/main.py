@@ -28,6 +28,8 @@ from flcore.servers.servertspv4 import FedTSPv4
 from flcore.servers.servertspv4_ablation import FedTSPv4_ablation
 from flcore.servers.servermrl import FedMRL
 
+from flcore.servers.serverprotoeval import FedProtoEval
+
 from flcore.servers.serverword import FedWord
 from flcore.servers.serverstruct import FedStruct
 
@@ -345,6 +347,9 @@ def run(args):
         elif args.algorithm == "FedWord":
             server = FedWord(args, i)
         
+        elif args.algorithm == "FedProtoEval":
+            server = FedProtoEval(args, i)
+
         elif args.algorithm == 'FedStruct':
             server = FedStruct(args, i)
         
