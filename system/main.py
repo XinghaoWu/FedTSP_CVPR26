@@ -68,6 +68,52 @@ def run(args):
         print("Creating server and clients ...")
         start = time.time()
 
+        # Homogeneous models
+        if args.model_family == "FedAvgCNN":
+            args.models = [
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
+            ]
+        elif args.model_family == "resnet4":
+            args.models = [
+                'resnet4(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet8":
+            args.models = [
+                'resnet8(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet18":
+            args.models = [
+                'resnet18(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet34":
+            args.models = [
+                'resnet34(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet50":
+            args.models = [
+                'resnet50(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet101":
+            args.models = [
+                'resnet101(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet152":
+            args.models = [
+                'resnet152(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "mobilenet_v2":
+            args.models = [
+                'mobilenet_v2(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "vit_b_16":
+            args.models = [
+                'torchvision.models.vit_b_16(image_size=32, num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "vit_b_32":
+            args.models = [
+                'torchvision.models.vit_b_32(image_size=32, num_classes=args.num_classes)',
+            ]
+        # Heterogeneous models
         # Generate args.models
         if args.model_family == "HtFE2":
             args.models = [
