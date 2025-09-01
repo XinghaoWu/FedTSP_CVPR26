@@ -1,6 +1,6 @@
 import time
 import numpy as np
-from flcore.clients.clienttspv4_ablation import clientTSPv4_ablation
+from flcore.clients.clienttspv4_dp import clientTSPv4_dp
 from flcore.servers.serverbase import Server
 from flcore.clients.clientbase import load_item, save_item
 from utils.data_utils import read_client_data
@@ -10,7 +10,7 @@ import json
 import copy
 from tqdm import tqdm
 import clip
-from flcore.trainmodel.clip_base_v2 import TextEncoder_server
+from flcore.trainmodel.clip_base_v2_dp import TextEncoder_server
 from flcore.trainmodel.bert_base_v2 import TextEncoder_server_bert
 import torch
 import torch.nn.functional as F
@@ -18,12 +18,13 @@ import os
 from torch.utils.data import DataLoader
 
 '''
-相比于servertspv4，FedTSPv4_ablation主要区别在于：
-1. 可以手动指定LLM_prompt_file和LLM_prompt_number，从而使用不同的LLM prompt
+Used for neurips2025 rebuttal
+相比于FedTSPv4_ablation_2， FedTSPv4_dp主要区别在于：
+1. 可以在计算完text embedding后加入noise
 '''
 
 
-class FedTSPv4_ablation(Server):
+class FedTSPv4_dp(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
 
@@ -32,13 +33,12 @@ class FedTSPv4_ablation(Server):
             logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                            f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
                            f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
-                           f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_LLM({args.LLM_prompt_file}_{args.LLM_prompt_number})_seed{args.seed}/')
+                           f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_LLM({args.LLM_prompt_file}_{args.LLM_prompt_number})_TGP({args.TGP_loss})_local_loss({args.local_loss_type})_dp({args.enable_dp}_{args.dp_noise_std})_seed{args.seed}/')
         else:
             logger_path = (
                 f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                 f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
-                f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
-                f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_LLM({args.LLM_prompt_file}_{args.LLM_prompt_number})_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/')
+                f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'    f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_LLM({args.LLM_prompt_file}_{args.LLM_prompt_number})_TGP({args.TGP_loss})_local_loss({args.local_loss_type})_dp({args.enable_dp}_{args.dp_noise_std})_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
@@ -50,12 +50,12 @@ class FedTSPv4_ablation(Server):
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                                 f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda})_cls{args.p_classifier}_'
                                 f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
-                                f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_LLM({args.LLM_prompt_file}_{args.LLM_prompt_number})_seed{args.seed}')
+                                f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_LLM({args.LLM_prompt_file}_{args.LLM_prompt_number})_TGP({args.TGP_loss})_local_loss({args.local_loss_type})_dp({args.enable_dp}_{args.dp_noise_std})_seed{args.seed}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                           f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda})_cls{args.p_classifier}_'
                           f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
-                          f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_LLM({args.LLM_prompt_file}_{args.LLM_prompt_number})_seed{args.seed}')
+                          f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_LLM({args.LLM_prompt_file}_{args.LLM_prompt_number})_TGP({args.TGP_loss})_local_loss({args.local_loss_type})_seed{args.seed}')
 
         # obtain the classes
         dataset_json_dir = f'../dataset/{args.dataset}/config.json'
@@ -65,7 +65,7 @@ class FedTSPv4_ablation(Server):
 
         # select slow clients
         self.set_slow_clients()
-        self.set_clients(clientTSPv4_ablation)
+        self.set_clients(clientTSPv4_dp)
 
         print(f"\nJoin ratio / total clients: {self.join_ratio} / {self.num_clients}")
         print("Finished creating server and clients.")
@@ -84,7 +84,8 @@ class FedTSPv4_ablation(Server):
             clip_model.to(self.device)
             self.global_model = TextEncoder_server(self.args.classes, clip_model, self.args.len_prompt, self.args.CSC,
                                                    self.args.prompt_random_init, self.args.manual_prompt,
-                                                   self.args.negative_class, self.args.dataset, self.args.LLM_prompt_file, self.args.LLM_prompt_number).to(self.device)
+                                                   self.args.negative_class, self.args.dataset, self.args.LLM_prompt_file, self.args.LLM_prompt_number,
+                                                   self.args.dp_noise_std, self.args.enable_dp).to(self.device)
             for name, param in self.global_model.named_parameters():
                 if 'ctx_global' in name or 'logit_scale' in name:
                     param.requires_grad_(True)
@@ -116,6 +117,9 @@ class FedTSPv4_ablation(Server):
         self.global_classifier = None
 
         self.epoch = 0
+
+        self.batch_num = args.batch_size
+        self.margin_threthold = args.margin_threthold
 
     def train(self):
         for i in tqdm(range(self.global_rounds + 1)):
@@ -150,6 +154,10 @@ class FedTSPv4_ablation(Server):
 
             self.aggregate_parameters()
 
+            # 添加TGP loss
+            if self.args.TGP_loss == 1:
+                self.receive_protos()
+
             # server training to optimize the text prompt
             if self.args.len_prompt > 0 and i % self.args.server_training_freq == 0:
                 print(f'Rounds {i}, server training starts.')
@@ -160,17 +168,42 @@ class FedTSPv4_ablation(Server):
                 optimizer_logit_scale = torch.optim.SGD([self.global_model.logit_scale], lr=self.prompt_lr)
                 try:
                     for j in range(self.args.prompt_epoch):
-                        clip_logits = self.global_model(self.global_vision_protos)
-                        loss = F.cross_entropy(clip_logits,
-                                               torch.tensor([i for i in range(self.num_classes)]).to(self.device))
-                        optimizer_prompts.zero_grad()
-                        optimizer_logit_scale.zero_grad()
-                        loss.backward()
-                        optimizer_prompts.step()
-                        optimizer_logit_scale.step()
-                        print(f'Prompt training epoch {j}, loss: {loss.item()}')
-                        self.logger.info(f'Prompt training epoch {j}, loss: {loss.item()}')
-                        print(f'logit_scale: {self.global_model.logit_scale.item()}')
+                        if self.args.TGP_loss == 1:
+                            print('Utilize TGP loss to update trainable prompt')
+                            
+                            proto_loader = DataLoader(self.uploaded_protos, self.batch_size, 
+                                      drop_last=False, shuffle=True)
+                            for proto, y in proto_loader:
+                                y = torch.Tensor(y).type(torch.int64).to(self.device)
+                                proto_gen = self.global_model.get_text_prototypes(training=True)
+                                features_square = torch.sum(torch.pow(proto, 2), 1, keepdim=True)
+                                centers_square = torch.sum(torch.pow(proto_gen, 2), 1, keepdim=True)
+                                features_into_centers = torch.matmul(proto, proto_gen.T)
+                                dist = features_square - 2 * features_into_centers + centers_square.T
+                                dist = torch.sqrt(dist)
+                                one_hot = F.one_hot(y, self.num_classes).to(self.device)
+                                gap2 = min(self.max_gap.item(), self.margin_threthold)
+                                dist = dist + one_hot * gap2
+                                loss = F.cross_entropy(-dist, y)
+                                optimizer_prompts.zero_grad()
+                                loss.backward()
+                                optimizer_prompts.step()
+                                print(f'Prompt training epoch {j}, loss: {loss.item()}')
+                                self.logger.info(f'Prompt training epoch {j}, loss: {loss.item()}')
+
+                        else:
+                            print('Utilize clip contrastive loss to update trainable prompt')
+                            clip_logits = self.global_model(self.global_vision_protos)
+                            loss = F.cross_entropy(clip_logits,
+                                                torch.tensor([i for i in range(self.num_classes)]).to(self.device))
+                            optimizer_prompts.zero_grad()
+                            optimizer_logit_scale.zero_grad()
+                            loss.backward()
+                            optimizer_prompts.step()
+                            optimizer_logit_scale.step()
+                            print(f'Prompt training epoch {j}, loss: {loss.item()}')
+                            self.logger.info(f'Prompt training epoch {j}, loss: {loss.item()}')
+                            print(f'logit_scale: {self.global_model.logit_scale.item()}')
                     prompts.data = self.args.prompt_EMA_alpha * old_prompts.data + (
                                 1 - self.args.prompt_EMA_alpha) * prompts.data
                 except Exception as e:
@@ -198,6 +231,9 @@ class FedTSPv4_ablation(Server):
             'server_training_freq': self.args.server_training_freq,
             'LLM_prompt_file': self.args.LLM_prompt_file,
             'LLM_prompt_number': self.args.LLM_prompt_number,
+            'TGP_loss': self.args.TGP_loss,
+            'local_loss_type': self.args.local_loss_type,
+            'dp_noise_std': self.args.dp_noise_std,
             'seed': self.args.seed
         }
         results = {
@@ -212,7 +248,7 @@ class FedTSPv4_ablation(Server):
         print(max(self.rs_test_acc))
         print(sum(self.Budget[1:]) / len(self.Budget[1:]))
         self.save_results()
-
+    
     def aggregate_parameters(self):
         assert (len(self.uploaded_ids) > 0)
 
@@ -239,6 +275,36 @@ class FedTSPv4_ablation(Server):
             protos = client.local_vision_proto
             uploaded_protos.append(protos)
         self.global_vision_protos = proto_aggregation(uploaded_protos)
+
+    def receive_protos(self):
+        assert (len(self.selected_clients) > 0)
+        self.uploaded_ids = []
+        self.uploaded_protos = []
+        uploaded_protos_per_client = []
+        for client in self.selected_clients:
+            self.uploaded_ids.append(client.id)
+            protos = client.local_vision_proto
+            for k in protos.keys():
+                self.uploaded_protos.append((protos[k], k))
+            uploaded_protos_per_client.append(protos)
+
+        # calculate class-wise minimum distance
+        self.gap = torch.ones(self.num_classes, device=self.device) * 1e9
+        avg_protos = proto_cluster(uploaded_protos_per_client)
+        for k1 in avg_protos.keys():
+            for k2 in avg_protos.keys():
+                if k1 > k2:
+                    dis = torch.norm(avg_protos[k1] - avg_protos[k2], p=2)
+                    self.gap[k1] = torch.min(self.gap[k1], dis)
+                    self.gap[k2] = torch.min(self.gap[k2], dis)
+        self.min_gap = torch.min(self.gap)
+        for i in range(len(self.gap)):
+            if self.gap[i] > torch.tensor(1e8, device=self.device):
+                self.gap[i] = self.min_gap
+        self.max_gap = torch.max(self.gap)
+        print('class-wise minimum distance', self.gap)
+        print('min_gap', self.min_gap)
+        print('max_gap', self.max_gap)
 
     def send_parameters(self):
         assert (len(self.clients) > 0)
@@ -325,6 +391,9 @@ class FedTSPv4_ablation(Server):
             'prompt_EMA_alpha': self.args.prompt_EMA_alpha,
             'prompt_epoch': self.args.prompt_epoch,
             'server_training_freq': self.args.server_training_freq,
+            'TGP_loss': self.args.TGP_loss,
+            'local_loss_type': self.args.local_loss_type,
+            'dp_noise_std': self.args.dp_noise_std,
             'seed': self.args.seed,
             'type': type
         }
@@ -665,3 +734,15 @@ def proto_aggregation(local_protos_list):
             agg_protos_label[label] = proto_list[0].data
 
     return agg_protos_label
+
+def proto_cluster(protos_list):
+    proto_clusters = defaultdict(list)
+    for protos in protos_list:
+        for k in protos.keys():
+            proto_clusters[k].append(protos[k])
+
+    for k in proto_clusters.keys():
+        protos = torch.stack(proto_clusters[k])
+        proto_clusters[k] = torch.mean(protos, dim=0).detach()
+
+    return proto_clusters

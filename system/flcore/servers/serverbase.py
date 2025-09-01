@@ -625,8 +625,10 @@ class Server(object):
         if self.args.similarity_mode == 'cosine':
             # sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
             #             xticklabels=class_names, yticklabels=class_names, vmin=0, vmax=1, annot_kws={"size": 16})
+            # ax = sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='viridis', cbar=True,
+            #             xticklabels=class_names, yticklabels=class_names, norm=norm, annot_kws={"size": 17})
             ax = sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='viridis', cbar=True,
-                        xticklabels=class_names, yticklabels=class_names, norm=norm, annot_kws={"size": 17})
+                        xticklabels=class_names, yticklabels=class_names, vmin=0, vmax=1, annot_kws={"size": 17})
         else:
             ax = sns.heatmap(similarity_matrix_np, annot=True, fmt=".2f", cmap='Blues', cbar=True,
                         xticklabels=class_names, yticklabels=class_names)
@@ -639,7 +641,7 @@ class Server(object):
         plt.yticks(rotation=0, fontsize=24)
         plt.tight_layout()  # Adjust layout to prevent label cutoff
         # plt.savefig(f'{self.args.dataset}_{self.args.model_family}_{self.args.algorithm}.png')
-        plt.savefig(f'{self.args.dataset}_{self.args.model_family}_{self.args.algorithm}_test.png')
+        plt.savefig(os.path.join(self.model_save_path, f"{self.args.dataset}_{self.args.model_family}_{self.args.algorithm}_test.png"))
         plt.show()
 
         return similarity_matrix

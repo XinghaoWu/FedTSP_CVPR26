@@ -1,0 +1,82 @@
+{
+    "airplane": {
+        "Short Label": "Aircraft",
+        "Fine-grained Descriptions": [
+            "A metallic flying vehicle with wings and engines soaring through the blue sky or clouds.",
+            "A commercial or military aircraft with streamlined fuselage, typically white or gray in color, designed for air transportation.",
+            "A winged machine capable of flight, often seen at airports or in aerial views with distinctive tail and wing configuration."
+        ]
+    },
+    "automobile": {
+        "Short Label": "Car",
+        "Fine-grained Descriptions": [
+            "A four-wheeled motor vehicle with doors and windows, commonly found on roads and streets for personal transportation.",
+            "A passenger car with headlights, bumpers, and various colors, parked or driving on asphalt surfaces.",
+            "A wheeled vehicle with a enclosed cabin, designed to carry passengers on land with steering wheel and automotive features."
+        ]
+    },
+    "bird": {
+        "Short Label": "Bird",
+        "Fine-grained Descriptions": [
+            "A feathered flying animal with wings, beak, and claws, often perched on branches or in natural outdoor settings.",
+            "A small to medium-sized avian creature with colorful plumage, captured in flight or standing positions.",
+            "A winged vertebrate animal with distinctive bird features like beaks and talons, commonly found in trees, sky, or ground."
+        ]
+    },
+    "cat": {
+        "Short Label": "Feline",
+        "Fine-grained Descriptions": [
+            "A furry domestic animal with pointed ears, whiskers, and a long tail, often in indoor household environments.",
+            "A small carnivorous mammal with cat-like eyes and graceful posture, displaying typical feline behavior and features.",
+            "A pet animal with soft fur, four paws, and distinctive cat facial features, commonly in various colors and patterns."
+        ]
+    },
+    "deer": {
+        "Short Label": "Deer",
+        "Fine-grained Descriptions": [
+            "A graceful wild animal with slender legs and often antlers, typically found in forest or natural woodland settings.",
+            "A brown or tan-colored mammal with a gentle appearance, featuring large ears and alert posture in outdoor environments.",
+            "A herbivorous animal with characteristic deer silhouette, often shown in profile with natural coloring and forest background."
+        ]
+    },
+    "dog": {
+        "Short Label": "Canine",
+        "Fine-grained Descriptions": [
+            "A loyal domestic animal with fur, floppy or pointed ears, and a wagging tail, often in home or outdoor settings.",
+            "A four-legged pet with canine features like a snout and friendly expression, available in various breeds and sizes.",
+            "A furry companion animal with dog-typical posture and facial features, commonly interacting with humans or in playful poses."
+        ]
+    },
+    "frog": {
+        "Short Label": "Amphibian",
+        "Fine-grained Descriptions": [
+            "A small green amphibian with bulging eyes and webbed feet, typically found near water or on lily pads.",
+            "A smooth-skinned creature with a compact body and strong hind legs, capable of both swimming and jumping.",
+            "A small aquatic animal with a wide mouth and moist skin, often in green coloration with pond or wetland backgrounds."
+        ]
+    },
+    "horse": {
+        "Short Label": "Equine",
+        "Fine-grained Descriptions": [
+            "A large four-legged mammal with a flowing mane and tail, often in fields, stables, or being ridden by humans.",
+            "A powerful domesticated animal with hooves and elongated face, typically brown, black, or white in color.",
+            "A majestic riding animal with muscular build and graceful movement, commonly associated with farms, races, or countryside."
+        ]
+    },
+    "ship": {
+        "Short Label": "Vessel",
+        "Fine-grained Descriptions": [
+            "A large watercraft with a hull and superstructure, floating on blue ocean or harbor waters for transportation.",
+            "A maritime vessel with decks, masts, or smokestacks, designed for sea travel and cargo or passenger transport.",
+            "A boat-like structure on water with nautical features, often white or gray, navigating through seas or docked at ports."
+        ]
+    },
+    "truck": {
+        "Short Label": "Heavy Vehicle",
+        "Fine-grained Descriptions": [
+            "A large motor vehicle with a cargo bed or container, designed for hauling goods and materials on roads.",
+            "A heavy-duty vehicle with multiple wheels and robust build, typically used for commercial transportation and delivery.",
+            "A powerful wheeled machine with a cab and loading area, often in industrial or construction settings for carrying freight."
+        ]
+    }
+}

@@ -1,0 +1,805 @@
+{
+    "apple": {
+        "Short Label": "Apple",
+        "Fine-grained Descriptions": [
+            "A round fruit with red or green skin and crisp white flesh, often with a stem.",
+            "A common fruit grown on trees, widely consumed as a snack or used in cooking, like in pies.",
+            "A sweet, edible fruit with a core containing small seeds."
+        ]
+    },
+    "aquarium_fish": {
+        "Short Label": "Aquarium Fish",
+        "Fine-grained Descriptions": [
+            "A small, often brightly colored fish, swimming in a man-made water-filled tank.",
+            "An ornamental fish, like a goldfish or angelfish, kept as a pet in a home aquarium.",
+            "A fish seen among aquatic plants, gravel, and decorations inside a glass enclosure."
+        ]
+    },
+    "baby": {
+        "Short Label": "Baby",
+        "Fine-grained Descriptions": [
+            "A very young human infant, typically characterized by small size and dependence on adults.",
+            "A human child in the earliest stage of life, often seen sleeping, crying, or crawling.",
+            "An infant with soft skin and delicate features, often held in arms or lying in a crib."
+        ]
+    },
+    "bear": {
+        "Short Label": "Bear",
+        "Fine-grained Descriptions": [
+            "A large, heavy mammal with thick fur, a short tail, and a prominent snout.",
+            "A powerful omnivorous or carnivorous animal, like a grizzly or polar bear, often found in forests or arctic regions.",
+            "A wild animal known for its strength and large paws with non-retractable claws."
+        ]
+    },
+    "beaver": {
+        "Short Label": "Beaver",
+        "Fine-grained Descriptions": [
+            "A large, semi-aquatic rodent with a broad, flat tail and sharp incisors used for felling trees.",
+            "An animal known for building dams and lodges in rivers and streams.",
+            "A brown, furry rodent with webbed hind feet, often seen near or in the water."
+        ]
+    },
+    "bed": {
+        "Short Label": "Bed",
+        "Fine-grained Descriptions": [
+            "A piece of furniture used for sleeping or resting, typically consisting of a mattress and a frame.",
+            "A rectangular frame with a soft mattress, often covered with sheets, pillows, and a blanket.",
+            "An item of furniture found in a bedroom, designed for comfort and sleep."
+        ]
+    },
+    "bee": {
+        "Short Label": "Bee",
+        "Fine-grained Descriptions": [
+            "A flying insect with a yellow-and-black striped body, known for producing honey and pollinating flowers.",
+            "A small, winged insect with a stinger, often seen buzzing around flowers.",
+            "An insect part of a colony, living in a hive and collecting nectar."
+        ]
+    },
+    "beetle": {
+        "Short Label": "Beetle",
+        "Fine-grained Descriptions": [
+            "An insect with a hard, protective outer casing (elytra) covering its wings.",
+            "A common insect with six legs and antennae, found in various shapes, sizes, and colors.",
+            "A type of insect like a ladybug or scarab, often found on plants or on the ground."
+        ]
+    },
+    "bicycle": {
+        "Short Label": "Bicycle",
+        "Fine-grained Descriptions": [
+            "A human-powered vehicle with two wheels, a seat, handlebars, and pedals.",
+            "A mode of transport or recreational vehicle consisting of a frame, two wheels, and a chain.",
+            "A two-wheeled vehicle that is ridden by pushing pedals with the feet."
+        ]
+    },
+    "bottle": {
+        "Short Label": "Bottle",
+        "Fine-grained Descriptions": [
+            "A container, typically made of glass or plastic, with a narrow neck, used for holding liquids.",
+            "A portable cylindrical container for drinks like water, soda, or milk, with a cap on top.",
+            "A vessel with a body and a neck, designed to be sealed with a stopper or cap."
+        ]
+    },
+    "bowl": {
+        "Short Label": "Bowl",
+        "Fine-grained Descriptions": [
+            "A round, deep dish or basin, typically used for food like soup or cereal.",
+            "A hemispherical container used for preparing or serving food.",
+            "A piece of tableware that is circular and hollow, often made of ceramic or glass."
+        ]
+    },
+    "boy": {
+        "Short Label": "Boy",
+        "Fine-grained Descriptions": [
+            "A young male human child, from birth to adolescence.",
+            "A male child, often depicted playing, in school, or with family.",
+            "A young person of the male gender, with youthful features."
+        ]
+    },
+    "bridge": {
+        "Short Label": "Bridge",
+        "Fine-grained Descriptions": [
+            "A structure built to span a physical obstacle, such as a river or valley, allowing passage over it.",
+            "A construction of wood, steel, or stone that crosses over a body of water or a road.",
+            "An architectural structure that connects two points, often featuring arches, cables, or beams."
+        ]
+    },
+    "bus": {
+        "Short Label": "Bus",
+        "Fine-grained Descriptions": [
+            "A large motor vehicle carrying passengers by road, typically on a fixed route.",
+            "A long public transport vehicle with many windows and seats, used for commuting in cities.",
+            "A vehicle designed to transport a large number of people, such as a school bus or a double-decker bus."
+        ]
+    },
+    "butterfly": {
+        "Short Label": "Butterfly",
+        "Fine-grained Descriptions": [
+            "An insect with two pairs of large, often brightly colored wings.",
+            "A flying insect with slender body and clubbed antennae, often seen fluttering around flowers.",
+            "An insect that develops from a caterpillar, known for its delicate and patterned wings."
+        ]
+    },
+    "camel": {
+        "Short Label": "Camel",
+        "Fine-grained Descriptions": [
+            "A large, long-necked mammal with one or two humps on its back, native to desert regions.",
+            "A domesticated pack animal adapted to arid environments, known for its ability to conserve water.",
+            "An ungulate with a sandy-colored coat and long eyelashes, often used for transport in deserts."
+        ]
+    },
+    "can": {
+        "Short Label": "Can",
+        "Fine-grained Descriptions": [
+            "A cylindrical metal container, typically for preserving food or drinks.",
+            "A sealed tin-plated steel or aluminum container, such as for soda or canned vegetables.",
+            "A small metal cylinder that is opened with a pull-tab or a can opener."
+        ]
+    },
+    "castle": {
+        "Short Label": "Castle",
+        "Fine-grained Descriptions": [
+            "A large, fortified building or group of buildings, often from the medieval period.",
+            "A historic stone structure with towers, battlements, and thick walls.",
+            "A fortress that served as a residence for a lord or monarch, often surrounded by a moat."
+        ]
+    },
+    "caterpillar": {
+        "Short Label": "Caterpillar",
+        "Fine-grained Descriptions": [
+            "The larva of a butterfly or moth, having a segmented, worm-like body.",
+            "A small, crawling insect with many legs, often seen eating leaves.",
+            "The larval stage of a lepidopteran, which will eventually transform into a winged insect."
+        ]
+    },
+    "cattle": {
+        "Short Label": "Cattle",
+        "Fine-grained Descriptions": [
+            "Large domesticated bovine animals, such as cows and bulls, kept for milk or meat.",
+            "A herd of horned farm animals, typically seen grazing in a pasture or field.",
+            "Ruminant mammals with cloven hooves, commonly found on a farm or ranch."
+        ]
+    },
+    "chair": {
+        "Short Label": "Chair",
+        "Fine-grained Descriptions": [
+            "A seat for one person, with a back and typically four legs.",
+            "A piece of furniture designed for sitting, with a supportive backrest.",
+            "An item of furniture like a dining chair, armchair, or office chair, made of wood, metal, or plastic."
+        ]
+    },
+    "chimpanzee": {
+        "Short Label": "Chimpanzee",
+        "Fine-grained Descriptions": [
+            "A great ape with black hair and a bare face, native to the forests of Africa.",
+            "An intelligent primate, closely related to humans, known for using tools.",
+            "An ape with long arms and a stocky body, often seen climbing trees or socializing in groups."
+        ]
+    },
+    "clock": {
+        "Short Label": "Clock",
+        "Fine-grained Descriptions": [
+            "An instrument for measuring and indicating time, typically with hands or a digital display.",
+            "A device with a numbered dial and moving hands, found on walls or tables.",
+            "A timepiece, which can be analog or digital, that shows hours, minutes, and seconds."
+        ]
+    },
+    "cloud": {
+        "Short Label": "Cloud",
+        "Fine-grained Descriptions": [
+            "A visible mass of water droplets or ice crystals suspended in the atmosphere.",
+            "A white or gray formation in the sky, varying in shape and size.",
+            "A puffy, cotton-like mass floating in the air, from which rain can fall."
+        ]
+    },
+    "cockroach": {
+        "Short Label": "Cockroach",
+        "Fine-grained Descriptions": [
+            "A scavenging insect with a flattened, dark-colored body and long antennae.",
+            "A common household pest, typically found in dark, warm places.",
+            "A fast-moving insect with six legs and a brownish, oval-shaped body."
+        ]
+    },
+    "couch": {
+        "Short Label": "Couch",
+        "Fine-grained Descriptions": [
+            "A long upholstered seat with a back and arms, for two or more people.",
+            "A piece of furniture, also known as a sofa, found in a living room for comfortable seating.",
+            "A large, cushioned bench with back support, used for relaxing or socializing."
+        ]
+    },
+    "crab": {
+        "Short Label": "Crab",
+        "Fine-grained Descriptions": [
+            "A crustacean with a broad carapace, stalked eyes, and five pairs of legs, the first pair of which are modified as pincers.",
+            "A sea creature that walks sideways and has a hard outer shell.",
+            "A decapod crustacean, often found on beaches or in the ocean, with a distinctive pincer grip."
+        ]
+    },
+    "crocodile": {
+        "Short Label": "Crocodile",
+        "Fine-grained Descriptions": [
+            "A large predatory semi-aquatic reptile with a long snout, powerful jaws, and armored skin.",
+            "A reptile with a V-shaped snout, often seen lurking in tropical rivers and swamps.",
+            "A large, carnivorous reptile that lives in and out of water, known for its powerful bite."
+        ]
+    },
+    "cup": {
+        "Short Label": "Cup",
+        "Fine-grained Descriptions": [
+            "A small, open container with a handle, used for drinking from.",
+            "A vessel for hot or cold beverages, such as tea or coffee, typically made of ceramic.",
+            "A small bowl-shaped container, with or without a handle, for holding a single serving of a drink."
+        ]
+    },
+    "dinosaur": {
+        "Short Label": "Dinosaur",
+        "Fine-grained Descriptions": [
+            "A fossil reptile of the Mesozoic era, often of enormous size.",
+            "An extinct prehistoric reptile, such as a Tyrannosaurus Rex or Triceratops.",
+            "A member of a diverse group of reptiles that dominated the Earth for over 160 million years."
+        ]
+    },
+    "dolphin": {
+        "Short Label": "Dolphin",
+        "Fine-grained Descriptions": [
+            "A small, intelligent toothed whale with a streamlined body and a beak-like snout.",
+            "A playful marine mammal known for leaping out of the water.",
+            "An aquatic mammal with smooth, gray skin, a dorsal fin, and a friendly appearance."
+        ]
+    },
+    "elephant": {
+        "Short Label": "Elephant",
+        "Fine-grained Descriptions": [
+            "A very large mammal with a trunk, large ears, and tusks, native to Africa and Asia.",
+            "The largest living land animal, characterized by its gray, wrinkled skin and thick legs.",
+            "A herbivorous mammal known for its long, prehensile trunk used for breathing, smelling, and grasping."
+        ]
+    },
+    "flatfish": {
+        "Short Label": "Flatfish",
+        "Fine-grained Descriptions": [
+            "A type of fish, such as a flounder or sole, with a flattened body and both eyes on one side of its head.",
+            "A marine fish that lies on its side on the seabed.",
+            "A fish with an asymmetrical, diamond-shaped body, adapted for a bottom-dwelling lifestyle."
+        ]
+    },
+    "forest": {
+        "Short Label": "Forest",
+        "Fine-grained Descriptions": [
+            "A large area covered chiefly with trees and undergrowth.",
+            "A dense growth of trees, plants, and animals, forming a complex ecosystem.",
+            "A natural landscape dominated by tall trees, with a canopy and a forest floor."
+        ]
+    },
+    "fox": {
+        "Short Label": "Fox",
+        "Fine-grained Descriptions": [
+            "A carnivorous mammal of the dog family with a pointed snout and a bushy tail.",
+            "A cunning, reddish-brown animal known for its slyness, often found in woodlands.",
+            "A small canine with a slender body, pointed ears, and a distinctively fluffy tail."
+        ]
+    },
+    "girl": {
+        "Short Label": "Girl",
+        "Fine-grained Descriptions": [
+            "A young female human child, from birth to adolescence.",
+            "A female child, often depicted playing, in school, or with family.",
+            "A young person of the female gender, with youthful features."
+        ]
+    },
+    "hamster": {
+        "Short Label": "Hamster",
+        "Fine-grained Descriptions": [
+            "A small, stout-bodied rodent with large cheek pouches, often kept as a pet.",
+            "A small, furry rodent, typically seen running on a wheel or hoarding food in its cheeks.",
+            "A nocturnal pet with a short tail and small ears, living in a cage with bedding."
+        ]
+    },
+    "house": {
+        "Short Label": "House",
+        "Fine-grained Descriptions": [
+            "A building for human habitation, especially one that is lived in by a family or small group of people.",
+            "A structure with a roof, walls, windows, and doors, serving as a private residence.",
+            "A residential building, which can be a single-family home, a townhouse, or a cottage."
+        ]
+
+    },
+    "kangaroo": {
+        "Short Label": "Kangaroo",
+        "Fine-grained Descriptions": [
+            "A large marsupial from Australia with strong hind legs for leaping and a long tail for balance.",
+            "An animal that carries its young, known as a joey, in a pouch on its abdomen.",
+            "A herbivorous mammal from Australia, recognized by its powerful hopping movement."
+        ]
+    },
+    "keyboard": {
+        "Short Label": "Keyboard",
+        "Fine-grained Descriptions": [
+            "A panel of keys used for putting information into a computer or typewriter.",
+            "An input device with a set of buttons or keys, arranged in a specific layout.",
+            "The part of a computer or piano that has a row of keys for typing or playing music."
+        ]
+    },
+    "lamp": {
+        "Short Label": "Lamp",
+        "Fine-grained Descriptions": [
+            "A device for giving light, either electric or fueled by oil or gas.",
+            "An object with a base, a stand, and a light bulb, often with a lampshade, to illuminate a room.",
+            "A source of artificial light, such as a table lamp or floor lamp."
+        ]
+
+    },
+    "lawn_mower": {
+        "Short Label": "Lawn Mower",
+        "Fine-grained Descriptions": [
+            "A machine with rotating blades for cutting grass on a lawn.",
+            "A manually pushed or self-propelled device used to maintain the height of grass.",
+            "A piece of gardening equipment, which can be electric, gas-powered, or manual, for trimming lawns."
+        ]
+    },
+    "leopard": {
+        "Short Label": "Leopard",
+        "Fine-grained Descriptions": [
+            "A large, carnivorous cat with a yellowish-brown coat marked with dark spots, native to Africa and Asia.",
+            "A powerful feline predator known for its agility and ability to climb trees.",
+            "A member of the big cat family, with a spotted coat that provides camouflage."
+        ]
+    },
+    "lion": {
+        "Short Label": "Lion",
+        "Fine-grained Descriptions": [
+            "A large, carnivorous cat of Africa and India, the male of which has a shaggy mane.",
+            "A powerful feline predator, often called the 'king of the jungle,' living in prides.",
+            "A large tawny-colored cat with a tufted tail, known for its loud roar."
+        ]
+    },
+    "lizard": {
+        "Short Label": "Lizard",
+        "Fine-grained Descriptions": [
+            "A reptile that typically has a long body and tail, four legs, movable eyelids, and a scaly skin.",
+            "A cold-blooded reptile, such as a gecko or iguana, often seen basking in the sun.",
+            "A slender reptile with a tapering tail, found in a variety of habitats worldwide."
+        ]
+    },
+    "lobster": {
+        "Short Label": "Lobster",
+        "Fine-grained Descriptions": [
+            "A large marine crustacean with a cylindrical body, stalked eyes, and five pairs of legs, including large pincers.",
+            "A type of shellfish with a hard, reddish shell and a muscular tail, often considered a delicacy.",
+            "A bottom-dwelling sea creature with a long body and prominent claws."
+        ]
+    },
+    "man": {
+        "Short Label": "Man",
+        "Fine-grained Descriptions": [
+            "An adult male human being.",
+            "A grown-up male person, as distinguished from a woman or a boy.",
+            "An adult male, often depicted in various roles such as working, with family, or in social settings."
+        ]
+    },
+    "maple_tree": {
+        "Short Label": "Maple Tree",
+        "Fine-grained Descriptions": [
+            "A type of tree known for its distinctive lobed leaves and for producing maple syrup.",
+            "A deciduous tree with palmate leaves that often turn vibrant red, orange, or yellow in the fall.",
+            "A tree from the genus Acer, easily recognized by its winged seeds, called samaras."
+        ]
+    },
+    "motorcycle": {
+        "Short Label": "Motorcycle",
+        "Fine-grained Descriptions": [
+            "A two-wheeled motor vehicle, designed for a single rider and sometimes a passenger.",
+            "A motorized bicycle with an engine, handlebars, and a seat.",
+            "A vehicle known for its speed and maneuverability, also referred to as a motorbike."
+        ]
+    },
+    "mountain": {
+        "Short Label": "Mountain",
+        "Fine-grained Descriptions": [
+            "A large natural elevation of the earth's surface rising abruptly from the surrounding level; a large steep hill.",
+            "A landform with high elevation, steep slopes, and a pointed or rounded peak.",
+            "A majestic and often rocky or snow-capped peak, part of a mountain range."
+        ]
+    },
+    "mouse": {
+        "Short Label": "Mouse",
+        "Fine-grained Descriptions": [
+            "A small rodent with a pointed snout, small rounded ears, a body-length scaly tail, and a high breeding rate.",
+            "A small, often gray or brown mammal, known for being timid and quick.",
+            "A small rodent, sometimes kept as a pet or considered a pest, that scurries and eats seeds or grains."
+        ]
+    },
+    "mushroom": {
+        "Short Label": "Mushroom",
+        "Fine-grained Descriptions": [
+            "A fungal growth that typically takes the form of a domed cap on a stalk, with gills on the underside of the cap.",
+            "A type of fungus, some of which are edible and others poisonous, often found in damp, wooded areas.",
+            "The fleshy, spore-bearing fruiting body of a fungus, typically produced above ground on soil or on its food source."
+        ]
+    },
+    "oak_tree": {
+        "Short Label": "Oak Tree",
+        "Fine-grained Descriptions": [
+            "A large, deciduous tree of the beech family, bearing acorns as fruit.",
+            "A hardwood tree known for its strength and longevity, with characteristic lobed leaves.",
+            "A majestic tree from the genus Quercus, often associated with wisdom and endurance."
+        ]
+    },
+    "orange": {
+        "Short Label": "Orange",
+        "Fine-grained Descriptions": [
+            "A round, orange-colored citrus fruit with a tough, pitted rind and juicy, pulpy flesh.",
+            "A sweet, spherical fruit that grows on trees in warm climates and is a popular source of vitamin C.",
+            "A citrus fruit with a peelable, fragrant skin and segmented, juicy interior."
+        ]
+    },
+    "orchid": {
+        "Short Label": "Orchid",
+        "Fine-grained Descriptions": [
+            "A flowering plant with complex, often unusually shaped and beautifully colored flowers.",
+            "An exotic flower with a distinct, often symmetrical, three-petaled structure.",
+            "A plant from the family Orchidaceae, known for its vibrant and diverse blooms."
+        ]
+    },
+    "otter": {
+        "Short Label": "Otter",
+        "Fine-grained Descriptions": [
+            "A semi-aquatic carnivorous mammal with a long, slender body, webbed feet, and dense fur.",
+            "A playful, fish-eating mammal often seen floating on its back in rivers or coastal waters.",
+            "A member of the weasel family, adapted for life in the water, with a streamlined body and a strong tail."
+        ]
+    },
+    "palm_tree": {
+        "Short Label": "Palm Tree",
+        "Fine-grained Descriptions": [
+            "A tall, unbranched tree with a crown of large, fan-shaped or feathery leaves, typically found in tropical climates.",
+            "A tree with a straight, slender trunk and a cluster of large leaves (fronds) at the top.",
+            "A tropical tree often associated with beaches and oases, which may produce coconuts or dates."
+        ]
+    },
+    "pear": {
+        "Short Label": "Pear",
+        "Fine-grained Descriptions": [
+            "A sweet, juicy fruit that is narrow at the stem and wider at the bottom.",
+            "A temperate-climate fruit with a characteristic bell shape, green or yellowish skin, and gritty texture.",
+            "An edible fruit with a mild, sweet flavor and soft, granular flesh."
+        ]
+    },
+    "pickup_truck": {
+        "Short Label": "Pickup Truck",
+        "Fine-grained Descriptions": [
+            "A motor vehicle with an enclosed cab and an open cargo area (bed) in the rear.",
+            "A light-duty truck used for transporting goods or for personal use, with an open-top rear section.",
+            "A versatile vehicle combining passenger seating with an open space for hauling."
+        ]
+    },
+    "pine_tree": {
+        "Short Label": "Pine Tree",
+        "Fine-grained Descriptions": [
+            "An evergreen coniferous tree with needle-like leaves and cones.",
+            "A tree from the genus Pinus, known for its characteristic pine scent and woody cones.",
+            "A tall, coniferous tree that retains its needles throughout the year, common in forests."
+        ]
+    },
+    "plain": {
+        "Short Label": "Plain",
+        "Fine-grained Descriptions": [
+            "A large area of flat land with few trees.",
+            "A vast, open, and level expanse of grassland or prairie.",
+            "A geographical feature consisting of a broad, treeless, and relatively flat landscape."
+        ]
+    },
+    "plate": {
+        "Short Label": "Plate",
+        "Fine-grained Descriptions": [
+            "A flat, typically circular dish from which food is eaten or served.",
+            "A piece of tableware, often made of ceramic or porcelain, used to hold a meal.",
+            "A shallow, flat-bottomed dish, a common item in a dinnerware set."
+        ]
+    },
+    "poppy": {
+        "Short Label": "Poppy",
+        "Fine-grained Descriptions": [
+            "A flowering plant with a colorful, often red, cup-shaped flower and a dark center.",
+            "A plant from the genus Papaver, known for its showy flowers and as a source of opium.",
+            "A delicate flower with thin petals, often found in fields and gardens."
+        ]
+    },
+    "porcupine": {
+        "Short Label": "Porcupine",
+        "Fine-grained Descriptions": [
+            "A large rodent with a coat of sharp spines, or quills, that serve as a defense mechanism.",
+            "A slow-moving, herbivorous rodent covered in sharp, stiff spines.",
+            "An animal known for its protective quills, which detach easily when touched by a predator."
+        ]
+    },
+    "possum": {
+        "Short Label": "Possum",
+        "Fine-grained Descriptions": [
+            "A nocturnal, tree-dwelling marsupial with a prehensile tail and a pointed snout.",
+            "An omnivorous marsupial known for 'playing possum,' or feigning death, when threatened.",
+            "A small to medium-sized mammal with grayish fur and a long, hairless tail."
+        ]
+    },
+    "rabbit": {
+        "Short Label": "Rabbit",
+        "Fine-grained Descriptions": [
+            "A small, burrowing mammal with long ears, a short, fluffy tail, and strong hind legs for hopping.",
+            "A herbivorous animal with a divided upper lip, often kept as a pet or found in the wild.",
+            "A quick, timid animal known for its long ears and twitching nose."
+        ]
+    },
+    "raccoon": {
+        "Short Label": "Raccoon",
+        "Fine-grained Descriptions": [
+            "A nocturnal, omnivorous mammal with a mask-like black patch over its eyes and a ringed tail.",
+            "A North American mammal known for its dexterity and habit of 'washing' its food.",
+            "An intelligent and curious animal with grayish fur, a bushy tail with black rings, and nimble front paws."
+        ]
+    },
+    "ray": {
+        "Short Label": "Ray",
+        "Fine-grained Descriptions": [
+            "A cartilaginous fish with a flattened body and large, wing-like pectoral fins.",
+            "A marine creature, related to sharks, that glides through the water, such as a stingray or manta ray.",
+            "A bottom-dwelling fish with a flat, diamond-shaped body and a long, slender tail."
+        ]
+    },
+    "road": {
+        "Short Label": "Road",
+        "Fine-grained Descriptions": [
+            "A wide way leading from one place to another, especially one with a prepared surface that vehicles can use.",
+            "A public thoroughfare, such as a street or highway, for travel by car, truck, or bus.",
+            "A paved or unpaved track that connects different locations, often marked with lines and signs."
+        ]
+    },
+    "rocket": {
+        "Short Label": "Rocket",
+        "Fine-grained Descriptions": [
+            "A spacecraft propelled by a rocket engine, used for space exploration or launching satellites.",
+            "A cylindrical projectile that can be propelled to a great height or distance by the combustion of its contents.",
+            "A tall, slender vehicle designed to travel into space, which launches vertically with a massive plume of fire and smoke."
+        ]
+    },
+    "rose": {
+        "Short Label": "Rose",
+        "Fine-grained Descriptions": [
+            "A flowering shrub with thorny stems and fragrant, often red, pink, or white flowers.",
+            "A popular ornamental flower, symbolizing love and beauty, with layered petals.",
+            "A flower from the genus Rosa, known for its classic beauty and prickly stems."
+        ]
+    },
+    "sea": {
+        "Short Label": "Sea",
+        "Fine-grained Descriptions": [
+            "The expanse of salt water that covers most of the earth's surface and surrounds its landmasses.",
+            "A large body of salt water, often characterized by waves, tides, and marine life.",
+            "A vast, open water scene, showing the ocean under a sky, possibly with a horizon line."
+        ]
+    },
+    "seal": {
+        "Short Label": "Seal",
+        "Fine-grained Descriptions": [
+            "A carnivorous marine mammal with a streamlined body and flippers for swimming.",
+            "An aquatic mammal with smooth, slick fur, often seen basking on rocks or ice.",
+            "A pinniped with external ear flaps (sea lion) or without (true seal), adapted for life in the ocean."
+        ]
+    },
+    "shark": {
+        "Short Label": "Shark",
+        "Fine-grained Descriptions": [
+            "A long-bodied, predatory cartilaginous fish with a prominent dorsal fin and sharp teeth.",
+            "A marine predator, such as a great white or hammerhead, known for its powerful swimming.",
+            "A carnivorous fish with a streamlined body, gill slits, and a reputation as a fierce hunter of the sea."
+        ]
+    },
+    "shrew": {
+        "Short Label": "Shrew",
+        "Fine-grained Descriptions": [
+            "A small, mouse-like mammal with a long, pointed snout and tiny eyes.",
+            "A small, insectivorous mammal known for its high metabolism and active nature.",
+            "A tiny, ground-dwelling mammal with velvety fur, often mistaken for a mouse but belonging to a different order."
+        ]
+    },
+    "skunk": {
+        "Short Label": "Skunk",
+        "Fine-grained Descriptions": [
+            "A black-and-white striped mammal of the weasel family, known for its ability to spray a foul-smelling liquid as a defense.",
+            "A North American mammal with distinctive black and white coloration and a bushy tail.",
+            "An animal recognized by its bold warning colors, which signal its potent chemical defense."
+        ]
+    },
+    "skyscraper": {
+        "Short Label": "Skyscraper",
+        "Fine-grained Descriptions": [
+            "A very tall building with many stories, typically found in a city.",
+            "A towering modern building made of steel, glass, and concrete, defining a city's skyline.",
+            "An architectural structure of great height, used for offices or residences."
+        ]
+    },
+    "snail": {
+        "Short Label": "Snail",
+        "Fine-grained Descriptions": [
+            "A mollusk with a single, spiral shell into which the whole body can be withdrawn.",
+            "A slow-moving gastropod that secretes a slime trail, often found in gardens.",
+            "A small creature with a coiled shell on its back and soft, slimy body."
+        ]
+    },
+    "snake": {
+        "Short Label": "Snake",
+        "Fine-grained Descriptions": [
+            "A long, legless reptile with a scaly skin, which may be venomous or a constrictor.",
+            "A limbless reptile that moves by slithering, with a forked tongue to smell the air.",
+            "A carnivorous reptile with an elongated body, found in a variety of habitats from forests to deserts."
+        ]
+    },
+    "spider": {
+        "Short Label": "Spider",
+        "Fine-grained Descriptions": [
+            "An eight-legged arachnid with a body divided into two parts, known for spinning webs.",
+            "A small arthropod that catches prey, typically insects, in a silky web.",
+            "An air-breathing arthropod that has fangs to inject venom, but most are harmless to humans."
+        ]
+    },
+    "squirrel": {
+        "Short Label": "Squirrel",
+        "Fine-grained Descriptions": [
+            "A small rodent with a long, bushy tail and strong hind legs, known for climbing trees and burying nuts.",
+            "A common woodland and suburban animal with grayish or reddish-brown fur, often seen scampering up trees.",
+            "An agile rodent that gathers and stores nuts and seeds for the winter."
+        ]
+    },
+    "streetcar": {
+        "Short Label": "Streetcar",
+        "Fine-grained Descriptions": [
+            "A public transport vehicle that runs on rails along urban streets, powered by electricity.",
+            "A tram or trolley that provides transportation within a city.",
+            "A rail-based vehicle that shares the road with other traffic, connected to overhead electrical wires."
+        ]
+    },
+    "sunflower": {
+        "Short Label": "Sunflower",
+        "Fine-grained Descriptions": [
+            "A tall plant with a large, yellow, daisy-like flower head that turns to follow the sun.",
+            "A plant known for its large, composite flower with a dark center from which seeds are harvested.",
+            "A tall, striking flower with bright yellow petals surrounding a brown, seed-filled disk."
+        ]
+    },
+    "sweet_pepper": {
+        "Short Label": "Sweet Pepper",
+        "Fine-grained Descriptions": [
+            "A large, mild-flavored fruit of the pepper plant, typically red, yellow, or green.",
+            "A bell-shaped vegetable with a glossy skin and a hollow interior containing seeds.",
+            "A type of pepper, also known as a bell pepper, used in cooking for its sweet, crisp flesh."
+        ]
+    },
+    "table": {
+        "Short Label": "Table",
+        "Fine-grained Descriptions": [
+            "A piece of furniture with a flat top and one or more legs, providing a level surface.",
+            "An item of furniture used for placing things on, such as for dining, working, or as a stand.",
+            "A flat-topped piece of furniture, like a dining table or coffee table, made of wood, glass, or metal."
+        ]
+    },
+    "tank": {
+        "Short Label": "Tank",
+        "Fine-grained Descriptions": [
+            "A large container or storage chamber, especially for liquid or gas.",
+            "A heavy armored fighting vehicle carrying guns and moving on a continuous articulated metal track.",
+            "A military vehicle with a large cannon and caterpillar tracks, designed for frontline combat."
+        ]
+
+    },
+    "telephone": {
+        "Short Label": "Telephone",
+        "Fine-grained Descriptions": [
+            "A system for transmitting voices over a distance using wire or radio, by converting acoustic vibrations to electrical signals.",
+            "A device with a handset and a keypad or dial for making and receiving calls.",
+            "An electronic communication device, which can be a landline or a mobile phone."
+        ]
+    },
+    "television": {
+        "Short Label": "Television",
+        "Fine-grained Descriptions": [
+            "A system for transmitting visual images and sound that are reproduced on screens, chiefly used to broadcast programs for entertainment, information, and education.",
+            "An electronic device with a screen for displaying broadcast signals, also known as a TV.",
+            "A household appliance with a display screen, used for watching movies, shows, and news."
+        ]
+    },
+    "tiger": {
+        "Short Label": "Tiger",
+        "Fine-grained Descriptions": [
+            "A large, carnivorous cat with a distinctive coat of orange or reddish-brown fur with dark vertical stripes.",
+            "The largest species of cat, a powerful predator native to Asia, known for its striped pattern.",
+            "A solitary big cat with a muscular body and a long tail, recognized by its unique striped markings."
+        ]
+    },
+    "tractor": {
+        "Short Label": "Tractor",
+        "Fine-grained Descriptions": [
+            "A powerful motor vehicle with large rear wheels, used for pulling farm machinery and other heavy loads.",
+            "A farm vehicle used for plowing, harrowing, and other agricultural tasks.",
+            "A heavy-duty vehicle designed for high traction at slow speeds, essential for farming and construction."
+        ]
+    },
+    "train": {
+        "Short Label": "Train",
+        "Fine-grained Descriptions": [
+            "A series of connected railway carriages or wagons moved by a locomotive.",
+            "A form of rail transport consisting of a set of connected vehicles that travel along a railway track.",
+            "A long, multi-car vehicle used for transporting passengers or freight over long distances on a railroad."
+        ]
+    },
+    "trout": {
+        "Short Label": "Trout",
+        "Fine-grained Descriptions": [
+            "A freshwater fish of the salmon family, highly prized for food and sport.",
+            "A fish, often with a speckled pattern, found in cold, clear rivers and lakes.",
+            "A species of carnivorous fish, such as rainbow trout or brown trout, known for its fine-flavored flesh."
+        ]
+    },
+    "tulip": {
+        "Short Label": "Tulip",
+        "Fine-grained Descriptions": [
+            "A spring-blooming plant with a large, brightly colored, cup-shaped or bell-shaped flower.",
+            "A bulbous flower, often grown in gardens, known for its simple, elegant shape and wide range of colors.",
+            "A flower from the genus Tulipa, characterized by its single, showy flower on a stem."
+        ]
+    },
+    "turtle": {
+        "Short Label": "Turtle",
+        "Fine-grained Descriptions": [
+            "A slow-moving reptile with a hard, bony shell that encloses its body.",
+            "A reptile that can live on land or in water, distinguished by its protective shell.",
+            "A cold-blooded animal with a shell, a beak-like jaw, and four legs, known for its longevity."
+        ]
+    },
+    "wardrobe": {
+        "Short Label": "Wardrobe",
+        "Fine-grained Descriptions": [
+            "A large, tall cupboard or closet in which clothes may be hung or stored.",
+            "A piece of bedroom furniture, typically made of wood, for storing clothing.",
+            "A standing closet used for clothes, with doors and often drawers."
+        ]
+    },
+    "whale": {
+        "Short Label": "Whale",
+        "Fine-grained Descriptions": [
+            "A very large marine mammal with a streamlined hairless body, a horizontal tail fin, and a blowhole on top of the head for breathing.",
+            "The largest animal on Earth, a mammal that lives in the ocean, such as a blue whale or humpback whale.",
+            "A cetacean that breathes air through a blowhole and communicates using complex vocalizations."
+        ]
+    },
+    "willow_tree": {
+        "Short Label": "Willow Tree",
+        "Fine-grained Descriptions": [
+            "A tree or shrub of temperate climates, which has slender, flexible branches and narrow leaves.",
+            "A tree from the genus Salix, often found near water, known for its drooping branches (weeping willow).",
+            "A graceful tree with long, trailing branches and lance-shaped leaves."
+        ]
+    },
+    "wolf": {
+        "Short Label": "Wolf",
+        "Fine-grained Descriptions": [
+            "A wild carnivorous mammal of the dog family, living and hunting in packs.",
+            "A large canine predator, typically with gray fur, known for its distinctive howl.",
+            "The ancestor of the domestic dog, a social animal that inhabits remote wilderness areas."
+        ]
+    },
+    "woman": {
+        "Short Label": "Woman",
+        "Fine-grained Descriptions": [
+            "An adult female human being.",
+            "A grown-up female person, as distinguished from a man or a girl.",
+            "An adult female, often depicted in various roles such as working, with family, or in social settings."
+        ]
+    },
+    "worm": {
+        "Short Label": "Worm",
+        "Fine-grained Descriptions": [
+            "A long, slender, soft-bodied, legless invertebrate.",
+            "A burrowing creature, like an earthworm, with a segmented body, found in soil.",
+            "A limbless invertebrate with a cylindrical or flattened body, such as an earthworm or a tapeworm."
+        ]
+    }
+} 

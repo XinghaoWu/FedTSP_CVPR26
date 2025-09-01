@@ -28,8 +28,13 @@ from flcore.servers.serverours import FedOurs
 from flcore.servers.servertspv2 import FedTSPv2
 from flcore.servers.servertspv3 import FedTSPv3
 from flcore.servers.servertspv4 import FedTSPv4
+from flcore.servers.servertspv4_ablation import FedTSPv4_ablation
+from flcore.servers.servertspv4_ablation_2 import FedTSPv4_ablation_2
 from flcore.servers.serverstruct import FedStruct
+from flcore.servers.serverprotocon import FedProtoCon
 from flcore.servers.serverprotoeval import FedProtoEval
+from flcore.servers.serverprotocka import FedProtoCKA
+from flcore.servers.serverprotocos import FedProtoCos
 
 from utils.result_utils import average_data
 from utils.mem_utils import MemReporter
@@ -65,8 +70,54 @@ def run(args):
         print("Creating server and clients ...")
         start = time.time()
 
+        # Homogeneous models
+        if args.model_family == "FedAvgCNN":
+            args.models = [
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
+            ]
+        elif args.model_family == "resnet4":
+            args.models = [
+                'resnet4(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet8":
+            args.models = [
+                'resnet8(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet18":
+            args.models = [
+                'resnet18(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet34":
+            args.models = [
+                'resnet34(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet50":
+            args.models = [
+                'resnet50(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet101":
+            args.models = [
+                'resnet101(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet152":
+            args.models = [
+                'resnet152(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "mobilenet_v2":
+            args.models = [
+                'mobilenet_v2(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "vit_b_16":
+            args.models = [
+                'torchvision.models.vit_b_16(image_size=32, num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "vit_b_32":
+            args.models = [
+                'torchvision.models.vit_b_32(image_size=32, num_classes=args.num_classes)',
+            ]
+        # Heterogeneous models
         # Generate args.models
-        if args.model_family == "HtFE2":
+        elif args.model_family == "HtFE2":
             args.models = [
                 f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 'resnet18(num_classes=args.num_classes)',
@@ -177,6 +228,14 @@ def run(args):
                 'torchvision.models.vit_b_16(image_size=32, num_classes=args.num_classes)',
                 'torchvision.models.vit_b_32(image_size=32, num_classes=args.num_classes)'
             ]
+        
+        elif args.model_family == "HtM4":
+            args.models = [
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
+                'mobilenet_v2(num_classes=args.num_classes)',
+                'resnet18(num_classes=args.num_classes)',
+                'torchvision.models.vit_b_16(image_size=32, num_classes=args.num_classes)',
+            ]
 
         elif args.model_family == "NLP_all":
             args.models = [
@@ -285,6 +344,12 @@ def run(args):
         elif args.algorithm == "FedTSPv4":
             server = FedTSPv4(args, i)
 
+        elif args.algorithm == "FedTSPv4_ablation":
+            server = FedTSPv4_ablation(args, i)
+        
+        elif args.algorithm == "FedTSPv4_ablation_2":
+            server = FedTSPv4_ablation_2(args, i)
+
         # elif args.algorithm == "FedKTL-stylegan-xl":
         #     server = FedKTL_stylegan_xl(args, i)
         #
@@ -296,6 +361,15 @@ def run(args):
 
         elif args.algorithm == "FedProtoEval":
             server = FedProtoEval(args, i)
+        
+        elif args.algorithm == "FedProtoCon":
+            server = FedProtoCon(args, i)
+        
+        elif args.algorithm == "FedProtoCKA":
+            server = FedProtoCKA(args, i)
+
+        elif args.algorithm == "FedProtoCos":
+            server = FedProtoCos(args, i)
 
         elif args.algorithm == 'FedStruct':
             server = FedStruct(args, i)
@@ -470,6 +544,14 @@ if __name__ == "__main__":
     # FedTSPv4
     parser.add_argument('--manual_prompt', type=int, default=1, help='whether to use manual prompt')
     parser.add_argument('--negative_class', type=int, default=0, help='whether add negative class')
+
+    # FedTSPv4 ablation
+    parser.add_argument('--LLM_prompt_file', type=str, default='LLM_prompts', help='LLM prompt file')
+    parser.add_argument('--LLM_prompt_number', type=int, default=-1, help='LLM prompt number. set -1 to select all prompts')
+
+    # FedTSPv4 ablation 2
+    parser.add_argument('--TGP_loss', type=int, default=0, help='whether to use TGP loss')
+    parser.add_argument('--local_loss_type', type=str, default='Con', help='Con: clip contrastive loss; L2: L2 loss')
 
     # FedStruct
     parser.add_argument('--version', type=int, default=1, help='distinguish the version of the proposed method')

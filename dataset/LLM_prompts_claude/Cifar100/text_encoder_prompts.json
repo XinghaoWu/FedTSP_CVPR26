@@ -1,0 +1,802 @@
+{
+    "apple": {
+        "Short Label": "Apple",
+        "Fine-grained Descriptions": [
+            "A round red, green, or yellow fruit with smooth skin and a small stem, often seen in orchards or on tables.",
+            "A crisp edible fruit with a distinctive apple shape, commonly held in hands or arranged in bowls and baskets.",
+            "A fresh produce item with natural fruit coloring and characteristic apple silhouette, frequently associated with healthy eating."
+        ]
+    },
+    "aquarium_fish": {
+        "Short Label": "Aquarium Fish",
+        "Fine-grained Descriptions": [
+            "A colorful small fish swimming in clear water with aquarium decorations or plants in the background.",
+            "A tropical or ornamental fish with vibrant scales and fins, typically captured in an indoor tank environment.",
+            "A pet fish with distinctive aquatic features, often photographed underwater with bubble or coral decorations."
+        ]
+    },
+    "baby": {
+        "Short Label": "Baby",
+        "Fine-grained Descriptions": [
+            "A young infant with soft features, typically in diapers or baby clothes, often in indoor family settings.",
+            "A small child with round face and innocent expression, commonly held by adults or lying in cribs.",
+            "A toddler or infant with characteristic baby proportions, frequently captured in playful or sleeping poses."
+        ]
+    },
+    "bear": {
+        "Short Label": "Bear",
+        "Fine-grained Descriptions": [
+            "A large furry mammal with brown or black coat, typically found in forest or wilderness environments.",
+            "A powerful wild animal with distinctive bear shape, rounded ears, and strong build in natural outdoor settings.",
+            "A massive carnivorous mammal with thick fur and characteristic bear posture, often standing or walking in nature."
+        ]
+    },
+    "beaver": {
+        "Short Label": "Beaver",
+        "Fine-grained Descriptions": [
+            "A brown aquatic rodent with a flat tail and webbed feet, typically near water or wooden dam structures.",
+            "A furry mammal with distinctive beaver features, often shown gnawing wood or swimming in ponds.",
+            "A semi-aquatic animal with waterproof fur and large front teeth, commonly found in wetland environments."
+        ]
+    },
+    "bed": {
+        "Short Label": "Bed",
+        "Fine-grained Descriptions": [
+            "A piece of bedroom furniture with mattress, pillows, and bedding, typically in indoor residential settings.",
+            "A sleeping surface with frame and linens, commonly shown in bedrooms with various colors and styles.",
+            "A rest furniture item with headboard and comfortable bedding arrangement, often photographed in home interiors."
+        ]
+    },
+    "bee": {
+        "Short Label": "Bee",
+        "Fine-grained Descriptions": [
+            "A small flying insect with yellow and black stripes, often captured near flowers or in garden environments.",
+            "A winged pollinator with fuzzy body and distinctive bee markings, typically in flight or on blossoms.",
+            "A beneficial insect with characteristic bee shape and coloration, commonly associated with honey and flowering plants."
+        ]
+    },
+    "beetle": {
+        "Short Label": "Beetle",
+        "Fine-grained Descriptions": [
+            "A small insect with hard wing covers and six legs, often found on leaves, ground, or wooden surfaces.",
+            "A crawling bug with shiny or textured exoskeleton, typically photographed in close-up outdoor nature shots.",
+            "A six-legged arthropod with distinctive beetle features, commonly captured in natural environments or macro photography."
+        ]
+    },
+    "bicycle": {
+        "Short Label": "Bicycle",
+        "Fine-grained Descriptions": [
+            "A two-wheeled vehicle with pedals, handlebars, and frame, commonly found on streets, paths, or bike racks.",
+            "A human-powered transportation device with chain and gears, often photographed in urban or recreational settings.",
+            "A pedal-powered bike with distinctive wheel and frame configuration, typically associated with outdoor activities."
+        ]
+    },
+    "bottle": {
+        "Short Label": "Bottle",
+        "Fine-grained Descriptions": [
+            "A cylindrical container made of glass or plastic with a neck and opening, used for storing liquids.",
+            "A transparent or colored vessel with bottle shape, commonly found on tables, shelves, or in hands.",
+            "A liquid storage container with characteristic bottle silhouette, often containing water, beverages, or other fluids."
+        ]
+    },
+    "bowl": {
+        "Short Label": "Bowl",
+        "Fine-grained Descriptions": [
+            "A round shallow container used for serving or eating food, typically made of ceramic, glass, or plastic.",
+            "A curved dish with open top design, commonly found in kitchens, dining tables, or containing various contents.",
+            "A circular food vessel with bowl-like shape, often photographed with meals, fruits, or empty on surfaces."
+        ]
+    },
+    "boy": {
+        "Short Label": "Boy",
+        "Fine-grained Descriptions": [
+            "A young male child with youthful features, typically wearing casual clothes in indoor or outdoor settings.",
+            "A male kid with boyish appearance and expressions, commonly captured playing, learning, or in family photos.",
+            "A young person with masculine child characteristics, often shown in school, home, or recreational environments."
+        ]
+    },
+    "bridge": {
+        "Short Label": "Bridge",
+        "Fine-grained Descriptions": [
+            "A structural span crossing over water, roads, or valleys, typically made of concrete, steel, or stone materials.",
+            "An architectural structure connecting two sides with distinctive bridge design, often photographed from various angles.",
+            "A transportation infrastructure with characteristic bridge features, commonly spanning rivers, highways, or landscapes."
+        ]
+    },
+    "bus": {
+        "Short Label": "Bus",
+        "Fine-grained Descriptions": [
+            "A large public transportation vehicle with multiple windows and doors, commonly found on city streets or bus stops.",
+            "A passenger vehicle with elongated body and high capacity, typically yellow, white, or other municipal colors.",
+            "A mass transit vehicle with distinctive bus shape and features, often photographed in urban transportation settings."
+        ]
+    },
+    "butterfly": {
+        "Short Label": "Butterfly",
+        "Fine-grained Descriptions": [
+            "A colorful flying insect with large patterned wings, often captured on flowers or in garden environments.",
+            "A delicate winged creature with vibrant wing patterns and thin body, typically in flight or perched positions.",
+            "A beautiful flying insect with symmetrical colorful wings, commonly associated with flowers and outdoor nature scenes."
+        ]
+    },
+    "camel": {
+        "Short Label": "Camel",
+        "Fine-grained Descriptions": [
+            "A large desert animal with one or two humps and long neck, typically found in arid or sandy environments.",
+            "A sturdy mammal with characteristic camel features and tan coloring, often used for transportation in desert regions.",
+            "A domesticated animal with distinctive hump and desert adaptations, commonly photographed in Middle Eastern or African settings."
+        ]
+    },
+    "can": {
+        "Short Label": "Can",
+        "Fine-grained Descriptions": [
+            "A cylindrical metal container with labels, typically used for storing food or beverages in kitchens or stores.",
+            "A tin or aluminum vessel with pull-tab or lid, commonly found on shelves or in pantries with product branding.",
+            "A preserved food container with metallic surface and cylindrical shape, often displaying colorful product labels."
+        ]
+    },
+    "castle": {
+        "Short Label": "Castle",
+        "Fine-grained Descriptions": [
+            "A large stone fortress with towers and walls, typically set in historical or medieval architectural settings.",
+            "A majestic building with defensive features and royal architecture, often photographed against sky backgrounds.",
+            "A historic structure with characteristic castle design including battlements, often surrounded by landscapes or moats."
+        ]
+    },
+    "caterpillar": {
+        "Short Label": "Caterpillar",
+        "Fine-grained Descriptions": [
+            "A segmented larval insect with soft body and multiple legs, typically found crawling on leaves or plants.",
+            "A green or colorful worm-like creature with fuzzy or smooth texture, often captured in close-up garden photography.",
+            "A developing butterfly or moth larva with characteristic caterpillar shape, commonly feeding on vegetation."
+        ]
+    },
+    "cattle": {
+        "Short Label": "Cattle",
+        "Fine-grained Descriptions": [
+            "Large domesticated animals with four legs and udders, typically grazing in fields or farm pastures.",
+            "Farm livestock with black, brown, or mixed coloring, commonly found in rural agricultural settings.",
+            "Bovine animals with characteristic cow or bull features, often photographed in groups on grasslands or farms."
+        ]
+    },
+    "chair": {
+        "Short Label": "Chair",
+        "Fine-grained Descriptions": [
+            "A seat furniture with backrest and four legs, commonly found in homes, offices, or dining areas.",
+            "A sitting furniture piece with various materials and styles, typically positioned near tables or desks.",
+            "A seating item with characteristic chair design, often made of wood, metal, or plastic in indoor settings."
+        ]
+    },
+    "chimpanzee": {
+        "Short Label": "Chimpanzee",
+        "Fine-grained Descriptions": [
+            "A primate with dark fur and human-like features, typically found in jungle environments or zoo settings.",
+            "An intelligent ape with long arms and expressive face, commonly captured in natural or captive habitats.",
+            "A large monkey with characteristic chimpanzee features, often shown in trees, cages, or wildlife photography."
+        ]
+    },
+    "clock": {
+        "Short Label": "Clock",
+        "Fine-grained Descriptions": [
+            "A time-telling device with round face and hands, commonly found on walls, desks, or tower structures.",
+            "A timepiece with numbers and clock mechanism, typically displayed in homes, offices, or public spaces.",
+            "A timing instrument with characteristic clock design, often featuring traditional or digital displays."
+        ]
+    },
+    "cloud": {
+        "Short Label": "Cloud",
+        "Fine-grained Descriptions": [
+            "White or gray fluffy formations in the sky, typically photographed against blue backgrounds or weather scenes.",
+            "Atmospheric water vapor clusters with various shapes and densities, often captured in landscape photography.",
+            "Sky formations with characteristic cloud patterns, commonly associated with weather and outdoor scenery."
+        ]
+    },
+    "cockroach": {
+        "Short Label": "Cockroach",
+        "Fine-grained Descriptions": [
+            "A brown or black insect with flat body and long antennae, typically found in indoor environments or dark places.",
+            "A six-legged pest with shiny exoskeleton, commonly captured in close-up photography showing insect details.",
+            "A household insect with characteristic cockroach features, often photographed on floors, walls, or surfaces."
+        ]
+    },
+    "couch": {
+        "Short Label": "Couch",
+        "Fine-grained Descriptions": [
+            "A large upholstered seating furniture for multiple people, typically found in living rooms or family areas.",
+            "A comfortable sofa with cushions and fabric covering, commonly positioned in home entertainment spaces.",
+            "A sitting furniture piece with characteristic couch design, often featuring arms and back support in various colors."
+        ]
+    },
+    "crab": {
+        "Short Label": "Crab",
+        "Fine-grained Descriptions": [
+            "A crustacean with hard shell and claws, typically found on beaches, rocks, or underwater marine environments.",
+            "A sideways-walking sea creature with characteristic crab features, often captured near ocean or tidal areas.",
+            "A marine animal with pincer claws and segmented legs, commonly photographed in coastal or aquatic settings."
+        ]
+    },
+    "crocodile": {
+        "Short Label": "Crocodile",
+        "Fine-grained Descriptions": [
+            "A large reptile with powerful jaws and scaly skin, typically found in rivers, swamps, or tropical water environments.",
+            "A predatory animal with elongated snout and armored body, often captured in or near water habitats.",
+            "A dangerous reptile with characteristic crocodile features, commonly photographed in wildlife or zoo settings."
+        ]
+    },
+    "cup": {
+        "Short Label": "Cup",
+        "Fine-grained Descriptions": [
+            "A small drinking vessel with handle, typically used for hot beverages like coffee or tea in indoor settings.",
+            "A ceramic or glass container for liquids, commonly found on tables, desks, or in kitchen environments.",
+            "A beverage holder with characteristic cup shape, often containing drinks or photographed empty on surfaces."
+        ]
+    },
+    "dinosaur": {
+        "Short Label": "Dinosaur",
+        "Fine-grained Descriptions": [
+            "A prehistoric reptile with large body and distinctive features, typically shown as museum displays or artistic recreations.",
+            "An extinct animal with characteristic dinosaur anatomy, often captured in educational or entertainment contexts.",
+            "A fossilized or reconstructed ancient creature with various sizes and features, commonly associated with paleontology."
+        ]
+    },
+    "dolphin": {
+        "Short Label": "Dolphin",
+        "Fine-grained Descriptions": [
+            "A marine mammal with sleek body and curved fin, typically captured jumping or swimming in ocean environments.",
+            "An intelligent aquatic animal with characteristic dolphin features, often photographed in clear blue water.",
+            "A friendly sea creature with smooth gray skin, commonly shown in natural ocean settings or marine parks."
+        ]
+    },
+    "elephant": {
+        "Short Label": "Elephant",
+        "Fine-grained Descriptions": [
+            "A massive gray mammal with trunk and large ears, typically found in African or Asian wildlife environments.",
+            "A gentle giant with characteristic elephant features including tusks, often captured in savanna or zoo settings.",
+            "A large herbivorous animal with distinctive trunk and wrinkled skin, commonly photographed in family groups."
+        ]
+    },
+    "flatfish": {
+        "Short Label": "Flatfish",
+        "Fine-grained Descriptions": [
+            "A flat marine fish with both eyes on one side, typically found on ocean floors or in underwater photography.",
+            "A bottom-dwelling fish with asymmetrical body shape, often captured camouflaged against sandy or rocky surfaces.",
+            "An unusual fish with characteristic flatfish anatomy, commonly photographed in marine or aquarium environments."
+        ]
+    },
+    "forest": {
+        "Short Label": "Forest",
+        "Fine-grained Descriptions": [
+            "A dense collection of trees and vegetation, typically captured in natural woodland environments with green foliage.",
+            "A wooded landscape with tall trees and natural lighting, often photographed showing depth and natural beauty.",
+            "A natural ecosystem with characteristic forest features, commonly associated with wildlife and outdoor recreation."
+        ]
+    },
+    "fox": {
+        "Short Label": "Fox",
+        "Fine-grained Descriptions": [
+            "A small wild animal with pointed ears and bushy tail, typically reddish-brown in color in woodland settings.",
+            "A cunning mammal with characteristic fox features and alert expression, often captured in natural outdoor environments.",
+            "A sleek predator with triangular ears and intelligent eyes, commonly photographed in forest or rural areas."
+        ]
+    },
+    "girl": {
+        "Short Label": "Girl",
+        "Fine-grained Descriptions": [
+            "A young female child with youthful features, typically wearing casual or dress clothes in various settings.",
+            "A female kid with girlish appearance and expressions, commonly captured playing, learning, or in family photos.",
+            "A young person with feminine child characteristics, often shown in school, home, or recreational environments."
+        ]
+    },
+    "hamster": {
+        "Short Label": "Hamster",
+        "Fine-grained Descriptions": [
+            "A small furry rodent with chubby cheeks and tiny paws, typically found in cages or pet environments.",
+            "A cute pet animal with characteristic hamster features, often captured eating, running, or in bedding materials.",
+            "A tiny mammal with soft fur and beady eyes, commonly photographed in domestic pet settings or exercise wheels."
+        ]
+    },
+    "house": {
+        "Short Label": "House",
+        "Fine-grained Descriptions": [
+            "A residential building with walls, roof, and windows, typically found in suburban or urban neighborhood settings.",
+            "A family dwelling with characteristic house architecture, often featuring doors, gardens, or driveways.",
+            "A home structure with various architectural styles, commonly photographed from exterior views showing living spaces."
+        ]
+    },
+    "kangaroo": {
+        "Short Label": "Kangaroo",
+        "Fine-grained Descriptions": [
+            "A marsupial with powerful hind legs and pouch, typically found in Australian outback or grassland environments.",
+            "A hopping animal with characteristic kangaroo features including long tail, often captured in natural habitats.",
+            "A unique mammal with distinctive anatomy and brown coloring, commonly photographed in wildlife or zoo settings."
+        ]
+    },
+    "keyboard": {
+        "Short Label": "Keyboard",
+        "Fine-grained Descriptions": [
+            "A computer input device with multiple keys and letters, typically found on desks in office or home environments.",
+            "A typing instrument with characteristic key layout, commonly associated with computers and digital workspaces.",
+            "An electronic interface with buttons and symbols, often photographed in technology or workspace contexts."
+        ]
+    },
+    "lamp": {
+        "Short Label": "Lamp",
+        "Fine-grained Descriptions": [
+            "A lighting fixture with shade and base, typically found on tables, desks, or floor stands in indoor settings.",
+            "An illumination device with characteristic lamp design, commonly used for reading or ambient lighting.",
+            "A light source with various styles and materials, often photographed in home or office interior environments."
+        ]
+    },
+    "lawn_mower": {
+        "Short Label": "Lawn Mower",
+        "Fine-grained Descriptions": [
+            "A grass-cutting machine with wheels and engine, typically found in yards, garages, or outdoor maintenance settings.",
+            "A motorized gardening tool with characteristic mower features, commonly used for lawn care and landscaping.",
+            "A mechanical device with cutting blades, often photographed in residential or commercial landscape maintenance."
+        ]
+    },
+    "leopard": {
+        "Short Label": "Leopard",
+        "Fine-grained Descriptions": [
+            "A spotted wild cat with golden fur and black rosettes, typically found in African or Asian jungle environments.",
+            "A powerful predator with characteristic leopard markings, often captured in trees or natural wildlife settings.",
+            "A graceful big cat with distinctive spot patterns, commonly photographed in safari or zoo environments."
+        ]
+    },
+    "lion": {
+        "Short Label": "Lion",
+        "Fine-grained Descriptions": [
+            "A large wild cat with golden mane (males), typically found in African savanna or grassland environments.",
+            "A powerful predator with characteristic lion features, often captured in family groups or hunting scenarios.",
+            "A majestic big cat with tawny coloring, commonly photographed in wildlife reserves or natural habitats."
+        ]
+    },
+    "lizard": {
+        "Short Label": "Lizard",
+        "Fine-grained Descriptions": [
+            "A small reptile with scaly skin and long tail, typically found on rocks, walls, or in desert environments.",
+            "A cold-blooded animal with characteristic lizard features, often captured basking in sunlight or natural settings.",
+            "A quick-moving reptile with various colors and patterns, commonly photographed in outdoor or terrarium environments."
+        ]
+    },
+    "lobster": {
+        "Short Label": "Lobster",
+        "Fine-grained Descriptions": [
+            "A marine crustacean with large claws and segmented body, typically found in ocean environments or seafood contexts.",
+            "A bottom-dwelling sea creature with characteristic lobster features, often captured in underwater or culinary photography.",
+            "A shellfish with hard exoskeleton and antenna, commonly associated with coastal waters or food preparation."
+        ]
+    },
+    "man": {
+        "Short Label": "Man",
+        "Fine-grained Descriptions": [
+            "An adult male person with mature features, typically wearing various clothing in professional or casual settings.",
+            "A masculine individual with characteristic male appearance, commonly captured in work, social, or family environments.",
+            "A grown male human with adult proportions and expressions, often photographed in diverse life situations."
+        ]
+    },
+    "maple_tree": {
+        "Short Label": "Maple Tree",
+        "Fine-grained Descriptions": [
+            "A deciduous tree with distinctive lobed leaves, typically showing seasonal colors in park or forest environments.",
+            "A tall tree with characteristic maple leaf shape, often captured during autumn with colorful foliage.",
+            "A broadleaf tree with symmetrical branching, commonly photographed in natural outdoor or landscaping settings."
+        ]
+    },
+    "motorcycle": {
+        "Short Label": "Motorcycle",
+        "Fine-grained Descriptions": [
+            "A two-wheeled motor vehicle with engine and handlebars, typically found on roads or in parking areas.",
+            "A powered bike with characteristic motorcycle features, commonly associated with transportation and recreation.",
+            "A motorized vehicle with distinctive design elements, often photographed in urban or touring contexts."
+        ]
+    },
+    "mountain": {
+        "Short Label": "Mountain",
+        "Fine-grained Descriptions": [
+            "A large natural elevation with peaks and slopes, typically captured in landscape photography with sky backgrounds.",
+            "A rocky or snow-capped landform with characteristic mountain features, often associated with wilderness areas.",
+            "A towering geological formation with dramatic terrain, commonly photographed in scenic or hiking contexts."
+        ]
+    },
+    "mouse": {
+        "Short Label": "Mouse",
+        "Fine-grained Descriptions": [
+            "A small rodent with pointed nose and long tail, typically found in houses, fields, or laboratory environments.",
+            "A tiny mammal with characteristic mouse features, often captured in quick movements or hiding positions.",
+            "A small gray or brown animal with large ears, commonly associated with domestic or research settings."
+        ]
+    },
+    "mushroom": {
+        "Short Label": "Mushroom",
+        "Fine-grained Descriptions": [
+            "A fungal organism with cap and stem, typically found growing in forests, gardens, or damp natural environments.",
+            "A non-plant organism with characteristic mushroom shape, often captured in close-up nature photography.",
+            "A spore-producing fungus with various colors and sizes, commonly photographed in woodland or culinary contexts."
+        ]
+    },
+    "oak_tree": {
+        "Short Label": "Oak Tree",
+        "Fine-grained Descriptions": [
+            "A large deciduous tree with broad trunk and acorns, typically found in parks, forests, or landscape settings.",
+            "A sturdy tree with characteristic oak leaf pattern, often captured showing strength and natural beauty.",
+            "A long-lived tree with thick branching, commonly photographed in natural or historical outdoor environments."
+        ]
+    },
+    "orange": {
+        "Short Label": "Orange",
+        "Fine-grained Descriptions": [
+            "A round citrus fruit with bright orange skin and segments, often found in orchards, kitchens, or markets.",
+            "A sweet and tangy fruit with characteristic orange color, commonly held in hands or arranged in displays.",
+            "A juicy citrus with textured peel and natural coloring, frequently associated with healthy eating and nutrition."
+        ]
+    },
+    "orchid": {
+        "Short Label": "Orchid",
+        "Fine-grained Descriptions": [
+            "An elegant flower with unique petal arrangements, typically found in greenhouses, gardens, or indoor plant settings.",
+            "A delicate bloom with characteristic orchid features and vibrant colors, often captured in close-up floral photography.",
+            "An exotic flowering plant with sophisticated appearance, commonly associated with tropical or cultivated environments."
+        ]
+    },
+    "otter": {
+        "Short Label": "Otter",
+        "Fine-grained Descriptions": [
+            "A playful aquatic mammal with sleek fur and webbed feet, typically found in rivers, lakes, or coastal environments.",
+            "A swimming animal with characteristic otter features, often captured playing in water or on riverbanks.",
+            "A semi-aquatic creature with dense fur and long tail, commonly photographed in natural wetland habitats."
+        ]
+    },
+    "palm_tree": {
+        "Short Label": "Palm Tree",
+        "Fine-grained Descriptions": [
+            "A tropical tree with large fronds and tall trunk, typically found in beaches, resorts, or warm climate environments.",
+            "A characteristic tree with fan or feather-like leaves, often captured against blue skies or ocean backgrounds.",
+            "A warm-weather plant with distinctive palm features, commonly associated with vacation and tropical settings."
+        ]
+    },
+    "pear": {
+        "Short Label": "Pear",
+        "Fine-grained Descriptions": [
+            "A teardrop-shaped fruit with smooth skin, typically green or yellow in color found in orchards or kitchens.",
+            "A sweet fruit with characteristic pear silhouette, commonly arranged in bowls or held in hands.",
+            "A fresh produce item with natural fruit coloring, frequently associated with healthy eating and desserts."
+        ]
+    },
+    "pickup_truck": {
+        "Short Label": "Pickup Truck",
+        "Fine-grained Descriptions": [
+            "A vehicle with open cargo bed and cab, typically found on roads, construction sites, or rural environments.",
+            "A utility truck with characteristic pickup design, commonly used for work, hauling, or recreational purposes.",
+            "A multi-purpose vehicle with truck features, often photographed in outdoor, industrial, or farming contexts."
+        ]
+    },
+    "pine_tree": {
+        "Short Label": "Pine Tree",
+        "Fine-grained Descriptions": [
+            "An evergreen tree with needle-like leaves and cones, typically found in forests, mountains, or winter landscapes.",
+            "A coniferous tree with characteristic pine features, often captured in natural outdoor or Christmas contexts.",
+            "A tall tree with pyramid shape and green needles, commonly photographed in woodland or holiday settings."
+        ]
+    },
+    "plain": {
+        "Short Label": "Plain",
+        "Fine-grained Descriptions": [
+            "A flat grassland area with minimal trees, typically captured in landscape photography showing wide open spaces.",
+            "An expansive field or prairie with characteristic plain features, often associated with agriculture or natural habitats.",
+            "A level terrain with grass or crops, commonly photographed in rural or agricultural environmental contexts."
+        ]
+    },
+    "plate": {
+        "Short Label": "Plate",
+        "Fine-grained Descriptions": [
+            "A flat round dish used for serving food, typically found on tables in dining, kitchen, or restaurant settings.",
+            "A dining vessel with characteristic plate shape, commonly containing meals or photographed empty on surfaces.",
+            "A food service item made of ceramic, glass, or plastic, often associated with eating and meal presentation."
+        ]
+    },
+    "poppy": {
+        "Short Label": "Poppy",
+        "Fine-grained Descriptions": [
+            "A bright red flower with delicate petals, typically found in fields, gardens, or wildflower environments.",
+            "A colorful bloom with characteristic poppy features, often captured in close-up floral or landscape photography.",
+            "A vibrant flowering plant with papery petals, commonly associated with memorial or natural outdoor settings."
+        ]
+    },
+    "porcupine": {
+        "Short Label": "Porcupine",
+        "Fine-grained Descriptions": [
+            "A spiny mammal with protective quills, typically found in forests, woodlands, or natural wildlife environments.",
+            "A defensive animal with characteristic porcupine features, often captured showing quill patterns and body shape.",
+            "A unique rodent with sharp spines, commonly photographed in trees, ground, or wildlife sanctuary settings."
+        ]
+    },
+    "possum": {
+        "Short Label": "Possum",
+        "Fine-grained Descriptions": [
+            "A marsupial with grayish fur and pointed snout, typically found in trees, urban areas, or nighttime environments.",
+            "A nocturnal animal with characteristic possum features, often captured climbing or in defensive positions.",
+            "A small mammal with prehensile tail, commonly photographed in suburban, forest, or wildlife contexts."
+        ]
+    },
+    "rabbit": {
+        "Short Label": "Rabbit",
+        "Fine-grained Descriptions": [
+            "A small mammal with long ears and fluffy tail, typically found in meadows, gardens, or domestic pet environments.",
+            "A hopping animal with characteristic rabbit features, often captured eating, sitting, or in alert positions.",
+            "A gentle creature with soft fur and large eyes, commonly associated with Easter, pets, or natural habitats."
+        ]
+    },
+    "raccoon": {
+        "Short Label": "Raccoon",
+        "Fine-grained Descriptions": [
+            "A masked mammal with ringed tail and dexterous paws, typically found in urban, forest, or nighttime environments.",
+            "A curious animal with characteristic raccoon markings, often captured foraging, climbing, or washing food.",
+            "A nocturnal creature with distinctive facial patterns, commonly photographed in trees, garbage areas, or natural settings."
+        ]
+    },
+    "ray": {
+        "Short Label": "Ray",
+        "Fine-grained Descriptions": [
+            "A flat marine fish with wing-like fins, typically found gliding through ocean waters or resting on sandy bottoms.",
+            "An aquatic animal with characteristic ray shape, often captured in underwater photography showing graceful movement.",
+            "A cartilaginous fish with broad pectoral fins, commonly photographed in marine environments or aquariums."
+        ]
+    },
+    "road": {
+        "Short Label": "Road",
+        "Fine-grained Descriptions": [
+            "A paved surface for vehicle travel with markings and lanes, typically captured in urban, suburban, or rural settings.",
+            "A transportation route with characteristic road features, often photographed from various angles showing infrastructure.",
+            "A travel pathway with asphalt or concrete surface, commonly associated with cars, signs, and transportation networks."
+        ]
+    },
+    "rocket": {
+        "Short Label": "Rocket",
+        "Fine-grained Descriptions": [
+            "A cylindrical space vehicle with pointed top and engines, typically captured during launch or in aerospace contexts.",
+            "A propulsion-powered craft with characteristic rocket design, often associated with space exploration and technology.",
+            "A vertical launch vehicle with distinctive shape, commonly photographed against sky backgrounds or launch facilities."
+        ]
+    },
+    "rose": {
+        "Short Label": "Rose",
+        "Fine-grained Descriptions": [
+            "A beautiful flower with layered petals and thorny stem, typically found in gardens, bouquets, or romantic settings.",
+            "A fragrant bloom with characteristic rose features in various colors, often captured in close-up floral photography.",
+            "An elegant flowering plant with classic beauty, commonly associated with love, gardens, and special occasions."
+        ]
+    },
+    "sea": {
+        "Short Label": "Sea",
+        "Fine-grained Descriptions": [
+            "A large body of saltwater with waves and horizons, typically captured in coastal, marine, or beach environments.",
+            "An ocean expanse with characteristic water features, often photographed showing depth, movement, and natural beauty.",
+            "A marine environment with blue coloring and wave patterns, commonly associated with beaches, ships, and aquatic life."
+        ]
+    },
+    "seal": {
+        "Short Label": "Seal",
+        "Fine-grained Descriptions": [
+            "A marine mammal with flippers and whiskers, typically found on beaches, ice, or swimming in ocean environments.",
+            "An aquatic animal with characteristic seal features, often captured resting, swimming, or interacting with others.",
+            "A sleek sea creature with streamlined body, commonly photographed in coastal, arctic, or marine sanctuary settings."
+        ]
+    },
+    "shark": {
+        "Short Label": "Shark",
+        "Fine-grained Descriptions": [
+            "A predatory fish with pointed fins and rows of teeth, typically found swimming in deep ocean or aquarium environments.",
+            "A powerful marine animal with characteristic shark features, often captured in underwater photography showing hunting behavior.",
+            "A cartilaginous fish with streamlined body, commonly associated with ocean depths and marine ecosystems."
+        ]
+    },
+    "shrew": {
+        "Short Label": "Shrew",
+        "Fine-grained Descriptions": [
+            "A tiny mammal with pointed snout and small eyes, typically found in grass, undergrowth, or natural ground environments.",
+            "A small insectivorous animal with characteristic shrew features, often captured in quick movements or hiding positions.",
+            "A miniature creature with high metabolism, commonly photographed in natural habitats or close-up wildlife photography."
+        ]
+    },
+    "skunk": {
+        "Short Label": "Skunk",
+        "Fine-grained Descriptions": [
+            "A black and white mammal with distinctive stripe pattern, typically found in forests, suburbs, or nighttime environments.",
+            "A defensive animal with characteristic skunk markings, often captured walking, foraging, or in alert positions.",
+            "A small carnivore with warning coloration, commonly photographed in natural or residential outdoor settings."
+        ]
+    },
+    "skyscraper": {
+        "Short Label": "Skyscraper",
+        "Fine-grained Descriptions": [
+            "A very tall building with multiple floors and modern architecture, typically found in urban city center environments.",
+            "A high-rise structure with characteristic skyscraper features, often captured against sky backgrounds or city skylines.",
+            "A towering commercial building with glass and steel construction, commonly associated with business districts and metropolitan areas."
+        ]
+    },
+    "snail": {
+        "Short Label": "Snail",
+        "Fine-grained Descriptions": [
+            "A small mollusk with spiral shell and soft body, typically found in gardens, leaves, or moist natural environments.",
+            "A slow-moving creature with characteristic snail features, often captured crawling on surfaces or showing shell patterns.",
+            "A gastropod animal with protective shell, commonly photographed in close-up nature or garden photography."
+        ]
+    },
+    "snake": {
+        "Short Label": "Snake",
+        "Fine-grained Descriptions": [
+            "A long reptile with scales and no legs, typically found in various natural environments including deserts, forests, or water.",
+            "A serpentine animal with characteristic snake features, often captured coiled, moving, or in defensive positions.",
+            "A flexible predator with smooth or patterned skin, commonly photographed in wildlife, zoo, or natural habitat settings."
+        ]
+    },
+    "spider": {
+        "Short Label": "Spider",
+        "Fine-grained Descriptions": [
+            "An eight-legged arachnid with web-spinning abilities, typically found in corners, gardens, or natural outdoor environments.",
+            "A small arthropod with characteristic spider features, often captured in webs, hunting, or close-up macro photography.",
+            "A predatory arachnid with various colors and patterns, commonly photographed in natural or domestic settings."
+        ]
+    },
+    "squirrel": {
+        "Short Label": "Squirrel",
+        "Fine-grained Descriptions": [
+            "A small mammal with bushy tail and nimble movements, typically found in trees, parks, or urban environments.",
+            "A rodent with characteristic squirrel features, often captured climbing, eating nuts, or in alert positions.",
+            "An agile creature with gray or brown fur, commonly photographed in natural outdoor or residential settings."
+        ]
+    },
+    "streetcar": {
+        "Short Label": "Streetcar",
+        "Fine-grained Descriptions": [
+            "A public rail vehicle running on tracks in streets, typically found in urban transportation or historic city environments.",
+            "An electric tram with characteristic streetcar design, often captured in motion or at stations in city settings.",
+            "A track-guided transit vehicle with distinctive features, commonly associated with urban public transportation systems."
+        ]
+    },
+    "sunflower": {
+        "Short Label": "Sunflower",
+        "Fine-grained Descriptions": [
+            "A large yellow flower with dark center and broad petals, typically found in fields, gardens, or agricultural environments.",
+            "A tall flowering plant with characteristic sunflower features, often captured following sun direction or in close-up photography.",
+            "A bright bloom with distinctive appearance, commonly associated with summer, farming, and cheerful outdoor settings."
+        ]
+    },
+    "sweet_pepper": {
+        "Short Label": "Sweet Pepper",
+        "Fine-grained Descriptions": [
+            "A colorful bell-shaped vegetable with smooth skin, typically found in gardens, kitchens, or market environments.",
+            "A crunchy produce item with characteristic pepper shape in red, yellow, or green colors, often used in cooking.",
+            "A fresh vegetable with glossy appearance, commonly photographed in culinary, agricultural, or nutritional contexts."
+        ]
+    },
+    "table": {
+        "Short Label": "Table",
+        "Fine-grained Descriptions": [
+            "A flat surface furniture with legs for support, typically found in dining rooms, kitchens, or office environments.",
+            "A horizontal platform with characteristic table design, commonly used for eating, working, or displaying items.",
+            "A functional furniture piece with various materials and styles, often photographed with objects, meals, or in interior settings."
+        ]
+    },
+    "tank": {
+        "Short Label": "Tank",
+        "Fine-grained Descriptions": [
+            "A heavily armored military vehicle with tracks and cannon, typically found in battlefields, parades, or military contexts.",
+            "A combat vehicle with characteristic tank features, often captured showing power, protection, and military capability.",
+            "An armored fighting machine with distinctive design, commonly associated with warfare, defense, and military operations."
+        ]
+    },
+    "telephone": {
+        "Short Label": "Telephone",
+        "Fine-grained Descriptions": [
+            "A communication device with handset and dial or buttons, typically found in homes, offices, or vintage settings.",
+            "A voice transmission instrument with characteristic phone features, often associated with communication and connectivity.",
+            "A calling device with various designs and technologies, commonly photographed in domestic or business environments."
+        ]
+    },
+    "television": {
+        "Short Label": "Television",
+        "Fine-grained Descriptions": [
+            "An electronic display device with screen and controls, typically found in living rooms, bedrooms, or entertainment areas.",
+            "A viewing apparatus with characteristic TV features, commonly used for watching programs, movies, or gaming.",
+            "A broadcast receiver with various sizes and styles, often photographed in home interior or technology contexts."
+        ]
+    },
+    "tiger": {
+        "Short Label": "Tiger",
+        "Fine-grained Descriptions": [
+            "A large wild cat with orange fur and black stripes, typically found in Asian jungles or wildlife reserve environments.",
+            "A powerful predator with characteristic tiger markings, often captured stalking, resting, or showing territorial behavior.",
+            "A majestic big cat with distinctive stripe patterns, commonly photographed in natural habitats or conservation settings."
+        ]
+    },
+    "tractor": {
+        "Short Label": "Tractor",
+        "Fine-grained Descriptions": [
+            "A powerful agricultural vehicle with large wheels, typically found in farms, fields, or rural working environments.",
+            "A farming machine with characteristic tractor features, often captured pulling equipment or working in agricultural settings.",
+            "A utility vehicle with robust build, commonly associated with farming, construction, and outdoor work operations."
+        ]
+    },
+    "train": {
+        "Short Label": "Train",
+        "Fine-grained Descriptions": [
+            "A rail vehicle with multiple cars and locomotive, typically found on tracks in stations or traveling through landscapes.",
+            "A transportation system with characteristic train features, often captured in motion or stationary at railway facilities.",
+            "A mass transit vehicle with distinctive design, commonly associated with long-distance travel and urban transportation."
+        ]
+    },
+    "trout": {
+        "Short Label": "Trout",
+        "Fine-grained Descriptions": [
+            "A freshwater fish with spotted patterns and streamlined body, typically found in rivers, streams, or fishing environments.",
+            "An aquatic animal with characteristic trout features, often captured swimming in clear water or in fishing contexts.",
+            "A popular game fish with natural coloring, commonly photographed in outdoor recreational or culinary settings."
+        ]
+    },
+    "tulip": {
+        "Short Label": "Tulip",
+        "Fine-grained Descriptions": [
+            "A cup-shaped flower with smooth petals in various colors, typically found in gardens, parks, or spring environments.",
+            "A bulb flower with characteristic tulip features, often captured in close-up photography or field arrangements.",
+            "A spring bloom with elegant appearance, commonly associated with Holland, gardens, and seasonal celebrations."
+        ]
+    },
+    "turtle": {
+        "Short Label": "Turtle",
+        "Fine-grained Descriptions": [
+            "A reptile with protective shell and slow movement, typically found in ponds, beaches, or terrarium environments.",
+            "An ancient animal with characteristic turtle features, often captured swimming, walking, or retracting into shell.",
+            "A shelled creature with distinctive anatomy, commonly photographed in aquatic, terrestrial, or pet settings."
+        ]
+    },
+    "wardrobe": {
+        "Short Label": "Wardrobe",
+        "Fine-grained Descriptions": [
+            "A large furniture piece for storing clothes with doors and shelves, typically found in bedrooms or dressing areas.",
+            "A clothing storage unit with characteristic wardrobe design, commonly made of wood or other materials in home settings.",
+            "A closet furniture with various styles and sizes, often photographed in interior design or bedroom organization contexts."
+        ]
+    },
+    "whale": {
+        "Short Label": "Whale",
+        "Fine-grained Descriptions": [
+            "A massive marine mammal with streamlined body, typically found in oceans, often captured breaching or swimming.",
+            "A giant aquatic animal with characteristic whale features, commonly photographed in natural marine or wildlife contexts.",
+            "A majestic sea creature with distinctive anatomy, often associated with ocean conservation and marine ecosystem."
+        ]
+    },
+    "willow_tree": {
+        "Short Label": "Willow Tree",
+        "Fine-grained Descriptions": [
+            "A graceful tree with drooping branches and narrow leaves, typically found near water sources or in park environments.",
+            "A distinctive tree with characteristic weeping willow features, often captured showing elegant flowing branch patterns.",
+            "A water-loving plant with flexible branches, commonly photographed in peaceful outdoor or landscape settings."
+        ]
+    },
+    "wolf": {
+        "Short Label": "Wolf",
+        "Fine-grained Descriptions": [
+            "A wild canine with thick fur and alert expression, typically found in forests, mountains, or pack environments.",
+            "A predatory animal with characteristic wolf features, often captured howling, hunting, or in natural wilderness settings.",
+            "A powerful carnivore with distinctive anatomy, commonly photographed in wildlife reserves or natural habitat contexts."
+        ]
+    },
+    "woman": {
+        "Short Label": "Woman",
+        "Fine-grained Descriptions": [
+            "An adult female person with mature features, typically wearing various clothing in professional or casual settings.",
+            "A feminine individual with characteristic female appearance, commonly captured in work, social, or family environments.",
+            "A grown female human with adult proportions and expressions, often photographed in diverse life situations."
+        ]
+    },
+    "worm": {
+        "Short Label": "Worm",
+        "Fine-grained Descriptions": [
+            "A soft-bodied invertebrate with segmented body, typically found in soil, compost, or garden environments.",
+            "A elongated creature with characteristic worm features, often captured in earth, leaves, or decomposing material.",
+            "A beneficial soil animal with smooth texture, commonly photographed in close-up nature or gardening contexts."
+        ]
+    }
+}

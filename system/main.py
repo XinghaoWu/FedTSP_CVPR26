@@ -26,9 +26,13 @@ from flcore.servers.servertspv2 import FedTSPv2
 from flcore.servers.servertspv3 import FedTSPv3
 from flcore.servers.servertspv4 import FedTSPv4
 from flcore.servers.servertspv4_ablation import FedTSPv4_ablation
+from flcore.servers.servertspv4_ablation_2 import FedTSPv4_ablation_2
+from flcore.servers.servertspv4_dp import FedTSPv4_dp
 from flcore.servers.servermrl import FedMRL
-
+from flcore.servers.serverprotocon import FedProtoCon
 from flcore.servers.serverprotoeval import FedProtoEval
+from flcore.servers.serverprotocka import FedProtoCKA
+from flcore.servers.serverprotocos import FedProtoCos
 
 from flcore.servers.serverword import FedWord
 from flcore.servers.serverstruct import FedStruct
@@ -115,7 +119,7 @@ def run(args):
             ]
         # Heterogeneous models
         # Generate args.models
-        if args.model_family == "HtFE2":
+        elif args.model_family == "HtFE2":
             args.models = [
                 f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 'resnet18(num_classes=args.num_classes)',
@@ -225,6 +229,14 @@ def run(args):
                 'resnet152(num_classes=args.num_classes)',
                 'torchvision.models.vit_b_16(image_size=32, num_classes=args.num_classes)',
                 'torchvision.models.vit_b_32(image_size=32, num_classes=args.num_classes)'
+            ]
+        
+        elif args.model_family == "HtM4":
+            args.models = [
+                f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
+                'mobilenet_v2(num_classes=args.num_classes)',
+                'resnet18(num_classes=args.num_classes)',
+                'torchvision.models.vit_b_16(image_size=32, num_classes=args.num_classes)',
             ]
 
         elif args.model_family == "NLP_all":
@@ -380,6 +392,12 @@ def run(args):
 
         elif args.algorithm == "FedTSPv4_ablation":
             server = FedTSPv4_ablation(args, i)
+        
+        elif args.algorithm == "FedTSPv4_ablation_2":
+            server = FedTSPv4_ablation_2(args, i)
+
+        elif args.algorithm == "FedTSPv4_dp":
+            server = FedTSPv4_dp(args, i)
 
         # elif args.algorithm == "FedKTL-stylegan-xl":
         #     server = FedKTL_stylegan_xl(args, i)
@@ -395,6 +413,15 @@ def run(args):
         
         elif args.algorithm == "FedProtoEval":
             server = FedProtoEval(args, i)
+        
+        elif args.algorithm == "FedProtoCon":
+            server = FedProtoCon(args, i)
+        
+        elif args.algorithm == "FedProtoCKA":
+            server = FedProtoCKA(args, i)
+
+        elif args.algorithm == "FedProtoCos":
+            server = FedProtoCos(args, i)
 
         elif args.algorithm == 'FedStruct':
             server = FedStruct(args, i)
@@ -541,6 +568,14 @@ if __name__ == "__main__":
     # FedTSPv4 ablation
     parser.add_argument('--LLM_prompt_file', type=str, default='LLM_prompts', help='LLM prompt file')
     parser.add_argument('--LLM_prompt_number', type=int, default=-1, help='LLM prompt number. set -1 to select all prompts')
+
+    # FedTSPv4 ablation 2
+    parser.add_argument('--TGP_loss', type=int, default=0, help='whether to use TGP loss')
+    parser.add_argument('--local_loss_type', type=str, default='Con', help='Con: clip contrastive loss; L2: L2 loss')
+
+    # FedTSPv4 dp
+    parser.add_argument('--enable_dp', type=int, default=0, help='whether to enable dp')
+    parser.add_argument('--dp_noise_std', type=float, default=0.01, help='noise std')
 
     # FedStruct
     parser.add_argument('--version', type=int, default=1, help='distinguish the version of the proposed method')

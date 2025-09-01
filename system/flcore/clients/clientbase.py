@@ -190,15 +190,25 @@ class Client(object):
         return top5_acc, test_num, losses
         
 
-    def save_model(self, save_dir):
+    def save_model(self, save_dir, tag='best'):
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
-        model_save_path = os.path.join(save_dir, f'local_model_client_{self.id}.pth')
+        if tag == 'best':
+            model_save_path = os.path.join(save_dir, f'local_model_client_{self.id}.pth')
+        elif tag == 'last':
+            model_save_path = os.path.join(save_dir, f'local_model_client_{self.id}_last.pth')
+        else:
+            raise ValueError(f'Invalid tag: {tag}')
         torch.save(self.model, model_save_path)
 
-    def load_model(self, save_dir):
-        model_save_path = os.path.join(save_dir, f'local_model_client_{self.id}.pth')
-        self.model = torch.load(model_save_path).to(self.device)
+    def load_model(self, save_dir, tag='best'):
+        if tag == 'best':
+            model_save_path = os.path.join(save_dir, f'local_model_client_{self.id}.pth')
+        elif tag == 'last':
+            model_save_path = os.path.join(save_dir, f'local_model_client_{self.id}_last.pth')
+        else:
+            raise ValueError(f'Invalid tag: {tag}')
+        self.model = torch.load(model_save_path, map_location=self.device)
 
     def get_features_and_labels(self):
         all_features = []

@@ -1,0 +1,82 @@
+{
+    "airplane": {
+        "Short Label": "Aircraft",
+        "Fine-grained Descriptions": [
+            "A large, fixed-wing vehicle for air travel, typically with a fuselage, wings, and tail.",
+            "A machine designed for flight, with a cockpit, engines, and control surfaces.",
+            "A mode of transportation that takes to the skies, often used for commercial or recreational purposes."
+        ]
+    },
+    "automobile": {
+        "Short Label": "Car",
+        "Fine-grained Descriptions": [
+            "A four-wheeled vehicle designed for personal transportation, with a body, wheels, and engine.",
+            "A motorized vehicle with four wheels, used for daily commuting or long road trips.",
+            "A self-propelled vehicle with a metal body, wheels, and engine, often used for recreation or daily use."
+        ]
+    },
+    "bird": {
+        "Short Label": "Avian",
+        "Fine-grained Descriptions": [
+            "A warm-blooded vertebrate with feathers, wings, and beak, often found in trees or skies.",
+            "A light, winged creature with feathers, beak, and claws, known for singing or flying.",
+            "A small, flying creature with feathers, often seen in gardens, forests, or backyards."
+        ]
+    },
+    "cat": {
+        "Short Label": "Feline",
+        "Fine-grained Descriptions": [
+            "A small, carnivorous mammal with fur, whiskers, and retractable claws, often kept as a pet.",
+            "A furry, four-legged animal with sharp claws and a playful demeanor, often found in homes or outdoors.",
+            "A small, agile creature with soft fur, bright eyes, and a curious nature, often seen pouncing on toys."
+        ]
+    },
+    "deer": {
+        "Short Label": "Ruminant",
+        "Fine-grained Descriptions": [
+            "A large, hoofed mammal with a coat, antlers, and a gentle nature, often found in forests or fields.",
+            "A grazing animal with a brown coat, white spots, and a large rack of antlers, known for its speed and agility.",
+            "A wild, hoofed creature with a reddish-brown coat, often seen in meadows, forests, or near water sources."
+        ]
+    },
+    "dog": {
+        "Short Label": "Canine",
+        "Fine-grained Descriptions": [
+            "A domesticated, carnivorous mammal with fur, tail, and floppy ears, often kept as a pet.",
+            "A four-legged animal with a wagging tail and a friendly demeanor, often found in homes or parks.",
+            "A loyal, furry companion with a keen sense of smell, often seen playing fetch or going for walks."
+        ]
+    },
+    "frog": {
+        "Short Label": "Amphibian",
+        "Fine-grained Descriptions": [
+            "A small, green or brown vertebrate with a moist, smooth skin, often found near water sources.",
+            "A hopping, jumping creature with sticky pads on its feet, known for its ability to breathe underwater.",
+            "A tiny, aquatic animal with a slender body and large eyes, often seen near ponds, lakes, or streams."
+        ]
+    },
+    "horse": {
+        "Short Label": "Equine",
+        "Fine-grained Descriptions": [
+            "A large, hoofed mammal with a coat, mane, and tail, often used for riding or transportation.",
+            "A powerful, four-legged animal with a flowing mane and a strong sense of loyalty, often found on farms or ranches.",
+            "A majestic, hooved creature with a shiny coat and a flowing tail, often seen in fields, forests, or stables."
+        ]
+    },
+    "ship": {
+        "Short Label": "Vessel",
+        "Fine-grained Descriptions": [
+            "A large, ocean-going vehicle with a hull, propellers, and masts, often used for transportation or trade.",
+            "A massive, seafaring vessel with a flat bottom and a towering superstructure, known for its size and cargo capacity.",
+            "A floating, man-made structure with a metal hull and a crew, often seen navigating through oceans or harbors."
+        ]
+    },
+    "truck": {
+        "Short Label": "Lorry",
+        "Fine-grained Descriptions": [
+            "A large, motorized vehicle with a flatbed, wheels, and an engine, often used for hauling goods or equipment.",
+            "A heavy-duty, four-wheeled vehicle with a metal body and a powerful engine, often found on highways or construction sites.",
+            "A rugged, self-propelled vehicle with a cargo bed and a towing capacity, often seen on roads, highways, or job sites."
+        ]
+    }
+}

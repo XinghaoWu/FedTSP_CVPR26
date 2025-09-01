@@ -1,0 +1,82 @@
+{
+    "airplane": {
+        "Short Label": "Airplane",
+        "Fine-grained Descriptions": [
+            "A winged aircraft designed for air travel, often seen in the sky or at an airport.",
+            "A large vehicle with wings and engines that flies through the air.",
+            "A fixed-wing aircraft propelled by jet engines or propellers, used for transporting passengers or cargo."
+        ]
+    },
+    "automobile": {
+        "Short Label": "Automobile",
+        "Fine-grained Descriptions": [
+            "A four-wheeled road vehicle that is powered by an engine and is able to carry a small number of people.",
+            "A personal car, typically found on roads, in parking lots, or in a garage, used for daily transport.",
+            "A passenger vehicle with a metal body, four wheels, and windows, coming in various models like sedans, SUVs, or convertibles."
+        ]
+    },
+    "bird": {
+        "Short Label": "Bird",
+        "Fine-grained Descriptions": [
+            "A warm-blooded, egg-laying vertebrate distinguished by the possession of feathers, wings, and a beak.",
+            "A small animal with feathers and wings, often seen perching on tree branches, flying in the sky, or foraging for food.",
+            "An avian creature of various colors and sizes, known for its birdsong and ability to fly."
+        ]
+    },
+    "cat": {
+        "Short Label": "Cat",
+        "Fine-grained Descriptions": [
+            "A small domesticated carnivorous mammal with soft fur, a short snout, and retractable claws.",
+            "A common household pet known for its agility, whiskers, and purring, often depicted as independent and playful.",
+            "A feline creature, often found napping in a sunny spot, grooming itself, or playfully chasing toys."
+        ]
+    },
+    "deer": {
+        "Short Label": "Deer",
+        "Fine-grained Descriptions": [
+            "A hoofed grazing or browsing animal, with branched bony antlers that are shed annually and typically grow only on the male.",
+            "A wild animal with long legs, a brown or reddish-brown coat, and a white tail, often found in forests or fields.",
+            "A graceful and slender ruminant mammal, known for its gentle nature and often seen in herds."
+        ]
+    },
+    "dog": {
+        "Short Label": "Dog",
+        "Fine-grained Descriptions": [
+            "A domesticated carnivorous mammal that typically has a long snout, an acute sense of smell, and a barking, howling, or whining voice.",
+            "A popular pet known as 'man's best friend,' often seen playing fetch, going for a walk, or wagging its tail.",
+            "A canine with four legs, a tail, and fur, of various breeds and sizes, known for its loyalty and companionship."
+        ]
+    },
+    "frog": {
+        "Short Label": "Frog",
+        "Fine-grained Descriptions": [
+            "A tailless amphibian with a short-bodied, stout build, moist smooth skin, and very long hind legs for leaping.",
+            "A small, often green or brown creature with bulging eyes, typically found near ponds, swamps, or in wet environments.",
+            "An amphibian known for its distinct croaking sound and its life cycle that transitions from a tadpole in water to a land-dweller."
+        ]
+    },
+    "horse": {
+        "Short Label": "Horse",
+        "Fine-grained Descriptions": [
+            "A large plant-eating domesticated mammal with solid hoofs and a flowing mane and tail, used for riding, racing, and to carry and pull loads.",
+            "A majestic animal with a long head and muscular body, often found in stables, pastures, or galloping in open fields.",
+            "An equine creature with a strong back and long legs, commonly associated with farming, transportation, and equestrian sports."
+        ]
+    },
+    "ship": {
+        "Short Label": "Ship",
+        "Fine-grained Descriptions": [
+            "A large boat for transporting people or goods by sea or other large bodies of water.",
+            "A massive vessel with a hull, deck, and superstructure, often seen sailing on the ocean or docked at a port.",
+            "A watercraft of considerable size, such as a cargo ship, cruise liner, or naval vessel, navigating through water."
+        ]
+    },
+    "truck": {
+        "Short Label": "Truck",
+        "Fine-grained Descriptions": [
+            "A large, heavy motor vehicle used for transporting goods, materials, or troops.",
+            "A commercial vehicle with a cab for the driver and a large cargo area, commonly seen on highways and at loading docks.",
+            "A motor vehicle designed to carry heavy loads, characterized by its sturdy frame, multiple wheels, and powerful engine."
+        ]
+    }
+}

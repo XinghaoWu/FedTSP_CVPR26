@@ -75,7 +75,7 @@ class FedProtoEval(Server):
 
             if self.auto_break and self.check_done(acc_lss=[self.rs_test_acc], top_cnt=self.top_cnt):
                 break
-
+        self.save_model(tag='last')
         hyperparameters = {
             'lamda': self.args.lamda,
             'seed': self.args.seed
@@ -94,31 +94,41 @@ class FedProtoEval(Server):
 
         self.save_results()
 
-    def save_model(self):
+    def save_model(self, tag='best'):
         if not os.path.exists(self.model_save_path):
             os.makedirs(self.model_save_path)
 
         # save server proto
         try:
             PROTO = load_item(self.role, 'global_protos', self.save_folder_name)
-            torch.save(PROTO, f'{self.model_save_path}/global_proto.pth')
+            if tag == 'best':
+                torch.save(PROTO, f'{self.model_save_path}/global_proto.pth')
+            elif tag == 'last':
+                torch.save(PROTO, f'{self.model_save_path}/global_proto_last.pth')
+            else:
+                raise ValueError(f'Invalid tag: {tag}')
         except:
             print('No global protos to save')
 
         # save client models
         for client in self.clients:
-            client.save_model(save_dir=self.model_save_path)
+            client.save_model(save_dir=self.model_save_path, tag=tag)
 
-    def load_model(self):
+    def load_model(self, tag='best'):
         if not os.path.exists(self.model_save_path):
             raise ValueError(f'No model to load: {self.model_save_path}')
 
         # load server proto
-        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth')
+        if tag == 'best':
+            self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth', map_location=self.device)
+        elif tag == 'last':
+            self.global_proto = torch.load(f'{self.model_save_path}/global_proto_last.pth', map_location=self.device)
+        else:
+            raise ValueError(f'Invalid tag: {tag}')
 
         # load client models
         for c in self.clients:
-            c.load_model(save_dir=self.model_save_path)
+            c.load_model(save_dir=self.model_save_path, tag=tag)
 
         print('Loaded checkpoint models successfully')
         self.logger.info('Loaded checkpoint models successfully')
@@ -128,7 +138,7 @@ class FedProtoEval(Server):
             raise ValueError(f'No model to load: {self.model_save_path}')
 
         # load server proto
-        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth')
+        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth', map_location=self.device)
 
         print('Loaded checkpoint global protos successfully')
         self.logger.info('Loaded checkpoint global protos successfully')
@@ -226,7 +236,7 @@ class FedProtoEval(Server):
         ③ 打印三种指标的整体均值以及同构/异构均值
         """
         if round is None:
-            self.load_model()
+            self.load_model(tag='last')
 
         # -------- 1. 收集原型 --------
         client_proto_dict = {}
@@ -238,14 +248,14 @@ class FedProtoEval(Server):
         metric_mats = compute_coord_metric_matrices(client_proto_dict, client_ids)
         print(f'metric_mats: {metric_mats}')
 
-        # -------- 3. 针对模型架构生成 arch_id 列表 --------
-        # self.args.model_family 形如 'HtFE4' → 提取数字
-        import re
-        m = re.search(r'HtFE(\d+)', self.args.model_family)
-        if m is None:
-            raise ValueError(f"model_family '{self.args.model_family}' 不符合 HtFE# 格式")
-        num_arch = int(m.group(1))
-        arch_ids = [cid % num_arch for cid in client_ids]    # id 取模确定架构
+        # # -------- 3. 针对模型架构生成 arch_id 列表 --------
+        # # self.args.model_family 形如 'HtFE4' → 提取数字
+        # import re
+        # m = re.search(r'HtFE(\d+)', self.args.model_family)
+        # if m is None:
+        #     raise ValueError(f"model_family '{self.args.model_family}' 不符合 HtFE# 格式")
+        # num_arch = int(m.group(1))
+        # arch_ids = [cid % num_arch for cid in client_ids]    # id 取模确定架构
         # print(f'arch_ids: {arch_ids}')
 
         # -------- 4. 打印统计 --------
@@ -255,13 +265,13 @@ class FedProtoEval(Server):
             valid = valid[~np.isnan(valid)]
             print(f"{name:10}: {valid.mean():.4f}  (N={valid.size})")
 
-        print("\n=== Homogeneous vs. Heterogeneous ===")
-        for name, mat in metric_mats.items():
-            stats = compute_hom_het_stats(mat, arch_ids)
-            hom_mean, hom_N = stats['hom_mean']
-            het_mean, het_N = stats['het_mean']
-            print(f"{name:10}: hom {hom_mean:.4f} (N={hom_N}) | "
-                f"het {het_mean:.4f} (N={het_N})")
+        # print("\n=== Homogeneous vs. Heterogeneous ===")
+        # for name, mat in metric_mats.items():
+        #     stats = compute_hom_het_stats(mat, arch_ids)
+        #     hom_mean, hom_N = stats['hom_mean']
+        #     het_mean, het_N = stats['het_mean']
+        #     print(f"{name:10}: hom {hom_mean:.4f} (N={hom_N}) | "
+        #         f"het {het_mean:.4f} (N={het_N})")
 
         # -------- 5. 返回供后续绘图 / 保存 --------
         return metric_mats
@@ -685,7 +695,7 @@ def procrustes_coord_metrics(P: np.ndarray, Q: np.ndarray):
         angles_rad = subspace_angles(Ui, Uj)       # 返回长度 = k
         return np.degrees(angles_rad).mean()
     
-    theta_deg = mean_principal_angle(P, Q, k=min(2, P.shape[1]))
+    theta_deg = mean_principal_angle(P, Q, k=min(3, P.shape[1]))
 
     # --- 线性 CKA ---
     def linear_cka(X, Y):

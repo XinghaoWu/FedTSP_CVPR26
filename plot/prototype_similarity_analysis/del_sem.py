@@ -1,5 +1,7 @@
 import numpy as np
 import torch
+# import nltk
+# nltk.download('wordnet')
 
 # S : (C, C) numpy array of cosine similarities
 # a_idx, v_idx : lists of class indices
@@ -34,10 +36,14 @@ def delta_sym(S, a_idx, v_idx):
 
     return intra - AV
 
-S = torch.load('./save/Cifar10_dir_0.1_balance_20_HtFE2_FedTSPv4_bert_global_prototype_similarity_matrix.pt')
+# S = torch.load('./save/Cifar10_dir_0.1_balance_20_HtFE2_FedTSPv4_bert_global_prototype_similarity_matrix.pt')
+# S = torch.load('./save/Cifar10_dir_0.1_balance_20_HtFE9_FedTSPv4_ablation_2_TGP(1_1)_global_prototype_similarity_matrix.pt')
+S = torch.load('./save/Cifar10_dir_0.1_balance_20_HtFE9_FedTSPv4_ablation_2_TGP(3_40)_global_prototype_similarity_matrix.pt')
+# S = torch.load('./save/Cifar10_dir_0.1_balance_20_HtFE9_FedTSPv4_global_prototype_similarity_matrix.pt')
+
 S = np.array(S)
 # Example
-a_idx = [0, 1, 2, 3, 4, 5]      # bird, cat, deer, dog, frog, horse
+a_idx = [0, 1, 2, 3, 4, 5]      # bird, cat, deer, dog, frog, horse / bird, cat, deer, dog, horse, frog?
 v_idx = [6, 7, 8, 9]            # ship, truck, automobile, airplane
 Δ_sem = delta_sym(S, a_idx, v_idx)
 print(f"Δ_sym= {Δ_sem:.4f}")

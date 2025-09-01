@@ -103,7 +103,7 @@ class clientStruct(Client):
                             type(global_protos[c.item()]) != type([])):    # 该类在服务器有原型
                             selected_global.append(global_protos[c.item()].to(self.device))
                             valid_idx.append(idx_c)
-                    # print(f'selected global:{len(selected_global)}') 
+                    # print(f'selected global:{len(selected_global)}') +2
                     if selected_global and len(selected_global) > 1:                                # 至少存在 1 个有效类
                         proto_global = torch.stack(selected_global, 0)     # (N_valid, D)
                         proto_local  = proto_local[valid_idx]              # (N_valid, D)   # todo: 需要检查local和global是否对应
