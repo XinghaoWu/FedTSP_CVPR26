@@ -13,6 +13,22 @@ def cos_loss(x, y, t=1.0):
     cos_sim = F.cosine_similarity(x, y, dim=1)          # (B,)
     return (1 - cos_sim / t).mean()
 
+def cos_loss_detach(x: torch.Tensor, y: torch.Tensor, t: float = 1.0, eps: float = 1e-12):
+    """
+    方向-only 的 cosine loss：分母的 L2 范数 stop-grad。
+    x, y: (B, D)
+    t   : 温度（>0）
+    """
+    # 手动归一化 + 分母 stop-grad
+    x_norm = x.norm(dim=1, keepdim=True).detach().clamp_min(eps)
+    y_norm = y.norm(dim=1, keepdim=True).detach().clamp_min(eps)
+    x_hat = x / x_norm
+    y_hat = y / y_norm
+
+    cos_sim = (x_hat * y_hat).sum(dim=1)  # (B,)
+    # 保持你原有的温度用法
+    return (1.0 - cos_sim / t).mean()
+
 
 class clientProtoCos(clientProtoEval):
     def __init__(self, args, id, train_samples, test_samples, **kwargs):
@@ -20,6 +36,7 @@ class clientProtoCos(clientProtoEval):
         torch.manual_seed(0)
 
         self.lamda = args.lamda
+        self.tag = args.tag
 
         self.model = load_item(self.role, 'model', self.save_folder_name)
 
@@ -63,13 +80,18 @@ class clientProtoCos(clientProtoEval):
                         y_c = yy.item()
                         if type(global_protos[y_c]) != type([]):
                             proto_new[i, :] = global_protos[y_c].data
-                    cka_loss_val = cos_loss(rep, proto_new)
-                    loss += self.lamda * cka_loss_val
+                    if self.tag == 'detach':
+                        cos_loss_val = cos_loss_detach(rep, proto_new)
+                    else:
+                        cos_loss_val = cos_loss(rep, proto_new)
+                    loss += self.lamda * cos_loss_val
                     
 
-                for i, yy in enumerate(y):
-                    y_c = yy.item()
-                    protos[y_c].append(rep[i, :].detach().data)
+                # only accumulate features in the last epoch
+                if step == max_local_epochs - 1:
+                    for i, yy in enumerate(y):
+                        y_c = yy.item()
+                        protos[y_c].append(rep[i, :].detach().data)
 
                 optimizer.zero_grad()
                 # optimizer_logit_scale.zero_grad()

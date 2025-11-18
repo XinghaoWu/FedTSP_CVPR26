@@ -26,18 +26,21 @@ class FedProtoEval(Server):
         self.Budget = []
         self.num_classes = args.num_classes
 
+        # tag suffix for paths
+        tag_suffix = f'_tag({args.tag})' if hasattr(args, 'tag') and args.tag else ''
+
         # set logger
         if 'main.py' in self.caller_script:
-            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_seed{args.seed}/'
+            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}{tag_suffix}_seed{args.seed}/'
         else:
-            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
+            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}{tag_suffix}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
         self.set_loggers(logger_path)
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_seed{args.seed}')
+                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}{tag_suffix}_seed{args.seed}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_seed{args.seed}')
+                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}{tag_suffix}_seed{args.seed}')
 
         if 'main.py' in self.caller_script:
             self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary.txt'
@@ -45,6 +48,8 @@ class FedProtoEval(Server):
             self.final_log_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})/summary.txt'
 
     def train(self):
+        self.feature_metric_change = []
+        self.average_feature_metric_change = []
         for i in range(self.global_rounds+1):
             s_t = time.time()
             self.selected_clients = self.select_clients()
@@ -59,10 +64,22 @@ class FedProtoEval(Server):
                 if self.best_epoch == i:
                     if self.args.save_model != 0:
                         self.save_model()
-
+            client_feature_metric_change = {}
             for client in self.selected_clients:
+                # before_proto = client.get_local_prototpye()
                 client.train()
-
+                # after_proto = client.get_local_prototpye()
+                # abs_log_s, theta, cka = self.get_feature_metric_change(before_proto, after_proto)
+                abs_log_s, theta, cka = 0, 0, 0
+                client_feature_metric_change[client.id] = (abs_log_s, theta, cka)
+            self.feature_metric_change.append(client_feature_metric_change)
+            # 计算所有客户端三个指标的平均值
+            abs_log_s_mean = np.mean([v[0] for v in client_feature_metric_change.values()])
+            theta_mean = np.mean([v[1] for v in client_feature_metric_change.values()])
+            cka_mean = np.mean([v[2] for v in client_feature_metric_change.values()])
+            self.average_feature_metric_change.append((abs_log_s_mean, theta_mean, cka_mean))
+            print(f'Average feature metric change: {self.average_feature_metric_change[-1]}')
+            self.logger.info(f'Average feature metric change: {self.average_feature_metric_change[-1]}')
             # threads = [Thread(target=client.train)
             #            for client in self.selected_clients]
             # [t.start() for t in threads]
@@ -78,11 +95,23 @@ class FedProtoEval(Server):
         self.save_model(tag='last')
         hyperparameters = {
             'lamda': self.args.lamda,
+            'tag': self.args.tag,
             'seed': self.args.seed
         }
+        # 计算所有轮次特征指标变化的均值
+        if self.average_feature_metric_change:
+            avg_abs_log_s = np.mean([v[0] for v in self.average_feature_metric_change])
+            avg_theta = np.mean([v[1] for v in self.average_feature_metric_change])
+            avg_cka = np.mean([v[2] for v in self.average_feature_metric_change])
+        else:
+            avg_abs_log_s = avg_theta = avg_cka = np.nan
+            
         results = {
             'Best accuracy': self.best_acc,
             'Best epoch': self.best_epoch,
+            'Average abs_log_s': avg_abs_log_s,
+            'Average theta': avg_theta,
+            'Average cka': avg_cka,
         }
         self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
@@ -113,6 +142,9 @@ class FedProtoEval(Server):
         # save client models
         for client in self.clients:
             client.save_model(save_dir=self.model_save_path, tag=tag)
+        
+        # save feature metric change
+        torch.save(self.feature_metric_change, f'{self.model_save_path}/feature_metric_change.pth')
 
     def load_model(self, tag='best'):
         if not os.path.exists(self.model_save_path):
@@ -273,11 +305,41 @@ class FedProtoEval(Server):
         #     print(f"{name:10}: hom {hom_mean:.4f} (N={hom_N}) | "
         #         f"het {het_mean:.4f} (N={het_N})")
 
-        # -------- 5. 返回供后续绘图 / 保存 --------
+        # -------- 5. 写入结果到txt --------
+        result_dir = '../result'
+        os.makedirs(result_dir, exist_ok=True)
+
+        # 构建实验组文件名（不包含lamda）
+        exp_group_name = (f'{self.args.dataset}_{self.args.model_family}_{self.args.algorithm}_'
+                         f'gr{self.args.global_rounds}_ep{self.args.local_epochs}_'
+                         f'bs{self.args.batch_size}_nc{self.args.num_clients}_'
+                         f'lr{self.args.local_learning_rate}_tag({self.args.tag})_seed{self.args.seed}')
+        result_file = os.path.join(result_dir, f'{exp_group_name}.txt')
+
+        # 追加写入结果
+        with open(result_file, 'a') as f:
+            f.write(f'\nlamda={self.args.lamda}\n')
+            f.write("=== Overall Mean (上三角, 排除 NaN) ===\n")
+            for name, mat in metric_mats.items():
+                valid = mat[np.triu_indices_from(mat, k=1)]
+                valid = valid[~np.isnan(valid)]
+                f.write(f"{name:10}: {valid.mean():.4f}  (N={valid.size})\n")
+            f.write('-' * 50 + '\n')
+
+        # -------- 6. 返回供后续绘图 / 保存 --------
         return metric_mats
             
-        
-        
+    def get_feature_metric_change(self, before_proto, after_proto):
+        shared = get_shared_classes(before_proto, after_proto)
+        if len(shared) < 2:
+            # 若共享类不足 2，统计意义不够；保持 NaN
+            return 0, 0, 1
+
+        Pi = protos_to_matrix(before_proto, shared)  # (K,D)
+        Pj = protos_to_matrix(after_proto, shared)
+
+        abs_log_s, theta, _, _, cka = procrustes_coord_metrics(Pi, Pj)
+        return abs_log_s, theta, cka
 
     
     def get_prototype_semantic_similarity(self, metrics=('pearson', 'spearman', 'cka'), round=None):
@@ -664,16 +726,24 @@ def procrustes_coord_metrics(P: np.ndarray, Q: np.ndarray):
     M = Pc.T @ Qc                       # (D,D)
     U, S, Vt = np.linalg.svd(M, full_matrices=False)
     R = U @ Vt                          # 旋转
-    s = S.sum() / (np.linalg.norm(Pc)**2 + 1e-12)
+    # s = S.sum() / (np.linalg.norm(Pc)**2 + 1e-12)
+    s = S.sum() / (np.linalg.norm(Qc)**2 + 1e-12)   # 20250911 修改为Qc
 
     abs_log_s = abs(np.log(s + 1e-12))  # 对称尺度差异
+
+    # --- Frobenius 范数差异 ---
+    norm_diff = abs(np.log(np.linalg.norm(Pc, 'fro') + 1e-12) - np.log(np.linalg.norm(Qc, 'fro') + 1e-12))
+    # P_norm = np.log(np.linalg.norm(Pc, 'fro') + 1e-12)
+    # Q_norm = np.log(np.linalg.norm(Qc, 'fro') + 1e-12)
+    # norm_diff = abs(P_norm - Q_norm) / min(P_norm, Q_norm)
 
     # # --- 旋转角：用对角平均近似 principal angle ---
     # cos_theta = np.clip(np.diag(R).mean(), -1.0, 1.0)
     # theta_deg = np.degrees(np.arccos(cos_theta))
 
+    from scipy.linalg import subspace_angles, svd
     def mean_principal_angle(P, Q, k=None):
-        from scipy.linalg import subspace_angles, svd
+        # from scipy.linalg import subspace_angles, svd
 
         """
         P, Q : (K, D)  numpy arrays  (同一组 shared labels)
@@ -695,7 +765,62 @@ def procrustes_coord_metrics(P: np.ndarray, Q: np.ndarray):
         angles_rad = subspace_angles(Ui, Uj)       # 返回长度 = k
         return np.degrees(angles_rad).mean()
     
-    theta_deg = mean_principal_angle(P, Q, k=min(3, P.shape[1]))
+    def mean_principal_angle_right(P, Q, k=None, energy=0.90, weight=True):
+        # 1) 去均值
+        Pc = P - P.mean(0, keepdims=True)
+        Qc = Q - Q.mean(0, keepdims=True)
+        # 2) 取行空间（右奇异向量 V ∈ R^{D×r}）
+        _, S_p, Vt_p = svd(Pc, full_matrices=False)
+        _, S_q, Vt_q = svd(Qc, full_matrices=False)
+        V_p, V_q = Vt_p.T, Vt_q.T  # 形状：(D, r)
+        
+        if k is None:
+            # # 与左侧保持同样的“轻量默认”：取 k=2；你也可以改成能量阈值策略
+            # k = min(V_p.shape[1], V_q.shape[1], 2)
+
+            # 选择覆盖 energy 的维度数
+            def choose_k(S, thr=energy, eps=1e-12):
+                e = (S**2)
+                c = np.cumsum(e) / (e.sum() + eps)
+                return int(np.searchsorted(c, thr)) + 1
+
+            kp = choose_k(S_p, energy); kq = choose_k(S_q, energy)
+            k = min(kp, kq)
+            k = max(k, 3)
+            # print(f'k: {k}', end=' ')
+
+        # V_p, V_q = V_p[:, :k], V_q[:, :k]
+        # angles_rad = subspace_angles(V_p, V_q)
+        # return float(np.degrees(angles_rad).mean())
+
+        Vp, Vq = V_p[:, :k], V_q[:, :k]
+
+        # 角度（逐维）+ 按能量加权平均
+        ang = np.degrees(subspace_angles(Vp, Vq))  # len = k
+        # 用几何均值权重（稳健）
+        if weight:
+            w = np.sqrt((S_p[:k]**2) * (S_q[:k]**2))
+        else:
+            w = np.ones(k)
+        w = w / (w.sum() + 1e-12)
+        # print(f'right angle: {float((ang * w).sum())}')
+        return float((ang * w).sum())
+ 
+    def right_whiten(X, eps=1e-6):
+        Xm = X - X.mean(0, keepdims=True)
+        C = Xm.T @ Xm
+        # 对称平方根逆
+        evals, evecs = np.linalg.eigh(C + eps * np.eye(C.shape[0]))
+        W = evecs @ np.diag(1.0 / np.sqrt(np.clip(evals, eps, None))) @ evecs.T
+        return Xm @ W
+
+    theta_deg = mean_principal_angle(P, Q, k=min(2, P.shape[1]))
+    # theta_deg_right = mean_principal_angle_right(P, Q, k=min(2, P.shape[1]))
+    # print('right angle: ')
+    theta_deg_right = mean_principal_angle_right(P, Q, weight=True)
+    # print(f'right angle whiten: ')
+    Pw, Qw = right_whiten(P), right_whiten(Q)
+    theta_deg_right_whiten = mean_principal_angle_right(Pw, Qw, weight=False)
 
     # --- 线性 CKA ---
     def linear_cka(X, Y):
@@ -712,10 +837,11 @@ def procrustes_coord_metrics(P: np.ndarray, Q: np.ndarray):
 
         # Compute the CKA score
         cka_value = torch.trace(gram_X @ gram_Y) / (torch.norm(gram_X) * torch.norm(gram_Y))
-        return cka_value
+        # return cka_value
+        return float(cka_value)
 
     cka_val = linear_cka(P, Q)
-    return abs_log_s, theta_deg, cka_val
+    return abs_log_s, norm_diff, theta_deg, theta_deg_right, theta_deg_right_whiten, cka_val
 
 
 # ---------- 全客户端两两计算矩阵 ----------
@@ -726,12 +852,14 @@ def compute_coord_metric_matrices(client_proto_dict, client_ids):
         metrics : dict
             {
               'abs_log_s': np.ndarray (n,n),
+              'norm_diff': np.ndarray (n,n),
               'theta'    : np.ndarray (n,n),
+              'theta_right'    : np.ndarray (n,n),
               'cka'      : np.ndarray (n,n),
             }
     """
     n = len(client_ids)
-    mats = {m: np.full((n, n), np.nan) for m in ('abs_log_s', 'theta', 'cka')}
+    mats = {m: np.full((n, n), np.nan) for m in ('abs_log_s', 'norm_diff', 'theta', 'theta_right', 'theta_right_whiten', 'cka')}
 
     for i, ci in enumerate(client_ids):
         for j, cj in enumerate(client_ids):
@@ -746,16 +874,22 @@ def compute_coord_metric_matrices(client_proto_dict, client_ids):
             Pi = protos_to_matrix(proto_i, shared)  # (K,D)
             Pj = protos_to_matrix(proto_j, shared)
 
-            abs_log_s, theta, cka = procrustes_coord_metrics(Pi, Pj)
+            abs_log_s, norm_diff, theta, theta_right, theta_right_whiten, cka = procrustes_coord_metrics(Pi, Pj)
 
             # 对称填充
             mats['abs_log_s'][i, j] = mats['abs_log_s'][j, i] = abs_log_s
+            mats['norm_diff'][i, j] = mats['norm_diff'][j, i] = norm_diff
             mats['theta'][i, j]     = mats['theta'][j, i]     = theta
+            mats['theta_right'][i, j] = mats['theta_right'][j, i] = theta_right
+            mats['theta_right_whiten'][i, j] = mats['theta_right_whiten'][j, i] = theta_right_whiten
             mats['cka'][i, j]       = mats['cka'][j, i]       = cka
 
     # 对角线：自己与自己
     np.fill_diagonal(mats['abs_log_s'], 0.0)
+    np.fill_diagonal(mats['norm_diff'], 0.0)
     np.fill_diagonal(mats['theta'],      0.0)
+    np.fill_diagonal(mats['theta_right'], 0.0)
+    np.fill_diagonal(mats['theta_right_whiten'], 0.0)
     np.fill_diagonal(mats['cka'],        1.0)
     return mats
 

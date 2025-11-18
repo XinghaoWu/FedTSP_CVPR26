@@ -10,6 +10,49 @@ from collections import defaultdict
 import torch.nn.functional as F
 import math
 
+def cka_loss_detach(X: torch.Tensor, Y: torch.Tensor, eps: float = 1e-12):
+    """
+    线性 CKA 的 Gram 版，分母的范数 stop-grad。
+    X, Y: (N, D)
+    返回: 1 - CKA
+    """
+    Xc = X - X.mean(dim=0, keepdim=True)
+    Yc = Y - Y.mean(dim=0, keepdim=True)
+
+    Gx = Xc @ Xc.T      # (N, N)
+    Gy = Yc @ Yc.T      # (N, N)
+
+    num = torch.trace(Gx @ Gy)  # = <Gx, Gy>_F
+
+    den_x = torch.norm(Gx).detach()
+    den_y = torch.norm(Gy).detach()
+    den = (den_x * den_y).clamp_min(eps)
+
+    cka = num / den
+    return 1.0 - cka
+
+def cka_loss_detach_cov(X: torch.Tensor, Y: torch.Tensor, eps: float = 1e-12):
+    """
+    线性 CKA 的协方差式（推荐）：在 D×D 上计算，分母 stop-grad。
+    X, Y: (N, D)
+    返回: 1 - CKA
+    """
+    Xc = X - X.mean(dim=0, keepdim=True)
+    Yc = Y - Y.mean(dim=0, keepdim=True)
+
+    XtY = Xc.T @ Yc     # (D, D)
+    XtX = Xc.T @ Xc     # (D, D)
+    YtY = Yc.T @ Yc     # (D, D)
+
+    num = (XtY * XtY).sum()  # ||XtY||_F^2
+
+    den_x = torch.sqrt((XtX * XtX).sum()).detach()
+    den_y = torch.sqrt((YtY * YtY).sum()).detach()
+    den = (den_x * den_y).clamp_min(eps)
+
+    cka = num / den
+    return 1.0 - cka
+
 
 class clientProtoCKA(clientProtoEval):
     def __init__(self, args, id, train_samples, test_samples, **kwargs):
@@ -17,6 +60,7 @@ class clientProtoCKA(clientProtoEval):
         torch.manual_seed(0)
 
         self.lamda = args.lamda
+        self.tag = args.tag
 
         self.model = load_item(self.role, 'model', self.save_folder_name)
 
@@ -60,13 +104,23 @@ class clientProtoCKA(clientProtoEval):
                         y_c = yy.item()
                         if type(global_protos[y_c]) != type([]):
                             proto_new[i, :] = global_protos[y_c].data
-                    cka_loss_val = cka_loss(rep, proto_new)
+                    if self.tag == 'detach':
+                        cka_loss_val = cka_loss_detach(rep, proto_new)
+                    elif self.tag == 'detach_cov':
+                        cka_loss_val = cka_loss_detach_cov(rep, proto_new)
+                        print(f'detach_cov', end=' ')
+                    elif self.tag == '':
+                        cka_loss_val = cka_loss(rep, proto_new)
+                        print(f'default cka', end=' ')
+                    else: raise NotImplementedError
                     loss += self.lamda * cka_loss_val
                     
 
-                for i, yy in enumerate(y):
-                    y_c = yy.item()
-                    protos[y_c].append(rep[i, :].detach().data)
+                # only accumulate features in the last epoch
+                if step == max_local_epochs - 1:
+                    for i, yy in enumerate(y):
+                        y_c = yy.item()
+                        protos[y_c].append(rep[i, :].detach().data)
 
                 optimizer.zero_grad()
                 # optimizer_logit_scale.zero_grad()

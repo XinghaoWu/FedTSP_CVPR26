@@ -81,9 +81,17 @@ def run(args):
             args.models = [
                 'resnet4(num_classes=args.num_classes)',
             ]
+        elif args.model_family == "resnet6":
+            args.models = [
+                'resnet6(num_classes=args.num_classes)',
+            ]
         elif args.model_family == "resnet8":
             args.models = [
                 'resnet8(num_classes=args.num_classes)',
+            ]
+        elif args.model_family == "resnet10":
+            args.models = [
+                'resnet10(num_classes=args.num_classes)',
             ]
         elif args.model_family == "resnet18":
             args.models = [
@@ -581,6 +589,9 @@ if __name__ == "__main__":
     parser.add_argument('--version', type=int, default=1, help='distinguish the version of the proposed method')
     parser.add_argument('--gamma', type=float, default=1, help='weight of feature CKA loss')
     parser.add_argument('--rotation', type=int, default=1, help='whether rotate local proto before aggregation. set 0 to rotate')
+
+    # FedProtoCKA
+    parser.add_argument('--tag', type=str, default='', help='tag for cka loss type: "detach" uses cka_loss_detach, otherwise uses cka_loss')
 
     parser.add_argument('--save_model', type=int, default=1, help='Whether to save models. Set 0 to not save')
 

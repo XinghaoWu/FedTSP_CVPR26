@@ -1,0 +1,140 @@
+
+lamda=1e-05
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.4315  (N=36)
+norm_diff : 0.4034  (N=36)
+theta     : 44.2544  (N=36)
+theta_right: 85.4162  (N=36)
+theta_right_whiten: 83.4312  (N=36)
+cka       : 0.8972  (N=36)
+--------------------------------------------------
+
+lamda=5e-05
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.4317  (N=36)
+norm_diff : 0.4045  (N=36)
+theta     : 43.8251  (N=36)
+theta_right: 85.2783  (N=36)
+theta_right_whiten: 83.2620  (N=36)
+cka       : 0.8999  (N=36)
+--------------------------------------------------
+
+lamda=0.0001
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.4318  (N=36)
+norm_diff : 0.4048  (N=36)
+theta     : 44.0362  (N=36)
+theta_right: 85.4404  (N=36)
+theta_right_whiten: 83.3718  (N=36)
+cka       : 0.9003  (N=36)
+--------------------------------------------------
+
+lamda=0.0005
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.4313  (N=36)
+norm_diff : 0.4043  (N=36)
+theta     : 43.4728  (N=36)
+theta_right: 85.4695  (N=36)
+theta_right_whiten: 83.3841  (N=36)
+cka       : 0.8986  (N=36)
+--------------------------------------------------
+
+lamda=0.001
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.4295  (N=36)
+norm_diff : 0.4020  (N=36)
+theta     : 41.6762  (N=36)
+theta_right: 85.5328  (N=36)
+theta_right_whiten: 83.4292  (N=36)
+cka       : 0.9068  (N=36)
+--------------------------------------------------
+
+lamda=0.005
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.4490  (N=36)
+norm_diff : 0.4130  (N=36)
+theta     : 35.1331  (N=36)
+theta_right: 86.4403  (N=36)
+theta_right_whiten: 83.0520  (N=36)
+cka       : 0.8759  (N=36)
+--------------------------------------------------
+
+lamda=0.01
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.5034  (N=36)
+norm_diff : 0.4313  (N=36)
+theta     : 34.0840  (N=36)
+theta_right: 87.1928  (N=36)
+theta_right_whiten: 82.4239  (N=36)
+cka       : 0.8328  (N=36)
+--------------------------------------------------
+
+lamda=0.05
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.5285  (N=36)
+norm_diff : 0.4934  (N=36)
+theta     : 33.6564  (N=36)
+theta_right: 87.3693  (N=36)
+theta_right_whiten: 79.5833  (N=36)
+cka       : 0.8365  (N=36)
+--------------------------------------------------
+
+lamda=0.1
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.7147  (N=36)
+norm_diff : 0.6827  (N=36)
+theta     : 38.6898  (N=36)
+theta_right: 87.2511  (N=36)
+theta_right_whiten: 77.4063  (N=36)
+cka       : 0.8647  (N=36)
+--------------------------------------------------
+
+lamda=0.5
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.6668  (N=36)
+norm_diff : 0.6648  (N=36)
+theta     : 35.2121  (N=36)
+theta_right: 87.5429  (N=36)
+theta_right_whiten: 72.5843  (N=36)
+cka       : 0.9814  (N=36)
+--------------------------------------------------
+
+lamda=1.0
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.3758  (N=36)
+norm_diff : 0.3765  (N=36)
+theta     : 30.6826  (N=36)
+theta_right: 85.8604  (N=36)
+theta_right_whiten: 68.9838  (N=36)
+cka       : 0.9973  (N=36)
+--------------------------------------------------
+
+lamda=5.0
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.3370  (N=36)
+norm_diff : 0.3379  (N=36)
+theta     : 17.5830  (N=36)
+theta_right: 87.0845  (N=36)
+theta_right_whiten: 68.6688  (N=36)
+cka       : 0.9981  (N=36)
+--------------------------------------------------
+
+lamda=10.0
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.4160  (N=36)
+norm_diff : 0.4228  (N=36)
+theta     : 16.1382  (N=36)
+theta_right: 86.7118  (N=36)
+theta_right_whiten: 74.4320  (N=36)
+cka       : 0.9798  (N=36)
+--------------------------------------------------
+
+lamda=20.0
+=== Overall Mean (上三角, 排除 NaN) ===
+abs_log_s : 0.2925  (N=36)
+norm_diff : 0.2950  (N=36)
+theta     : 15.8778  (N=36)
+theta_right: 86.5239  (N=36)
+theta_right_whiten: 81.1676  (N=36)
+cka       : 0.9943  (N=36)
+--------------------------------------------------
