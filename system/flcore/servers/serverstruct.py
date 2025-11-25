@@ -203,24 +203,23 @@ class FedStruct(Server):
             idx = mask.nonzero(as_tuple=True)[0]
             # print(f'idx numel:{idx.numel()}')
             if idx.numel() >= 2:
-                M     = P_k_c[idx] @ P_g_c[idx].T
-                U, _, Vt = torch.linalg.svd(M, full_matrices=False)
-                R_small  = Vt.T @ U.T                              # (C',C')
-                # 嵌入完整 R_full
-                R_full = torch.eye(self.num_classes, device=self.device)
-                # if idx.numel() == 2:
-                #     print(f'变换前的大矩阵:{R_full}')
-                #     print(f'变换前的小矩阵:{R_small}')
-                R_full[idx.unsqueeze(1), idx] = R_small
-                # R_full[torch.ix_(idx, idx)] = R_small
-                    # print(idx)
-                    # print(f'嵌入后的大矩阵:{R_full}')
-                    # exit(1)
-            else:
-                R_full = torch.eye(self.num_classes, device=self.device)
+                # 取共有类别的子矩阵 (C',D)
+                Pk_sub = P_k_c[idx]                              # (C',D)
+                Pg_sub = P_g_c[idx]                              # (C',D)
 
-            # 旋转后加回全局平移
-            P_k_align = (R_full @ P_k_c) + g_mean                  # (C,D)
+                # 经典特征空间 Procrustes：min_R || Pk_sub R - Pg_sub ||_F
+                M = Pk_sub.T @ Pg_sub                            # (D,D)
+                U, _, Vt = torch.linalg.svd(M, full_matrices=False)
+                R_D = U @ Vt                                     # (D,D) 旋转矩阵
+
+                # 对整张 P_k_c 在特征维做旋转
+                P_k_align = P_k_c @ R_D                          # (C,D)
+            else:
+                # 共享类太少，无法估计稳定旋转 → 不做旋转
+                P_k_align = P_k_c                                # (C,D)
+
+            # 加回全局平移
+            P_k_align = P_k_align + g_mean                       # (C,D)
 
             # 只把真实行放进桶
             for lbl_idx in idx.tolist():
