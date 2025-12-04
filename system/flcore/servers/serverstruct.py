@@ -14,6 +14,22 @@ class FedStruct(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
 
+        # Check if we should skip existing experiments
+        if hasattr(args, 'skip_exist') and args.skip_exist == 1:
+            # Construct logger_path to check existence
+            if 'main.py' in self.caller_script:
+                logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_struct({args.struct_loss_type})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_seed{args.seed}/'
+            else:
+                logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_struct({args.struct_loss_type})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
+
+            if os.path.exists(logger_path):
+                print(f"\n[SKIP] Logger path already exists: {logger_path}")
+                print(f"[SKIP] Skipping this hyperparameter combination (skip_exist=1)")
+                self.skip_training = True
+                return
+
+        self.skip_training = False
+
         # select slow clients
         self.set_slow_clients()
         self.set_clients(clientStruct)
@@ -27,16 +43,16 @@ class FedStruct(Server):
 
         # set logger
         if 'main.py' in self.caller_script:
-            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_seed{args.seed}/'
+            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_struct({args.struct_loss_type})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_seed{args.seed}/'
         else:
-            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
+            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_struct({args.struct_loss_type})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
         self.set_loggers(logger_path)
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_'
-                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_seed{args.seed}')
+                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_struct({args.struct_loss_type})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_seed{args.seed}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_'
-                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_seed{args.seed}')
+                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_struct({args.struct_loss_type})_rot{args.rotation}_lamda{args.lamda}_gamma{args.gamma}_beta{args.beta}_seed{args.seed}')
 
         if 'main.py' in self.caller_script:
             self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}_v{args.version}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary.txt'
@@ -46,6 +62,11 @@ class FedStruct(Server):
         self.global_proto = None
 
     def train(self):
+        # Check if training should be skipped
+        if hasattr(self, 'skip_training') and self.skip_training:
+            print("[SKIP] Training skipped for this hyperparameter combination.")
+            return
+
         for i in range(self.global_rounds+1):
             s_t = time.time()
             self.selected_clients = self.select_clients()
@@ -79,7 +100,9 @@ class FedStruct(Server):
             self.Budget.append(time.time() - s_t)
             print('-'*50, self.Budget[-1])
 
-            if self.auto_break and self.check_done(acc_lss=[self.rs_test_acc], top_cnt=self.top_cnt):
+            if i - self.best_epoch >= self.args.tolerance:
+                print(f'The best accuracy has not changed for {self.args.tolerance} rounds; stopping automatically.')
+                self.logger.info(f'The best accuracy has not changed for {self.args.tolerance} rounds; stopping automatically.')
                 break
 
         hyperparameters = {
@@ -87,6 +110,7 @@ class FedStruct(Server):
             'gamma': self.args.gamma,
             'beta': self.args.beta,
             'rotation': self.args.rotation,
+            'struct_loss': self.args.struct_loss_type,
             'seed': self.args.seed
         }
         results = {
@@ -198,6 +222,8 @@ class FedStruct(Server):
             P_k, mask = dict_to_mat(proto_dict, self.label_order,
                                     self.device, fill_mat=P_g)   # (C,D)
             P_k_c = P_k - P_k.mean(0, keepdim=True)
+            # print(f'!!!!!!!!!!!!!!!!!!! P_g:{P_g} !!!!!!!!!!!!!!!!!!!!!!')
+            # print(f'!!!!!!!!!!!!!!!!!!! P_k:{P_k} !!!!!!!!!!!!!!!!!!!!!!')
 
             # 仅用真实行估计旋转 R_small
             idx = mask.nonzero(as_tuple=True)[0]
@@ -209,11 +235,24 @@ class FedStruct(Server):
 
                 # 经典特征空间 Procrustes：min_R || Pk_sub R - Pg_sub ||_F
                 M = Pk_sub.T @ Pg_sub                            # (D,D)
-                U, _, Vt = torch.linalg.svd(M, full_matrices=False)
-                R_D = U @ Vt                                     # (D,D) 旋转矩阵
-
-                # 对整张 P_k_c 在特征维做旋转
-                P_k_align = P_k_c @ R_D                          # (C,D)
+                # print(f'!!!!!!!!!!!!!!!!!!! M:{M} !!!!!!!!!!!!!!!!!!!!!!')
+                try:
+                    U, _, Vt = torch.linalg.svd(M, full_matrices=False)
+                    R_D = U @ Vt                                     # (D,D) 旋转矩阵
+                    P_k_align = P_k_c @ R_D                          # (C,D)
+                except torch._C._LinAlgError:
+                    # print(f'!!!!!!!!!!!!!!!!!!! SVD失败，添加正则化重新拟合 !!!!!!!!!!!!!!!!!!!!!!')
+                    # 添加正则化重试
+                    eps = 1e-6
+                    M_reg = M + eps * torch.eye(M.shape[0], device=M.device)
+                    try:
+                        U, _, Vt = torch.linalg.svd(M_reg, full_matrices=False)
+                        R_D = U @ Vt
+                        P_k_align = P_k_c @ R_D
+                    except torch._C._LinAlgError:
+                        # print(f'!!!!!!!!!!!!!!!!!!! 正则化后仍然失败 !!!!!!!!!!!!!!!!!!!!!!')
+                        # 仍然失败，不做旋转
+                        P_k_align = P_k_c
             else:
                 # 共享类太少，无法估计稳定旋转 → 不做旋转
                 P_k_align = P_k_c                                # (C,D)
