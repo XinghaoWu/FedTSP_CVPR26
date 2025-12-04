@@ -23,6 +23,8 @@ def pairwise_l2_distance(X, eps: float = 1e-12):
     Dmat = torch.sqrt(dist_sq + eps)
     return Dmat
 
+# ===================== 结构对齐家族 =====================
+
 def cka_loss(X, Y):
     """
     Calculate the CKA loss between two feature sets X and Y.
@@ -93,12 +95,27 @@ def rdm_cos_loss(X, Y, eps: float = 1e-12):
     cos_sim = (vX @ vY) / denom
     return 1.0 - cos_sim
 
-def struct_loss(X, Y, mode: str = "cka"):
+# ===================== 坐标对齐：MSE / Cosine =====================
+def coord_mse_loss(X, Y):
     """
-    Unified structural alignment loss.
+    Coordinate-level MSE alignment.
+    直接对每个样本 / prototype 做点对点 L2，对应传统的 MSE feature alignment。
     X, Y: (N, D)
-    mode: one of {"cka", "gram_mse", "rdm_mse", "rdm_cos"}
     """
+    return F.mse_loss(X, Y)
+
+
+def coord_cosine_loss(X, Y):
+    """
+    Coordinate-level cosine alignment.
+    对每一行计算 cosine similarity，然后取平均，loss = 1 - mean_cos。
+    X, Y: (N, D)
+    """
+    # N==0 理论上不会出现；N==1 也没问题
+    cos = F.cosine_similarity(X, Y, dim=1)   # (N,)
+    return 1.0 - cos.mean()
+
+def struct_loss(X, Y, mode: str = "cka"):
     if mode == "cka":
         return cka_loss(X, Y)
     elif mode == "gram_mse":
@@ -107,6 +124,10 @@ def struct_loss(X, Y, mode: str = "cka"):
         return rdm_mse_loss(X, Y)
     elif mode == "rdm_cos":
         return rdm_cos_loss(X, Y)
+    elif mode == "mse":
+        return coord_mse_loss(X, Y)
+    elif mode == "cosine":
+        return coord_cosine_loss(X, Y)
     else:
         raise ValueError(f"Unknown struct_loss mode: {mode}")
 
