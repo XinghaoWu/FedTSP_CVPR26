@@ -23,6 +23,17 @@ def pairwise_l2_distance(X, eps: float = 1e-12):
     Dmat = torch.sqrt(dist_sq + eps)
     return Dmat
 
+def pairwise_l2_distance_sq(X):
+    """
+    Compute pairwise squared L2 distance matrix for X.
+    X: (N, D)
+    Return: Dmat_sq: (N, N), Dmat_sq[i, j] = ||x_i - x_j||_2^2
+    """
+    X_norm_sq = (X ** 2).sum(dim=1, keepdim=True)             # (N, 1)
+    dist_sq = X_norm_sq + X_norm_sq.T - 2.0 * (X @ X.T)       # (N, N)
+    dist_sq = torch.clamp(dist_sq, min=0.0)
+    return dist_sq
+
 # ===================== 结构对齐家族 =====================
 
 def cka_loss(X, Y):
@@ -71,6 +82,20 @@ def rdm_mse_loss(X, Y):
     D_Y = pairwise_l2_distance(Y)   # (N, N)
     return F.mse_loss(D_X, D_Y)
 
+def rdm_mse_sq_loss(X, Y, normalize: bool = False):
+    """
+    RDM-MSE structural loss.
+    S: L2 distance matrix D(i,j) = ||x_i - x_j||_2
+    D: L2 (Frobenius MSE between distance matrices)
+    X, Y: (N, D)
+    """
+    if normalize:
+        X = F.normalize(X, dim=1)
+        Y = F.normalize(Y, dim=1)
+    D_X = pairwise_l2_distance_sq(X)
+    D_Y = pairwise_l2_distance_sq(Y)
+    return F.mse_loss(D_X, D_Y)
+
 def rdm_cos_loss(X, Y, eps: float = 1e-12):
     """
     RDM-Cos structural loss.
@@ -85,6 +110,34 @@ def rdm_cos_loss(X, Y, eps: float = 1e-12):
 
     D_X = pairwise_l2_distance(X)   # (N, N)
     D_Y = pairwise_l2_distance(Y)   # (N, N)
+
+    # take upper triangle (i < j) to avoid duplicates and zeros on diagonal
+    idx = torch.triu_indices(N, N, offset=1, device=X.device)
+    vX = D_X[idx[0], idx[1]]        # (N*(N-1)/2,)
+    vY = D_Y[idx[0], idx[1]]        # (N*(N-1)/2,)
+
+    denom = (vX.norm() * vY.norm()).clamp_min(eps)
+    cos_sim = (vX @ vY) / denom
+    return 1.0 - cos_sim
+
+def rdm_cos_sq_loss(X, Y, eps: float = 1e-12, normalize: bool = False):
+    """
+    RDM-Cos structural loss.
+    S: L2 distance matrix D(i,j) = ||x_i - x_j||_2
+    D: cosine similarity between vectorized upper-triangular distance entries
+    X, Y: (N, D)
+    """
+    N = X.size(0)
+    if N <= 1:
+        # too few points to define a meaningful structure
+        return torch.tensor(0.0, device=X.device)
+
+    if normalize:
+        X = F.normalize(X, dim=1)
+        Y = F.normalize(Y, dim=1)
+
+    D_X = pairwise_l2_distance_sq(X)   # (N, N)
+    D_Y = pairwise_l2_distance_sq(Y)   # (N, N)
 
     # take upper triangle (i < j) to avoid duplicates and zeros on diagonal
     idx = torch.triu_indices(N, N, offset=1, device=X.device)
@@ -124,6 +177,14 @@ def struct_loss(X, Y, mode: str = "cka"):
         return rdm_mse_loss(X, Y)
     elif mode == "rdm_cos":
         return rdm_cos_loss(X, Y)
+    elif mode == "rdm_mse_sq":
+        return rdm_mse_sq_loss(X, Y)
+    elif mode == "rdm_cos_sq":
+        return rdm_cos_sq_loss(X, Y)
+    elif mode == "rdm_mse_sq_norm":
+        return rdm_mse_sq_loss(X, Y, normalize=True)
+    elif mode == "rdm_cos_sq_norm":
+        return rdm_cos_sq_loss(X, Y, normalize=True)
     elif mode == "mse":
         return coord_mse_loss(X, Y)
     elif mode == "cosine":

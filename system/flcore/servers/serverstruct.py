@@ -309,7 +309,116 @@ class FedStruct(Server):
         results['mse'] = mse_matrix_dis
         print(results)
 
-    
+    def visualize_prototypes_tsne(self):
+        """
+        1. 加载checkpoint
+        2. 收集每个客户端的Local Prototype
+        3. 使用t-SNE可视化, 用颜色区分不同客户端, 用marker区分类别
+        """
+        import matplotlib.pyplot as plt
+        from sklearn.manifold import TSNE
+
+        # 1. 加载checkpoint
+        self.load_model()
+        print("Loaded checkpoint successfully")
+
+        # 2. 收集每个客户端的Local Prototype
+        client_proto_dict = {}
+        all_prototypes = []
+        all_client_ids = []
+        all_class_labels = []
+
+        for client in self.clients:
+            prototype = client.get_local_prototpye()
+            client_proto_dict[client.id] = prototype
+
+            # 收集该客户端的所有prototype
+            for class_id, proto_tensor in prototype.items():
+                all_prototypes.append(proto_tensor.detach().cpu().numpy())
+                all_client_ids.append(client.id)
+                all_class_labels.append(class_id)
+
+        print(f"Collected {len(all_prototypes)} prototypes from {len(self.clients)} clients")
+
+        # 3. 使用t-SNE降维
+        all_prototypes = np.array(all_prototypes)
+        print(f"Prototype shape: {all_prototypes.shape}")
+
+        tsne = TSNE(n_components=2, random_state=42, perplexity=min(30, len(all_prototypes)-1))
+        prototypes_2d = tsne.fit_transform(all_prototypes)
+
+        # 4. 可视化
+        fig, ax = plt.subplots(figsize=(12, 10))
+
+        # 定义颜色映射(每个客户端一种颜色)
+        colors = plt.cm.tab20(np.linspace(0, 1, len(self.clients)))
+
+        # 定义marker映射(每个类别一种marker)
+        markers = ['o', 's', '^', 'v', 'D', 'P', '*', 'X', 'p', 'H',
+                   'd', '<', '>', '1', '2', '3', '4', '8', 'h', '+']
+        num_classes = self.num_classes
+
+        # 为每个客户端-类别组合绘制点
+        for client_id in range(len(self.clients)):
+            for class_id in range(num_classes):
+                # 找到属于该客户端和类别的点
+                mask = np.array([(cid == client_id and cls == class_id)
+                                for cid, cls in zip(all_client_ids, all_class_labels)])
+
+                if mask.any():
+                    ax.scatter(prototypes_2d[mask, 0],
+                              prototypes_2d[mask, 1],
+                              c=[colors[client_id]],
+                              marker=markers[class_id % len(markers)],
+                              s=100,
+                              alpha=0.7,
+                              edgecolors='black',
+                              linewidths=0.5,
+                              label=f'Client {client_id}, Class {class_id}' if class_id == 0 else '')
+
+        # 创建图例: 颜色表示客户端
+        from matplotlib.patches import Patch
+        legend_elements_clients = [Patch(facecolor=colors[i], edgecolor='black', label=f'Client {i}')
+                                  for i in range(len(self.clients))]
+
+        # 创建图例: marker表示类别
+        from matplotlib.lines import Line2D
+        legend_elements_classes = [Line2D([0], [0], marker=markers[i % len(markers)], color='w',
+                                         markerfacecolor='gray', markersize=10,
+                                         label=f'Class {i}', markeredgecolor='black')
+                                  for i in range(num_classes)]
+
+        # 添加两个图例
+        first_legend = ax.legend(handles=legend_elements_clients,
+                                loc='upper left',
+                                bbox_to_anchor=(1.02, 1),
+                                title='Clients',
+                                fontsize=8)
+        ax.add_artist(first_legend)
+
+        ax.legend(handles=legend_elements_classes,
+                 loc='upper left',
+                 bbox_to_anchor=(1.02, 0.5),
+                 title='Classes',
+                 fontsize=8)
+
+        ax.set_title('t-SNE Visualization of Client Prototypes\n(Color=Client, Marker=Class)',
+                     fontsize=14, fontweight='bold')
+        ax.set_xlabel('t-SNE Component 1', fontsize=12)
+        ax.set_ylabel('t-SNE Component 2', fontsize=12)
+        ax.grid(True, alpha=0.3)
+
+        plt.tight_layout()
+
+        # 保存图片
+        os.makedirs(self.plot_path, exist_ok=True)
+        save_path = os.path.join(self.plot_path, 'prototype_tsne_visualization.png')
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        print(f"t-SNE visualization saved to: {save_path}")
+        plt.close()
+
+        return client_proto_dict, prototypes_2d
+
     def get_prototype_semantic_similarity(self, metrics=('pearson', 'spearman', 'cka'), round=None):
         if round is None:   # post-training validation
             self.load_model()
@@ -320,7 +429,7 @@ class FedStruct(Server):
             prototype = client.get_local_prototpye()
             client_proto_dict[client.id] = prototype
             client_protos.append(prototype)
-        
+
         # 增加计算全局prototype，将其作为最后一个客户端计算相似度
         global_prototye = proto_aggregation(client_protos)
         client_proto_dict[len(self.clients)] = global_prototye
@@ -328,11 +437,11 @@ class FedStruct(Server):
         client_ids = list(client_proto_dict.keys())
         results = compute_prototype_similarity_missing_safe(client_proto_dict, client_ids, metrics=('pearson', 'spearman', 'cka'))
 
-        
+
         # ===== Cosine & MSE Difference Matrix =====
         cosine_matrix_dis = compute_cosine_distance_matrix(client_proto_dict)
         mse_matrix_dis = compute_mse_distance_matrix(client_proto_dict)
-        
+
         results['cosine'] = cosine_matrix_dis
         results['mse'] = mse_matrix_dis
 
@@ -344,6 +453,101 @@ class FedStruct(Server):
         plot_similarity_heatmap(cosine_matrix_dis, client_ids, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_Cosine_Distance', round=round)
         plot_similarity_heatmap(mse_matrix_dis, client_ids, self.plot_path, f'{self.args.dataset}_{self.args.model_family}_MSE_Distance', round=round)
         return client_ids, results
+
+    def compute_effective_dimension(self):
+        """
+        计算所有客户端local prototype的有效维度。
+        流程：
+        1. 加载客户端的checkpoint
+        2. 收集所有客户端的local prototype
+        3. 叠放在一起（形成矩阵）
+        4. 归一化（L2 norm）
+        5. 去均值（center）
+        6. SVD分解
+        7. 计算有效维度
+
+        Returns:
+            dict: {
+                'effective_dim': float,           # 有效维度（奇异值的贡献比例）
+                'singular_values': np.ndarray,   # 所有奇异值
+                'cumsum_ratio': np.ndarray,      # 奇异值累计贡献比例
+                'total_samples': int,            # 总的原型向量数
+                'feature_dim': int,              # 特征维度
+                'data_matrix_shape': tuple,      # 数据矩阵的形状
+            }
+        """
+        # 1. 加载checkpoint
+        print("[INFO] Loading client checkpoints...")
+        self.load_model()
+
+        # 2. 收集所有客户端的local prototype
+        print("[INFO] Collecting client prototypes...")
+        all_prototypes = []
+
+        for client in self.clients:
+            prototype = client.get_local_prototpye()  # dict: {class_id: tensor}
+
+            # 将该客户端的所有class prototype提取为向量
+            for class_id in sorted(prototype.keys()):
+                proto_vector = prototype[class_id].detach().cpu().numpy()
+                all_prototypes.append(proto_vector)
+
+        # 3. 叠放在一起形成矩阵 (N, D)
+        # N = 总prototype数量, D = 特征维度
+        data_matrix = np.vstack(all_prototypes)
+        print(f"[INFO] Data matrix shape: {data_matrix.shape} (samples={data_matrix.shape[0]}, features={data_matrix.shape[1]})")
+
+        # 4. L2归一化（每个样本单独归一化）
+        print("[INFO] Normalizing data (L2 norm)...")
+        norms = np.linalg.norm(data_matrix, axis=1, keepdims=True)
+        norms[norms == 0] = 1  # 避免除零
+        data_matrix_normalized = data_matrix / norms
+
+        # 5. 去均值（中心化）
+        print("[INFO] Centering data (removing mean)...")
+        mean_vec = data_matrix_normalized.mean(axis=0, keepdims=True)
+        data_matrix_centered = data_matrix_normalized - mean_vec
+
+        # 6. SVD分解
+        print("[INFO] Computing SVD...")
+        U, singular_values, Vt = np.linalg.svd(data_matrix_centered, full_matrices=False)
+
+        # 7. 计算有效维度
+        # 有效维度定义：找到使得累计方差贡献比例达到某个阈值（如90%）的维度数
+        variance_explained = singular_values ** 2 / (singular_values ** 2).sum()
+        cumsum_variance = np.cumsum(variance_explained)
+
+        # 找到达到90%累计方差的维度
+        threshold = 0.9
+        effective_dim = np.argmax(cumsum_variance >= threshold) + 1
+
+        print(f"\n[RESULTS] Effective Dimension Analysis:")
+        print(f"  - Total samples: {data_matrix.shape[0]}")
+        print(f"  - Feature dimension: {data_matrix.shape[1]}")
+        print(f"  - Top 10 singular values: {singular_values[:10]}")
+        print(f"  - Effective dimension (90% variance): {effective_dim}")
+        print(f"  - Variance explained by effective_dim: {cumsum_variance[effective_dim-1]:.4f}")
+
+        results = {
+            'effective_dim': int(effective_dim),
+            'singular_values': singular_values,
+            'cumsum_ratio': cumsum_variance,
+            'variance_explained': variance_explained,
+            'total_samples': data_matrix.shape[0],
+            'feature_dim': data_matrix.shape[1],
+            'data_matrix_shape': data_matrix.shape,
+            'mean_vec': mean_vec,
+            'U': U,
+            'Vt': Vt,
+        }
+
+        # 打印更多统计信息
+        print(f"\n[STATISTICS]")
+        for threshold in [0.8, 0.85, 0.9, 0.95, 0.99]:
+            dim = np.argmax(cumsum_variance >= threshold) + 1
+            print(f"  - Dimension for {threshold*100:.0f}% variance: {dim}")
+
+        return results
 
 # --------------- 工具：dict <-> tensor ----------------       
 def dict_to_mat(proto_dict, label_order, device, fill_mat=None):

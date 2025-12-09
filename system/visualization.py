@@ -385,45 +385,47 @@ def run(args):
         else:
             raise NotImplementedError
 
-        if args.visualization_mode == 'TSNE':
-            server.Plot_TSNE_Together()
+        if 'FedTSP' in args.algorithm:
+            if args.visualization_mode == 'TSNE':
+                server.Plot_TSNE_Together()
 
-        if args.visualization_mode == 'proto_sim':
-            server.visualize_global_prototype_similarity()
+            if args.visualization_mode == 'proto_sim':
+                server.visualize_global_prototype_similarity()
 
-        if args.visualization_mode == 'test':
-            server.load_model()
-            server.evaluate_after_training(args.test_data_mode)
+            if args.visualization_mode == 'test':
+                server.load_model()
+                server.evaluate_after_training(args.test_data_mode)
 
-        if args.visualization_mode == 'top5acc':
-            server.load_model()
-            server.top5_accuracy(args.test_data_mode)
+            if args.visualization_mode == 'top5acc':
+                server.load_model()
+                server.top5_accuracy(args.test_data_mode)
 
-        if args.visualization_mode == 'super_sim':
-            server.visualize_global_protos_superclass_similarity()
-        
-        if args.visualization_mode == 'client_prototype_semantic_similarity':
-            if hasattr(server, 'get_prototype_semantic_similarity'):
-                method = getattr(server, 'get_prototype_semantic_similarity')
-                result = method()
-            else:
-                print(f'{args.algorithm} does not have this method.')
-        
-        if args.visualization_mode == 'testing_feature_difference':
-            if hasattr(server, 'testing_feature_difference'):
-                print('1111111111111111')
-                method = getattr(server, 'testing_feature_difference')
-                result = method()
-            else:
-                print(f'{args.algorithm} does not have this method.')
+            if args.visualization_mode == 'super_sim':
+                server.visualize_global_protos_superclass_similarity()
+        if 'FedProto' in args.algorithm:
+            if args.visualization_mode == 'client_prototype_semantic_similarity':
+                if hasattr(server, 'get_prototype_semantic_similarity'):
+                    method = getattr(server, 'get_prototype_semantic_similarity')
+                    result = method()
+                else:
+                    print(f'{args.algorithm} does not have this method.')
+            
+            if args.visualization_mode == 'testing_feature_difference':
+                if hasattr(server, 'testing_feature_difference'):
+                    print('1111111111111111')
+                    method = getattr(server, 'testing_feature_difference')
+                    result = method()
+                else:
+                    print(f'{args.algorithm} does not have this method.')
 
-        if args.visualization_mode == 'cka':
-            if hasattr(server, 'test_cka_sensitivity'):
-                method = getattr(server, 'test_cka_sensitivity')
-                result = method()
-            else:
-                print(f'{args.algorithm} does not have this method.')
-
+            if args.visualization_mode == 'cka':
+                if hasattr(server, 'test_cka_sensitivity'):
+                    method = getattr(server, 'test_cka_sensitivity')
+                    result = method()
+                else:
+                    print(f'{args.algorithm} does not have this method.')
+        if 'FedStruct' in args.algorithm:
+            pass
 
         time_list.append(time.time() - start)
 
@@ -563,6 +565,11 @@ if __name__ == "__main__":
 
     # FedStruct
     parser.add_argument('--version', type=int, default=1, help='distinguish the version of the proposed method')
+    parser.add_argument('--gamma', type=float, default=1, help='weight of feature CKA loss')
+    parser.add_argument('--rotation', type=int, default=1, help='whether rotate local proto before aggregation. set 0 to rotate')
+    parser.add_argument('--struct_loss_type', type=str, default='cka', choices=['cka', 'gram_mse', 'rdm_mse', 'rdm_cos', 'rdm_mse_sq', 'rdm_cos_sq', 'rdm_mse_sq_norm', 'rdm_cos_sq_norm', 'mse', 'cosine'], help='struct loss type. Can be chosed in cka, gram-mse, rdm-cos')
+    parser.add_argument('--skip_exist', type=int, default=1, help='Whether to skip experiments that have already been run.')
+    parser.add_argument('--tolerance', type=int, default=50, help='How many rounds of no improvement in the best accuracy to tolerate.')
 
     # FedProtoCKA
     parser.add_argument('--tag', type=str, default='', help='tag for cka loss type: "detach" uses cka_loss_detach, otherwise uses cka_loss')
