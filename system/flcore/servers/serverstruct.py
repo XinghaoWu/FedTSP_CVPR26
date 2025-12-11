@@ -104,7 +104,8 @@ class FedStruct(Server):
                 print(f'The best accuracy has not changed for {self.args.tolerance} rounds; stopping automatically.')
                 self.logger.info(f'The best accuracy has not changed for {self.args.tolerance} rounds; stopping automatically.')
                 break
-
+        if self.args.save_model != 0:
+            self.save_model(tag='last')
         hyperparameters = {
             'lamda': self.args.lamda,
             'gamma': self.args.gamma,
@@ -127,32 +128,44 @@ class FedStruct(Server):
 
         self.save_results()
 
-    def save_model(self):
+    def save_model(self, tag='best'):
         if not os.path.exists(self.model_save_path):
             os.makedirs(self.model_save_path)
 
         # save server proto
         try:
-            # PROTO = load_item(self.role, 'global_protos', self.save_folder_name)
             PROTO = self.global_proto
-            torch.save(PROTO, f'{self.model_save_path}/global_proto.pth')
+            if tag == 'best':
+                torch.save(PROTO, f'{self.model_save_path}/global_proto.pth')
+            elif tag == 'last':
+                torch.save(PROTO, f'{self.model_save_path}/global_proto_last.pth')
+            else:
+                raise ValueError(f'Invalid tag: {tag}')
         except:
             print('No global protos to save')
 
         # save client models
         for client in self.clients:
-            client.save_model(save_dir=self.model_save_path)
+            client.save_model(save_dir=self.model_save_path, tag=tag)
 
-    def load_model(self):
+    def load_model(self, tag='best'):
         if not os.path.exists(self.model_save_path):
             raise ValueError(f'No model to load: {self.model_save_path}')
 
         # load server proto
-        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth')
+        try:
+            if tag == 'best':
+                self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth', map_location=self.device)
+            elif tag == 'last':
+                self.global_proto = torch.load(f'{self.model_save_path}/global_proto_last.pth', map_location=self.device)
+            else:
+                raise ValueError(f'Invalid tag: {tag}')
+        except Exception as e:
+            print(e)
 
         # load client models
         for c in self.clients:
-            c.load_model(save_dir=self.model_save_path)
+            c.load_model(save_dir=self.model_save_path, tag=tag)
 
         print('Loaded checkpoint models successfully')
         self.logger.info('Loaded checkpoint models successfully')
@@ -319,7 +332,7 @@ class FedStruct(Server):
         from sklearn.manifold import TSNE
 
         # 1. 加载checkpoint
-        self.load_model()
+        self.load_model(tag='last')
         print("Loaded checkpoint successfully")
 
         # 2. 收集每个客户端的Local Prototype
@@ -327,6 +340,10 @@ class FedStruct(Server):
         all_prototypes = []
         all_client_ids = []
         all_class_labels = []
+
+        # 绘制指定客户端
+        # self.clients = self.clients[-4:]
+        selected_client_ids = [client.id for client in self.clients]  # 保存选中客户端的真实ID
 
         for client in self.clients:
             prototype = client.get_local_prototpye()
@@ -351,7 +368,12 @@ class FedStruct(Server):
         fig, ax = plt.subplots(figsize=(12, 10))
 
         # 定义颜色映射(每个客户端一种颜色)
-        colors = plt.cm.tab20(np.linspace(0, 1, len(self.clients)))
+        num_clients = len(self.clients)
+        if num_clients <= 20:
+            colors = plt.cm.tab20(np.linspace(0, 1, num_clients))
+        else:
+            # 对于超过20个客户端，使用hsv colormap获取更多颜色
+            colors = plt.cm.hsv(np.linspace(0, 0.95, num_clients))
 
         # 定义marker映射(每个类别一种marker)
         markers = ['o', 's', '^', 'v', 'D', 'P', '*', 'X', 'p', 'H',
@@ -359,27 +381,26 @@ class FedStruct(Server):
         num_classes = self.num_classes
 
         # 为每个客户端-类别组合绘制点
-        for client_id in range(len(self.clients)):
+        for idx, real_client_id in enumerate(selected_client_ids):
             for class_id in range(num_classes):
                 # 找到属于该客户端和类别的点
-                mask = np.array([(cid == client_id and cls == class_id)
+                mask = np.array([(cid == real_client_id and cls == class_id)
                                 for cid, cls in zip(all_client_ids, all_class_labels)])
 
                 if mask.any():
                     ax.scatter(prototypes_2d[mask, 0],
                               prototypes_2d[mask, 1],
-                              c=[colors[client_id]],
+                              c=[colors[idx]],
                               marker=markers[class_id % len(markers)],
                               s=100,
-                              alpha=0.7,
+                              alpha=1,
                               edgecolors='black',
-                              linewidths=0.5,
-                              label=f'Client {client_id}, Class {class_id}' if class_id == 0 else '')
+                              linewidths=0.5)
 
         # 创建图例: 颜色表示客户端
         from matplotlib.patches import Patch
-        legend_elements_clients = [Patch(facecolor=colors[i], edgecolor='black', label=f'Client {i}')
-                                  for i in range(len(self.clients))]
+        legend_elements_clients = [Patch(facecolor=colors[i], edgecolor='black', label=f'Client {selected_client_ids[i]}')
+                                  for i in range(len(selected_client_ids))]
 
         # 创建图例: marker表示类别
         from matplotlib.lines import Line2D
@@ -478,7 +499,7 @@ class FedStruct(Server):
         """
         # 1. 加载checkpoint
         print("[INFO] Loading client checkpoints...")
-        self.load_model()
+        self.load_model(tag='last')
 
         # 2. 收集所有客户端的local prototype
         print("[INFO] Collecting client prototypes...")
