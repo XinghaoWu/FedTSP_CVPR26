@@ -173,7 +173,7 @@ def main():
     parser.add_argument("--value", type=str, default="Best accuracy",
                         help="Field to use as cell value, e.g., 'Best accuracy'")
     parser.add_argument("--group_by", type=str, default=None,
-                        help="Field name to group by. Each unique value will create a separate table.")
+                        help="Field name(s) to group by (comma-separated). Each unique combination will create a separate table.")
     args = parser.parse_args()
 
     experiments = parse_summary_file(args.input)
@@ -181,23 +181,37 @@ def main():
     if not experiments:
         raise RuntimeError("No experiments found in input file.")
 
-    # 如果指定了 group_by，按该字段分组
+    # 如果指定了 group_by，按该字段(s)分组
     if args.group_by:
-        # 收集所有不同的 group_by 取值
-        group_values = sorted({exp[args.group_by] for exp in experiments if args.group_by in exp})
+        # 解析 group_by 字段列表（支持逗号分隔的多个字段）
+        group_by_fields = [f.strip() for f in args.group_by.split(',')]
 
-        if not group_values:
-            raise ValueError(f"Cannot find group_by field '{args.group_by}' in experiments")
+        # 验证所有 group_by 字段都存在
+        for field in group_by_fields:
+            if not any(field in exp for exp in experiments):
+                raise ValueError(f"Cannot find group_by field '{field}' in experiments")
 
-        # 按 group_by 值分组实验
+        # 收集所有不同的 group_by 组合
+        group_combinations = set()
+        for exp in experiments:
+            group_tuple = tuple(exp.get(field) for field in group_by_fields)
+            group_combinations.add(group_tuple)
+
+        group_combinations = sorted(group_combinations)
+
+        # 按 group_by 组合分组实验
         grouped_experiments = {}
-        for group_val in group_values:
-            grouped_experiments[group_val] = [
-                exp for exp in experiments if exp.get(args.group_by) == group_val
+        for group_tuple in group_combinations:
+            # 创建分组键：将字段名和值配对
+            group_key = tuple(zip(group_by_fields, group_tuple))
+            grouped_experiments[group_key] = [
+                exp for exp in experiments
+                if all(exp.get(field) == value for field, value in zip(group_by_fields, group_tuple))
             ]
     else:
         # 如果没有指定 group_by，所有实验作为一组
         grouped_experiments = {"all": experiments}
+        group_by_fields = []
 
     raw_df = pd.DataFrame(experiments)
 
@@ -228,10 +242,13 @@ def main():
         })
 
         # 为每个分组创建一个sheet
-        for group_name, group_exps in grouped_experiments.items():
+        sheet_counter = 0
+        for group_key, group_exps in grouped_experiments.items():
             # 确定sheet名称
             if args.group_by:
-                sheet_name = f"{args.group_by}={group_name}"
+                # 生成sheet名称：使用序号，确保唯一且不超过31字符
+                sheet_name = f"Group_{sheet_counter}"
+                sheet_counter += 1
             else:
                 sheet_name = "Results"
 
@@ -246,7 +263,7 @@ def main():
             # 收集其他设置信息（排除 group_by 字段）
             excluded_keys = {args.x, args.y, args.value}
             if args.group_by:
-                excluded_keys.add(args.group_by)
+                excluded_keys.update(group_by_fields)
 
             settings_text = collect_other_settings_with_exclusion(
                 group_exps,
@@ -254,13 +271,15 @@ def main():
             )
 
             # 创建worksheet
-            worksheet = workbook.add_worksheet(sheet_name[:31])  # Excel sheet名称最多31个字符
+            worksheet = workbook.add_worksheet(sheet_name)
 
             # 写入设置信息
             current_row = 0
             if args.group_by:
                 # 如果是分组模式，显示当前组的值
-                worksheet.write(current_row, 0, f"{args.group_by}: {group_name}", header_format)
+                group_info_parts = [f"{field}={value}" for field, value in group_key]
+                group_info = ", ".join(group_info_parts)
+                worksheet.write(current_row, 0, f"Group: {group_info}", header_format)
                 current_row += 1
 
             if settings_text:
