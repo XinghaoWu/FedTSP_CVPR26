@@ -81,21 +81,41 @@ class FedStruct(Server):
                 if self.best_epoch == i:
                     if self.args.save_model != 0:
                         self.save_model()
-                        # self.get_prototype_semantic_similarity(round=i)
             
-            # if i % 5 == 0:
-            #     self.get_prototype_semantic_similarity(round=i)
 
             for client in self.selected_clients:
                 client.train()
 
-            # threads = [Thread(target=client.train)
-            #            for client in self.selected_clients]
-            # [t.start() for t in threads]
-            # [t.join() for t in threads]
-
             self.receive_protos()
             self.send_protos()
+
+            # 只用作toy example，这里用rotation代替，不更换参数了
+            # 用于验证如果聚合模型，客户端的特征空间是什么样的
+            if self.args.rotation == 2:
+                # add model aggregation
+                self.client_parameters = []
+                for client in self.clients:
+                    self.client_parameters.append(client.model.base.state_dict())
+                # 2. 计算聚合（FedAvg 逻辑）
+                # 初始化一个全零的字典，结构与模型的 base 一致
+                global_base_dict = copy.deepcopy(self.client_parameters[0])
+                for key in global_base_dict.keys():
+                    # 将第一个客户端的参数转为 float 以防溢出，并重置为 0
+                    global_base_dict[key] = torch.zeros_like(global_base_dict[key]).float()
+                    
+                    # 累加所有客户端的参数
+                    for client_sd in self.client_parameters:
+                        global_base_dict[key] += client_sd[key].float()
+                    
+                    # 取平均值
+                    global_base_dict[key] /= len(self.client_parameters)
+
+                # 3. 将聚合后的参数下发（Load）给所有客户端
+                for client in self.clients:
+                    # 使用 strict=True 确保结构完全一致
+                    client.model.base.load_state_dict(global_base_dict)
+                
+                print(f"--- Round {i}: Feature extractor (model.base) aggregation completed ---")
 
             self.Budget.append(time.time() - s_t)
             print('-'*50, self.Budget[-1])
@@ -201,98 +221,12 @@ class FedStruct(Server):
             uploaded_proto_dicts.append(copy.deepcopy(client.local_proto))
             weights.append(float(client.train_samples))
 
-        # ---------------- 非 version 3：保持原逻辑 ----------------
-        if self.args.version not in [3, 4, 5] or self.args.rotation == 0:
-            global_protos = proto_aggregation(uploaded_proto_dicts)
-            # save_item(global_protos, self.role, 'global_protos', self.save_folder_name)
-            self.global_proto = copy.deepcopy(global_protos)
-            return
+        global_protos = proto_aggregation(uploaded_proto_dicts)
+        # save_item(global_protos, self.role, 'global_protos', self.save_folder_name)
+        self.global_proto = copy.deepcopy(global_protos)
+        return
 
-        # ---------------- version 3：等权逐类聚合 ----------------
-        # P_g_dict = load_item('Server', 'global_protos', self.save_folder_name)
-        P_g_dict = copy.deepcopy(self.global_proto)
-
-        # 首轮无全局 → 先用 FedProto 均值 boot-strap，再退出
-        if P_g_dict is None:
-            # save_item(proto_aggregation(uploaded_proto_dicts),
-            #         self.role, 'global_protos', self.save_folder_name)
-            self.global_proto = proto_aggregation(uploaded_proto_dicts)
-            print("[BOOTSTRAP] global_protos saved (FedProto mean).")
-            return
-
-        print('Orthogonal-Procrustes (per-class equal mean).')
-
-        # 全局原型 (C,D) & 中心化
-        P_g, _ = dict_to_mat(P_g_dict, self.label_order, self.device)
-        P_g_c  = P_g - P_g.mean(0, keepdim=True)
-        g_mean = P_g.mean(0, keepdim=True)          # (1,D) 用于加回平移
-
-        # 桶：label -> list[tensor(D,)]
-        agg_bucket = defaultdict(list)
-
-        # ----- 遍历客户端：旋转对齐 + 填充桶 -----
-        for proto_dict in uploaded_proto_dicts:
-            P_k, mask = dict_to_mat(proto_dict, self.label_order,
-                                    self.device, fill_mat=P_g)   # (C,D)
-            P_k_c = P_k - P_k.mean(0, keepdim=True)
-            # print(f'!!!!!!!!!!!!!!!!!!! P_g:{P_g} !!!!!!!!!!!!!!!!!!!!!!')
-            # print(f'!!!!!!!!!!!!!!!!!!! P_k:{P_k} !!!!!!!!!!!!!!!!!!!!!!')
-
-            # 仅用真实行估计旋转 R_small
-            idx = mask.nonzero(as_tuple=True)[0]
-            # print(f'idx numel:{idx.numel()}')
-            if idx.numel() >= 2:
-                # 取共有类别的子矩阵 (C',D)
-                Pk_sub = P_k_c[idx]                              # (C',D)
-                Pg_sub = P_g_c[idx]                              # (C',D)
-
-                # 经典特征空间 Procrustes：min_R || Pk_sub R - Pg_sub ||_F
-                M = Pk_sub.T @ Pg_sub                            # (D,D)
-                # print(f'!!!!!!!!!!!!!!!!!!! M:{M} !!!!!!!!!!!!!!!!!!!!!!')
-                try:
-                    U, _, Vt = torch.linalg.svd(M, full_matrices=False)
-                    R_D = U @ Vt                                     # (D,D) 旋转矩阵
-                    P_k_align = P_k_c @ R_D                          # (C,D)
-                except torch._C._LinAlgError:
-                    # print(f'!!!!!!!!!!!!!!!!!!! SVD失败，添加正则化重新拟合 !!!!!!!!!!!!!!!!!!!!!!')
-                    # 添加正则化重试
-                    eps = 1e-6
-                    M_reg = M + eps * torch.eye(M.shape[0], device=M.device)
-                    try:
-                        U, _, Vt = torch.linalg.svd(M_reg, full_matrices=False)
-                        R_D = U @ Vt
-                        P_k_align = P_k_c @ R_D
-                    except torch._C._LinAlgError:
-                        # print(f'!!!!!!!!!!!!!!!!!!! 正则化后仍然失败 !!!!!!!!!!!!!!!!!!!!!!')
-                        # 仍然失败，不做旋转
-                        P_k_align = P_k_c
-            else:
-                # 共享类太少，无法估计稳定旋转 → 不做旋转
-                P_k_align = P_k_c                                # (C,D)
-
-            # 加回全局平移
-            P_k_align = P_k_align + g_mean                       # (C,D)
-
-            # 只把真实行放进桶
-            for lbl_idx in idx.tolist():
-                agg_bucket[lbl_idx].append(P_k_align[lbl_idx])
-
-        # ----- 逐类等权平均 + 行级 EMA -----
-        beta = getattr(self.args, "beta", 0.1)
-        new_Pg = {}
-
-        for lbl_idx in self.label_order:
-            if lbl_idx in agg_bucket:                             # 至少有一个客户端拥有该类
-                mean_vec = torch.stack(agg_bucket[lbl_idx], 0).mean(0)
-                old_vec  = P_g[lbl_idx]
-                new_Pg[lbl_idx] = ((1 - beta) * old_vec + beta * mean_vec).detach().cpu()
-            else:
-                # 仍无人持有该类 → 直接保持旧值
-                new_Pg[lbl_idx] = P_g[lbl_idx].detach().cpu()
-
-        # save_item(new_Pg, self.role, 'global_protos', self.save_folder_name)
-        self.global_proto = copy.deepcopy(new_Pg)
-        print(f"[UPDATE] global_protos saved (β={beta}).")
+        
 
     
     def test_cka_sensitivity(self):

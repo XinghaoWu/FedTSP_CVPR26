@@ -86,11 +86,14 @@ def get_domainnet_dloader(dataset_path, domain_name):
 
 random.seed(1)
 np.random.seed(1)
-data_path = "DomainNet/"
-dir_path = "DomainNet/"
+data_path = "rawdata/DomainNet"
 
 # Allocate data to users
-def generate_dataset(dir_path):
+def generate_dataset():
+    domains = ['clipart', 'infograph', 'painting', 'quickdraw', 'real', 'sketch']
+    num_clients = len(domains)
+    dir_path = f"DomainNet_{num_clients}/"
+
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
         
@@ -104,9 +107,8 @@ def generate_dataset(dir_path):
     if not os.path.exists(test_path):
         os.makedirs(test_path)
 
-    root = data_path+"rawdata"
+    root = data_path
     
-    domains = ['clipart', 'infograph', 'painting', 'quickdraw', 'real', 'sketch']
     urls = [
         'http://csr.bu.edu/ftp/visda/2019/multi-source/groundtruth/clipart.zip', 
         'http://csr.bu.edu/ftp/visda/2019/multi-source/infograph.zip', 
@@ -148,7 +150,6 @@ def generate_dataset(dir_path):
     labelss = []
     for yy in y:
         labelss.append(len(set(yy)))
-    num_clients = len(y)
     print(f'Number of labels: {labelss}')
     print(f'Number of clients: {num_clients}')
 
@@ -165,4 +166,4 @@ def generate_dataset(dir_path):
 
 
 if __name__ == "__main__":
-    generate_dataset(dir_path)
+    generate_dataset()

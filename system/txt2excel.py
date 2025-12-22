@@ -194,7 +194,7 @@ def main():
         # 收集所有不同的 group_by 组合
         group_combinations = set()
         for exp in experiments:
-            group_tuple = tuple(exp.get(field) for field in group_by_fields)
+            group_tuple = tuple(exp.get(field, "N/A") for field in group_by_fields)
             group_combinations.add(group_tuple)
 
         group_combinations = sorted(group_combinations)

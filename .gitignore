@@ -2,6 +2,8 @@
 #/dataset/
 /dataset/rawdata/
 /dataset/*_*_*_balance_*/
+/dataset/DomainNet_6/
+/dataset/PACS_4/
 !/dataset/generate_*.py
 !/dataset/LLM_prompts/
 !/dataset/utils/
