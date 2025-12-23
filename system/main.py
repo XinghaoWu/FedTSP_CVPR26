@@ -143,7 +143,7 @@ def run(args):
         elif args.model_family == "HtFE4":
             args.models = [
                 f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
-                'googlenet(aux_logits=False, num_classes=args.num_classes)',
+                'torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)'
             ]
@@ -152,7 +152,7 @@ def run(args):
             args.models = [
                 f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
                 # 'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=10816)', 
-                'googlenet(aux_logits=False, num_classes=args.num_classes)',
+                'torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
                 'resnet34(num_classes=args.num_classes)',
@@ -177,7 +177,7 @@ def run(args):
         elif args.model_family == "HtFE8-HtC4":
             args.models = [
                 f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
-                'googlenet(aux_logits=False, num_classes=args.num_classes)',
+                'torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
                 'resnet34(num_classes=args.num_classes)',
@@ -228,7 +228,7 @@ def run(args):
         elif args.model_family == "HtM10":
             args.models = [
                 f'FedAvgCNN(in_features=3, num_classes=args.num_classes, dim={args.FedAvgCNN_dim})',
-                'googlenet(aux_logits=False, num_classes=args.num_classes)',
+                'torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)',
                 'mobilenet_v2(num_classes=args.num_classes)',
                 'resnet18(num_classes=args.num_classes)',
                 'resnet34(num_classes=args.num_classes)',
