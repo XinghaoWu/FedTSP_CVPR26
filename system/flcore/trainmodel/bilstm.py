@@ -63,8 +63,9 @@ class BiLSTM_TextClassification(nn.Module):
 
         input_seq = self.embedding_dropout_layer(input_seq)
 
-        h_0 = torch.zeros((self.num_layers*2, batch_size, self.hidden_size)).to(device='cuda')
-        c_0 = torch.zeros((self.num_layers*2, batch_size, self.hidden_size)).to(device='cuda')
+        # Use the same device as input_seq to support multi-GPU parallel execution
+        h_0 = torch.zeros((self.num_layers*2, batch_size, self.hidden_size), device=input_seq.device)
+        c_0 = torch.zeros((self.num_layers*2, batch_size, self.hidden_size), device=input_seq.device)
 
         input_seq = input_seq.permute(1, 0, 2)
         output, (final_hidden_state, final_cell_state) = self.lstm_layer(input_seq, (h_0, c_0))

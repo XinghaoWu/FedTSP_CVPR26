@@ -53,14 +53,17 @@ def load_amazon(base_path):
 
 random.seed(1)
 np.random.seed(1)
-data_path = "AmazonReview/"
-dir_path = "AmazonReview/"
+data_path = "rawdata/AmazonReview"
 
 # Allocate data to users
-def generate_dataset(dir_path):
+def generate_dataset():
+    domains = ["books", "dvd", "electronics", "kitchen"]
+    num_clients = len(domains)
+    dir_path = f"AmazonReview_{num_clients}/"
+
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
-        
+
     # Setup directory for train/test data
     config_path = dir_path + "config.json"
     train_path = dir_path + "train/"
@@ -71,12 +74,19 @@ def generate_dataset(dir_path):
     if not os.path.exists(test_path):
         os.makedirs(test_path)
 
-    root = data_path+"rawdata"
-    
+    root = data_path
+
     # Get AmazonReview data
     if not os.path.exists(root):
         os.makedirs(root)
-        os.system(f'wget https://drive.google.com/u/0/uc?id=1QbXFENNyqor1IlCpRRFtOluI2_hMEd1W&export=download -P {root}')
+
+    amazon_file = path.join(root, "amazon.npz")
+    if not os.path.exists(amazon_file):
+        # Download the zip file
+        zip_file = path.join(root, "amazon_download.zip")
+        os.system(f'gdown 1QbXFENNyqor1IlCpRRFtOluI2_hMEd1W -O {zip_file}')
+        # Extract the actual amazon.npz from the zip
+        os.system(f'cd {root} && unzip -o {zip_file} && mv AmazonReview/amazon.npz . && rm -rf AmazonReview {zip_file}')
 
     X, y = load_amazon(root)
 
@@ -99,4 +109,4 @@ def generate_dataset(dir_path):
 
 
 if __name__ == "__main__":
-    generate_dataset(dir_path)
+    generate_dataset()
