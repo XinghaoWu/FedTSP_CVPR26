@@ -231,14 +231,17 @@ class Server(object):
 
         return ids, num_samples, tot_correct, tot_auc
 
-    def train_metrics(self):        
+    def train_metrics(self):
         num_samples = []
         losses = []
         for c in self.clients:
             cl, ns = c.train_metrics()
             num_samples.append(ns)
             losses.append(cl*1.0)
-            print(f'Client {c.id}: Loss: {cl*1.0/ns}')
+            if ns > 0:
+                print(f'Client {c.id}: Loss: {cl*1.0/ns}')
+            else:
+                print(f'Client {c.id}: Loss: N/A (no training samples)')
 
         ids = [c.id for c in self.clients]
 
@@ -286,6 +289,11 @@ class Server(object):
             self.logger.info("Std Test AUC: {:.4f}".format(np.std(aucs)))
             self.logger.info("Best Epoch: {}".format(self.best_epoch))
             self.logger.info("Best Test Accurancy: {:.4f}".format(self.best_acc))
+            # 记录所有客户端的测试准确率（按ID排序，数值列表格式）
+            client_acc_pairs = list(zip(stats[0], accs))
+            client_acc_pairs.sort(key=lambda x: x[0])  # 按客户端ID从小到大排序
+            acc_list = [f"{acc:.4f}" for cid, acc in client_acc_pairs]
+            self.logger.info("Test Accuracy list: [" + ", ".join(acc_list) + "]")
 
             train_info = {
                 'train_loss': train_loss,

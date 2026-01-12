@@ -4,6 +4,11 @@
 /dataset/*_*_*_balance_*/
 /dataset/DomainNet_6/
 /dataset/PACS_4/
+dataset/AmazonReview_4/
+dataset/Shakespeare_0.02_118/
+dataset/Shakespeare_0.2_118/
+dataset/Shakespeare_2percent/
+dataset/utils/LEAF/
 !/dataset/generate_*.py
 !/dataset/LLM_prompts/
 !/dataset/utils/
@@ -15,6 +20,7 @@
 /system/flcore/trainmodel/bert-base-uncased
 /system/flcore/trainmodel/clip-ViT-B-32.pt
 /system/batch_shell_*.sh
+/system/SOTA_*.sh
 /logs_20250107/
 /save_20250107/
 # Byte-compiled / optimized / DLL files

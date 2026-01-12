@@ -51,17 +51,17 @@ class FedTGPStruct(Server):
 
         # set logger
         if 'main.py' in self.caller_script:
-            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_gamma{args.gamma}_se{args.server_epochs}_margin{args.margin_threthold}_seed{args.seed}/'
+            logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_struct({args.struct_loss_type})_lamda{args.lamda}_gamma{args.gamma}_se{args.server_epochs}_margin{args.margin_threthold}_seed{args.seed}/'
         else:
-            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_gamma{args.gamma}_se{args.server_epochs}_margin{args.margin_threthold}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
-        
+            logger_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_struct({args.struct_loss_type})_lamda{args.lamda}_gamma{args.gamma}_se{args.server_epochs}_margin{args.margin_threthold}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/'
+
         self.set_loggers(logger_path)
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_gamma{args.gamma}_se{args.server_epochs}_margin{args.margin_threthold}_seed{args.seed}')
+                                f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_struct({args.struct_loss_type})_lamda{args.lamda}_gamma{args.gamma}_se{args.server_epochs}_margin{args.margin_threthold}_seed{args.seed}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
-                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_gamma{args.gamma}_se{args.server_epochs}_margin{args.margin_threthold}_seed{args.seed}')
+                          f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_struct({args.struct_loss_type})_lamda{args.lamda}_gamma{args.gamma}_se{args.server_epochs}_margin{args.margin_threthold}_seed{args.seed}')
         if 'main.py' in self.caller_script:
             self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary.txt'
         else:
@@ -103,6 +103,7 @@ class FedTGPStruct(Server):
         hyperparameters = {
             'lamda': self.args.lamda,
             'gamma': self.args.gamma,
+            'struct_loss': self.args.struct_loss_type,
             'server_epochs': self.args.server_epochs,
             'margin_threshold': self.args.margin_threthold,
             'seed': self.args.seed

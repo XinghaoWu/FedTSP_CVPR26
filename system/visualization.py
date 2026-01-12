@@ -437,6 +437,9 @@ def run(args):
                     result = method()
                 else:
                     print(f'{args.algorithm} does not have this method.')
+            if args.visualization_mode == 'test':
+                server.load_model()
+                server.evaluate_after_training(args.test_data_mode)
 
         time_list.append(time.time() - start)
 
