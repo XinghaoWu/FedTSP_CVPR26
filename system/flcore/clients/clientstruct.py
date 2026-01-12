@@ -303,7 +303,8 @@ class clientStruct(Client):
                 optimizer.zero_grad()
                 # optimizer_logit_scale.zero_grad()
                 loss.backward()
-                torch.nn.utils.clip_grad_norm_(model.parameters(), 20)
+                if self.args.grad_clip == 1:
+                    torch.nn.utils.clip_grad_norm_(model.parameters(), 20)
                 optimizer.step()
                 # optimizer_logit_scale.step()
 
