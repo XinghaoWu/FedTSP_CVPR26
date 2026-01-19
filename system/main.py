@@ -590,7 +590,7 @@ if __name__ == "__main__":
     parser.add_argument('--gamma', type=float, default=1, help='weight of feature CKA loss')
     parser.add_argument('--rotation', type=int, default=1, help='whether rotate local proto before aggregation. set 0 to rotate')
     parser.add_argument('--struct_loss_type', type=str, default='cka', choices=['cka', 'gram_mse', 'rdm_mse', 'rdm_cos', 'rdm_mse_sq', 'rdm_cos_sq', 'rdm_mse_sq_norm', 'rdm_cos_sq_norm', 'mse', 'cosine'], help='struct loss type. Can be chosed in cka, gram-mse, rdm-cos')
-    parser.add_argument('--grad_clip', type=int, default=0, help='whether clip the gradient before updating')
+    parser.add_argument('--grad_clip', type=int, default=0, help='Whether clip the gradient before updating. Set 0 to not use. Set a positive number to indicate clip value.')
     parser.add_argument('--skip_exist', type=int, default=1, help='Whether to skip experiments that have already been run.')
     parser.add_argument('--tolerance', type=int, default=50, help='How many rounds of no improvement in the best accuracy to tolerate.')
 
