@@ -22,11 +22,11 @@ class clientDistill(Client):
         self.model = model
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
         global_logits = load_item('Server', 'global_logits', self.save_folder_name)
-        
-        start_time = time.time()
 
         # model.to(self.device)
         model.train()
+
+        start_time = time.time()
 
         max_local_epochs = self.local_epochs
         if self.train_slow:
@@ -60,12 +60,12 @@ class clientDistill(Client):
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
+        
+        self.train_time_cost['num_rounds'] += 1
+        self.train_time_cost['total_cost'] += time.time() - start_time
         save_item(model, self.role, 'model', self.save_folder_name)
         save_item(agg_func(logits), self.role, 'logits', self.save_folder_name)
         self.model.to('cpu')
-
-        self.train_time_cost['num_rounds'] += 1
-        self.train_time_cost['total_cost'] += time.time() - start_time
 
 
     def train_metrics(self):

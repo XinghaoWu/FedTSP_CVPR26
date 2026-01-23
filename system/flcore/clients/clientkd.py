@@ -80,6 +80,8 @@ class clientKD(Client):
                 optimizer_g.step()
                 optimizer_W.step()
 
+        self.train_time_cost['num_rounds'] += 1
+        self.train_time_cost['total_cost'] += time.time() - start_time
         save_item(model, self.role, 'model', self.save_folder_name)
         save_item(global_model, self.role, 'global_model', self.save_folder_name)
         save_item(W_h, self.role, 'W_h', self.save_folder_name)
@@ -87,8 +89,6 @@ class clientKD(Client):
         # compressed_param = decomposition(global_model.named_parameters(), self.energy)
         # save_item(compressed_param, self.role, 'compressed_param', self.save_folder_name)
 
-        self.train_time_cost['num_rounds'] += 1
-        self.train_time_cost['total_cost'] += time.time() - start_time
 
     def save_model(self, save_dir):
         if not os.path.exists(save_dir):

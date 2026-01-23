@@ -36,6 +36,7 @@ from flcore.servers.serverprotocos import FedProtoCos
 
 from flcore.servers.serverword import FedWord
 from flcore.servers.serverstruct import FedStruct
+from flcore.servers.serverstructfast import FedStructFast
 
 from flcore.servers.serveralignstruct import AlignFedStruct
 from flcore.servers.servertgpstruct import FedTGPStruct
@@ -434,6 +435,9 @@ def run(args):
         elif args.algorithm == 'FedStruct':
             server = FedStruct(args, i)
         
+        elif args.algorithm == 'FedStructFast':
+            server = FedStructFast(args, i)
+        
         elif args.algorithm == 'AlignFedStruct':
             server = AlignFedStruct(args, i)
         
@@ -510,6 +514,8 @@ if __name__ == "__main__":
     parser.add_argument('-tth', "--time_threthold", type=float, default=10000,
                         help="The threthold for droping slow clients")
 
+    parser.add_argument("-co", "--compute_overhead", type=int, default=1,
+                        help="Whether to compute communication and computation overhead. 1 for yes, 0 for no.")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--num_workers", type=int, default=4)
 
@@ -591,7 +597,7 @@ if __name__ == "__main__":
     parser.add_argument('--rotation', type=int, default=1, help='whether rotate local proto before aggregation. set 0 to rotate')
     parser.add_argument('--struct_loss_type', type=str, default='cka', choices=['cka', 'gram_mse', 'rdm_mse', 'rdm_cos', 'rdm_mse_sq', 'rdm_cos_sq', 'rdm_mse_sq_norm', 'rdm_cos_sq_norm', 'mse', 'cosine'], help='struct loss type. Can be chosed in cka, gram-mse, rdm-cos')
     parser.add_argument('--grad_clip', type=int, default=0, help='Whether clip the gradient before updating. Set 0 to not use. Set a positive number to indicate clip value.')
-    parser.add_argument('--skip_exist', type=int, default=1, help='Whether to skip experiments that have already been run.')
+    parser.add_argument('--skip_exist', type=int, default=1, help='Whether to skip experiments that have already been run.') 
     parser.add_argument('--tolerance', type=int, default=50, help='How many rounds of no improvement in the best accuracy to tolerate.')
 
     # FedProtoCKA

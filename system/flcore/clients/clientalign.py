@@ -59,9 +59,9 @@ class clientAlign(Client):
                 loss.backward()
                 optimizer.step()
                 # optimizer_logit_scale.step()
-        model.to('cpu')
         self.train_time_cost['num_rounds'] += 1
         self.train_time_cost['total_cost'] += time.time() - start_time
+        model.to('cpu')
 
     # AlignFed utilize lamda decay trick
     def get_transfer_lambda(self, global_epoch):

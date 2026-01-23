@@ -26,6 +26,12 @@ class FedGH(Server):
         self.server_learning_rate = args.server_learning_rate
         self.server_epochs = args.server_epochs
 
+        # 通信开销和计算开销统计
+        self.comm_costs = []  # 每轮的上行链路通信开销（MB）
+        self.downlink_comm_costs = []  # 每轮的下行链路通信开销（MB）
+        self.client_comp_costs = []  # 每轮的客户端计算开销（秒）
+        self.server_comp_costs = []  # 每轮的服务器计算开销（秒）
+
         head = load_item(self.clients[0].role, 'model', self.clients[0].save_folder_name).head
         save_item(head, 'Server', 'head', self.save_folder_name)
 
@@ -65,13 +71,27 @@ class FedGH(Server):
                 client.train()
                 client.collect_protos()
 
-            # threads = [Thread(target=client.train)
-            #            for client in self.selected_clients]
-            # [t.start() for t in threads]
-            # [t.join() for t in threads]
+            if self.args.compute_overhead:
 
-            self.receive_protos()
-            self.train_head()
+                # 统计服务器计算开销
+                server_start_time = time.time()
+
+                self.receive_protos()
+                self.train_head()
+
+                server_comp_time = time.time() - server_start_time
+                self.server_comp_costs.append(server_comp_time)
+
+                # 统计上行链路通信开销（MB）
+                comm_cost = self.calculate_communication_cost()
+                self.comm_costs.append(comm_cost)
+
+                # 统计下行链路通信开销（MB）
+                downlink_comm_cost = self.calculate_downlink_communication_cost()
+                self.downlink_comm_costs.append(downlink_comm_cost)
+            else:
+                self.receive_protos()
+                self.train_head()
 
             self.Budget.append(time.time() - s_t)
             print('-'*50, self.Budget[-1])
@@ -87,6 +107,15 @@ class FedGH(Server):
             'Best accuracy': self.best_acc,
             'Best epoch': self.best_epoch,
         }
+
+        if self.args.compute_overhead:
+            for client in self.clients:
+                self.client_comp_costs.append(client.train_time_cost['total_cost'] / client.train_time_cost['num_rounds'])
+            results['Average uplink communication cost per round'] = sum(self.comm_costs[1:])/len(self.comm_costs[1:])
+            results['Average downlink communication cost per round'] = sum(self.downlink_comm_costs[1:])/len(self.downlink_comm_costs[1:])
+            results['Average client computation cost per round'] = sum(self.client_comp_costs)/len(self.client_comp_costs)
+            results['Average server computation cost per round'] = sum(self.server_comp_costs[1:])/len(self.server_comp_costs[1:])
+
         self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
         print("\nBest accuracy.")
@@ -96,6 +125,46 @@ class FedGH(Server):
         print(sum(self.Budget[1:])/len(self.Budget[1:]))
 
         self.save_results()
+
+    def calculate_downlink_communication_cost(self):
+        """计算下行链路通信开销（MB）- FedGH 发送头部模型参数"""
+        total_bytes = 0
+
+        # 计算发送给客户端的头部模型参数大小
+        try:
+            head = load_item('Server', 'head', self.save_folder_name)
+            for param in head.parameters():
+                param_bytes = param.nelement() * 4  # float32计算
+                total_bytes += param_bytes
+        except Exception as e:
+            print(f"Error calculating downlink communication cost: {e}")
+
+        # 转换为MB
+        total_mb = total_bytes / (1024 * 1024)
+
+        return total_mb
+
+    def calculate_communication_cost(self):
+        """计算上行链路通信开销（MB）- FedGH 接收原型数据"""
+        total_bytes = 0
+
+        # 计算每个上传客户端的原型数据大小
+        for client in self.selected_clients:
+            try:
+                protos = load_item(client.role, 'protos', client.save_folder_name)
+                for cc in protos.keys():
+                    proto = protos[cc]
+                    # 每个原型的字节数 = 元素数量 * 每个元素的字节数（float32 = 4字节）
+                    proto_bytes = proto.nelement() * 4  # 默认使用float32计算
+                    total_bytes += proto_bytes
+            except Exception as e:
+                print(f"Error calculating communication cost for client {client.id}: {e}")
+                continue
+
+        # 转换为MB（1 MB = 1024 * 1024 字节）
+        total_mb = total_bytes / (1024 * 1024)
+
+        return total_mb
 
     def save_model(self):
         if not os.path.exists(self.model_save_path):

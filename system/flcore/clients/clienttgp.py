@@ -71,12 +71,12 @@ class clientTGP(Client):
                 optimizer.step()
                 # optimizer_logit_scale.step()
 
+        self.train_time_cost['num_rounds'] += 1
+        self.train_time_cost['total_cost'] += time.time() - start_time
         self.collect_protos()
         save_item(model, self.role, 'model', self.save_folder_name)
         self.model.to('cpu')
 
-        self.train_time_cost['num_rounds'] += 1
-        self.train_time_cost['total_cost'] += time.time() - start_time
         # print(f'client: {self.id}. logit_scale: {self.logit_scale.item()}')
 
 

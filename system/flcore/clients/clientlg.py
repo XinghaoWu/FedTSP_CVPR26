@@ -40,11 +40,10 @@ class clientLG(Client):
                 loss.backward()
                 optimizer.step()
 
-        save_item(model, self.role, 'model', self.save_folder_name)
-        self.model.to('cpu')
-
         self.train_time_cost['num_rounds'] += 1
         self.train_time_cost['total_cost'] += time.time() - start_time
+        save_item(model, self.role, 'model', self.save_folder_name)
+        self.model.to('cpu')
         
     def set_parameters(self):
         model = load_item(self.role, 'model', self.save_folder_name)

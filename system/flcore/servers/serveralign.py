@@ -26,6 +26,12 @@ class AlignFed(Server):
         self.Budget = []
         self.num_classes = args.num_classes
 
+        # 通信开销和计算开销统计
+        self.comm_costs = []  # 每轮的上行链路通信开销（MB）
+        self.downlink_comm_costs = []  # 每轮的下行链路通信开销（MB）
+        self.client_comp_costs = []  # 每轮的客户端计算开销（秒）
+        self.server_comp_costs = []  # 每轮的服务器计算开销（秒）
+
         # set logger
         if 'main.py' in self.caller_script:
             logger_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}_finallamda{args.final_lamda}_seed{args.seed}/'
@@ -69,9 +75,29 @@ class AlignFed(Server):
             for client in self.selected_clients:
                 client.train()
 
-            self.receive_ids()
-            self.aggregate_parameters()
-            self.send_parameters()
+            if self.args.compute_overhead:
+
+                # 统计服务器计算开销
+                server_start_time = time.time()
+
+                self.receive_ids()
+                self.aggregate_parameters()
+                self.send_parameters()
+
+                server_comp_time = time.time() - server_start_time
+                self.server_comp_costs.append(server_comp_time)
+
+                # 统计上行链路通信开销（MB）
+                comm_cost = self.calculate_communication_cost()
+                self.comm_costs.append(comm_cost)
+
+                # 统计下行链路通信开销（MB）
+                downlink_comm_cost = self.calculate_downlink_communication_cost()
+                self.downlink_comm_costs.append(downlink_comm_cost)
+            else:
+                self.receive_ids()
+                self.aggregate_parameters()
+                self.send_parameters()
 
             self.Budget.append(time.time() - s_t)
             print('-' * 50, self.Budget[-1])
@@ -88,6 +114,16 @@ class AlignFed(Server):
             'Best accuracy': self.best_acc,
             'Best epoch': self.best_epoch,
         }
+
+        if self.args.compute_overhead:
+            # 计算客户端平均计算开时间
+            for client in self.clients:
+                self.client_comp_costs.append(client.train_time_cost['total_cost'] / client.train_time_cost['num_rounds'])
+            results['Average uplink communication cost per round'] = sum(self.comm_costs[1:])/len(self.comm_costs[1:])
+            results['Average downlink communication cost per round'] = sum(self.downlink_comm_costs[1:])/len(self.downlink_comm_costs[1:])
+            results['Average client computation cost per round'] = sum(self.client_comp_costs)/len(self.client_comp_costs)
+            results['Average server computation cost per round'] = sum(self.server_comp_costs[1:])/len(self.server_comp_costs[1:])
+
         self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
         print("\nBest accuracy.")
@@ -97,6 +133,43 @@ class AlignFed(Server):
         print(sum(self.Budget[1:]) / len(self.Budget[1:]))
 
         self.save_results()
+
+    def calculate_downlink_communication_cost(self):
+        """计算下行链路通信开销（MB）- FedAlign发送全局分类器和全局原型"""
+        total_bytes = 0
+
+        # 计算全局分类器参数大小
+        if hasattr(self, 'global_classifier'):
+            for param in self.global_classifier.parameters():
+                param_bytes = param.nelement() * 4  # float32计算
+                total_bytes += param_bytes
+
+        # 计算全局原型大小
+        if hasattr(self, 'global_proto'):
+            proto_bytes = self.global_proto.nelement() * 4  # float32计算
+            total_bytes += proto_bytes
+
+        # 转换为MB
+        total_mb = total_bytes / (1024 * 1024)
+
+        return total_mb
+
+    def calculate_communication_cost(self):
+        total_bytes = 0
+        for cid in self.uploaded_ids:
+            client = self.clients[cid]
+            client_model = client.model.head
+
+            # 计算模型参数的总字节数
+            for param in client_model.parameters():
+                # 每个参数的字节数 = 元素数量 * 每个元素的字节数（float32 = 4字节）
+                param_bytes = param.nelement() * 4  # 默认使用float32计算
+                total_bytes += param_bytes
+
+        # 转换为MB（1 MB = 1024 * 1024 字节）
+        total_mb = total_bytes / (1024 * 1024)
+
+        return total_mb
 
     def aggregate_parameters(self):
         assert (len(self.uploaded_ids) > 0)

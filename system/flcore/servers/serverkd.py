@@ -15,9 +15,9 @@ class FedKD(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
         if args.save_folder_name == 'temp' or 'temp' not in args.save_folder_name:
-            global_model = BaseHeadSplit(args, 0).to(args.device)            
+            global_model = BaseHeadSplit(args, 0).to(args.device)
             save_item(global_model, self.role, 'global_model', self.save_folder_name)
-        
+
         # select slow clients
         self.set_slow_clients()
         self.set_clients(clientKD)
@@ -30,6 +30,12 @@ class FedKD(Server):
         self.T_start = args.T_start
         self.T_end = args.T_end
         self.energy = self.T_start
+
+        # 通信开销和计算开销统计
+        self.comm_costs = []  # 每轮的上行链路通信开销（MB）
+        self.downlink_comm_costs = []  # 每轮的下行链路通信开销（MB）
+        self.client_comp_costs = []  # 每轮的客户端计算开销（秒）
+        self.server_comp_costs = []  # 每轮的服务器计算开销（秒）
 
         # set logger
         if 'main.py' in self.caller_script:
@@ -65,15 +71,28 @@ class FedKD(Server):
             for client in self.selected_clients:
                 client.train()
 
-            # threads = [Thread(target=client.train)
-            #            for client in self.selected_clients]
-            # [t.start() for t in threads]
-            # [t.join() for t in threads]
+            if self.args.compute_overhead:
+                # 统计服务器计算开销
+                server_start_time = time.time()
 
-            self.receive_ids()
-            self.aggregate_parameters()
+                self.receive_ids()
+                self.aggregate_parameters()
+                self.send_parameters()
 
-            self.send_parameters()
+                server_comp_time = time.time() - server_start_time
+                self.server_comp_costs.append(server_comp_time)
+
+                # 统计上行链路通信开销（MB）
+                comm_cost = self.calculate_communication_cost()
+                self.comm_costs.append(comm_cost)
+
+                # 统计下行链路通信开销（MB）
+                downlink_comm_cost = self.calculate_downlink_communication_cost()
+                self.downlink_comm_costs.append(downlink_comm_cost)
+            else:
+                self.receive_ids()
+                self.aggregate_parameters()
+                self.send_parameters()
 
             self.Budget.append(time.time() - s_t)
             print('-'*25, 'time cost', '-'*25, self.Budget[-1])
@@ -95,6 +114,16 @@ class FedKD(Server):
             'Best accuracy': self.best_acc,
             'Best epoch': self.best_epoch,
         }
+
+        if self.args.compute_overhead:
+            # 计算客户端平均计算开时间
+            for client in self.clients:
+                self.client_comp_costs.append(client.train_time_cost['total_cost'] / client.train_time_cost['num_rounds'])
+            results['Average uplink communication cost per round'] = sum(self.comm_costs[1:])/len(self.comm_costs[1:])
+            results['Average downlink communication cost per round'] = sum(self.downlink_comm_costs[1:])/len(self.downlink_comm_costs[1:])
+            results['Average client computation cost per round'] = sum(self.client_comp_costs)/len(self.client_comp_costs)
+            results['Average server computation cost per round'] = sum(self.server_comp_costs[1:])/len(self.server_comp_costs[1:])
+
         self.log_experiment_results(self.final_log_path, hyperparameters, results)
 
         print("\nBest accuracy.")
@@ -105,6 +134,59 @@ class FedKD(Server):
         print(sum(self.Budget[1:])/len(self.Budget[1:]))
 
         self.save_results()
+
+    def calculate_downlink_communication_cost(self):
+        """计算下行链路通信开销（MB）- FedKD 发送压缩后的参数"""
+        total_bytes = 0
+
+        # 计算发送给客户端的压缩参数大小
+        try:
+            compressed_param = load_item(self.role, 'compressed_param', self.save_folder_name)
+
+            # 计算参数的总字节数（考虑numpy数组的字节大小）
+            if isinstance(compressed_param, dict):
+                for k, v in compressed_param.items():
+                    if isinstance(v, np.ndarray):
+                        total_bytes += v.nbytes
+                    elif isinstance(v, torch.Tensor):
+                        total_bytes += v.nelement() * 4  # 默认使用float32计算
+            else:
+                print(f"Unknown param type from server: {type(compressed_param)}")
+        except Exception as e:
+            print(f"Error calculating downlink communication cost: {e}")
+
+        # 转换为MB
+        total_mb = total_bytes / (1024 * 1024)
+
+        return total_mb
+
+    def calculate_communication_cost(self):
+        """计算上行链路通信开销（MB）- FedKD 接收压缩后的参数"""
+        total_bytes = 0
+
+        # 计算每个上传客户端的压缩参数大小
+        for cid in self.uploaded_ids:
+            client = self.clients[cid]
+            try:
+                client_param = load_item(client.role, 'compressed_param', client.save_folder_name)
+
+                # 计算参数的总字节数（考虑numpy数组的字节大小）
+                if isinstance(client_param, dict):
+                    for k, v in client_param.items():
+                        if isinstance(v, np.ndarray):
+                            total_bytes += v.nbytes
+                        elif isinstance(v, torch.Tensor):
+                            total_bytes += v.nelement() * 4  # 默认使用float32计算
+                else:
+                    print(f"Unknown param type from client {cid}: {type(client_param)}")
+            except Exception as e:
+                print(f"Error calculating communication cost for client {cid}: {e}")
+                continue
+
+        # 转换为MB（1 MB = 1024 * 1024 字节）
+        total_mb = total_bytes / (1024 * 1024)
+
+        return total_mb
 
     def save_model(self):
         if not os.path.exists(self.model_save_path):

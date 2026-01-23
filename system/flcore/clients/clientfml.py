@@ -59,13 +59,11 @@ class clientFML(Client):
                 optimizer.step()
                 optimizer_g.step()
 
-        # model.cpu()
+        self.train_time_cost['num_rounds'] += 1
+        self.train_time_cost['total_cost'] += time.time() - start_time
         save_item(model, self.role, 'model', self.save_folder_name)
         save_item(global_model, self.role, 'global_model', self.save_folder_name)
         self.model.to('cpu')
-
-        self.train_time_cost['num_rounds'] += 1
-        self.train_time_cost['total_cost'] += time.time() - start_time
 
 
     def test_metrics(self):

@@ -1,6 +1,6 @@
 import time
 import numpy as np
-from flcore.clients.clientstruct import clientStruct
+from flcore.clients.clientstructfast import clientStructFast
 from flcore.servers.serverbase import Server
 from flcore.clients.clientbase import load_item, save_item
 from utils.data_utils import read_client_data
@@ -10,7 +10,7 @@ import os, copy
 import torch
 
 
-class FedStruct(Server):
+class FedStructFast(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
 
@@ -32,7 +32,7 @@ class FedStruct(Server):
 
         # select slow clients
         self.set_slow_clients()
-        self.set_clients(clientStruct)
+        self.set_clients(clientStructFast)
 
         print(f"\nJoin ratio / total clients: {self.join_ratio} / {self.num_clients}")
         print("Finished creating server and clients.")
@@ -372,9 +372,9 @@ class FedStruct(Server):
         matplotlib.rcParams['font.size'] = 12
         matplotlib.rcParams['axes.labelsize'] = 14
         matplotlib.rcParams['axes.titlesize'] = 16
-        matplotlib.rcParams['legend.fontsize'] = 12
-        matplotlib.rcParams['xtick.labelsize'] = 9
-        matplotlib.rcParams['ytick.labelsize'] = 9
+        matplotlib.rcParams['legend.fontsize'] = 10
+        matplotlib.rcParams['xtick.labelsize'] = 10
+        matplotlib.rcParams['ytick.labelsize'] = 10
 
         # 1. 加载checkpoint
         self.load_model(tag='last')
@@ -439,7 +439,7 @@ class FedStruct(Server):
                               prototypes_2d[mask, 1],
                               c=[colors[idx]],
                               marker=markers[class_id % len(markers)],
-                              s=120,
+                              s=80,
                               alpha=0.9,
                               edgecolors='black',
                               linewidths=0.8)
@@ -452,7 +452,7 @@ class FedStruct(Server):
         # 创建图例: marker表示类别
         from matplotlib.lines import Line2D
         legend_elements_classes = [Line2D([0], [0], marker=markers[i % len(markers)], color='w',
-                                         markerfacecolor='gray', markersize=10,
+                                         markerfacecolor='gray', markersize=8,
                                          label=f'Class {i}', markeredgecolor='black')
                                   for i in range(num_classes)]
 
@@ -461,14 +461,14 @@ class FedStruct(Server):
                                 loc='upper left',
                                 bbox_to_anchor=(1.02, 1),
                                 title='Clients',
-                                fontsize=11)
+                                fontsize=10)
         ax.add_artist(first_legend)
 
         ax.legend(handles=legend_elements_classes,
                  loc='upper left',
                  bbox_to_anchor=(1.02, 0.5),
                  title='Classes',
-                 fontsize=11)
+                 fontsize=10)
 
         # ax.set_title('t-SNE Visualization of Client Prototypes',
         #              fontsize=16, fontweight='bold', pad=20)
