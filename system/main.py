@@ -10,6 +10,7 @@ import random
 
 from flcore.servers.serverlocal import Local
 from flcore.servers.serverproto import FedProto
+from flcore.servers.serverproto_cvpr26 import FedProto_CVPR26
 from flcore.servers.servergen import FedGen
 from flcore.servers.serverdistill import FedDistill
 from flcore.servers.serverlg import LG_FedAvg
@@ -17,6 +18,7 @@ from flcore.servers.serverfml import FML
 from flcore.servers.serverkd import FedKD
 from flcore.servers.servergh import FedGH
 from flcore.servers.servertgp import FedTGP
+from flcore.servers.servertgp_cvpr26 import FedTGP_CVPR26
 # from flcore.servers.serverktl_stylegan_xl import FedKTL as FedKTL_stylegan_xl
 # from flcore.servers.serverktl_stylegan_3 import FedKTL as FedKTL_stylegan_3
 # from flcore.servers.serverktl_stable_diffusion import FedKTL as FedKTL_stable_diffusion
@@ -28,6 +30,7 @@ from flcore.servers.servertspv4 import FedTSPv4
 from flcore.servers.servertspv4_ablation import FedTSPv4_ablation
 from flcore.servers.servertspv4_ablation_2 import FedTSPv4_ablation_2
 from flcore.servers.servertspv4_dp import FedTSPv4_dp
+from flcore.servers.servertspv4_cvpr26 import FedTSPv4_CVPR26
 from flcore.servers.servermrl import FedMRL
 from flcore.servers.serverprotocon import FedProtoCon
 from flcore.servers.serverprotoeval import FedProtoEval
@@ -407,6 +410,15 @@ def run(args):
 
         elif args.algorithm == "FedTSPv4_dp":
             server = FedTSPv4_dp(args, i)
+        
+        elif args.algorithm == "FedTSPv4_CVPR26":
+            server = FedTSPv4_CVPR26(args, i)
+        
+        elif args.algorithm == "FedTGP_CVPR26":
+            server = FedTGP_CVPR26(args, i)
+        
+        elif args.algorithm == "FedProto_CVPR26":
+            server = FedProto_CVPR26(args, i)
 
         # elif args.algorithm == "FedKTL-stylegan-xl":
         #     server = FedKTL_stylegan_xl(args, i)
@@ -514,7 +526,7 @@ if __name__ == "__main__":
     parser.add_argument('-tth', "--time_threthold", type=float, default=10000,
                         help="The threthold for droping slow clients")
 
-    parser.add_argument("-co", "--compute_overhead", type=int, default=1,
+    parser.add_argument("-co", "--compute_overhead", type=int, default=0,
                         help="Whether to compute communication and computation overhead. 1 for yes, 0 for no.")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--num_workers", type=int, default=4)
@@ -590,6 +602,11 @@ if __name__ == "__main__":
     # FedTSPv4 dp
     parser.add_argument('--enable_dp', type=int, default=0, help='whether to enable dp')
     parser.add_argument('--dp_noise_std', type=float, default=0.01, help='noise std')
+
+    # FedTSPv4_CVPR26
+    parser.add_argument('--enable_quantization', type=int, default=8, help='set 0 to disable quantization. Otherwise indicate quantization degree')
+    parser.add_argument('--switch_dataset', type=str, default='', help='dataset to switch to at switch_round')
+    parser.add_argument('--switch_round', type=int, default=-1, help='round number to switch dataset. Set -1 to disable')
 
     # FedStruct
     parser.add_argument('--version', type=int, default=1, help='distinguish the version of the proposed method')
