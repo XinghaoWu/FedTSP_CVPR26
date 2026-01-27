@@ -267,8 +267,15 @@ class FedTSPv4_ablation(Server):
         if not os.path.exists(self.model_save_path):
             raise ValueError(f'No model to load: {self.model_save_path}')
 
-        # load server model
-        self.global_model = torch.load(f'{self.model_save_path}/server_model.pth').to(self.device)
+        # load server model with map_location to handle device mismatch
+        self.global_model = torch.load(f'{self.model_save_path}/server_model.pth', map_location=self.device)
+        self.global_model.to(self.device)
+
+        # Update device references in all sub-modules
+        if hasattr(self.global_model, 'prompt_learner'):
+            self.global_model.prompt_learner.device = self.device
+        if hasattr(self.global_model, 'device'):
+            self.global_model.device = self.device
 
         # load client models
         for c in self.clients:

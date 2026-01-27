@@ -564,6 +564,71 @@ class Server(object):
 
 
 
+    def compute_and_save_prototype_similarity_matrix(self):
+        """
+        计算并保存 prototype 之间的相似度矩阵
+        包含模型加载、prototype获取、相似度计算和保存等完整流程
+
+        Returns:
+            similarity_matrix_np: numpy.ndarray, shape (num_classes, num_classes), 相似度矩阵
+        """
+        import torch
+        import numpy as np
+        import os
+
+        # 加载模型
+        # if self.args.algorithm != "FedTSPv4":
+        #     self.load_model()
+        self.load_model()
+
+        # 获取全局 prototype 并归一化
+        global_protos = self.get_global_protos()
+        global_protos = global_protos / global_protos.norm(dim=-1, keepdim=True)
+
+        print(f'tsne class:{self.args.tsne_classes}')
+
+        # 选择部分类别可视化（如果指定）
+        if self.args.tsne_classes is not None:
+            plot_proto = []
+            for plot_class in self.args.tsne_classes:
+                for idx, class_name in enumerate(self.args.classes):
+                    if class_name == plot_class:
+                        plot_proto.append(global_protos[idx])
+                        break
+            global_protos = torch.stack(plot_proto)
+
+
+        # 计算相似度矩阵
+        if self.args.similarity_mode == 'cosine':
+            similarity_matrix = global_protos @ global_protos.T
+        elif self.args.similarity_mode == 'euclidean':
+            similarity_matrix = torch.cdist(global_protos, global_protos, p=2)
+        else:
+            raise ValueError(f'Invalid similarity mode: {self.args.similarity_mode}')
+
+        # 转换为 numpy
+        similarity_matrix_np = similarity_matrix.detach().cpu().numpy()
+
+        # 可选的 min-max 归一化
+        if self.args.scaler == 'minmax':
+            mask = ~np.eye(similarity_matrix_np.shape[0], dtype=bool)
+            non_diag_elements = similarity_matrix_np[mask]
+            min_val = non_diag_elements.min()
+            max_val = non_diag_elements.max()
+            normalized_values = (non_diag_elements - min_val) / (max_val - min_val)
+            similarity_matrix_np[mask] = normalized_values
+
+        print(similarity_matrix_np)
+
+        # 保存相似度矩阵
+        os.makedirs(self.model_save_path, exist_ok=True)
+        save_path = os.path.join(self.model_save_path,
+                                f'{self.args.dataset}_{self.args.model_family}_{self.args.algorithm}_global_prototype_similarity_matrix.pt')
+        print(f'similarity matrix save path:{save_path}')
+        torch.save(torch.tensor(similarity_matrix_np), save_path)
+
+        return similarity_matrix_np
+
     def visualize_global_prototype_similarity(self):
         import matplotlib.pyplot as plt
         import seaborn as sns

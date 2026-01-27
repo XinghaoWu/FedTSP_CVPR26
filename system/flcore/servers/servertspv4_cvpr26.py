@@ -10,7 +10,7 @@ import json
 import copy
 from tqdm import tqdm
 import clip
-from flcore.trainmodel.clip_base_v2 import TextEncoder_server
+from flcore.trainmodel.clip_base_v3 import TextEncoder_server
 from flcore.trainmodel.bert_base_v2 import TextEncoder_server_bert
 import torch
 import torch.nn.functional as F
@@ -35,39 +35,53 @@ class FedTSPv4_CVPR26(Server):
         self.best_acc_after_switch = 0.0
         self.best_epoch_after_switch = 0
 
+        # openset training parameters
+        self.openset = args.openset
+        self.first_stage_clients = args.first_stage_clients
+        self.first_stage_rounds = args.first_stage_rounds
+        # openset best accuracy tracking
+        self.best_acc_first_stage = 0.0
+        self.best_epoch_first_stage = 0
+        self.best_acc_remaining = 0.0
+        self.best_epoch_remaining = 0
+
         # set logger
         if 'main.py' in self.caller_script:
             logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                         f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
                         f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
                         f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_quant{args.enable_quantization}'
-                        f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}_seed{args.seed}/')
+                        f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}'
+                        f'{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}_seed{args.seed}/')
         else:
             logger_path = (f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                         f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate}_{args.prompt_lr})_'
                         f'lamda(t{args.lamda})_cls{args.p_classifier}_prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
                         f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_quant{args.enable_quantization}'
-                        f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/')
+                        f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}'
+                        f'{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/')
         self.set_loggers(logger_path)
         self.args.logger = self.logger
         self.args.tensorboardLogger = self.tensorboardLogger
         if 'main.py' in self.caller_script:
-            self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary_{args.server_model}_quant{args.enable_quantization}{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}.txt'
+            self.final_log_path = f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/summary_{args.server_model}_quant{args.enable_quantization}{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}.txt'
         else:
-            self.final_log_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})/summary_{args.server_model}_quant{args.enable_quantization}{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}.txt'
+            self.final_log_path = f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})/summary_{args.server_model}_quant{args.enable_quantization}{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}.txt'
 
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                                 f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda})_cls{args.p_classifier}_'
                                 f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
                                 f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_quant{args.enable_quantization}'
-                                f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}_seed{args.seed}')
+                                f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}'
+                                f'{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}_seed{args.seed}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                                 f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lamda(t{args.lamda})_cls{args.p_classifier}_'
                                 f'prompt(CSC{args.CSC}_len{args.len_prompt}_random{args.prompt_random_init}_manual{args.manual_prompt}_negative{args.negative_class})_'
                                 f'EMA{args.EMA_alpha}_promptep{args.prompt_epoch}_{args.server_model}_quant{args.enable_quantization}'
-                                f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}_seed{args.seed}')
+                                f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}'
+                                f'{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}_seed{args.seed}')
 
         # obtain the classes
         dataset_json_dir = f'../dataset/{args.dataset}/config.json'
@@ -141,6 +155,23 @@ class FedTSPv4_CVPR26(Server):
         print("Training and test data distribution switch completed.")
         self.logger.info("Training and test data distribution switch completed.")
 
+    def select_clients(self):
+        """Override base class select_clients to support openset training"""
+        if self.openset == 1 and self.epoch < self.first_stage_rounds:
+            # First stage: only select from first_stage_clients
+            available_clients = self.clients[:self.first_stage_clients]
+            if self.random_join_ratio:
+                num_join = np.random.choice(range(1, len(available_clients) + 1), 1, replace=False)[0]
+            else:
+                num_join = int(self.join_ratio * len(available_clients))
+                num_join = max(1, num_join)
+            selected_clients = list(np.random.choice(available_clients, num_join, replace=False))
+            self.current_num_join_clients = len(selected_clients)  # Update for receive_ids
+            return selected_clients
+        else:
+            # Second stage or normal mode: use base class implementation
+            return super().select_clients()
+
     def train(self):
         for i in tqdm(range(self.global_rounds + 1)):
             s_t = time.time()
@@ -191,7 +222,10 @@ class FedTSPv4_CVPR26(Server):
                 try:
                     for j in range(self.args.prompt_epoch):
                         clip_logits = self.global_model(self.global_vision_protos)
-                        loss = F.cross_entropy(clip_logits, torch.tensor([i for i in range(self.num_classes)]).to(self.device))
+                        present_class_ids = sorted(self.global_vision_protos.keys())
+                        targets = torch.arange(len(present_class_ids), device=self.device)
+                        loss = F.cross_entropy(clip_logits, targets)
+                        # loss = F.cross_entropy(clip_logits, torch.tensor([i for i in range(self.num_classes)]).to(self.device))
                         optimizer_prompts.zero_grad()
                         optimizer_logit_scale.zero_grad()
                         loss.backward()
@@ -334,8 +368,8 @@ class FedTSPv4_CVPR26(Server):
         if not os.path.exists(self.model_save_path):
             raise ValueError(f'No model to load: {self.model_save_path}')
 
-        # load server model
-        self.global_model = torch.load(f'{self.model_save_path}/server_model.pth').to(self.device)
+        # load server model with map_location to handle device mismatch
+        self.global_model = torch.load(f'{self.model_save_path}/server_model.pth', map_location=self.device).to(self.device)
 
         # load client models
         for c in self.clients:
@@ -440,6 +474,28 @@ class FedTSPv4_CVPR26(Server):
         test_accs = [a / n for a, n in zip(stats[2], stats[1])]
         test_losses = [a / n for a, n in zip(stats[3], stats[1])]
 
+        # 如果启用了openset模式,分别计算前first_stage_clients和后续clients的准确率
+        if self.openset == 1:
+            # First stage clients (0 to first_stage_clients-1)
+            first_stage_acc = sum(stats[2][:self.first_stage_clients]) * 1.0 / sum(stats[1][:self.first_stage_clients])
+            # Remaining clients (from first_stage_clients to end)
+            remaining_acc = sum(stats[2][self.first_stage_clients:]) * 1.0 / sum(stats[1][self.first_stage_clients:]) if len(stats[2]) > self.first_stage_clients else 0.0
+
+            # Update best accuracy for first stage clients
+            if first_stage_acc >= self.best_acc_first_stage:
+                self.best_acc_first_stage = first_stage_acc
+                self.best_epoch_first_stage = self.epoch
+
+            # Update best accuracy for remaining clients
+            if remaining_acc >= self.best_acc_remaining:
+                self.best_acc_remaining = remaining_acc
+                self.best_epoch_remaining = self.epoch
+
+            print(f"First stage clients (0-{self.first_stage_clients-1}) Test Acc: {first_stage_acc:.4f}, Best: {self.best_acc_first_stage:.4f} (Epoch {self.best_epoch_first_stage})")
+            print(f"Remaining clients ({self.first_stage_clients}-{self.num_clients-1}) Test Acc: {remaining_acc:.4f}, Best: {self.best_acc_remaining:.4f} (Epoch {self.best_epoch_remaining})")
+            self.logger.info(f"First stage clients (0-{self.first_stage_clients-1}) Test Acc: {first_stage_acc:.4f}, Best: {self.best_acc_first_stage:.4f} (Epoch {self.best_epoch_first_stage})")
+            self.logger.info(f"Remaining clients ({self.first_stage_clients}-{self.num_clients-1}) Test Acc: {remaining_acc:.4f}, Best: {self.best_acc_remaining:.4f} (Epoch {self.best_epoch_remaining})")
+
         # 统计全过程最佳准确率
         if test_acc >= self.best_acc:
             self.best_acc = test_acc
@@ -527,6 +583,14 @@ class FedTSPv4_CVPR26(Server):
             'test_loss': test_loss,
             'best_acc': self.best_acc
         }
+
+        # 如果启用了openset模式,在tensorboard中记录分组准确率
+        if self.openset == 1:
+            test_info['first_stage_acc'] = first_stage_acc
+            test_info['remaining_acc'] = remaining_acc
+            test_info['best_acc_first_stage'] = self.best_acc_first_stage
+            test_info['best_acc_remaining'] = self.best_acc_remaining
+
         self.tensorboardLogger.add_scalars_dict(prefix='test', dic=test_info, rnd=self.epoch)
 
     def get_global_protos(self):

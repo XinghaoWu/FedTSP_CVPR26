@@ -604,9 +604,12 @@ if __name__ == "__main__":
     parser.add_argument('--dp_noise_std', type=float, default=0.01, help='noise std')
 
     # FedTSPv4_CVPR26
-    parser.add_argument('--enable_quantization', type=int, default=8, help='set 0 to disable quantization. Otherwise indicate quantization degree')
+    parser.add_argument('--enable_quantization', type=int, default=0, help='set 0 to disable quantization. Otherwise indicate quantization degree')
     parser.add_argument('--switch_dataset', type=str, default='', help='dataset to switch to at switch_round')
     parser.add_argument('--switch_round', type=int, default=-1, help='round number to switch dataset. Set -1 to disable')
+    parser.add_argument('--openset', type=int, default=0, help='set 1 to enable staged training with partial clients in first stage')
+    parser.add_argument('--first_stage_clients', type=int, default=16, help='number of clients participating in first stage training')
+    parser.add_argument('--first_stage_rounds', type=int, default=50, help='number of rounds for first stage training')
 
     # FedStruct
     parser.add_argument('--version', type=int, default=1, help='distinguish the version of the proposed method')

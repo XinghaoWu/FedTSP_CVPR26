@@ -25,6 +25,16 @@ class FedProto_CVPR26(Server):
         self.best_acc_after_switch = 0.0
         self.best_epoch_after_switch = 0
 
+        # openset training parameters
+        self.openset = args.openset
+        self.first_stage_clients = args.first_stage_clients
+        self.first_stage_rounds = args.first_stage_rounds
+        # openset best accuracy tracking
+        self.best_acc_first_stage = 0.0
+        self.best_epoch_first_stage = 0
+        self.best_acc_remaining = 0.0
+        self.best_epoch_remaining = 0
+
         # select slow clients
         self.set_slow_clients()
         self.set_clients(clientProto_CVPR26)
@@ -45,26 +55,32 @@ class FedProto_CVPR26(Server):
         # set logger
         if 'main.py' in self.caller_script:
             logger_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}'
-                        f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}_seed{args.seed}/')
+                        f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}'
+                        f'{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}_seed{args.seed}/')
         else:
             logger_path = (f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}'
-                        f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/')
+                        f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}'
+                        f'{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}_test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})_seed{args.seed}/')
         self.set_loggers(logger_path)
 
         self.model_save_path = (f'../save/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                                 f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}'
-                                f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}_seed{args.seed}')
+                                f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}'
+                                f'{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}_seed{args.seed}')
 
         self.plot_path = (f'../plot/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_'
                           f'ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/lr({args.local_learning_rate})_lamda{args.lamda}'
-                          f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}_seed{args.seed}')
+                          f'{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}'
+                          f'{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}_seed{args.seed}')
 
         if 'main.py' in self.caller_script:
             self.final_log_path = (f'../logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/'
-                               f'summary{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}.txt')
+                               f'summary{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}'
+                               f'{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}.txt')
         else:
             self.final_log_path = (f'../visualization_logs/{args.dataset}/{args.model_family}/{args.algorithm}/gr{args.global_rounds}_ep{args.local_epochs}_bs{args.batch_size}_nc{args.num_clients}/'
-                               f'test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})/summary{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}.txt')
+                               f'test({args.visualization_mode}_{args.visualization_dataset_type}_{args.test_data_mode})/summary{f"_switch({args.switch_dataset}_{args.switch_round})" if args.switch_round != -1 else ""}'
+                               f'{f"_openset({args.first_stage_clients}_{args.first_stage_rounds})" if args.openset == 1 else ""}.txt')
 
     def train(self):
         for i in range(self.global_rounds+1):
@@ -166,6 +182,23 @@ class FedProto_CVPR26(Server):
         print("Client data will be loaded from new dataset on next training/testing round")
         self.logger.info("Client data will be loaded from new dataset on next training/testing round")
 
+    def select_clients(self):
+        """Override base class select_clients to support openset training"""
+        if self.openset == 1 and self.current_epoch < self.first_stage_rounds:
+            # First stage: only select from first_stage_clients
+            available_clients = self.clients[:self.first_stage_clients]
+            if self.random_join_ratio:
+                num_join = np.random.choice(range(1, len(available_clients) + 1), 1, replace=False)[0]
+            else:
+                num_join = int(self.join_ratio * len(available_clients))
+                num_join = max(1, num_join)
+            selected_clients = list(np.random.choice(available_clients, num_join, replace=False))
+            self.current_num_join_clients = len(selected_clients)  # Update for receive_ids
+            return selected_clients
+        else:
+            # Second stage or normal mode: use base class implementation
+            return super().select_clients()
+
     # 重写evaluate方法以统计切换前后最佳准确率
     def evaluate(self, acc=None, loss=None):
         stats = self.test_metrics()
@@ -176,6 +209,28 @@ class FedProto_CVPR26(Server):
         train_loss = sum(stats_train[2])*1.0 / sum(stats_train[1])
         accs = [a / n for a, n in zip(stats[2], stats[1])]
         aucs = [a / n for a, n in zip(stats[3], stats[1])]
+
+        # 如果启用了openset模式,分别计算前first_stage_clients和后续clients的准确率
+        if self.openset == 1:
+            # First stage clients (0 to first_stage_clients-1)
+            first_stage_acc = sum(stats[2][:self.first_stage_clients]) * 1.0 / sum(stats[1][:self.first_stage_clients])
+            # Remaining clients (from first_stage_clients to end)
+            remaining_acc = sum(stats[2][self.first_stage_clients:]) * 1.0 / sum(stats[1][self.first_stage_clients:]) if len(stats[2]) > self.first_stage_clients else 0.0
+
+            # Update best accuracy for first stage clients
+            if first_stage_acc >= self.best_acc_first_stage:
+                self.best_acc_first_stage = first_stage_acc
+                self.best_epoch_first_stage = self.current_epoch
+
+            # Update best accuracy for remaining clients
+            if remaining_acc >= self.best_acc_remaining:
+                self.best_acc_remaining = remaining_acc
+                self.best_epoch_remaining = self.current_epoch
+
+            print(f"First stage clients (0-{self.first_stage_clients-1}) Test Acc: {first_stage_acc:.4f}, Best: {self.best_acc_first_stage:.4f} (Epoch {self.best_epoch_first_stage})")
+            print(f"Remaining clients ({self.first_stage_clients}-{self.num_clients-1}) Test Acc: {remaining_acc:.4f}, Best: {self.best_acc_remaining:.4f} (Epoch {self.best_epoch_remaining})")
+            self.logger.info(f"First stage clients (0-{self.first_stage_clients-1}) Test Acc: {first_stage_acc:.4f}, Best: {self.best_acc_first_stage:.4f} (Epoch {self.best_epoch_first_stage})")
+            self.logger.info(f"Remaining clients ({self.first_stage_clients}-{self.num_clients-1}) Test Acc: {remaining_acc:.4f}, Best: {self.best_acc_remaining:.4f} (Epoch {self.best_epoch_remaining})")
 
         if acc == None:
             self.rs_test_acc.append(test_acc)
@@ -246,8 +301,17 @@ class FedProto_CVPR26(Server):
                 'test_acc': test_acc,
                 'best_acc': self.best_acc
             }
+
+            # 如果启用了openset模式,在tensorboard中记录分组准确率
+            if self.openset == 1:
+                test_info['first_stage_acc'] = first_stage_acc
+                test_info['remaining_acc'] = remaining_acc
+                test_info['best_acc_first_stage'] = self.best_acc_first_stage
+                test_info['best_acc_remaining'] = self.best_acc_remaining
+
             self.tensorboardLogger.add_scalars_dict(prefix='test', dic=test_info, rnd=self.current_epoch)
-        """计算下行链路通信开销（MB）- FedProto 发送全局原型"""
+
+    def calculate_downlink_communication_cost(self):
         total_bytes = 0
 
         # 计算发送给客户端的全局原型大小
@@ -307,8 +371,8 @@ class FedProto_CVPR26(Server):
         if not os.path.exists(self.model_save_path):
             raise ValueError(f'No model to load: {self.model_save_path}')
 
-        # load server proto
-        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth')
+        # load server proto with map_location to handle device mismatch
+        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth', map_location=self.device)
 
         # load client models
         for c in self.clients:
@@ -321,8 +385,8 @@ class FedProto_CVPR26(Server):
         if not os.path.exists(self.model_save_path):
             raise ValueError(f'No model to load: {self.model_save_path}')
 
-        # load server proto
-        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth')
+        # load server proto with map_location to handle device mismatch
+        self.global_proto = torch.load(f'{self.model_save_path}/global_proto.pth', map_location=self.device)
 
         print('Loaded checkpoint global protos successfully')
         self.logger.info('Loaded checkpoint global protos successfully')
