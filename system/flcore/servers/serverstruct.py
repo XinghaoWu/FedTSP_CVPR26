@@ -375,6 +375,9 @@ class FedStruct(Server):
         matplotlib.rcParams['legend.fontsize'] = 12
         matplotlib.rcParams['xtick.labelsize'] = 9
         matplotlib.rcParams['ytick.labelsize'] = 9
+        plt.rcParams['pdf.fonttype'] = 42         # 强制嵌入 TrueType 字体，使 PDF 可编辑
+        plt.rcParams['ps.fonttype'] = 42
+        plt.rcParams['axes.unicode_minus'] = False # 正常显示负号
 
         # 1. 加载checkpoint
         self.load_model(tag='last')
@@ -480,10 +483,10 @@ class FedStruct(Server):
 
         # 保存图片 - 论文级别的分辨率
         os.makedirs(self.plot_path, exist_ok=True)
-        save_path = os.path.join(self.plot_path, 'prototype_tsne_visualization.png')
+        save_path = os.path.join(self.plot_path, 'prototype_tsne_visualization_disseration.png')
         plt.savefig(save_path, dpi=600, bbox_inches='tight', format='png')
         # 同时保存EPS格式以便出版
-        eps_path = os.path.join(self.plot_path, 'prototype_tsne_visualization.pdf')
+        eps_path = os.path.join(self.plot_path, 'prototype_tsne_visualization_disseration.pdf')
         plt.savefig(eps_path, dpi=600, bbox_inches='tight', format='pdf')
         print(f"t-SNE visualization saved to: {save_path} and {eps_path}")
         plt.close()

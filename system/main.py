@@ -31,6 +31,7 @@ from flcore.servers.servertspv4_ablation import FedTSPv4_ablation
 from flcore.servers.servertspv4_ablation_2 import FedTSPv4_ablation_2
 from flcore.servers.servertspv4_dp import FedTSPv4_dp
 from flcore.servers.servertspv4_cvpr26 import FedTSPv4_CVPR26
+from flcore.servers.servertspv4_cvpr26_test import FedTSPv4_CVPR26_test
 from flcore.servers.servermrl import FedMRL
 from flcore.servers.serverprotocon import FedProtoCon
 from flcore.servers.serverprotoeval import FedProtoEval
@@ -419,6 +420,9 @@ def run(args):
         
         elif args.algorithm == "FedProto_CVPR26":
             server = FedProto_CVPR26(args, i)
+        
+        elif args.algorithm == "FedTSPv4_CVPR26_test":
+            server = FedTSPv4_CVPR26_test(args, i)
 
         # elif args.algorithm == "FedKTL-stylegan-xl":
         #     server = FedKTL_stylegan_xl(args, i)
